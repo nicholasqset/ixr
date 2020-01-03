@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="co_totals_de" pageWidth="258" pageHeight="381" columnWidth="258" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12820145-d364-4832-ae14-2e314c78fe7c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_YEAR" class="java.lang.String"/>
+	<parameter name="P_MONTH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+	itemcode, itemname, pyear, pmonth, hdrtype, itempos,
+	SUM(amount) amount
+FROM
+	viewpyslip
+WHERE
+	hdrtype = 'DE' AND
+	pyear = CAST($P{P_YEAR} AS BIGINT) AND
+	pmonth = CAST($P{P_MONTH} AS BIGINT) AND	
+	itemcode NOT IN(SELECT td FROM pyconfig WHERE id = 1)
+GROUP BY
+	itemcode, itemname, pyear, pmonth, hdrtype, itempos]]>
+	</queryString>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<field name="hdrtype" class="java.lang.String"/>
+	<field name="itempos" class="java.lang.Integer"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<sortField name="itemcode"/>
+	<sortField name="itempos"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="3" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="38" height="20" uuid="bf138884-b604-4a60-b9d3-510dd6f9c051"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="0" width="121" height="20" uuid="e442fc45-6f76-46e8-8c1f-db8ff3e49547"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEDUCTIONS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="258" height="1" uuid="6fcbca98-2a8c-4a4b-a9f2-856c10435465"/>
+			</line>
+			<staticText>
+				<reportElement x="159" y="0" width="99" height="20" uuid="90cdc3ac-ed52-4403-931b-3a34551b53b5"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="38" height="20" uuid="fb6559ba-698d-4184-9c5a-b8561c0334e2"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="0" width="145" height="20" uuid="3c4c915e-481b-4300-a0ff-2c620d4ac400"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="183" y="0" width="75" height="20" uuid="f1604415-63cc-43a4-abeb-fdccec53b736"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="2" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="3" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="3" splitType="Stretch"/>
+	</summary>
+</jasperReport>

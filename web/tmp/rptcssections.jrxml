@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2620b2c7-2d1a-4a84-b66f-80feaa37fa93">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT s.id, s.deptcode,d.deptname,s.sectioncode,s.sectionname
+   FROM qset.cssections s LEFT JOIN qset.csdepts d ON d.deptcode= s.deptcode]]>
+	</queryString>
+	<field name="deptcode" class="java.lang.String"/>
+	<field name="deptname" class="java.lang.String"/>
+	<field name="sectioncode" class="java.lang.String"/>
+	<field name="sectionname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="0" width="100" height="20" uuid="4eb6de77-671f-49c0-9e53-4d21cfda618f"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECTIONS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="2" width="100" height="20" uuid="246778d5-5796-40d5-ab31-d5714de4f1f8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dept Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="2" width="100" height="20" uuid="8ac45a56-f972-4a5f-95ed-a3b61c6604e0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dept Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="2" width="100" height="20" uuid="9461d508-2b6b-4c30-b1da-729d8bb4de15"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Section Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="2" width="100" height="20" uuid="7561471c-05f6-492b-b735-71a7e5390e6b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Section Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="3" width="100" height="20" uuid="dccbe558-6409-4aa5-8c10-0d9c21402c52"/>
+				<textFieldExpression><![CDATA[$F{deptcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="142" y="3" width="100" height="20" uuid="1945985a-7294-4ac0-be27-ecb4a3b29452"/>
+				<textFieldExpression><![CDATA[$F{deptname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="3" width="100" height="20" uuid="b2c08395-ac80-424e-a626-113c87cf1a60"/>
+				<textFieldExpression><![CDATA[$F{sectioncode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="3" width="100" height="20" uuid="51467901-6f8e-471a-818a-7c6d93be6abd"/>
+				<textFieldExpression><![CDATA[$F{sectionname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

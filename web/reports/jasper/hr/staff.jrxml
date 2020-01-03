@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="staff" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f12d1a0f-36c0-4cd8-bb26-7527ca6cc17a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM qset.VIEWSTAFFPROFILE]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="pfno" class="java.lang.String"/>
+	<field name="salutationcode" class="java.lang.String"/>
+	<field name="salutationname" class="java.lang.String"/>
+	<field name="firstname" class="java.lang.String"/>
+	<field name="middlename" class="java.lang.String"/>
+	<field name="lastname" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="gendercode" class="java.lang.String"/>
+	<field name="gendername" class="java.lang.String"/>
+	<field name="dob" class="java.sql.Date"/>
+	<field name="countrycode" class="java.lang.String"/>
+	<field name="countryname" class="java.lang.String"/>
+	<field name="nationalid" class="java.lang.String"/>
+	<field name="passportno" class="java.lang.String"/>
+	<field name="physchald" class="java.lang.Integer"/>
+	<field name="disabcode" class="java.lang.String"/>
+	<field name="disabname" class="java.lang.String"/>
+	<field name="postaladdr" class="java.lang.String"/>
+	<field name="postalcode" class="java.lang.String"/>
+	<field name="physicaladdr" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="cellphone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="branchcode" class="java.lang.String"/>
+	<field name="branchname" class="java.lang.String"/>
+	<field name="deptcode" class="java.lang.String"/>
+	<field name="deptname" class="java.lang.String"/>
+	<field name="sectioncode" class="java.lang.String"/>
+	<field name="sectionname" class="java.lang.String"/>
+	<field name="statuscode" class="java.lang.String"/>
+	<field name="statusname" class="java.lang.String"/>
+	<field name="active" class="java.lang.Integer"/>
+	<field name="gradecode" class="java.lang.String"/>
+	<field name="gradename" class="java.lang.String"/>
+	<field name="positioncode" class="java.lang.String"/>
+	<field name="positionname" class="java.lang.String"/>
+	<field name="engtrmcode" class="java.lang.String"/>
+	<field name="engtrmname" class="java.lang.String"/>
+	<field name="categorycode" class="java.lang.String"/>
+	<field name="categoryname" class="java.lang.String"/>
+	<field name="pinno" class="java.lang.String"/>
+	<field name="nhifno" class="java.lang.String"/>
+	<field name="nssfno" class="java.lang.String"/>
+	<field name="medicalno" class="java.lang.String"/>
+	<variable name="pfno_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{pfno}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="235" y="99" width="100" height="20" uuid="040e2a2e-1de8-422a-a453-971815727847"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff Listing]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="100" uuid="59dde411-23fc-4e1f-a76b-52886dc2ed3c"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20" uuid="4c39da4e-ade4-4b1f-b207-c35d8ff802a7"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PF #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="0" width="139" height="20" uuid="4dd3ceee-8c31-4a75-aea0-e1e6a2ed2fbc"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="0" width="42" height="20" uuid="d29d29d8-897d-4646-a501-410a22268a36"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="59" height="20" uuid="9f52e2dc-968b-4163-898c-2ea035a86433"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="0" width="87" height="20" uuid="25ba3a3f-03b9-41e9-b053-c9e2cd50f638"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="0" width="92" height="20" uuid="3b685b6a-a10e-411d-a5b9-42ac1a02642a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Terms]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="4e23ae9b-ad9f-458b-9a33-f119b6ba2a96"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="c50e4b76-4630-4078-8f05-8ac578aaeacb"/>
+			</line>
+			<staticText>
+				<reportElement x="477" y="1" width="78" height="20" uuid="458b3725-675c-4e73-a09f-8d322e28e790"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scale]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="20" uuid="e294386d-1d90-46d9-81f1-ba6fb86aa13c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="0" width="139" height="20" uuid="4dd835a3-a6e1-47b5-be12-d39a7221ec17"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="0" width="42" height="20" uuid="c547c39a-0c30-4022-833e-da7079bad6f4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gendername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="59" height="20" uuid="3ac88f14-5256-4cea-bd79-953a08deac4b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{statusname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="0" width="87" height="20" uuid="9a392fca-c7e3-4e58-95e5-6c2ba574fdc7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deptname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="0" width="92" height="20" uuid="84d5c9ae-3a35-4f52-b838-6a0abfc05b20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{engtrmname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="78" height="20" uuid="21c945f6-79b3-49b5-b491-f9cb54b03f73"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gradename}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="217" y="0" width="100" height="20" uuid="fabda3a2-db13-479b-8117-f607f0e659b2"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="61" y="10" width="100" height="20" uuid="eb1aec43-0e48-43b6-930a-9612f73ccf84"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Count:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="10" width="100" height="20" uuid="3b829d96-4146-40b7-a632-e15cab2c7c56"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pfno_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

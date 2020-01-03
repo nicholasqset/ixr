@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stock" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="32e10fdf-25d9-4efa-8183-58b067bd0a43">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWRTITEMS]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="catcode" class="java.lang.String"/>
+	<field name="catname" class="java.lang.String"/>
+	<field name="deptcode" class="java.lang.String"/>
+	<field name="deptname" class="java.lang.String"/>
+	<field name="accsetcode" class="java.lang.String"/>
+	<field name="uomcode" class="java.lang.String"/>
+	<field name="unitcost" class="java.math.BigDecimal"/>
+	<field name="unitprice" class="java.math.BigDecimal"/>
+	<field name="stocked" class="java.lang.Integer"/>
+	<field name="qty" class="java.math.BigDecimal"/>
+	<sortField name="deptcode"/>
+	<sortField name="catcode"/>
+	<sortField name="itemcode"/>
+	<variable name="qty_1" class="java.math.BigDecimal" resetType="Group" resetGroup="catcode" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="qty_2" class="java.math.BigDecimal" resetType="Group" resetGroup="deptcode" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<group name="deptcode" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{deptcode}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="1e786348-9e0f-4bed-ae3f-da762cbe2f9a"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Department:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="82cb1f97-29fd-4ec0-b992-e37921058095"/>
+					<textFieldExpression><![CDATA[$F{deptname}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="20" width="555" height="1" uuid="28706c2f-4616-4a4b-ab0d-31e510ba0ba4"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<textField pattern="#,##0.00">
+					<reportElement x="455" y="0" width="100" height="20" uuid="a22bab3e-f69a-4afd-9bac-2c32b1e6c4cd"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="3.0" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{qty_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="catcode">
+		<groupExpression><![CDATA[$F{catcode}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="588d0782-3174-4a25-a2a6-db4a7f2afccd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Category:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="42" y="20" width="100" height="20" uuid="47f39d3d-114a-4b27-9f34-ee83153acb0b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Item Code]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="142" y="20" width="123" height="20" uuid="2e8b968f-bc4b-4431-bb77-0879f01ff708"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Description]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="455" y="20" width="100" height="20" uuid="9b9b2941-ea95-4433-88e6-2cb1805bbb8b"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Quantity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="138" height="20" uuid="c1ff651b-2f29-4cf0-850c-24739cf0d696"/>
+					<textFieldExpression><![CDATA[$F{catname}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="19" width="555" height="1" uuid="1acd0e76-afa5-4dc5-a251-01d024f67098"/>
+				</line>
+				<line>
+					<reportElement x="0" y="40" width="555" height="1" uuid="3b5ba4d1-6475-440e-be69-aa501f9cf76d"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<textField pattern="#,##0.00">
+					<reportElement x="455" y="0" width="100" height="20" uuid="2fd35916-d07e-4883-8130-80010ce70e4a"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{qty_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="100" width="555" height="1" uuid="aba695ca-9840-4758-82dc-6876d1cfe7d4"/>
+			</line>
+			<staticText>
+				<reportElement x="224" y="0" width="100" height="20" uuid="209cc2d4-1833-4749-8160-058fddab48cb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEMO COMPANY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="20" width="100" height="20" uuid="29f8cad8-2c7f-43e7-b078-cdb54bec5a80"/>
+				<text><![CDATA[PO BOX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="40" width="100" height="20" uuid="f3b6cdeb-2105-44be-892d-7078281f4ae0"/>
+				<text><![CDATA[Phone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="60" width="100" height="20" uuid="c6c3f6d2-d293-4581-aeb9-c9d083b6031b"/>
+				<text><![CDATA[www.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="142" y="0" width="225" height="20" uuid="5e350997-e3c4-4939-a255-71b5a6d75edd"/>
+				<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="455" y="0" width="100" height="20" uuid="0ba9eb60-9e9f-461e-a48e-984081285936"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="42" y="0" width="100" height="20" uuid="edaff45b-28e7-4135-9f26-26d1f2f0478e"/>
+				<textFieldExpression><![CDATA[$F{itemcode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>

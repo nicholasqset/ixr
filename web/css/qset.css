@@ -1,0 +1,16 @@
+/* 
+    Created on : May 19, 2017, 1:07:06 PM
+    Author     : nicholas
+*/
+div.table {
+    display: table;
+    width: 100%;
+}
+
+div.row {
+    display: table-row;
+}
+
+div.cell {
+    display: table-cell;
+}

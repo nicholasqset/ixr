@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c99d72ae-c5b5-4529-a92b-4e97e072f013">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/medical/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWHMINVENTORYBAL ORDER BY PYEAR, PMONTH]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PYEAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PMONTH" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OBAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITUSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITTIME" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITIPADR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="BAL_1" class="java.math.BigDecimal" resetType="Group" resetGroup="FISCALYEAR" calculation="Sum">
+		<variableExpression><![CDATA[$F{BAL}]]></variableExpression>
+	</variable>
+	<variable name="BAL_2" class="java.math.BigDecimal" resetType="Group" resetGroup="FISCALYEAR" calculation="Sum">
+		<variableExpression><![CDATA[$F{BAL}]]></variableExpression>
+	</variable>
+	<group name="FISCALYEAR">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement x="42" y="0" width="65" height="20" uuid="9aaa8ef1-9b6d-4620-b171-9b9ef402327d"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PYEAR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="42" y="20" width="100" height="20" uuid="82283828-f794-441e-aa42-97bb0647f4c9"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PMONTH}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="42" height="20" uuid="dde9791b-863d-48eb-a6e3-9535f78b5064"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Year: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="20" width="42" height="20" uuid="7daea25e-63f8-437f-bdeb-13021ce28637"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Month: ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="13" y="0" width="100" height="20" uuid="c1db2b3a-d106-4e06-840c-6a2a97af7d48"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="470" y="0" width="63" height="20" uuid="2b344c2b-50a2-40db-932b-cff7d78b02b2"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{BAL_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="188" y="0" width="154" height="15" uuid="0d63c2a0-cc8a-4ae8-baad-dbccd4ff49b0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[XR MEDICAL SYSTEM]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="188" y="15" width="154" height="68" uuid="2ccdf6d8-bd6e-4111-9ca2-6c4fd17ca7e8"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="188" y="0" width="100" height="20" uuid="afdb41f1-a91b-49f8-bef0-1fdcd4f6e9a6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inventory Balance]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="0" width="100" height="20" uuid="01984648-54b9-4e40-b796-c59ab3766744"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="0" width="100" height="20" uuid="4f1ca7cf-0d03-4fed-b53b-a67afc27ac12"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="0" width="100" height="20" uuid="f4e691bf-07bf-4728-a062-2643825cb2fa"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="ff4d1180-6264-44aa-8b69-6213b1a1e2a4"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="62" height="20" uuid="149384de-d09a-4f04-8196-fb4a500170ad"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="77" y="0" width="100" height="20" uuid="285989e2-0945-4570-8175-c7d80b20853d"/>
+				<textFieldExpression><![CDATA[$F{ITEMCODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="0" width="209" height="20" uuid="05f6a8f9-b361-4df7-916b-fb29e225c8a6"/>
+				<textFieldExpression><![CDATA[$F{ITEMNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="433" y="0" width="100" height="20" uuid="ed1f9d03-bbc4-4da9-8131-a4ef41c76b25"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{BAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="62" height="20" uuid="33dd5bd2-224d-4ce5-a48f-81bc5b226858"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

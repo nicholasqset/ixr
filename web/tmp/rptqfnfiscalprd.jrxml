@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa9cb819-d6a6-4b7d-aa07-8a10b16a5fcf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM qset.fnfiscalprd ORDER BY id DESC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fiscalyear" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="19" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="213" y="10" width="100" height="20" uuid="7fb9a7ae-b3b2-49fa-bef5-3825f8330e3b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FISCAL PERIOD]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="2" width="100" height="20" uuid="652c44c4-b004-47bc-95cf-048868438cde"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="2" width="100" height="20" uuid="155ce664-a1df-47dd-abd9-94c89893b4d9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fiscal Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="2" width="100" height="20" uuid="dd5958a4-9ec5-42c8-b877-586734599719"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calender Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="2" width="100" height="20" uuid="8cdd9d98-90a4-4e6c-b93d-4976b4a81240"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calender Month]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="6" width="100" height="20" uuid="efc0ac7b-02e5-4434-8d5c-fc77af126153"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="6" width="100" height="20" uuid="2acdac12-3e9a-440c-9475-0240a6433db9"/>
+				<textFieldExpression><![CDATA[$F{fiscalyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="6" width="100" height="20" uuid="e36f9ed3-e415-460d-a056-c6339c5caba1"/>
+				<textFieldExpression><![CDATA[$F{pyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="6" width="100" height="20" uuid="b7f21358-d892-400e-a284-76fa4ac590ef"/>
+				<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

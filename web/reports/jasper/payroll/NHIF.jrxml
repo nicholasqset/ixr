@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NHIF" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="47aa7627-ca6c-4594-ad49-2549f0efda43">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_YEAR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_MONTH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    s.*, 
+    (SELECT amount FROM qset.pyslip WHERE pfno = s.pfno AND itemcode = '410' AND pyear = CAST($P{P_YEAR} AS INT) AND pmonth  = CAST($P{P_MONTH} AS INT))nhif,     
+    '410' itemcode,
+    (firstname||' '||middlename)fmname
+
+FROM 
+	qset.viewstaffprofile s
+WHERE
+	active = 1 AND	
+	pfno NOT IN (SELECT pfno FROM qset.pystaffexempt WHERE itemcode = '410')]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="pfno" class="java.lang.String"/>
+	<field name="salutationcode" class="java.lang.String"/>
+	<field name="salutationname" class="java.lang.String"/>
+	<field name="firstname" class="java.lang.String"/>
+	<field name="middlename" class="java.lang.String"/>
+	<field name="lastname" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="gendercode" class="java.lang.String"/>
+	<field name="gendername" class="java.lang.String"/>
+	<field name="dob" class="java.sql.Date"/>
+	<field name="countrycode" class="java.lang.String"/>
+	<field name="countryname" class="java.lang.String"/>
+	<field name="nationalid" class="java.lang.String"/>
+	<field name="passportno" class="java.lang.String"/>
+	<field name="physchald" class="java.lang.Integer"/>
+	<field name="disabcode" class="java.lang.String"/>
+	<field name="disabname" class="java.lang.String"/>
+	<field name="postaladdr" class="java.lang.String"/>
+	<field name="postalcode" class="java.lang.String"/>
+	<field name="physicaladdr" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="cellphone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="branchcode" class="java.lang.String"/>
+	<field name="branchname" class="java.lang.String"/>
+	<field name="deptcode" class="java.lang.String"/>
+	<field name="deptname" class="java.lang.String"/>
+	<field name="sectioncode" class="java.lang.String"/>
+	<field name="sectionname" class="java.lang.String"/>
+	<field name="statuscode" class="java.lang.String"/>
+	<field name="statusname" class="java.lang.String"/>
+	<field name="active" class="java.lang.Integer"/>
+	<field name="gradecode" class="java.lang.String"/>
+	<field name="gradename" class="java.lang.String"/>
+	<field name="positioncode" class="java.lang.String"/>
+	<field name="positionname" class="java.lang.String"/>
+	<field name="engtrmcode" class="java.lang.String"/>
+	<field name="engtrmname" class="java.lang.String"/>
+	<field name="categorycode" class="java.lang.String"/>
+	<field name="categoryname" class="java.lang.String"/>
+	<field name="pinNo" class="java.lang.String"/>
+	<field name="nhifno" class="java.lang.String"/>
+	<field name="nssfno" class="java.lang.String"/>
+	<field name="medicalno" class="java.lang.String"/>
+	<field name="nhif" class="java.math.BigDecimal"/>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="fmname" class="java.lang.String"/>
+	<sortField name="pfno"/>
+	<variable name="nhif_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nhif}]]></variableExpression>
+	</variable>
+	<variable name="nhif_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{nhif}]]></variableExpression>
+	</variable>
+	<variable name="pp_pfno_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{pfno}]]></variableExpression>
+	</variable>
+	<variable name="pfno_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{pfno}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="154" splitType="Stretch">
+			<staticText>
+				<reportElement x="264" y="100" width="35" height="20" uuid="68948142-e732-4bf3-80b4-ce60d15777d6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NHIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="112" width="148" height="20" uuid="5ce3a8e1-895e-4766-9be7-c99b099e6b67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLOYER NUMBER]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="216" y="132" width="34" height="20" uuid="af8a8f3f-e496-411e-bf2e-8ea3d0b2c491"/>
+				<textFieldExpression><![CDATA[$P{P_YEAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="132" width="148" height="20" uuid="788431cd-6d0f-4961-ae3f-b2666f24d4bb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTH OF CONRIBUTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="112" width="68" height="20" uuid="e97a58f3-0f0e-4e31-9d1b-737ba909c5fc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A1235354P]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="100" uuid="2a30cb9b-e082-4cb4-b500-51868368dc52"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="66" height="20" uuid="500cae32-0f60-4ea2-85e7-95d59d79fe4e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PF #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="2" width="65" height="20" uuid="0ad63abb-470c-496b-ae5f-bf28ceb6b131"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NHIF NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="2" width="74" height="20" uuid="f428ce4b-768f-46bd-9428-a195d6c94aeb"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1" uuid="8e3135b0-aeab-4653-8023-2635a36e72f7"/>
+			</line>
+			<staticText>
+				<reportElement x="348" y="2" width="67" height="20" uuid="26782808-30ed-4432-b88b-fc994cfe07ae"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="2" width="100" height="20" uuid="95cdf51a-aafd-4479-9b19-1c744c56c1da"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAST NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="2" width="91" height="20" uuid="ead2fd9c-b546-4d76-b6ce-54344f450c6d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRST NAME]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="480" y="0" width="75" height="15" uuid="d7e6f0d2-5dbb-4ca1-b5b4-1f3500a448ce"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{nhif} == null? 0.0: $F{nhif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="66" height="15" uuid="3bb03fa3-6d8a-4e23-a47d-16369509d95f"/>
+				<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="0" width="100" height="15" uuid="51ecc458-3438-483b-965d-703d49f00507"/>
+				<textFieldExpression><![CDATA[$F{lastname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="1" width="67" height="15" uuid="5668a1d6-fee3-4b49-b98c-fba70486517f"/>
+				<textFieldExpression><![CDATA[$F{nationalid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="1" width="65" height="15" uuid="3a848fb1-54d0-465c-b6a2-6da2cd6af562"/>
+				<textFieldExpression><![CDATA[$F{nhifno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="0" width="182" height="15" uuid="a54c8c03-c610-441f-8c2e-e13bea37ad73"/>
+				<textFieldExpression><![CDATA[$F{fmname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="2" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="348" y="2" width="67" height="20" uuid="275e5947-e5e9-446c-a391-0fb547b61256"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="480" y="2" width="75" height="20" uuid="9d7c8732-4a4b-4da4-b921-d4776ddbc83c"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{nhif_2} == null? 0.0: $V{nhif_2}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="674c774d-8238-4b28-825b-9b078329a44a"/>
+			</line>
+			<staticText>
+				<reportElement x="66" y="2" width="100" height="20" uuid="b6d6c77c-5b7b-437e-9684-74f56911aff6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COUNT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="2" width="65" height="20" uuid="680efd39-e5e2-4c55-ab8e-6c3c4eccae1e"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="2" width="65" height="20" uuid="425f7d51-50fd-4f53-b0fb-27fe6f26a709"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="166" y="1" width="100" height="20" uuid="446a77f3-525e-41c3-ab4b-de771e94f53a"/>
+				<textFieldExpression><![CDATA[$V{pfno_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="20a9e2a9-5d0d-48ef-a57f-a3297e2ea5d2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/medical/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM VIEWPATIENTPROFILE]]>
+	</queryString>
+	<field name="PTNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GENDERNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CELLPHONE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BLOODGRPNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="198" y="0" width="154" height="16" uuid="43fef4c4-d598-4ca2-9731-0d4fd32728a5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[XR MEDICAL SYSTEM]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="198" y="16" width="154" height="67" uuid="dab890d4-3544-4462-aacc-9d664f65d2bb"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="198" y="0" width="100" height="20" uuid="daeae068-e100-42cc-b34f-4060d7177a99"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patients List]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="2" width="66" height="20" uuid="678985dc-9228-4304-b8db-9c79c4a8559d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="2" width="120" height="20" uuid="ce18057d-4485-4156-9e91-6ad816d6d1d2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="2" width="70" height="20" uuid="f1178ccb-71bb-4c40-904e-8f7033e2fa6d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="2" width="100" height="20" uuid="8720d48a-d076-46e8-82a6-dd4f674ec321"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="2" width="99" height="20" uuid="a581dcce-ce43-478f-bbd4-e45f9388013b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Blood Group]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="2" width="58" height="20" uuid="44c25307-e8d2-42c7-8b8c-a055b008f350"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cellphone]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1" uuid="7072e309-34e7-49d8-bf23-5a9642d64a54"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="0" width="66" height="20" uuid="0872065c-3c1c-4271-8d5e-5610c9e7f449"/>
+				<textFieldExpression><![CDATA[$F{PTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="0" width="120" height="20" uuid="8c0c5b1f-cc2a-420c-a70f-6290afb559a7"/>
+				<textFieldExpression><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="0" width="70" height="20" uuid="b1c6f159-5c48-4525-b2e0-cdbc97c6cfd5"/>
+				<textFieldExpression><![CDATA[$F{GENDERNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="285" y="0" width="100" height="20" uuid="a4304dc2-ac84-4cc9-a206-3cc4cb79beb7"/>
+				<textFieldExpression><![CDATA[$F{DOB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="0" width="99" height="20" uuid="413e4e95-c7c4-43bf-a139-59c1d2b0b64c"/>
+				<textFieldExpression><![CDATA[$F{BLOODGRPNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="0" width="71" height="20" uuid="6b3d7a2f-7ae8-49b6-9bbc-a3985ca32b48"/>
+				<textFieldExpression><![CDATA[$F{CELLPHONE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="252" y="19" width="100" height="20" uuid="a9fe0677-552d-4942-ad71-317d09cca08f"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

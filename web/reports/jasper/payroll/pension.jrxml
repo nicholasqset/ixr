@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pension" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3dc17b6-d14a-4de7-83f2-24739502c823">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_YEAR" class="java.lang.String"/>
+	<parameter name="P_MONTH" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+s.*,
+CAST($P{P_YEAR} AS BIGINT) pyear,
+CAST($P{P_MONTH} AS BIGINT) pmonth,	
+get_py_slip_amount(pfno, '435', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) pension_employee,
+	
+get_py_slip_amount(pfno, '440', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) pension_employer,
+
+get_py_slip_amount(pfno, '445', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) voluntary_pension,
+
+(
+  get_py_slip_amount(pfno, '435', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
++
+  get_py_slip_amount(pfno, '440', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
++
+  get_py_slip_amount(pfno, '445', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
+) pension_total
+	
+FROM 
+	viewstaffprofile s
+WHERE
+	active = 1 AND	
+	(
+		get_py_slip_amount(pfno, '435', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
+		+
+		get_py_slip_amount(pfno, '440', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
+		+
+		get_py_slip_amount(pfno, '445', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
+	) > 0]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="pfno" class="java.lang.String"/>
+	<field name="salutationcode" class="java.lang.String"/>
+	<field name="salutationname" class="java.lang.String"/>
+	<field name="firstname" class="java.lang.String"/>
+	<field name="middlename" class="java.lang.String"/>
+	<field name="lastname" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="gendercode" class="java.lang.String"/>
+	<field name="gendername" class="java.lang.String"/>
+	<field name="dob" class="java.sql.Date"/>
+	<field name="countrycode" class="java.lang.String"/>
+	<field name="countryname" class="java.lang.String"/>
+	<field name="nationalid" class="java.lang.String"/>
+	<field name="passportno" class="java.lang.String"/>
+	<field name="physchald" class="java.lang.Integer"/>
+	<field name="disabcode" class="java.lang.String"/>
+	<field name="disabname" class="java.lang.String"/>
+	<field name="postaladdr" class="java.lang.String"/>
+	<field name="postalcode" class="java.lang.String"/>
+	<field name="physicaladdr" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="cellphone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="branchcode" class="java.lang.String"/>
+	<field name="branchname" class="java.lang.String"/>
+	<field name="deptcode" class="java.lang.String"/>
+	<field name="deptname" class="java.lang.String"/>
+	<field name="sectioncode" class="java.lang.String"/>
+	<field name="sectionname" class="java.lang.String"/>
+	<field name="statuscode" class="java.lang.String"/>
+	<field name="statusname" class="java.lang.String"/>
+	<field name="active" class="java.lang.Integer"/>
+	<field name="gradecode" class="java.lang.String"/>
+	<field name="gradename" class="java.lang.String"/>
+	<field name="positioncode" class="java.lang.String"/>
+	<field name="positionname" class="java.lang.String"/>
+	<field name="engtrmcode" class="java.lang.String"/>
+	<field name="engtrmname" class="java.lang.String"/>
+	<field name="categorycode" class="java.lang.String"/>
+	<field name="categoryname" class="java.lang.String"/>
+	<field name="pinNo" class="java.lang.String"/>
+	<field name="nhifno" class="java.lang.String"/>
+	<field name="nssfno" class="java.lang.String"/>
+	<field name="medicalno" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Long"/>
+	<field name="pmonth" class="java.lang.Long"/>
+	<field name="pension_employee" class="java.math.BigDecimal"/>
+	<field name="pension_employer" class="java.math.BigDecimal"/>
+	<field name="voluntary_pension" class="java.math.BigDecimal"/>
+	<field name="pension_total" class="java.math.BigDecimal"/>
+	<sortField name="pfno"/>
+	<variable name="pp_pfno_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{pfno}]]></variableExpression>
+	</variable>
+	<variable name="pp_pfno_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{pfno}]]></variableExpression>
+	</variable>
+	<variable name="pension_total_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{pension_total}]]></variableExpression>
+	</variable>
+	<variable name="pension_employer_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{pension_employer}]]></variableExpression>
+	</variable>
+	<variable name="pension_employee_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{pension_employee}]]></variableExpression>
+	</variable>
+	<variable name="voluntary_pension_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{voluntary_pension}]]></variableExpression>
+	</variable>
+	<variable name="pfno_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{pfno}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="158" splitType="Stretch">
+			<staticText>
+				<reportElement x="226" y="98" width="100" height="20" uuid="9a02716f-8e05-4d6b-a4be-06f2d115326a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pension Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="118" width="41" height="20" uuid="09d88d2c-ccd0-483e-b355-4b5f2b6a199b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="138" width="41" height="20" uuid="29a9403e-bcfd-4431-b46b-6770b886519d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="44" y="118" width="100" height="20" uuid="551203f8-e7ab-4de3-9b02-cb6c71451b1b"/>
+				<textFieldExpression><![CDATA[$F{pyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="138" width="100" height="20" uuid="d596809f-c402-4825-b2f5-39dd3518092f"/>
+				<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="100" uuid="ba4baecc-9123-4adf-92df-bc7c004309df"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="5" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="4" width="555" height="1" uuid="9977d8bb-0212-4741-b384-28f89c463a69"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="53" height="20" uuid="a2f9f259-f39a-49c8-8026-9c3bd8008913"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PF No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="0" width="155" height="20" uuid="6358f007-f5cd-4c31-a51d-d34e6213102c"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="f02121ea-15a0-4912-a795-85bc16c8248b"/>
+			</line>
+			<staticText>
+				<reportElement x="208" y="0" width="83" height="20" uuid="a447897a-bca5-4e9d-9e46-4764befad3d1"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pension Employee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="85" height="20" uuid="c41bf7ca-c9db-49a5-add7-e2274affc498"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="0" width="89" height="20" uuid="5d301ee5-397d-467f-b80a-3764159ad3e7"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Voluntary Pension]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="83" height="20" uuid="df9e5bfd-82d6-445b-ad3b-2e4c68f05f14"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pension Employer]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="470" y="0" width="85" height="20" uuid="b8ae6721-5ba5-4063-b7fa-b0b9db803672"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pension_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="387" y="0" width="85" height="20" uuid="cbbad164-3fd8-4124-a708-1ccca7be973c"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{voluntary_pension}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="208" y="1" width="83" height="20" uuid="49e5c137-fd1e-42b9-b9c7-c9ebf2dd8799"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pension_employee}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="303" y="0" width="83" height="20" uuid="01b36fe1-78e5-4b04-88b7-06998a2efb40"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pension_employer}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="53" height="20" uuid="f6283753-8381-4c24-93b9-69941bab6fb1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="0" width="155" height="20" uuid="b11f94bc-464d-46f8-9b57-22654d707df8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="53" y="12" width="41" height="20" uuid="cf9391fe-820e-4380-83e8-473f5b22d5cf"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Count:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="12" width="46" height="20" uuid="8a7c4925-4583-40b0-b939-3637e3b50d1e"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="31" width="555" height="1" uuid="209408b2-6e2c-4540-9fbd-fca956aca135"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="dd78e461-f333-40dc-8364-bfd7fb4530d1"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="470" y="12" width="83" height="20" uuid="71dbbaba-af83-4b4e-b4d9-273c60b0661e"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pension_total_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="306" y="12" width="80" height="20" uuid="ab744228-06c2-413f-862f-42bab9567e14"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pension_employer_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="211" y="12" width="80" height="20" uuid="866ecd8d-c325-4c59-898a-1c9bfda82de2"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pension_employee_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="387" y="12" width="83" height="20" uuid="242f6696-d51a-45ce-9b89-858042ed84fa"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{voluntary_pension_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="13" width="47" height="20" uuid="65b0bd57-6413-489a-9fca-8108ceeeea7d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pfno_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

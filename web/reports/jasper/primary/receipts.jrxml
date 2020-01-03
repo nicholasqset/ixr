@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1065d872-3c59-458e-8a2e-4726d3eef0cf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/high/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWPRPROCRCPTS]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STUDENTNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACADEMICYEAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREAMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREAMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLASSCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLASSNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RCPTNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RCPTDESC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RCPTDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOCNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BRANCHCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AMOUNT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VERIFIED" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROCESSED" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITUSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITTIME" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITIPADR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="AMOUNT_1" class="java.math.BigDecimal" resetType="Group" resetGroup="ACADEMICYEAR" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="AMOUNT_2" class="java.math.BigDecimal" resetType="Group" resetGroup="TERMCODE" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="AMOUNT_3" class="java.math.BigDecimal" resetType="Group" resetGroup="CLASSCODE" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<group name="ACADEMICYEAR">
+		<groupExpression><![CDATA[$F{ACADEMICYEAR}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="90" height="20" uuid="14d3b394-bd3e-4766-a0db-8c48b0750810"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Academic Year:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="90" y="0" width="100" height="20" uuid="e0494d6f-423c-48f7-801e-5dd084a771f1"/>
+					<textFieldExpression><![CDATA[$F{ACADEMICYEAR}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="361" y="0" width="123" height="20" uuid="45a8b0d5-97dd-4c06-86e9-0de8e4687769"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Academic Year Total:]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="484" y="0" width="71" height="20" uuid="38f8f018-93f7-490c-b849-403704c730e6"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{AMOUNT_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="TERMCODE">
+		<groupExpression><![CDATA[$F{TERMCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="90" height="20" uuid="f32768bb-e9fb-42aa-bfec-7a1840ee0ab9"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Term:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="90" y="0" width="100" height="20" uuid="d8d8770f-166e-42ed-836b-487545647389"/>
+					<textFieldExpression><![CDATA[$F{TERMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="361" y="0" width="123" height="20" uuid="8fd6d785-7c37-496b-a069-6af4025efe2c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Term Total:]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="484" y="0" width="71" height="20" uuid="640cf3ac-2601-4129-9aff-48c18bcb6313"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{AMOUNT_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="CLASSCODE">
+		<groupExpression><![CDATA[$F{CLASSCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="90" height="20" uuid="43e8ba9b-5e91-4a68-bae8-c4da963fa710"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Class:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="90" y="0" width="100" height="20" uuid="e44cd1b0-6a13-4353-b1e9-392dcb166c85"/>
+					<textFieldExpression><![CDATA[$F{CLASSNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="361" y="0" width="123" height="20" uuid="a4cb9371-3d0a-41b3-85db-1e4610470786"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Class Total:]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="484" y="0" width="71" height="20" uuid="61fd4a73-d534-4894-a11b-e6402f2b39ca"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{AMOUNT_3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<subreport>
+				<reportElement x="261" y="0" width="135" height="79" uuid="f2876145-1c2d-432e-bd74-7cf19fafc43d"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="261" y="0" width="100" height="20" uuid="5db27977-edc5-4ef1-ab13-eff8e8b2aad1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Receipts]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="62" height="20" uuid="12e39e5e-fa5f-4900-9f0b-82928a1f082b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Receipt No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="0" width="135" height="20" uuid="a89edafc-639c-4a86-8b6c-3ef188f4e9c4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="0" width="71" height="20" uuid="3c7bb69c-0db7-4c15-a238-c4aafb70b600"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="0" width="64" height="20" uuid="819010c1-0a0c-4afd-bbf6-d7b4aa5251ea"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="0" width="135" height="20" uuid="5877dd13-6ad2-4dc8-b8d8-3b4021e3b949"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="0" width="88" height="20" uuid="d4bb0637-63e4-4929-ba1f-afae71537cf7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" uuid="d9b606f1-6380-4220-820c-ce17d0a4c503"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="62" height="20" uuid="415347e4-d8f3-4546-b740-7be0c19d796c"/>
+				<textFieldExpression><![CDATA[$F{RCPTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="135" height="20" uuid="0eab0e2a-b3ed-475c-b284-2d2483c694b9"/>
+				<textFieldExpression><![CDATA[$F{RCPTDESC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="484" y="0" width="71" height="20" uuid="89bbc1fc-d23d-4f9e-a187-9653a4b24d8f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="0" width="64" height="20" uuid="ba4408b1-fac6-475e-9a74-af05fb01cdc0"/>
+				<textFieldExpression><![CDATA[$F{STUDENTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="135" height="20" uuid="56ac83a0-aefa-4894-8875-9e23ec046692"/>
+				<textFieldExpression><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="396" y="0" width="88" height="20" uuid="356d55c7-14e4-4c3b-be3d-24222ff8607b"/>
+				<textFieldExpression><![CDATA[$F{RCPTDATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="261" y="0" width="100" height="20" uuid="a42d2ceb-d917-4e5a-bb35-7dd3933d9d64"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

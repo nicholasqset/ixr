@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PerItemListing" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="081ba416-a5e2-4116-b0c7-5bfb6677e915">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM qset.VIEWPYSLIP]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="pfno" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="gradecode" class="java.lang.String"/>
+	<field name="gradename" class="java.lang.String"/>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="hdrcode" class="java.lang.String"/>
+	<field name="hdrname" class="java.lang.String"/>
+	<field name="hdrtype" class="java.lang.String"/>
+	<field name="hdrpos" class="java.lang.Integer"/>
+	<field name="itemtype" class="java.lang.String"/>
+	<field name="accountcode" class="java.lang.String"/>
+	<field name="psshow" class="java.lang.Integer"/>
+	<field name="recur" class="java.lang.Integer"/>
+	<field name="itempos" class="java.lang.Integer"/>
+	<sortField name="itemcode"/>
+	<variable name="amount_1" class="java.math.BigDecimal" resetType="Group" resetGroup="itemcode" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<group name="itemcode">
+		<groupExpression><![CDATA[$F{itemcode}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="21" height="20" uuid="828decc3-cc46-4304-ad8b-f603e1d7c5d0"/>
+					<textFieldExpression><![CDATA[$F{itemcode}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="31" y="0" width="181" height="20" uuid="a089bfda-899f-49dc-819e-a56b4651ad21"/>
+					<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="21" y="0" width="10" height="20" uuid="4d79a779-b328-439a-aed6-44737a040860"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement x="326" y="0" width="100" height="20" uuid="00385e53-a64d-4370-9b3b-c5546fa66892"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{amount_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="99" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="-1" width="555" height="100" uuid="2ef76796-a213-4a57-9485-84b74afc4ba8"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement x="45" y="20" width="100" height="20" uuid="84d152cb-2514-4abd-a21b-cd9ea96c410e"/>
+				<textFieldExpression><![CDATA[$F{pyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="45" y="40" width="100" height="20" uuid="dbed06ab-4089-4f2e-a541-515bd3749cc9"/>
+				<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="45" height="20" uuid="5f66bfb4-bc63-4119-bc42-cce7abf053df"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="45" height="20" uuid="a8835695-367b-438c-acc1-0c378fe69df8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="145" height="20" uuid="8fbd4ef5-802b-4885-a285-7f98fb277c9c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item Listing]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="31" y="0" width="100" height="20" uuid="8fb81047-ce1f-4a70-9cd9-474a7a049ff1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="0" width="100" height="20" uuid="93ff89e3-7470-44f6-ae84-3550e179d061"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="0" width="100" height="20" uuid="dcab1868-ff28-4b98-9907-125c3b36144a"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="31" y="0" width="100" height="20" uuid="7a3b568b-1800-410e-a730-5adbfcab5886"/>
+				<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="168" height="20" uuid="e23ce7cc-a381-405b-80ba-23737fd7c333"/>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="0" width="100" height="20" uuid="c6379e97-3cae-45af-b500-ba272238c39f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

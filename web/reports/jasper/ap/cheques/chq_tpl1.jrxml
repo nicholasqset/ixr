@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="598951ab-3372-4190-9f9c-1a9a49249e6f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWAPPYDTLS]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="batchno" class="java.lang.Integer"/>
+	<field name="batchdesc" class="java.lang.String"/>
+	<field name="pyno" class="java.lang.String"/>
+	<field name="pydesc" class="java.lang.String"/>
+	<field name="srcbatchno" class="java.lang.Integer"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<field name="supplierno" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="supgrpcode" class="java.lang.String"/>
+	<field name="docno" class="java.lang.String"/>
+	<field name="lineno" class="java.lang.Integer"/>
+	<field name="curbal" class="java.math.BigDecimal"/>
+	<field name="aplamount" class="java.math.BigDecimal"/>
+	<field name="netbal" class="java.math.BigDecimal"/>
+	<field name="audituser" class="java.lang.String"/>
+	<field name="auditdate" class="java.sql.Date"/>
+	<field name="audittime" class="java.lang.Integer"/>
+	<field name="auditipadr" class="java.lang.String"/>
+	<variable name="aplamount_1" class="java.math.BigDecimal" resetType="Group" resetGroup="PYNO" calculation="Sum">
+		<variableExpression><![CDATA[$F{aplamount}]]></variableExpression>
+	</variable>
+	<group name="BATCHNO">
+		<groupExpression><![CDATA[$F{batchno}]]></groupExpression>
+		<groupHeader>
+			<band height="2"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="3"/>
+		</groupFooter>
+	</group>
+	<group name="PYNO">
+		<groupExpression><![CDATA[$F{pyno}]]></groupExpression>
+		<groupHeader>
+			<band height="56">
+				<textField evaluationTime="Group" evaluationGroup="PYNO">
+					<reportElement x="453" y="25" width="100" height="20" uuid="a7e44da3-af67-4d5d-b1d8-4f9e96a54f25"/>
+					<textFieldExpression><![CDATA[$V{aplamount_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="25" width="100" height="20" uuid="b4da22d4-2823-4d34-9162-ce1411ccca9e"/>
+					<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="3" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="2" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="4" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="3" splitType="Stretch"/>
+	</summary>
+</jasperReport>

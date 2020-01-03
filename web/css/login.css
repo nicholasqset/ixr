@@ -1,0 +1,86 @@
+/* 
+    Created on : Apr 30, 2015, 7:40:24 AM
+    Author     : nicholas
+*/
+
+html{
+    
+}
+body{
+    /*font-family:  'Carlito', 'Calibri', 'Lucida Grande', 'Gisha', 'Lucida Sans Unicode', 'Lucida Sans', Lucida, Arial, Verdana, sans-serif;*/
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+div.cont{
+    padding: 5px;
+    background-color: #F7F7F7;
+    margin-top: 14%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 5px;
+    border: 1px solid #78acff; 
+    display: table;
+    width: 60%;
+}
+
+h1{
+    padding: 0;
+    margin: 0;
+    color: #4185F3;
+    font-size: 18px;
+}
+
+div.hr{
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 8px auto;
+    width: 100%;
+    height: 0;
+    clear: both;
+    border: none;
+    border-top: 1px solid #78ACFF;
+    font-size: 1px;
+    line-height: 0;
+    overflow: visible;
+}
+
+div.feedback{
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    color: #FF0000;
+}
+
+span.inputs-lbl{
+    display: inline-block;
+    width: 20%;
+    padding: 3px;
+    white-space: nowrap;
+}
+
+span.inputs-ia{
+    display: inline-block;
+    width: 20%;
+    padding: 3px;
+    white-space: nowrap;
+}
+
+input, select{
+    border: 1px solid #78acff; 
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+input[type="text"] {
+    height: 24px;
+}
+
+input[type="password"] {
+    height: 24px;
+}
+
+select {
+    vertical-align: top;
+    height: 24px;
+}

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="company_totals" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="92d80129-9136-40b6-9452-9ee95af92d51">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="127"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_YEAR" class="java.lang.String"/>
+	<parameter name="P_MONTH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+	itemcode, pyear, pmonth, pt_name,
+	js_hrm.get_pr_item_ct((SELECT itemcode FROM js_hrm.prconfig WHERE cnfcode = 'GP'), fp_pyear, fp_pmonth, CAST($P{P_PT_ID} AS BIGINT)) GP,
+	js_hrm.get_pr_item_ct((SELECT itemcode FROM js_hrm.prconfig WHERE cnfcode = 'TD'), fp_pyear, fp_pmonth, CAST($P{P_PT_ID} AS BIGINT)) TD,
+	js_hrm.get_pr_item_ct((SELECT itemcode FROM js_hrm.prconfig WHERE cnfcode = 'NP'), fp_pyear, fp_pmonth, CAST($P{P_PT_ID} AS BIGINT)) NP,
+	(SELECT COUNT(DISTINCT PP_ID) FROM js_hrm.viewprslip WHERE pr_tp_id = CAST($P{P_PT_ID} AS BIGINT) AND fp_pyear = CAST($P{P_YEAR} AS BIGINT) AND fp_pmonth = CAST($P{P_MONTH} AS BIGINT)) CNT_STAFFS,
+js_hrm.get_pr_item_np_cash(fp_pyear, fp_pmonth, CAST($P{P_PT_ID} AS BIGINT)),
+js_hrm.get_pr_item_np_bank(fp_pyear, fp_pmonth, CAST($P{P_PT_ID} AS BIGINT)),
+js_hrm.get_pr_item_np_nv(fp_pyear, fp_pmonth, CAST($P{P_PT_ID} AS BIGINT))
+FROM 
+	viewpyslip
+WHERE
+	fp_pyear = CAST($P{P_YEAR} AS BIGINT) AND
+	fp_pmonth = CAST($P{P_MONTH} AS BIGINT) AND
+	itemcode IN (SELECT itemcode FROM js_hrm.prconfig WHERE cnfcode IN ('GP', 'TD', 'NP')) ]]>
+	</queryString>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="fp_pyear" class="java.lang.Integer"/>
+	<field name="fp_pmonth" class="java.lang.Integer"/>
+	<field name="pt_name" class="java.lang.String"/>
+	<field name="gp" class="java.math.BigDecimal"/>
+	<field name="td" class="java.math.BigDecimal"/>
+	<field name="np" class="java.math.BigDecimal"/>
+	<field name="cnt_staffs" class="java.lang.Long"/>
+	<field name="get_pr_item_np_cash" class="java.math.BigDecimal"/>
+	<field name="get_pr_item_np_bank" class="java.math.BigDecimal"/>
+	<field name="get_pr_item_np_nv" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="409" splitType="Stretch">
+			<staticText>
+				<reportElement x="209" y="131" width="165" height="20" uuid="0a4dbbf8-8cd3-4404-9488-c9b6dafb7ee9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAYROLL ANALYSIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="151" width="127" height="20" uuid="8aadb051-c17f-43f4-81eb-0643ecc8ad2b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAYROLL ANALYSIS FOR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="471" y="151" width="15" height="20" uuid="ab9b2ac1-2fbe-4b0c-9433-78cf5cc934c2"/>
+				<textFieldExpression><![CDATA[$P{P_MONTH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="486" y="151" width="7" height="20" uuid="c6f724f5-57d0-469f-abdd-086c331856ab"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="493" y="151" width="43" height="20" uuid="3bb1413f-8ab1-45d6-bbd5-6c20153a87d8"/>
+				<textFieldExpression><![CDATA[$P{P_YEAR}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="119" width="555" height="1" uuid="c8419de2-7264-43cf-ab82-d4c71bc83cdf"/>
+			</line>
+			<subreport>
+				<reportElement x="0" y="178" width="272" height="231" uuid="89ee0ddb-a24a-40ad-95d2-dc1ab8281b30"/>
+				<subreportParameter name="P_YEAR">
+					<subreportParameterExpression><![CDATA[$P{P_YEAR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_MONTH">
+					<subreportParameterExpression><![CDATA[$P{P_MONTH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PT_ID">
+					<subreportParameterExpression><![CDATA[$P{P_PT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_totals_en.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="284" y="178" width="271" height="231" uuid="153eb581-56b8-4418-a5b6-07579e1fefa3"/>
+				<subreportParameter name="P_YEAR">
+					<subreportParameterExpression><![CDATA[$P{P_YEAR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_MONTH">
+					<subreportParameterExpression><![CDATA[$P{P_MONTH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PT_ID">
+					<subreportParameterExpression><![CDATA[$P{P_PT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_totals_de.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="209" y="0" width="200" height="100" uuid="076f3c26-f15d-4285-b514-e2f7702ea2a8"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="3" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="3" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="175" splitType="Stretch">
+			<staticText>
+				<reportElement x="128" y="3" width="119" height="20" uuid="acfe93d8-5e25-4002-aabe-921052a5e42a"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GROSS PAY:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="247" y="3" width="84" height="20" uuid="708e5327-afa3-4991-9f53-ac5c170110be"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{gp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="128" y="23" width="119" height="20" uuid="dcd4d4e0-567e-4d23-9f7b-b286a560968b"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DEDUCTIONS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="44" width="119" height="20" uuid="f9aac981-cf94-4f41-87c6-7bf21329142b"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL NET PAY:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="247" y="24" width="84" height="20" uuid="9d05131e-8860-4b98-9843-3cf1f8677872"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{td}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="247" y="44" width="84" height="20" uuid="a5c193e9-a31f-427e-9e5f-6d81a6d3aeca"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{np}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="128" y="44" width="203" height="1" uuid="b4233887-4760-41d1-84b2-5076e046d87a"/>
+			</line>
+			<line>
+				<reportElement x="128" y="63" width="203" height="1" uuid="221537ae-3681-4668-82bf-7912937df403"/>
+			</line>
+			<textField>
+				<reportElement x="471" y="154" width="84" height="20" uuid="706abcbb-a74b-4f9a-a1e7-0668eb6e6177"/>
+				<textFieldExpression><![CDATA[$F{cnt_staffs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="344" y="154" width="119" height="20" uuid="29ffffcd-4fe8-44ea-bf73-074201e21243"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL EMPLOYEES:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="64e71e15-8de9-49fd-a8f2-3a014abf7b43"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="84" width="119" height="20" uuid="c8a17fc1-410a-4f86-84b3-3d73be30607a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANK ANALYSIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="104" width="39" height="20" uuid="2610132b-d2f6-4300-b575-700c94aa2bd7"/>
+				<text><![CDATA[Cash:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="124" width="39" height="20" uuid="85197993-480e-4b72-97f6-ca5486e1e35d"/>
+				<text><![CDATA[Bank:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="154" width="119" height="20" uuid="f2576fdc-9245-41ed-a884-afcfd3b98864"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Negative Pay Count:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="119" y="104" width="77" height="20" uuid="3757ced6-14f2-485d-8c2d-f81f253eaa05"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{get_pr_item_np_cash}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="119" y="124" width="77" height="20" uuid="765d7a12-1d8c-4599-9a0c-00607cb06907"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{get_pr_item_np_bank}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="119" y="154" width="77" height="20" uuid="f0b123b8-5dbb-486a-9e04-65167f46ca99"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{get_pr_item_np_nv}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stock_sales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="e2f72dfa-8453-453c-aedc-231d151f5f73">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *,  
+qset.get_date_item_ps_sales(itemcode, now()::timestamp::date)
+FROM qset.ICITEMS]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="catcode" class="java.lang.String"/>
+	<field name="accsetcode" class="java.lang.String"/>
+	<field name="uomcode" class="java.lang.String"/>
+	<field name="unitcost" class="java.math.BigDecimal"/>
+	<field name="unitprice" class="java.math.BigDecimal"/>
+	<field name="stocked" class="java.lang.Integer"/>
+	<field name="qty" class="java.math.BigDecimal"/>
+	<field name="audituser" class="java.lang.String"/>
+	<field name="auditdate" class="java.sql.Date"/>
+	<field name="audittime" class="java.lang.Integer"/>
+	<field name="auditipadr" class="java.lang.String"/>
+	<field name="supplierno" class="java.lang.String"/>
+	<field name="cmdtno" class="java.lang.String"/>
+	<field name="opt1" class="java.lang.String"/>
+	<field name="opt2" class="java.lang.String"/>
+	<field name="opt3" class="java.lang.String"/>
+	<field name="opt4" class="java.lang.String"/>
+	<field name="serialno" class="java.lang.String"/>
+	<field name="get_date_item_ps_sales" class="java.math.BigDecimal"/>
+	<sortField name="itemcode"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="555" height="83" uuid="79218f11-7d01-4b9d-9a0c-c9746b0917fd"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="227" y="0" width="100" height="20" uuid="5fb53b86-e090-44d2-8b17-179d48ed7d61"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock vs Sales]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="64" y="0" width="100" height="20" uuid="72d759d8-fe14-4584-98d9-30714740c02c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="0" width="173" height="20" uuid="ede6c9ee-c9aa-4a52-98be-109b1d3bbac4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="0" width="100" height="20" uuid="da342ade-536f-4bd3-83dc-591971b86608"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="64" height="20" uuid="c7d10e2c-b6ea-43d8-b81a-e65aede52f99"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="878f8885-76b4-4393-b2e8-8f5562ec1b22"/>
+			</line>
+			<staticText>
+				<reportElement x="437" y="1" width="100" height="20" uuid="a40970f4-012c-4b69-995d-9d9684fad142"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Today Sales]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="64" y="0" width="100" height="20" uuid="f0ca039b-ae70-4c9f-903b-c2762f336c91"/>
+				<textFieldExpression><![CDATA[$F{itemcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="0" width="173" height="20" uuid="46d7cb03-0001-4f73-93d4-529f69a32b63"/>
+				<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="337" y="0" width="100" height="20" uuid="363573c8-665e-4651-a07c-3619712491b7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="64" height="20" uuid="072ead8a-7497-45d9-ad07-8b4b0f5157c8"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="437" y="0" width="100" height="20" uuid="f4f8938f-41bf-4672-8735-97ca54d2cfac"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{get_date_item_ps_sales}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="28" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="29" splitType="Stretch"/>
+	</summary>
+</jasperReport>

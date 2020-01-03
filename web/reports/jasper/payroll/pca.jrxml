@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pca" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bdf20761-c705-4147-9939-54f6575f7549">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/payroll/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM VIEWPYPCADTLS]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="refno" class="java.lang.String"/>
+	<field name="pcano" class="java.lang.String"/>
+	<field name="pcadesc" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<field name="apr1" class="java.lang.Integer"/>
+	<field name="apr2" class="java.lang.Integer"/>
+	<field name="apr3" class="java.lang.Integer"/>
+	<field name="apr4" class="java.lang.Integer"/>
+	<field name="approved" class="java.lang.Integer"/>
+	<field name="dpvrsn" class="java.lang.String"/>
+	<field name="processed" class="java.lang.Integer"/>
+	<field name="pfno" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="oldamount" class="java.math.BigDecimal"/>
+	<field name="newamount" class="java.math.BigDecimal"/>
+	<field name="linedesc" class="java.lang.String"/>
+	<field name="audituser" class="java.lang.String"/>
+	<field name="auditdate" class="java.sql.Date"/>
+	<field name="audittime" class="java.lang.Integer"/>
+	<field name="auditipadr" class="java.lang.String"/>
+	<group name="refno">
+		<groupExpression><![CDATA[$F{refno}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement x="100" y="20" width="169" height="20" uuid="0b33d3cc-8671-44ed-8ad9-d6365fb2aa8c"/>
+					<textFieldExpression><![CDATA[$F{pcadesc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="477ae7d6-cc8b-4677-95c7-790605f1068c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PCA No. ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="19" width="100" height="20" uuid="3a396917-87a8-4b57-8265-1168e21cb495"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PCA Description: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="62aa3b3c-d948-43f7-b323-956fa4d74509"/>
+					<textFieldExpression><![CDATA[$F{pcano}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="9"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<subreport>
+				<reportElement x="200" y="0" width="198" height="79" uuid="c1d6914e-5bf5-4b1c-a95c-43c4faee4ca0"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="77ced2bb-1663-4de0-8f10-0e772d5197d0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PCAs]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="36" y="0" width="59" height="20" uuid="966334a7-b6e0-41c8-b130-fa606db73c1c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ref. No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="0" width="50" height="20" uuid="db7c027d-9586-458e-b500-4716c76168d1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pf. No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="0" width="124" height="20" uuid="9ce4cae1-c0d2-4ee0-aa80-b12e407dec83"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="0" width="72" height="20" uuid="99b99da8-8d1d-4601-9537-ed3036a97dd5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="0" width="100" height="20" uuid="52b71e30-8f7f-490d-b13c-d9a911bcb790"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="51d52ee2-9585-4536-919f-0f9ea9d59d7b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="36" height="20" uuid="d83d0361-99a7-4125-ae0b-c67cf3b1d825"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="36" y="0" width="59" height="20" uuid="5fa2c9c7-9d4c-4c00-bd3a-787dfa7730bf"/>
+				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="0" width="50" height="20" uuid="ea52062c-d98f-4547-85e3-8ae780455c31"/>
+				<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="124" height="20" uuid="96765482-995f-48f6-9c99-56e1ff236180"/>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="0" width="72" height="20" uuid="72f916a4-daca-4a86-848f-3174a4e954ff"/>
+				<textFieldExpression><![CDATA[$F{itemcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="0" width="100" height="20" uuid="332b9cb3-0083-49b8-84dd-3977154ffdfa"/>
+				<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="36" height="20" uuid="a5dee52a-0768-48b5-8bd9-ec4eb9509441"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="0e2db281-c95d-4b9c-8739-64031880db19"/>
+				<textFieldExpression><![CDATA[$F{newamount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="6" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="7" splitType="Stretch"/>
+	</summary>
+</jasperReport>

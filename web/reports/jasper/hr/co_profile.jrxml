@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="co_profile" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="02f6256d-62b0-4bdf-8042-ec06e2035f33">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="PieChartDataset" uuid="e5f90f82-c1eb-4667-8d72-e9fac57e9295"/>
+	<parameter name="p_comcode" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+	c.*,
+	l.logo
+FROM 
+	sys.coms c
+LEFT JOIN qset.cscologo l on l.companycode = c.comcode
+WHERE 
+	c.comcode = $P{p_comcode}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="compname" class="java.lang.String"/>
+	<field name="postaladr" class="java.lang.String"/>
+	<field name="postalcode" class="java.lang.String"/>
+	<field name="physicaladr" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="cellphone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="audituser" class="java.lang.String"/>
+	<field name="auditdate" class="java.sql.Date"/>
+	<field name="audittime" class="java.lang.Integer"/>
+	<field name="auditipadr" class="java.lang.String"/>
+	<field name="pinno" class="java.lang.String"/>
+	<field name="password" class="java.lang.String"/>
+	<field name="comcode" class="java.lang.String"/>
+	<field name="verify" class="java.lang.String"/>
+	<field name="create_date" class="java.sql.Timestamp"/>
+	<field name="optfld1" class="java.lang.String"/>
+	<field name="optfld2" class="java.lang.String"/>
+	<field name="optfld3" class="java.lang.String"/>
+	<field name="optfld4" class="java.lang.String"/>
+	<field name="optfld5" class="java.lang.String"/>
+	<field name="logo" class="java.io.InputStream"/>
+	<detail>
+		<band height="96">
+			<textField>
+				<reportElement x="128" y="68" width="138" height="12" uuid="b6a5e52e-c615-4042-9d6e-ca04ceb907b0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{website}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="20" width="95" height="12" uuid="931bc8dd-fdf6-4665-a212-a7c1bd8a829c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{postalcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="20" width="81" height="12" uuid="95291891-8b50-4d98-b9a7-60842c1cda1e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{postaladr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="32" width="138" height="12" uuid="83de7ab6-9616-4b7e-9a0a-8a5018e94510"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telephone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="44" width="138" height="12" uuid="d0479ccf-53d2-4246-87db-0ead50b05df7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cellphone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="56" width="138" height="12" uuid="11422f8b-3d90-4458-95ae-2abb7b61336a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="0" width="176" height="20" uuid="c85a8bf2-03ad-4b3b-9985-f242390d9fd6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compname}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="93" width="418" height="1" uuid="339ff0e8-8c1f-419b-bf3a-70b485629af5"/>
+			</line>
+			<image>
+				<reportElement x="0" y="0" width="128" height="93" uuid="c41b09a6-e7e8-46c7-a6e0-598e84af1a4f"/>
+				<imageExpression><![CDATA[$F{logo}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

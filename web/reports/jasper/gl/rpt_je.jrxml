@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_je" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f455a15e-254a-48e8-bec7-a11f9be4e8a2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_accountcode" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM qset.VIEWGLDTLS WHERE accountcode = COALESCE($P{p_accountcode}, accountcode)]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="batchno" class="java.lang.Integer"/>
+	<field name="batchdesc" class="java.lang.String"/>
+	<field name="batchsrc" class="java.lang.String"/>
+	<field name="posted" class="java.lang.Integer"/>
+	<field name="entryno" class="java.lang.Integer"/>
+	<field name="entrydesc" class="java.lang.String"/>
+	<field name="fiscalyear" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<field name="entrydate" class="java.sql.Date"/>
+	<field name="srcdocno" class="java.lang.String"/>
+	<field name="lineno" class="java.lang.Integer"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="accountcode" class="java.lang.String"/>
+	<field name="accountname" class="java.lang.String"/>
+	<field name="acctype" class="java.lang.String"/>
+	<field name="normalbal" class="java.lang.String"/>
+	<field name="dramount" class="java.math.BigDecimal"/>
+	<field name="cramount" class="java.math.BigDecimal"/>
+	<field name="audituser" class="java.lang.String"/>
+	<field name="auditdate" class="java.sql.Date"/>
+	<field name="audittime" class="java.lang.Integer"/>
+	<field name="auditipadr" class="java.lang.String"/>
+	<sortField name="fiscalyear" order="Descending"/>
+	<sortField name="accountcode"/>
+	<sortField name="pmonth"/>
+	<variable name="dramount_1" class="java.math.BigDecimal" resetType="Group" resetGroup="pmonth" calculation="Sum">
+		<variableExpression><![CDATA[$F{dramount}]]></variableExpression>
+	</variable>
+	<variable name="cramount_1" class="java.math.BigDecimal" resetType="Group" resetGroup="pmonth" calculation="Sum">
+		<variableExpression><![CDATA[$F{cramount}]]></variableExpression>
+	</variable>
+	<variable name="dramount_2" class="java.math.BigDecimal" resetType="Group" resetGroup="accountcode" calculation="Sum">
+		<variableExpression><![CDATA[$F{dramount}]]></variableExpression>
+	</variable>
+	<variable name="cramount_2" class="java.math.BigDecimal" resetType="Group" resetGroup="accountcode" calculation="Sum">
+		<variableExpression><![CDATA[$F{cramount}]]></variableExpression>
+	</variable>
+	<variable name="dramount_3" class="java.math.BigDecimal" resetType="Group" resetGroup="fiscalyear" calculation="Sum">
+		<variableExpression><![CDATA[$F{dramount}]]></variableExpression>
+	</variable>
+	<variable name="cramount_3" class="java.math.BigDecimal" resetType="Group" resetGroup="fiscalyear" calculation="Sum">
+		<variableExpression><![CDATA[$F{cramount}]]></variableExpression>
+	</variable>
+	<group name="fiscalyear" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{fiscalyear}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="de495575-881b-4f4c-a621-9a3aa24edb33"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fiscal Year:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="e217a34f-f47b-47f1-bc75-804fd91183c1"/>
+					<textFieldExpression><![CDATA[$F{fiscalyear}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<textField pattern="#,##0.00">
+					<reportElement x="485" y="0" width="68" height="20" uuid="55c97ba1-e4f2-431d-aba0-fef96c3f496f"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="2.0" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cramount_3}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="416" y="0" width="68" height="20" uuid="9f7aa1fb-7cf7-49cc-9e7b-6b80e8ecb3cf"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="2.0" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{dramount_3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="accountcode" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{accountcode}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="898994c6-67ce-44aa-8b16-19ae8e9d44cd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Account #:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="20" width="100" height="20" uuid="2b475471-036a-460f-9232-7d1744e4f54c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Description:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="54d7b457-bb0d-4eb9-a33c-545b5766e163"/>
+					<textFieldExpression><![CDATA[$F{accountcode}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="20" width="338" height="20" uuid="70b76f3c-80b6-414a-8454-ddf98426f288"/>
+					<textFieldExpression><![CDATA[$F{accountname}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="39" width="555" height="1" uuid="cda5032b-1665-4fef-b483-deb4c51c82a4"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<textField pattern="#,##0.00">
+					<reportElement x="416" y="0" width="68" height="20" uuid="a7206a73-1502-4bb3-91ee-0cbf58660364"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{dramount_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="485" y="0" width="68" height="20" uuid="507b506f-6e9f-4d8b-9c6b-e281c7114911"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cramount_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="pmonth">
+		<groupExpression><![CDATA[$F{pmonth}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement x="0" y="29" width="57" height="20" uuid="e107f3f9-de6c-48de-8246-c21e08786575"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="58" y="29" width="195" height="20" uuid="9ccdf006-36f5-4e30-9c6f-5e11de0a06e9"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reference]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="255" y="29" width="50" height="20" uuid="e1765cf0-2db1-4572-93fa-795aefa330f9"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="306" y="29" width="43" height="20" uuid="e44ece35-71d9-49ca-8456-d9e16e41d428"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Source]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="351" y="29" width="63" height="20" uuid="9848c42c-1d7c-4c3e-9a2c-5500eeb7deeb"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Doc #]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="416" y="29" width="68" height="20" uuid="6dd34ac6-8a04-44b8-96aa-f6d24dd52a2e"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="485" y="29" width="68" height="20" uuid="45bcc99b-2a54-4e1b-a440-031e67c12124"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="d32a6253-0b0e-4679-9570-f64877e75456"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Month:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="c0ff5a72-ab88-450b-93d2-4d2de4d7f535"/>
+					<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="49" width="555" height="1" uuid="68cb2ac0-f2c5-4509-a027-229347d00228"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<textField pattern="#,##0.00">
+					<reportElement x="416" y="0" width="68" height="20" uuid="55163dfa-493a-45c4-ad2e-d894c6c6208a"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{dramount_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="485" y="0" width="68" height="20" uuid="f57616fa-caf3-45b5-afa2-73a018f5912b"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cramount_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<staticText>
+				<reportElement x="233" y="99" width="100" height="20" uuid="7c851523-4bf7-45ca-a8ad-179c2aeb1bfb"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Journal Entries]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="104" y="0" width="214" height="88" uuid="c967646a-d3df-44b3-9dea-29fe333c72b3"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="57" height="20" uuid="7ae2eacc-e7f7-4bdc-bffc-0fe5a83d9568"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entryno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="0" width="195" height="20" uuid="27c7d79a-565b-4ac2-979d-86c8b362fcd5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reference}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="255" y="0" width="50" height="20" uuid="e4ed08d7-0ba8-4a99-bd9c-5a13b403d9a6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entrydate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="0" width="43" height="20" uuid="9e6f1684-c972-4dc0-8593-1d26f7c5ba74"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{batchsrc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="0" width="63" height="20" uuid="5581428a-4b67-472d-b700-04636ed39347"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{srcdocno}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="416" y="0" width="68" height="20" uuid="f879150d-951b-4485-ab17-64359b42a000"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dramount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="485" y="0" width="68" height="20" uuid="4a0a0315-40ff-4510-afb8-dbf42badf5fd"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cramount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="8" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="8" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,62 @@
+/* 
+    Created on : Oct 9, 2015, 6:53:45 PM
+    Author     : Nicholas
+*/
+
+body{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 12px;
+    padding: 5px;
+    margin: 0px;
+}
+
+table.header{
+    /*border: 1px solid #000;*/
+    background-color: #FFFFFF;
+    font-size: 11px;
+    padding: 2px;
+}
+
+table.header th{
+    text-align: left;
+}
+
+table.header td.bold{
+    font-weight: bold;
+}
+
+table.header td.u{
+    border-bottom: 1px solid #000000;
+}
+
+table.header td.o{
+    border-top: 1px solid #000000;
+}
+
+table.details{
+    background-color: #FFFFFF;
+    font-size: 11px;
+}
+
+table.details th{
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    text-align: left;
+    padding: 2px;
+}
+
+table.details td{
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    padding-left: 2px;
+}
+
+@media all {
+    .page-break	{ display: none; }
+}
+
+@media print {
+    .page-break	{ display: block; page-break-before: always; }
+}
+

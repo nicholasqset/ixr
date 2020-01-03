@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c8bb1db-5584-44a5-9ee7-abd5acbb2188">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM qset.CSCOUNTRIES]]>
+	</queryString>
+	<field name="regioncode" class="java.lang.String"/>
+	<field name="countrycode" class="java.lang.String"/>
+	<field name="countryname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="233" y="0" width="100" height="20" uuid="d6d5dcd2-83a3-48a0-914e-8a0bd754fd00"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COUNTRIES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="92" y="2" width="100" height="20" uuid="5603daff-fc48-4775-aaba-37587c53fc91"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Region Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="2" width="100" height="20" uuid="633a2214-0d73-4d1e-b9e6-c1fe71ac58af"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Country Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="2" width="100" height="20" uuid="10d08465-91b0-41bd-a57f-48351c5eaa80"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Country Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="92" y="0" width="100" height="20" uuid="0b2bfba1-73fd-4134-86f2-bd9a64c4a117"/>
+				<textFieldExpression><![CDATA[$F{regioncode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="100" height="20" uuid="04eb4a8b-6100-4656-8a94-b0585c89cd45"/>
+				<textFieldExpression><![CDATA[$F{countrycode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="0" width="100" height="20" uuid="35e9131b-bd7d-4a52-ad0f-25889f77543b"/>
+				<textFieldExpression><![CDATA[$F{countryname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

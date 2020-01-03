@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="555502bc-d08a-46b0-b880-b742301ba856">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/medical/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWHMTRIAGE ORDER BY PYEAR, PMONTH, REGNO]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REGNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REGTYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PTNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PTTYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PYEAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PMONTH" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NRNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NRNAME" class="java.lang.String"/>
+	<field name="PULSERATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BLOODPRESSURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TEMPERATURE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RESPIRATION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HEIGHT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="WEIGHT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITUSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITTIME" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITIPADR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="FISCALYEAR">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement x="42" y="20" width="100" height="20" uuid="35f5ac78-ebdf-4d52-8581-3df893aa4032"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PMONTH}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="42" y="0" width="65" height="20" uuid="c393c28d-d974-42be-8751-353045454581"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PYEAR}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="42" height="20" uuid="6b4ed325-7dd8-45f8-957a-6b9d968f020f"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Month: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="42" height="20" uuid="ecf4d855-0f99-42c5-b26b-6c60d19f88d8"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Year: ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="PTTYPE">
+		<groupExpression><![CDATA[$F{PTTYPE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20" uuid="eda91476-23dc-4048-94d2-36c3ce828a5e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PTTYPE}.equals( "OUT" )? "Out Patients": (($F{PTTYPE}.equals( "IN" ))? "In Patients": "Unknown")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="0" width="154" height="15" uuid="60e10b6c-f6f5-443b-816f-fe2dc5852488"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[XR MEDICAL SYSTEM]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="199" y="14" width="154" height="65" uuid="47e82771-46cc-42b3-a08a-60d191b36b88"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="0" width="114" height="20" uuid="bd15f8ee-72d1-4a33-bcde-a61443182226"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patients Triage]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="0" width="59" height="41" uuid="0a696320-0335-4f63-9a58-2f0479c0ebbe"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="48" height="41" uuid="0d0ac7bb-3dbd-4985-8f09-106d435333af"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="0" width="121" height="41" uuid="a04bfe2d-f6a9-46e8-b3ee-df7de79074d2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="21" height="41" uuid="99c07348-0a8f-4fed-aeff-5d3857087fcb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="0" width="38" height="41" uuid="7c81fa8a-b177-48ba-a465-8d944eb3bb2d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pulse Rate /min]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="0" width="47" height="41" uuid="d52189bf-782c-45c2-b062-87f8362389ef"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Blood Pressure mm of Hg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="0" width="70" height="41" uuid="9021425c-4586-4ef0-80c8-bac84bdf773a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Temperature C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="512" y="0" width="43" height="41" uuid="a427e60d-c94d-43cf-b02f-a0a7317cf247"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Weight /Kg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="0" width="43" height="41" uuid="b5f5f109-596f-41fd-8cdf-e6de3e650c37"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Height /cm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="0" width="65" height="41" uuid="ad85923e-2a16-4376-ac57-81d9f8034b82"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Respiration /min]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="41" width="555" height="1" uuid="678364de-9b8d-48fc-84bc-691cbc1b3c9d"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="0" width="59" height="20" uuid="0c19203f-4347-4a7d-b005-488a236a7a48"/>
+				<textFieldExpression><![CDATA[$F{REGNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="48" height="20" uuid="dca5312b-5482-4a7f-9e3c-177601de106c"/>
+				<textFieldExpression><![CDATA[$F{PTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="0" width="121" height="20" uuid="125fdbb9-15ae-479c-8b7b-c1a64f85dc2e"/>
+				<textFieldExpression><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="21" height="20" uuid="b5612b58-a246-4d9b-9796-5c56e7ffd593"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="0" width="40" height="20" uuid="2d3b2fae-1b6c-483b-ae3a-fa5daecddad2"/>
+				<textFieldExpression><![CDATA[$F{PULSERATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="0" width="45" height="20" uuid="7959d728-5d2e-4dcd-af2d-2e2ee76ac7b1"/>
+				<textFieldExpression><![CDATA[$F{BLOODPRESSURE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="0" width="70" height="20" uuid="ee1cda0c-1470-4079-ac55-e828925724ef"/>
+				<textFieldExpression><![CDATA[$F{TEMPERATURE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="0" width="43" height="20" uuid="e469180d-3ea9-4a14-a203-9a108c018797"/>
+				<textFieldExpression><![CDATA[$F{WEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="0" width="43" height="20" uuid="2fc6c441-5726-41c5-ba7f-14da9323d664"/>
+				<textFieldExpression><![CDATA[$F{HEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="404" y="0" width="65" height="20" uuid="e8115c8b-cb5e-48be-b4d6-4f76af8ab86d"/>
+				<textFieldExpression><![CDATA[$F{RESPIRATION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

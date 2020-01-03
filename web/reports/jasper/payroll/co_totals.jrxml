@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="co_totals" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="be4ae7c8-338c-4ae5-94d1-a4595ec1c437">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_YEAR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_MONTH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+	itemcode, itemname, pyear, pmonth, hdrtype, hdrname, hdrpos, itempos,
+	SUM(amount) amount,
+	(SELECT COUNT(DISTINCT pfno) FROM qset.viewpyslip WHERE pyear = CAST($P{P_YEAR} AS BIGINT) AND pmonth = CAST($P{P_MONTH} AS BIGINT)) CNT_STAFFS
+FROM
+	qset.viewpyslip
+WHERE
+	pyear = CAST($P{P_YEAR} AS BIGINT) AND
+	pmonth = CAST($P{P_MONTH} AS BIGINT)	
+GROUP BY
+	itemcode, itemname, pyear, pmonth, hdrtype, hdrname, hdrpos, itempos]]>
+	</queryString>
+	<field name="itemcode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="pyear" class="java.lang.Integer"/>
+	<field name="pmonth" class="java.lang.Integer"/>
+	<field name="hdrtype" class="java.lang.String"/>
+	<field name="hdrname" class="java.lang.String"/>
+	<field name="hdrpos" class="java.lang.Integer"/>
+	<field name="itempos" class="java.lang.Integer"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="cnt_staffs" class="java.lang.Long"/>
+	<sortField name="hdrpos"/>
+	<sortField name="itempos"/>
+	<group name="hdrtype">
+		<groupExpression><![CDATA[$F{hdrtype}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="17" y="0" width="150" height="20" uuid="c5cb03d1-047e-432d-8b96-247b8a2d5f3b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hdrname}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="161" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="100" width="114" height="20" uuid="3a081f5a-df9b-4eb4-866c-3785296cec4e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPANY TOTALS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="120" width="555" height="1" uuid="31b24943-c9fd-4086-8f6b-4258722ced3d"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="121" width="85" height="20" uuid="f0f03e9d-40f8-4abf-b4b3-917107c03b69"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="141" width="85" height="20" uuid="1cd8eec3-6c10-4129-a104-ebf7f54fead5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="121" width="100" height="20" uuid="9d002d1c-daf3-4db5-8935-bcd787d9f29d"/>
+				<textFieldExpression><![CDATA[$F{pyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="141" width="100" height="20" uuid="c4545b70-f90a-42dd-af9c-d60b0f13efec"/>
+				<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="160" width="555" height="1" uuid="48e9e100-310b-410a-8bd8-8efc4b752b10"/>
+			</line>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="100" uuid="f44df6d7-d4db-470a-b2aa-e5883fe6aedc"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="31" y="1" width="100" height="20" uuid="da903dc3-db3d-442a-b464-52d46cbf47df"/>
+				<textFieldExpression><![CDATA[$F{itemcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="159" height="20" uuid="b3113d96-f177-48a6-8c63-4a379b628b13"/>
+				<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="440" y="0" width="100" height="20" uuid="e782d294-17d7-48ea-8cc6-ddc10bc352bf"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="3" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="279" y="22" width="100" height="20" uuid="85cd1738-7c69-42a3-b9c4-480ecd36ba1d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Employees:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="379" y="22" width="100" height="20" uuid="ffdf72ea-e14b-4923-a7cf-01f2b74def1d"/>
+				<textFieldExpression><![CDATA[$F{cnt_staffs}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

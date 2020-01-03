@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NSSF" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="47aa7627-ca6c-4594-ad49-2549f0efda43">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_YEAR" class="java.lang.String"/>
+	<parameter name="P_MONTH" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_comcode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    s.*, 
+    get_py_slip_amount(s.pfno, '405', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) nssf_employee,
+    get_py_slip_amount(s.pfno, '415', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) nssf_employer,
+    get_py_slip_amount(s.pfno, '406', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) voluntary_nssf,
+
+    (
+    get_py_slip_amount(s.pfno, '405', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) 
+     + 
+    get_py_slip_amount(s.pfno, '415', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) 
+    ) std_total,
+
+    (
+    get_py_slip_amount(s.pfno, '405', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) 
+     + 
+    get_py_slip_amount(s.pfno, '415', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT)) 
+     + 
+    get_py_slip_amount(s.pfno, '406', CAST($P{P_YEAR} AS BIGINT), CAST($P{P_MONTH} AS BIGINT))
+    ) nssf_total
+FROM 
+    viewstaffprofile s
+WHERE
+	active = 1 AND
+        	pfno NOT IN (SELECT pfno FROM pystaffexempt WHERE itemcode IN ('405', '415'))]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="pfno" class="java.lang.String"/>
+	<field name="salutationcode" class="java.lang.String"/>
+	<field name="salutationname" class="java.lang.String"/>
+	<field name="firstname" class="java.lang.String"/>
+	<field name="middlename" class="java.lang.String"/>
+	<field name="lastname" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
+	<field name="gendercode" class="java.lang.String"/>
+	<field name="gendername" class="java.lang.String"/>
+	<field name="dob" class="java.sql.Date"/>
+	<field name="countrycode" class="java.lang.String"/>
+	<field name="countryname" class="java.lang.String"/>
+	<field name="nationalid" class="java.lang.String"/>
+	<field name="passportno" class="java.lang.String"/>
+	<field name="physchald" class="java.lang.Integer"/>
+	<field name="disabcode" class="java.lang.String"/>
+	<field name="disabname" class="java.lang.String"/>
+	<field name="postaladdr" class="java.lang.String"/>
+	<field name="postalcode" class="java.lang.String"/>
+	<field name="physicaladdr" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="cellphone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="branchcode" class="java.lang.String"/>
+	<field name="branchname" class="java.lang.String"/>
+	<field name="deptcode" class="java.lang.String"/>
+	<field name="deptname" class="java.lang.String"/>
+	<field name="sectioncode" class="java.lang.String"/>
+	<field name="sectionname" class="java.lang.String"/>
+	<field name="statuscode" class="java.lang.String"/>
+	<field name="statusname" class="java.lang.String"/>
+	<field name="active" class="java.lang.Integer"/>
+	<field name="gradecode" class="java.lang.String"/>
+	<field name="gradename" class="java.lang.String"/>
+	<field name="positioncode" class="java.lang.String"/>
+	<field name="positionname" class="java.lang.String"/>
+	<field name="engtrmcode" class="java.lang.String"/>
+	<field name="engtrmname" class="java.lang.String"/>
+	<field name="categorycode" class="java.lang.String"/>
+	<field name="categoryname" class="java.lang.String"/>
+	<field name="pinNo" class="java.lang.String"/>
+	<field name="nhifno" class="java.lang.String"/>
+	<field name="nssfno" class="java.lang.String"/>
+	<field name="medicalno" class="java.lang.String"/>
+	<field name="nssf_employee" class="java.math.BigDecimal"/>
+	<field name="nssf_employer" class="java.math.BigDecimal"/>
+	<field name="voluntary_nssf" class="java.math.BigDecimal"/>
+	<field name="std_total" class="java.math.BigDecimal"/>
+	<field name="nssf_total" class="java.math.BigDecimal"/>
+	<sortField name="pfno"/>
+	<variable name="nssf_employee_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{nssf_employee}]]></variableExpression>
+	</variable>
+	<variable name="nssf_total_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nssf_total}]]></variableExpression>
+	</variable>
+	<variable name="voluntary_nssf_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{voluntary_nssf}]]></variableExpression>
+	</variable>
+	<variable name="nssf_employer_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nssf_employer}]]></variableExpression>
+	</variable>
+	<variable name="nssf_employee_2" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nssf_employee}]]></variableExpression>
+	</variable>
+	<variable name="nssf_total_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{nssf_total}]]></variableExpression>
+	</variable>
+	<variable name="voluntary_nssf_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{voluntary_nssf}]]></variableExpression>
+	</variable>
+	<variable name="nssf_employer_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{nssf_employer}]]></variableExpression>
+	</variable>
+	<variable name="nssf_employee_3" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{nssf_employee}]]></variableExpression>
+	</variable>
+	<variable name="std_total_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{std_total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="160" splitType="Stretch">
+			<staticText>
+				<reportElement x="189" y="100" width="198" height="20" uuid="68948142-e732-4bf3-80b4-ce60d15777d6"/>
+				<box topPadding="3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NATIONAL SOCIAL SECURITY FUND]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="122" height="20" uuid="5ce3a8e1-895e-4766-9be7-c99b099e6b67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLOYER NUMBER:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="122" y="140" width="20" height="20" uuid="f496ca50-86a1-4a13-9512-2df5ddbc7d45"/>
+				<textFieldExpression><![CDATA[$P{P_MONTH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="142" y="140" width="7" height="20" uuid="21194c00-8537-4232-9feb-46c594c9a4a1"/>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="149" y="140" width="34" height="20" uuid="af8a8f3f-e496-411e-bf2e-8ea3d0b2c491"/>
+				<textFieldExpression><![CDATA[$P{P_YEAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="140" width="122" height="20" uuid="788431cd-6d0f-4961-ae3f-b2666f24d4bb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIOD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="120" width="61" height="20" uuid="c1872a43-8b53-40ee-b457-e83c6766848d"/>
+				<text><![CDATA[001122334455]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="556" height="100" uuid="5beed090-3710-4aaf-ba07-44744a85b751"/>
+				<subreportParameter name="p_comcode">
+					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="2" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="44" height="20" uuid="500cae32-0f60-4ea2-85e7-95d59d79fe4e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PF #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="2" width="151" height="20" uuid="52991dc3-f5ac-49e1-ac8a-c10c7f9a0ba7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEMBER'S NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="2" width="65" height="20" uuid="26782808-30ed-4432-b88b-fc994cfe07ae"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="2" width="74" height="20" uuid="91f88a05-55c7-4775-ac8e-ca7642b40544"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VOLUNTARY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="2" width="74" height="20" uuid="f428ce4b-768f-46bd-9428-a195d6c94aeb"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1" uuid="8e3135b0-aeab-4653-8023-2635a36e72f7"/>
+			</line>
+			<staticText>
+				<reportElement x="334" y="2" width="74" height="20" uuid="757f271d-af65-4369-aa0a-e4f2c9c78186"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[STD TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="2" width="74" height="20" uuid="0ad63abb-470c-496b-ae5f-bf28ceb6b131"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEMBER NO.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="481" y="0" width="74" height="20" uuid="dc524ad0-58e6-407b-a75c-a974e871b5cd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{nssf_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="407" y="0" width="74" height="20" uuid="965eda09-a850-4ccc-934a-945c6900de41"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{voluntary_nssf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="334" y="0" width="74" height="20" uuid="23696a4b-b96b-44a1-9ee6-f6efdd28d825"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{std_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="44" height="20" uuid="95987f95-c996-4210-98a4-f21a6b8b21c9"/>
+				<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="42" y="1" width="76" height="20" uuid="0a62184d-919d-4f37-a5f7-dccd64d1e0ba"/>
+				<textFieldExpression><![CDATA[$F{nssfno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="1" width="65" height="20" uuid="d934b7fd-9932-49e6-9a16-e7016e5d8f05"/>
+				<textFieldExpression><![CDATA[$F{nationalid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="183" y="1" width="151" height="20" uuid="2ee6fcf6-fa27-49f1-8d37-c1bd7935ba91"/>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="674c774d-8238-4b28-825b-9b078329a44a"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="481" y="2" width="74" height="20" uuid="c0eaab8e-dd41-4f9b-93c5-ea09b6a5e1e8"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{nssf_total_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="408" y="2" width="73" height="20" uuid="b60f1e34-3332-4282-b243-37f6d981dc07"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{voluntary_nssf_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="334" y="2" width="74" height="20" uuid="4ec8add3-6b5e-4012-8b62-a0509565cf04"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{std_total_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

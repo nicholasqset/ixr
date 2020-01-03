@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f6af07b7-8e24-4b38-9f01-8eb40b167597">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT r.id,
+    r.bankcode,
+    b.bankname,
+    r.bkbranchcode,
+    r.bkbranchname
+   FROM qset.fnbankbranch r
+     LEFT JOIN qset.fnbanks b ON b.bankcode = r.bankcode ORDER BY r.id ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="bkbranchcode" class="java.lang.String"/>
+	<field name="bkbranchname" class="java.lang.String"/>
+	<field name="bankname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="244" y="0" width="100" height="20" uuid="f6ff1547-5061-412f-917a-a74cfc9570c4"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRANCH NAME]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="51" y="2" width="100" height="20" uuid="91ca8d7d-98a0-4ecd-9dcc-223af5525101"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="2" width="100" height="20" uuid="f8903494-1e52-45ca-943e-58cead21b6bb"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Branch Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="2" width="100" height="20" uuid="06c765ef-efdf-4a06-b909-302e42572063"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Branch Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="2" width="100" height="20" uuid="46aca1fd-6dbe-4a69-970a-374ca55db588"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bank Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="51" y="0" width="100" height="20" uuid="fffcabca-a8e1-47d2-99e5-6f4ba00d5d5b"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="100" height="20" uuid="813f3ec7-4b8f-4219-a87e-68b20ccfe216"/>
+				<textFieldExpression><![CDATA[$F{bkbranchname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="474" y="0" width="100" height="20" uuid="43967ea2-ca95-4276-ba80-fdf2f132e35d"/>
+				<textFieldExpression><![CDATA[$F{bankname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="202" y="0" width="100" height="20" uuid="9857d5ad-e348-45aa-9b43-d23e08c39588"/>
+				<textFieldExpression><![CDATA[$F{bkbranchcode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,143 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="java.io.*"%>
+<%@page import="bean.sys.Sys"%>
+<%
+    Sys sys = new Sys();
+    
+    Integer errorCount      = 0;
+    String errorMsg         = "";
+    
+    Integer idRpt           = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
+    String subRptDesc       = request.getParameter("subRptDesc");
+    String subRptDataSrc    = request.getParameter("subRptDataSrc");
+    
+    String menuCode         = system.getOne("MDRPTS", "MENUCODE", "ID = "+idRpt);
+    
+    try{
+        String webRootPath      = application.getRealPath("/").replace('\\', '/');
+        String relReportPath    = "/reports/jasper/";
+
+        String reportDirPath    = webRootPath+ relReportPath;
+
+        String reportPath       = reportDirPath+ "/"+ menuCode;
+
+        String subRptName          = "";
+        String saveFile         = "";
+        String contentType      = request.getContentType();
+
+        if ((contentType != null) && (contentType.indexOf("multipart/form-data") >= 0)){
+
+            DataInputStream in  = new DataInputStream(request.getInputStream());
+            int formDataLength  = request.getContentLength();
+            byte dataBytes[]    = new byte[formDataLength];
+            int byteRead = 0;
+            int totalBytesRead = 0;
+            while (totalBytesRead < formDataLength) {
+                byteRead = in.read(dataBytes, totalBytesRead, formDataLength);
+                totalBytesRead += byteRead;
+            }
+
+            String file = new String(dataBytes);
+            saveFile = file.substring(file.indexOf("filename=\"") + 10);
+            saveFile = saveFile.substring(0, saveFile.indexOf("\n"));
+            saveFile = saveFile.substring(saveFile.lastIndexOf("\\") + 1, saveFile.indexOf("\""));
+            int lastIndex = contentType.lastIndexOf("=");
+            String boundary = contentType.substring(lastIndex + 1, contentType.length());
+            int pos;
+            pos = file.indexOf("filename=\"");
+            pos = file.indexOf("\n", pos) + 1;
+            pos = file.indexOf("\n", pos) + 1;
+            pos = file.indexOf("\n", pos) + 1;
+            int boundaryLocation = file.indexOf(boundary, pos) - 4;
+            int startPos = ((file.substring(0, pos)).getBytes()).length;
+            int endPos = ((file.substring(0, boundaryLocation)).getBytes()).length;
+
+            File reportDir = new File(reportPath); 
+
+            if(! reportDir.exists()){ 
+                reportDir.mkdir(); 
+            } 
+            
+            subRptName = saveFile;
+
+            reportPath      = reportDirPath+ "/"+ menuCode+ "/";
+            relReportPath   = relReportPath+ menuCode+ "/"+ saveFile;
+            saveFile        = reportPath + saveFile;
+            
+            File f = new File(saveFile);
+
+            String fileExtension = system.getFileExtension(f);
+
+            if(! fileExtension.equals("jrxml")){
+                errorCount++;
+                errorMsg = "Invalid file detected.";
+            }else{
+                FileOutputStream fileOut = new FileOutputStream(f);
+                fileOut.write(dataBytes, startPos, (endPos - startPos));
+                fileOut.flush();
+                fileOut.close();
+
+                try{
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+                    
+                    Integer id = system.generateId("MDSUBRPTS", "ID");
+
+                    String query = "INSERT INTO MDSUBRPTS "
+                        + "(ID, IDRPT, SUBRPTNAME, SUBRPTDESC, SUBRPTDATASRC, AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR) "
+                        + " VALUES "
+                        + "("
+                        + id+ ","
+                        + idRpt+ ","
+                        + "'"+ subRptName+ "', "
+                        + "'"+ subRptDesc+ "', "
+                        + "'"+ subRptDataSrc+ "', "
+                        + "'"+ system.getLogUser(session)+ "', "
+                        + "'"+ system.getLogDate()+ "', "
+                        + "'"+ system.getLogTime()+ "', "
+                        + "'"+ system.getClientIpAdr(request)+ "' "
+                        + ")";
+
+                    Integer saved = stmt.executeUpdate(query);
+
+                    if(saved == 1){
+                        // record saved
+                    }else{
+                        errorCount++;
+                        errorMsg = "Oops! An un-expected error occurred while trying to save.";
+                    }
+                }catch(SQLException e){
+                    errorCount++;
+                    errorMsg = e.getMessage();
+                }
+            }
+        }else{
+            errorCount++;
+            errorMsg = "Invalid file detected.";
+        }
+    }catch(Exception e){
+        errorCount++;
+        errorMsg = e.getMessage();
+    }
+    
+%>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            <%
+                if(errorCount > 0){%>
+                    parent.reports.getUploadResponse(<%= errorCount%>, '<%= errorMsg%>');
+                <%
+                }else{%>
+                    parent.reports.getUploadResponse(0, '', '<%= idRpt%>');
+                <%}
+                %>
+        </script>
+    </body>
+</html>

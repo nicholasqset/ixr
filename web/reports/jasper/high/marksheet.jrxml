@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="97a4410f-71e6-45ac-8032-f83cf422a361">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/high/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWHGMARKSHEET]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STUDENTNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREAMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREAMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FORMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FORMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACADEMICYEAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EXAMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EXAMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENG" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENGGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KIS" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KISGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MAT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MATGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BIO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BIOGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PHY" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PHYGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CHE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CHEGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GSC" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GSCGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HIG" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HIGGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GEO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GEOGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CRE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IRE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IREGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HRE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HREGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HSC" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HSCGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ATD" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ATDGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AGR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AGRGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CST" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CSTGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AVT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AVTGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FRN" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FRNGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GMN" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GMNGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ARB" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ARBGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MUS" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MUSGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BST" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BSTGRD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STUDAVG" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GRADE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITUSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITTIME" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITIPADR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="STUDAVG_1" class="java.math.BigDecimal" resetType="Group" resetGroup="EXAMCODE" calculation="Average">
+		<variableExpression><![CDATA[$F{STUDAVG}]]></variableExpression>
+	</variable>
+	<group name="ACADEMICYEAR">
+		<groupExpression><![CDATA[$F{ACADEMICYEAR}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="96" height="20" uuid="137cc2e5-a683-4e42-ba5f-58ae7239f0a4"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Academic Year: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="96" y="0" width="100" height="20" uuid="9f04eb20-fd4f-4054-afa4-245538b6385a"/>
+					<textFieldExpression><![CDATA[$F{ACADEMICYEAR}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="TERMCODE">
+		<groupExpression><![CDATA[$F{TERMCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="96" height="20" uuid="a4622518-438b-45c2-9f4b-66c0d3a9a1f6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Term: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="96" y="0" width="100" height="20" uuid="2622ee1f-bfe5-4f80-9af6-c1132145d66f"/>
+					<textFieldExpression><![CDATA[$F{TERMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="FORMCODE">
+		<groupExpression><![CDATA[$F{FORMCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="96" height="20" uuid="4c76b485-69d4-459f-a408-cc8d915de0eb"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Form: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="96" y="0" width="100" height="20" uuid="50ada969-16fe-4470-8310-1d8877cd4e11"/>
+					<textFieldExpression><![CDATA[$F{FORMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="EXAMCODE">
+		<groupExpression><![CDATA[$F{EXAMCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<staticText>
+					<reportElement x="0" y="0" width="96" height="20" uuid="d592437d-de24-469f-84a0-f2555b58961b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Examination: ]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="20" width="802" height="1" uuid="533e1425-f6c0-4089-836c-38ea5b7f73e2"/>
+				</line>
+				<textField>
+					<reportElement x="96" y="0" width="100" height="20" uuid="0ff8cd9a-acc3-4df0-bfa3-53c8a83204c7"/>
+					<textFieldExpression><![CDATA[$F{EXAMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="###0.00">
+					<reportElement x="702" y="0" width="100" height="20" uuid="2e0f45b4-11e7-40b9-82c6-6acbcde4b94d"/>
+					<textFieldExpression><![CDATA[$V{STUDAVG_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="603" y="0" width="96" height="20" uuid="96e604ef-302c-436d-b821-a3ea08747b48"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Exam Average: ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<subreport>
+				<reportElement x="349" y="0" width="136" height="82" uuid="b5396057-c896-4f86-b62d-0499294fe030"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="349" y="0" width="100" height="20" uuid="82f47c60-2dbd-41d1-85ee-cd8f6198abf9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mark Sheet]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="802" height="1" uuid="899a5d78-da7e-4fb2-a214-e992f09c668b"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="32" y="0" width="64" height="20" uuid="a3511f05-f900-4542-b3d3-09222151a3cd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="32" height="20" uuid="143a550d-48f4-4b76-b98a-6627cc7a7e22"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="0" width="32" height="20" uuid="b086d7c6-56f5-480e-822c-9081710aee53"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="699" y="0" width="37" height="20" uuid="9a962183-163e-416d-a144-7b62e651e9e1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="768" y="0" width="34" height="20" uuid="77cdf4cb-e11f-4266-bae8-99b8cf3b0284"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="736" y="0" width="32" height="20" uuid="36467548-f42d-4865-be91-2ccfa73821ed"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="0" width="32" height="20" uuid="f91d4056-f74f-4521-b80e-d255912f17a1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="0" width="32" height="20" uuid="47a3d5f2-d650-49c9-8124-07f513728cb1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Math]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="0" width="32" height="20" uuid="8943eabf-7d73-4fdc-9e86-1cf2e883b96d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="0" width="32" height="20" uuid="8b5b6e47-8520-4b54-b0df-7799a05b3c98"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="32" height="20" uuid="4ab7ba77-7a6f-41f3-a1ad-277b145ba302"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Che]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="0" width="32" height="20" uuid="402539ac-693c-4e34-98fa-31e4eb6e0a13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hig]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="509" y="0" width="32" height="20" uuid="4f813c55-ac33-490e-a964-a4d8abaedbfe"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Geo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="541" y="0" width="32" height="20" uuid="921e0775-9b84-414d-b5b8-a32634dd9002"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="573" y="0" width="32" height="20" uuid="585718fe-4f47-477e-a054-6a8da91d216a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="605" y="0" width="32" height="20" uuid="70a29208-8a3d-49c6-9082-476d953f3f60"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="637" y="0" width="32" height="20" uuid="8dae7385-9ec9-43c5-a5c4-72760052dacb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="0" width="139" height="20" uuid="56ae10e5-70ab-4b31-ae2d-70a562e09f4e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="802" height="1" uuid="38e07111-1c0d-40d0-afa0-42be325d25d6"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="32" height="20" uuid="039fff54-0989-41ef-b2a1-a487d5dadbd1"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="0" width="32" height="20" uuid="77486b19-e893-4f19-9e2c-93065ed3dc3c"/>
+				<textFieldExpression><![CDATA[$F{ENG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="699" y="0" width="37" height="20" uuid="aded0ef9-fea6-4761-a5b2-351f9e3563a0"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="768" y="0" width="34" height="20" uuid="8aff6b45-568c-4b5e-882b-776fe05faf13"/>
+				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="736" y="0" width="32" height="20" uuid="539b08b3-c811-482d-8775-19d1df17f62a"/>
+				<textFieldExpression><![CDATA[$F{STUDAVG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="0" width="64" height="20" uuid="60cc5b80-9a61-4f47-b1e7-5cb05416bdce"/>
+				<textFieldExpression><![CDATA[$F{STUDENTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="317" y="0" width="32" height="20" uuid="e28184a7-1f76-4c0c-b4ec-ce67552aa896"/>
+				<textFieldExpression><![CDATA[$F{KIS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="0" width="32" height="20" uuid="2da0ee52-0b8f-4d7c-8a2f-353d5cf7c77c"/>
+				<textFieldExpression><![CDATA[$F{MAT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="381" y="0" width="32" height="20" uuid="515c76a9-8d80-4bbc-bb26-f1edf31cb094"/>
+				<textFieldExpression><![CDATA[$F{BIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="0" width="32" height="20" uuid="4aca7f4c-873d-45fe-8323-0e5ef6f1a97e"/>
+				<textFieldExpression><![CDATA[$F{PHY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="0" width="32" height="20" uuid="55254841-d378-4311-a0fb-33f7e9e4165e"/>
+				<textFieldExpression><![CDATA[$F{CHE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="32" height="20" uuid="7f99635b-9e3a-4464-a141-b191381e5015"/>
+				<textFieldExpression><![CDATA[$F{HIG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="0" width="32" height="20" uuid="6b046d32-dd68-42ca-9a8c-c584c1ea0d6f"/>
+				<textFieldExpression><![CDATA[$F{GEO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="541" y="0" width="32" height="20" uuid="7f06eca9-2c03-4028-b394-c42531e61070"/>
+				<textFieldExpression><![CDATA[$F{CRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="573" y="0" width="32" height="20" uuid="b5a4ebca-c4eb-4309-b391-9ab243b868ae"/>
+				<textFieldExpression><![CDATA[$F{AGR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="605" y="0" width="32" height="20" uuid="a030b90b-d647-41ea-bccb-57a80a5c8edd"/>
+				<textFieldExpression><![CDATA[$F{CST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="637" y="0" width="32" height="20" uuid="c209e470-d469-40c2-9691-67be7a679360"/>
+				<textFieldExpression><![CDATA[$F{BST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="106" y="0" width="139" height="20" uuid="189f647d-7b93-4cea-87f5-89cac6ecd5f0"/>
+				<textFieldExpression><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="349" y="0" width="100" height="20" uuid="3a008df2-83f1-4ee2-82d7-cbea034d8ae6"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

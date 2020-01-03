@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5c9d8e1-8655-4781-8561-216b9ba258b4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM qset.fnpaymodes ORDER BY id ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="pmcode" class="java.lang.String"/>
+	<field name="pmname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="188" y="2" width="176" height="20" uuid="b941f820-847c-4ddb-91a6-bdccca8c1b54"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAYMENT METHODS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="2" width="62" height="20" uuid="8532de33-4c96-4aec-91c9-f2e6ce745742"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="2" width="169" height="20" uuid="d5ff6e9d-1b0c-4bae-ace4-7e236fcb0bf5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Method Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="2" width="176" height="20" uuid="682c4337-681e-42ad-8dc1-f17e9881109c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Method Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="4" width="62" height="20" uuid="4c18f8f8-dfb9-44eb-9cfa-e04f22fe4840"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="4" width="100" height="20" uuid="d49b9766-048a-4a9b-8c51-bd9cd68cfcb2"/>
+				<textFieldExpression><![CDATA[$F{pmcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="4" width="100" height="20" uuid="c5cfd23a-5fd7-4711-b303-378316ef1fe5"/>
+				<textFieldExpression><![CDATA[$F{pmname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

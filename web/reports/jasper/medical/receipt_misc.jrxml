@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c9cddae4-8148-4fe0-8402-99cc603dd316">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/medical/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWHMMISCRCPTSDTLS ORDER BY PYEAR, PMONTH, RCPTMNO, ITEMNAME]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RCPTMNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PYEAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PMONTH" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RCPTMDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISDRUG" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QTY" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VATRATE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VATAMOUNT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NETAMOUNT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AMOUNT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITUSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITTIME" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITIPADR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="AMOUNT_1" class="java.math.BigDecimal" resetType="Group" resetGroup="RCPTMNO" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<group name="FISCALYEAR">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement x="42" y="20" width="100" height="20" uuid="a9e34700-f891-43d6-9775-f0a14539c9a5"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PMONTH}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="42" y="0" width="65" height="20" uuid="c1f4317c-8ab1-4f42-9c75-cf31149fb29a"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PYEAR}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="42" height="20" uuid="1e34a314-4756-49c3-ad74-2f13fca07848"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Month: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="42" height="20" uuid="aa0a9e04-0456-43c4-9874-b01e41364553"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Year: ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="RCPTMNO">
+		<groupExpression><![CDATA[$F{RCPTMNO}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20" uuid="47cdcc84-0958-4868-8342-d0b9c7c0c6ee"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RCPTMNO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="331" y="0" width="100" height="20" uuid="6aa82070-3f56-499c-880f-37bfd635cade"/>
+					<textFieldExpression><![CDATA[$F{RCPTMDATE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="166" y="0" width="100" height="20" uuid="2e9f8d67-f7ed-45b5-9e56-cb60278f13c7"/>
+					<textFieldExpression><![CDATA[$F{PMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement x="455" y="0" width="100" height="20" uuid="3af8101e-226c-40b6-bd60-13fac9f38cfc"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{AMOUNT_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="154" height="15" uuid="1c1ca76f-9645-417a-a78c-fd50d8b26b4a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[XR MEDICAL SYSTEM]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="200" y="14" width="154" height="65" uuid="f5b72d7b-3310-4096-9cf6-4bac8c68fa10"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="169" height="20" uuid="98c93532-ad33-4663-a6b1-66e65b8e32d2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Miscellaneous Receipts]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="492" y="0" width="61" height="20" uuid="6470a572-3b64-4e71-8fa0-563c0b3576b5"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="39" height="20" uuid="1dff1652-5eb7-414a-a6a9-fee5c48f0ae3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="0" width="63" height="20" uuid="6f802d5f-4df1-4651-a767-b1c12dca4074"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="61" height="20" uuid="0f99c2af-7f5e-4449-84ea-84d5f488171f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VAT Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="0" width="64" height="20" uuid="ef0a4f67-17d3-4361-b71c-b03573977825"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VAT Analysis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="64" height="20" uuid="f5bd1068-d998-4a9f-9c91-09d64351cac1"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="0" width="64" height="20" uuid="3e7d106e-f857-40d3-9267-07ad1d7ae01f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="0" width="137" height="20" uuid="b99c583c-79bf-400c-83c4-e6a8a5519525"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="492" y="0" width="63" height="20" uuid="83003177-5206-465e-829a-f6bc80af82fa"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="39" height="20" uuid="52c19a94-9db3-401b-940f-c48fc0cf9ecf"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="0" width="63" height="20" uuid="21a55c3b-f05b-4448-9eac-15e7fa2b008f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{NETAMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="63" height="20" uuid="2633beae-f55a-475d-8229-b4a2489a2e9f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VATAMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="0" width="64" height="20" uuid="f6d1ad4d-d29a-4f05-b1bb-f4462b4e438d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VATRATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="64" height="20" uuid="e530553b-2fd1-4014-b3df-1b92b4a9c12a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{RATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="176" y="0" width="64" height="20" uuid="2df522a8-2ccf-49c3-86cf-7614ef4b2a12"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="0" width="137" height="20" uuid="fc9dfac1-eef9-4d99-8bcf-9ee202d7ed22"/>
+				<textFieldExpression><![CDATA[$F{ITEMNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="29024243-d068-4141-8900-6a86c60887f2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/nicholas/NetBeansProjects/xr/web/reports/jasper/high/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM VIEWPRSTUDENTMARKS]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STUDENTNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FULLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREAMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STREAMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLASSCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLASSNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACADEMICYEAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EXAMCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EXAMNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SUBJECTCODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SUBJECTNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SBJID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GRADE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITUSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITDATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITTIME" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUDITIPADR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="ACADEMICYEAR" order="Descending"/>
+	<sortField name="TERMCODE" order="Descending"/>
+	<sortField name="SBJID"/>
+	<sortField name="SCORE" order="Descending"/>
+	<sortField name="STUDENTNO"/>
+	<variable name="SCORE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="SUBJECTCODE" calculation="Average">
+		<variableExpression><![CDATA[$F{SCORE}]]></variableExpression>
+	</variable>
+	<group name="ACADEMICYEAR">
+		<groupExpression><![CDATA[$F{ACADEMICYEAR}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="28365eeb-0483-4e99-8a41-6e58ee01bc83"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Academic Year:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="6af0c349-c1f7-453e-914d-3dd535d1db8a"/>
+					<textFieldExpression><![CDATA[$F{ACADEMICYEAR}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="TERMCODE">
+		<groupExpression><![CDATA[$F{TERMCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="22612f2d-ffa8-4c13-8cdb-c35e1e51b0a6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Term:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="8a627cc2-f93d-486b-ae3e-560a77afc185"/>
+					<textFieldExpression><![CDATA[$F{TERMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="CLASSCODE">
+		<groupExpression><![CDATA[$F{CLASSCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="89b03cb7-b3ff-411a-b6fc-1a4c42141e8b"/>
+					<textFieldExpression><![CDATA[$F{CLASSNAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="81fcade7-62fb-48ab-8180-70e7a9f12e83"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Class:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="EXAMCODE">
+		<groupExpression><![CDATA[$F{EXAMCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="58212244-974b-4b96-8200-a825a90519d5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Examination:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="127" height="20" uuid="c9a3bbe3-bf50-4394-ade5-15b76465f124"/>
+					<textFieldExpression><![CDATA[$F{EXAMNAME}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="SUBJECTCODE">
+		<groupExpression><![CDATA[$F{SUBJECTCODE}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="1061b918-863c-4155-982a-7dc67d2ca6b5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Subject Code:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="20" width="100" height="20" uuid="5e16b5e7-8360-44c4-8e79-773e6dd6458e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Subject Name:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20" uuid="27eea9a0-e5b3-4fc3-b688-35b45453b654"/>
+					<textFieldExpression><![CDATA[$F{SUBJECTCODE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="20" width="210" height="20" uuid="66a5d7e5-053d-47fa-8313-e41f4b9061a1"/>
+					<textFieldExpression><![CDATA[$F{SUBJECTNAME}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="40" width="555" height="1" uuid="4f4490b6-9e1d-4cf9-a437-183087139e1c"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="238" y="0" width="100" height="20" uuid="aa0285f4-36eb-499b-b64c-50e9d335cdb0"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Subject Average:]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="338" y="0" width="100" height="20" uuid="7cec79c7-86c5-4341-a70c-7f60c28cae6f"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SCORE_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<subreport>
+				<reportElement x="210" y="-1" width="178" height="80" uuid="afd9a866-f07c-4039-b022-9836db86b41d"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="210" y="1" width="100" height="20" uuid="1d63276c-4b05-4430-bf48-ac16623e70c3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student Marks]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="4034bd39-f04f-43fe-b670-39410400b0de"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="57" y="0" width="100" height="20" uuid="461b2a3d-ef10-4b19-b61d-2a895bb350b4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="0" width="157" height="20" uuid="bcc4a49b-f9c0-4080-bb72-5121e469a73a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="338" y="0" width="100" height="20" uuid="c9d34f60-2522-4492-9674-0f3b20f0991e"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Score]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="2f842425-f09b-4b04-8b61-0af6464b4c57"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="20" uuid="fc8ae446-2b29-43f2-9511-35e3074c0237"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="71012c4d-4f5d-457b-b4eb-ef0a4272d552"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="57" y="0" width="100" height="20" uuid="599b1bcd-11d5-448f-b9cd-7588d9bb7766"/>
+				<textFieldExpression><![CDATA[$F{STUDENTNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="157" height="20" uuid="bd1c2d67-e4dc-4ab5-a3f3-2698f352ab1b"/>
+				<textFieldExpression><![CDATA[$F{FULLNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="338" y="0" width="100" height="20" uuid="5a126bbd-c4ce-453a-adbf-fab58b8b6ed6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{SCORE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="ad190557-e297-4298-93f1-90366a482d21"/>
+				<textFieldExpression><![CDATA[$F{GRADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="43" height="20" uuid="aea09849-1fa1-4d6a-8e05-a7871bb7bd21"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="238" y="0" width="100" height="20" uuid="8e33d782-04da-4f58-af15-c7bcf9c2a1d7"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
