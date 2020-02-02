@@ -42,8 +42,9 @@ final class Register{
         
         Sys sys = new Sys();
         
-        String cellphone        = request.getParameter("cellphone");
+        String compName         = request.getParameter("compName");
         String email            = request.getParameter("email");
+        String cellphone        = request.getParameter("cellphone");
         String password         = request.getParameter("password");
         String confPassword     = request.getParameter("confPassword");
         
@@ -69,6 +70,37 @@ final class Register{
             return obj;
         }
         
+        try{
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt  = conn.createStatement();
+
+            String query = ""
+                    + "INSERT INTO sys.pre_reg_logs "
+                    + "("
+                    + "comp_name, email, cellphone, password, crt_date"
+                    + ")"
+                    + "VALUES"
+                    + "("
+                    + "'"+compName+"', "
+                    + "'"+email+"', "
+                    + "'"+cellphone+"', "
+                    + "'"+password+"', "
+                    + "now() "
+                    + ")";
+
+            Integer  saved = stmt.executeUpdate(query);
+
+            if(saved == 1){
+               System.out.println("reg logged");
+
+            }else{
+                System.out.println("reg not logged");
+            }
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());                
+        }
+        
         obj.put("success", 1);
         obj.put("message", "success");
 
@@ -79,8 +111,7 @@ final class Register{
     public Boolean phoneNoValid(String phoneNo){
         Boolean phoneNoValid = true;
         
-        
-        
+                
         return phoneNoValid;
     }
     

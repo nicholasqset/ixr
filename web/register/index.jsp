@@ -93,50 +93,40 @@
 
                                 html += " <div id = \"dv_err\" style=\"padding: 3px; text-align: center; color: red;\"></div>";
 
-//                                html += "<div class=\"row\">";
                                 html += "<div >";
                                 html += ""+gui.formIcon(request.getContextPath(),"company.png", "", "")+" "+gui.formLabel("compName", "Company Name")+"";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"text\" id=\"compName\" name=\"compName\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html += "</div>";
-//                                html += "</div>";
 
-//                                html += " <div class=\"row\">";
                                 html += "<div >";
                                 html += ""+gui.formIcon(request.getContextPath(),"email.png", "", "")+" "+gui.formLabel("email", "Email")+"";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"text\" id=\"email\" name=\"email\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html +="</div>";
-//                                html +="</div>";
 
-//                                html += " <div class=\"row\">";
                                 html += "<div >";
                                 html += ""+gui.formIcon(request.getContextPath(),"mobile-phone.png", "", "")+" "+gui.formLabel("cellphone", "Cell Phone")+"";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"text\" id=\"cellphone\" name=\"cellphone\" placeholder = \"254712345678\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html +="</div>";
-//                                html +="</div>";
 
-//                                html += " <div class=\"row\">";
                                 html += "<div >";
                                 html += ""+gui.formIcon(request.getContextPath(),"lock.png", "", "")+" "+gui.formLabel("password", "Password")+"</td>";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"password\" id=\"password\" name=\"password\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html +="</div>";
-//                                html +="</div>";
 
-//                                html += " <div class=\"row\">";
                                 html += "<div >";
                                 html += ""+gui.formIcon(request.getContextPath(),"lock.png", "", "")+" "+gui.formLabel("confPassword", "Confirm Password")+"</td>";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"password\" id=\"confPassword\" name=\"confPassword\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px;\">";
                                 html +="</div>";
-//                                html +="</div>";
 
                                 html += "<div style=\"padding-left: 10px; padding-top: 20px; padding-bottom: 20px; border: 0;\" >";
                                 html += gui.formButton(request.getContextPath(), "button", "btnSave", "Register", "sign-up.png", "onclick = \"reg.save('compName email cellphone password confPassword'); return false;\"", "btn-info");
@@ -179,19 +169,6 @@
                     var frmModule    = $('frmModule');
                     var data = Form.serialize('frmModule');
                     if(module.validate(required)){
-//                        frmModule.action = "../payment/?"+ data;
-
-//                        var password        = $F('password');
-//                        var confPassword    = $F('confPassword');
-//                        
-//                        if(password !== confPassword){
-//                            $('dv_err').update('Invalid password');
-//                            return;
-//                        }
-                        
-//                        frmModule.action = "../payment/";
-//                        frmModule.submit();
-                        
                         if($('frmModule'))  $('frmModule').disabled = true;  
                         if($('btnSave')) $('btnSave').disabled = true; 
 			
