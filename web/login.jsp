@@ -34,13 +34,13 @@
         %>
         <div class="container">
             <div class="row" style="margin-top: 10%">
-                <div class="col-md-4">
+<!--                <div class="col-md-4">
                     
-                </div>
+                </div>-->
                 
-                <div class="col-md-4 card card-footer" style="background-color:#eceff1; border-radius: 5px ">
+                <div class="offset-md-3 col-md-5 card card-footer" style="background-color:#eceff1; border-radius: 5px ">
                     <div class="cont-headers">
-                        <h1>Login to iXR &trade;</h1>
+                        <h1>Login to iXR &trade; ERP</h1>
                         <div id="feedback" class="feedback" style="color: red;font-weight: bolder"><%= feedback %></div>
 
                         <div class="hr"></div>
