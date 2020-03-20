@@ -37,9 +37,9 @@ public class GLBatch {
                 this.posted             = rs.getBoolean("POSTED");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     

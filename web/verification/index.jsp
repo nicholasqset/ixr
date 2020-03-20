@@ -3,15 +3,20 @@
 <%@page import="bean.user.User"%>
 <%@page import="bean.security.EncryptionUtil"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
+<%@page import="bean.gui.Gui"%>
 <%
     
     String rootPath = "../";
     Boolean sessionExpired = false;
     
+    if(session.getAttribute("cellphone") == null){
+        response.sendRedirect("../");
+        return;
+    }
+    
     String cellphone = session.getAttribute("cellphone").toString();
     
-    String q            = request.getParameter("q");
+    String q         = request.getParameter("q");
     
     if(q != null){
         byte[] actualByte   = Base64.getDecoder().decode(q); 
@@ -34,7 +39,6 @@
         String comCode          = session.getAttribute("comCode").toString(); 
         String pinNo            = session.getAttribute("pinNo").toString();
     }
-   
         
     Gui gui = new Gui();
 %>

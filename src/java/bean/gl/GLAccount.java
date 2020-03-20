@@ -35,9 +35,9 @@ public class GLAccount {
                 this.active             = rs.getBoolean("ACTIVE");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     

@@ -15,6 +15,11 @@
     
     String cellphone  = request.getParameter("cellphone");
     
+    if(cellphone == null){
+        response.sendRedirect("../");
+        return;
+    }
+    
     session.setAttribute("cellphone", cellphone);
     
     

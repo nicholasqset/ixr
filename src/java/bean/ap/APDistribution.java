@@ -18,11 +18,11 @@ public class APDistribution {
     public String glAcc;
     public Boolean invDflt;
     
-    public APDistribution(String dtbCode){
+    public APDistribution(String dtbCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM APDTBS WHERE DTBCODE = '"+ dtbCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".APDTBS WHERE DTBCODE = '"+ dtbCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id             = rs.getString("ID");			
@@ -32,9 +32,9 @@ public class APDistribution {
                 this.invDflt        = rs.getBoolean("INVDFLT");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 }

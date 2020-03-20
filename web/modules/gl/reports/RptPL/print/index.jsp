@@ -17,11 +17,13 @@
 <%@page import="bean.sys.Sys"%>
 <%
     final class PrintRptPL{
-        
+        HttpSession session = request.getSession();
+        String comCode      = session.getAttribute("comCode").toString();
         
         Integer pYear   = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
         Integer pMonth  = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
-    
+        Integer cuml    = (request.getParameter("cuml") != null && request.getParameter("cuml").trim().equals("on"))? 1: 0;
+        
         String rptName = "";
         
         public String getReportHeader(){
@@ -33,25 +35,26 @@
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat2  = new SimpleDateFormat("MMMMM dd, yyyy");
                 
-//                Date convertedDate = originalFormat.parse(system.getLogDate());
+//                Date convertedDate = originalFormat.parse(sys.getLogDate());
                 Date convertedDate = originalFormat.parse(this.pYear+ "-"+ this.pMonth+ "-"+ "01");
                 Calendar c = Calendar.getInstance();
                 c.setTime(convertedDate);
                 c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
                 
                 String s = this.pMonth != null && this.pMonth > 1? "s": "";
-                this.rptName  = "Income Statement<br>For the "+ this.pMonth+ " Period"+ s+ " Ending "+ targetFormat2.format(c.getTime());
+//                this.rptName  = "Income Statement<br>For the "+ this.pMonth+ " Period"+ s+ " Ending "+ targetFormat2.format(c.getTime());
+                this.rptName  = "Income Statement<br>For the Period Ending "+ targetFormat2.format(c.getTime());
 
-                String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
+//                String comCode = sys.getOne("CSCOPROFILE", "COMPANYCODE", "");
 
-                if(companyCode != null){
+                if(comCode != null){
 
-                    Company company = new Company(companyCode);
+                    Company company = new Company(comCode);
 
                     String imgLogoSrc;
 
-                    if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
-                        imgLogoSrc = "logo.jsp?code="+companyCode;
+                    if(sys.getOne(comCode+".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ comCode +"'") != null){
+                        imgLogoSrc = "logo.jsp?code="+comCode;
                     }else{
                         imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
                     }
@@ -59,7 +62,7 @@
                     html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                     html += "<tr>";
-                    html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                    html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                     html += "</tr>";
 
                     html += "<tr>";
@@ -99,7 +102,7 @@
                     html += "<td colspan = \"3\"  align = \"center\">"+ this.rptName+ "</td>";
                     html += "</tr>";
 
-                    java.util.Date reportDate = originalFormat.parse(system.getLogDate());
+                    java.util.Date reportDate = originalFormat.parse(sys.getLogDate());
                     String reportDateLbl = targetFormat.format(reportDate);
 
                     html += "<tr>";
@@ -132,85 +135,84 @@
             String html = "";
             Sys sys = new Sys();
             
-            GLPL gLPL = new GLPL();
+            GLPL gLPL = new GLPL(comCode, this.pYear, this.pMonth, this.cuml);
             
-            Double revenue          = gLPL.getRevenue(this.pYear, this.pMonth);
-            Double cos              = gLPL.getCOS(this.pYear, this.pMonth);
+            Double revenue          = gLPL.getRevenue();
+            Double cos              = gLPL.getCOS();
             Double gp               = revenue - cos;
-            Double otherRev         = gLPL.getOtherRev(this.pYear, this.pMonth);
-            Double fixedCharges     = gLPL.getFixedCharges(this.pYear, this.pMonth);
-            Double otherExpenses    = gLPL.getOtherExpenses(this.pYear, this.pMonth);
-            Double depExpense       = gLPL.getDepExpense(this.pYear, this.pMonth);
+            Double otherRev         = gLPL.getOtherRev();
+            Double fixedCharges     = gLPL.getFixedCharges();
+            Double otherExpenses    = gLPL.getOtherExpenses();
+            Double depExpense       = gLPL.getDepExpense();
             Double elfo             = gp + otherRev - fixedCharges - otherExpenses - depExpense;
-            Double intExpense       = gLPL.getIntExpense(this.pYear, this.pMonth);
+            Double intExpense       = gLPL.getIntExpense();
             Double elbt             = elfo - intExpense;
-            Double incTaxes         = gLPL.getIncomeTaxes(this.pYear, this.pMonth);
+            Double incTaxes         = gLPL.getIncomeTaxes();
             
-//            Double netIncome        = elbt - incTaxes;
-            Double netIncome        = gLPL.getPL(this.pYear, this.pMonth);
+            Double netIncome        = gLPL.getPL();
 
-            if(system.recordExists("VIEWGLTB", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "")){
+            if(sys.recordExists(comCode+ ".VIEWGLTB", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "")){
 
                 html += "<table style = \"width: 100%;\" class = \"header\" cellpadding = \"3\" cellspacing = \"0\">";
                 
                 html += "<tr>";
                 html += "<td width = \"90%\">Revenue</td>";
-                html += "<td width = \"10%\" style = \"text-align: right;\">"+ system.numberFormat(revenue.toString())+ "</td>";
+                html += "<td width = \"10%\" style = \"text-align: right;\">"+ sys.numberFormat(revenue.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Cost of Sales</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(cos.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(cos.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td style = \"padding-left: 15px;\">Gross Profit</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(gp.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(gp.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Other Revenue</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(otherRev.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(otherRev.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Other Expenses</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(otherExpenses.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(otherExpenses.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Fixed Charges</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(fixedCharges.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(fixedCharges.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Other</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(depExpense.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(depExpense.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td class = \"bold\" style = \"padding-left: 15px;\">Earning (Loss) From Operation</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(elfo.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(elfo.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Interest Expense</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(intExpense.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(intExpense.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td class = \"bold\" style = \"padding-left: 15px;\">Earning (Loss) Before Tax</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(elbt.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(elbt.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Income Taxes</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(incTaxes.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(incTaxes.toString())+ "</td>";
                 html += "</tr>";
     
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td class = \"bold\" style = \"padding-left: 15px;\">Net Income (Loss)</td>";
-                html += "<td class = \"u\" style = \"font-weight: bold; text-align: right;\">"+ system.numberFormat(netIncome.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"font-weight: bold; text-align: right;\">"+ sys.numberFormat(netIncome.toString())+ "</td>";
                 html += "</tr>";
     
                 html += "<tr>";

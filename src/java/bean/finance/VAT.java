@@ -12,9 +12,9 @@ public class VAT {
     public Double total = 0.0;
     
     
-    public VAT(Double amount, Boolean taxInclusive){
+    public VAT(Double amount, Boolean taxInclusive, String schema){
         try{
-            FinConfig finConfig = new FinConfig();
+            FinConfig finConfig = new FinConfig(schema);
             this.vatRate        = finConfig.vatRate;
 
             if(taxInclusive){

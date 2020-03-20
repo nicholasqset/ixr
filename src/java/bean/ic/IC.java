@@ -28,7 +28,7 @@ public class IC {
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWICIUDTLS WHERE IUNO = '"+ iuNo+"'";
+            String query = "SELECT * FROM "+ schema+ ".VIEWICIUDTLS WHERE IUNO = '"+ iuNo+"'";
             ResultSet rs = stmt.executeQuery(query);
             
             Integer count = 0;
@@ -47,7 +47,7 @@ public class IC {
                 String icNoBatch_   = iuNo.replace("IU", "");
                 Integer icNoBatch   = Integer.parseInt(icNoBatch_);
                 
-                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode);
+                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode, schema);
                 
                 for(int i = 0; i < 2; i++){
                     if(i == 0){
@@ -79,9 +79,9 @@ public class IC {
                 Statement stmt = conn.createStatement();
                 String query;
                 if(addition){
-                    query = "UPDATE ICITEMS SET QTY = (QTY + "+ qty+ ") WHERE ITEMCODE = '"+ itemCode+ "'";
+                    query = "UPDATE "+ schema+ ".ICITEMS SET QTY = (QTY + "+ qty+ ") WHERE ITEMCODE = '"+ itemCode+ "'";
                 }else{
-                    query = "UPDATE ICITEMS SET QTY = (QTY - "+ qty+ ") WHERE ITEMCODE = '"+ itemCode+ "'";
+                    query = "UPDATE "+ schema+ ".ICITEMS SET QTY = (QTY - "+ qty+ ") WHERE ITEMCODE = '"+ itemCode+ "'";
                 }
                 Integer updated = stmt.executeUpdate(query);
                 effected += updated;
@@ -123,7 +123,7 @@ public class IC {
                 String icNoBatch_   = pyNo.replace("PY", "");
                 Integer icNoBatch   = Integer.parseInt(icNoBatch_);
                 
-                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode);
+                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode, schema);
                 
                 for(int i = 0; i < 2; i++){
                     if(i == 0){

@@ -21,11 +21,11 @@ public class ARAccountSet {
     public String accSetName;
     public String rCtlAcc;
     
-    public ARAccountSet(String accSetCode){
+    public ARAccountSet(String accSetCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM ARACCSETS WHERE ACCSETCODE = '"+ accSetCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".ARACCSETS WHERE ACCSETCODE = '"+ accSetCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id             = rs.getString("ID");			
@@ -34,9 +34,9 @@ public class ARAccountSet {
                 this.rCtlAcc        = rs.getString("RCTLACC");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 }

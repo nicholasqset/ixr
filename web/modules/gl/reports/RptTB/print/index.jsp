@@ -165,7 +165,8 @@
 //                    System.out.println("query==="+ query);
                     if(this.cuml == 1){
 //                        System.out.println("query2===");
-                        String fiscalYear = sys.getOne("qset.fnfiscalprd", "FISCALYEAR", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "");
+//                        String fiscalYear = sys.getOne("qset.fnfiscalprd", "FISCALYEAR", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "");
+                        String fiscalYear = sys.getOne(comCode+".fnfiscalprd", "FISCALYEAR", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "");
 //                        System.out.println("query2==="+ fiscalYear);
                         query = "SELECT * FROM "+comCode+".VIEWGLTBSMFY WHERE "
                             + "FISCALYEAR    = '"+ fiscalYear+ "' "

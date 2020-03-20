@@ -602,7 +602,7 @@ final class Invoices{
                 
                 Boolean taxInclusive    = (this.taxIncl != null && this.taxIncl == 1)? true: false;
     
-                VAT vAT = new VAT(this.amount, taxInclusive);
+                VAT vAT = new VAT(this.amount, taxInclusive, comCode);
                 
                 if(this.sid == null){
 
@@ -780,7 +780,7 @@ final class Invoices{
                     String itemName;
                     
                     if(entryType.equals("S")){
-                        ARDistribution aRDistribution = new ARDistribution(itemDtbCode);
+                        ARDistribution aRDistribution = new ARDistribution(itemDtbCode, comCode);
                         itemName = aRDistribution.dtbName;
                     }else{
                         ICItem iCItem = new ICItem(itemDtbCode, comCode);

@@ -474,7 +474,7 @@ final class Payments{
         }else{
             
             APSupplierProfile aPSupplierProfile = new APSupplierProfile(this.supplierNo, comCode);
-            APSupplierGroup aPSupplierGroup = new APSupplierGroup(aPSupplierProfile.supGrpCode);
+            APSupplierGroup aPSupplierGroup = new APSupplierGroup(aPSupplierProfile.supGrpCode, comCode);
             
 //            obj.put("fullName", aPSupplierProfile.fullName);
             obj.put("fullName", aPSupplierProfile.supplierName);

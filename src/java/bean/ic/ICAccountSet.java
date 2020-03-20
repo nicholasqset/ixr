@@ -17,11 +17,11 @@ public class ICAccountSet {
     public String invCtlAcc;
     public String apClrAcc;
     
-    public ICAccountSet(String accSetCode){
+    public ICAccountSet(String accSetCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM ICACCSETS WHERE ACCSETCODE = '"+ accSetCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".ICACCSETS WHERE ACCSETCODE = '"+ accSetCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id             = rs.getString("ID");			

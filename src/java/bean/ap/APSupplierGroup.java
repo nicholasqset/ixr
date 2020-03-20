@@ -19,11 +19,11 @@ public class APSupplierGroup {
     public String bkBranchCode;
     public String pmCode;
     
-    public APSupplierGroup(String supGrpCode){
+    public APSupplierGroup(String supGrpCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM APSUPGRPS WHERE SUPGRPCODE = '"+ supGrpCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".APSUPGRPS WHERE SUPGRPCODE = '"+ supGrpCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id                 = rs.getString("ID");			
@@ -34,9 +34,9 @@ public class APSupplierGroup {
                 this.pmCode             = rs.getString("PMCODE");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     

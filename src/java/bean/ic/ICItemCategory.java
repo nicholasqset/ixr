@@ -18,11 +18,11 @@ public class ICItemCategory {
     public String cvAcc;
     public String iuAcc;
     
-    public ICItemCategory(String catCode){
+    public ICItemCategory(String catCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM ICITEMCATS WHERE CATCODE = '"+ catCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".ICITEMCATS WHERE CATCODE = '"+ catCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.catCode    = rs.getString("CATCODE");			

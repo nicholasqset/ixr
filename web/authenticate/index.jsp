@@ -22,17 +22,16 @@
 //        System.out.println("userId="+ session.getAttribute("userId"));
 //        System.out.println("comCode="+comCode);
         if(comCode == null){
-//            session.setAttribute("comCode", comCode);
             message = "Invalid credentials";
         }else{
             session.setAttribute("comCode", comCode);
             message = "ok";
         }
-        
+        response.sendRedirect("../");
     }else{
         message = "Invalid credentials";
+        response.sendRedirect("../?m="+message);
     }
     
-    response.sendRedirect("../?m="+message);
-
+//    response.sendRedirect("../?m="+message);
 %>

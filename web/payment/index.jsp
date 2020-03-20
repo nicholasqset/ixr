@@ -22,16 +22,33 @@
     String email      = request.getParameter("email");
     String password   = request.getParameter("password");
     
+    if(compName == null){
+        response.sendRedirect("../");
+        return;
+    }
+    
+    if(cellphone == null){
+        response.sendRedirect("../");
+        return;
+    }
+    
+    
+    if(email == null){
+        response.sendRedirect("../");
+        return;
+    }
+    
+    
+    if(password == null){
+        response.sendRedirect("../");
+        return;
+    }
+    
     session.setAttribute("compName", compName);
     session.setAttribute("cellphone", cellphone);
     session.setAttribute("email", email);
     session.setAttribute("password", password);
     
-//    HashMap<String, String> regBskDtsl = new HashMap();
-//    regBskDtsl.put("compName", compName);
-//    regBskDtsl.put("cellphone", cellphone);
-//    regBskDtsl.put("email", email);
-//    regBskDtsl.put("password", password);
     
     JSONObject jSONObject = new JSONObject();
     jSONObject.put("compName", compName);
@@ -39,13 +56,7 @@
     jSONObject.put("email", email);
     jSONObject.put("password", password);
                         
-//    JSONArray data = new JSONArray();    
-//    data.add(jSONObject);
-    
-//    String data_ = data.toJSONString();
-//    System.out.println(data);
     String data_ = Base64.getEncoder().encodeToString(jSONObject.toJSONString().getBytes()); 
-//    System.out.println(data_);
     
     Gui gui = new Gui();
 %>

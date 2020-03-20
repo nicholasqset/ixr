@@ -382,7 +382,7 @@ final class Batch{
             
             AccountsReceivable accountsReceivable = new AccountsReceivable(comCode);
             
-            String batchAmt_ = sys.getOneAgt("VIEWARINDTLS", "SUM", "AMOUNT", "SM", "BATCHNO = "+ this.batchNo);
+            String batchAmt_ = sys.getOneAgt(comCode+".VIEWARINDTLS", "SUM", "AMOUNT", "SM", "BATCHNO = "+ this.batchNo);
             batchAmt_ = batchAmt_ != null && ! batchAmt_.trim().equals("")? batchAmt_: "0";
             Double batchAmt = Double.parseDouble(batchAmt_);
             

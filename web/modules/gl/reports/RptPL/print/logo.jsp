@@ -17,7 +17,7 @@
         String query;
         
         stmt = conn.createStatement();
-        query = "SELECT * FROM "+comCode+".CSCOLOGO WHERE COMPANYCODE = '"+companyCode+"'";
+        query = "SELECT * FROM "+companyCode+".CSCOLOGO WHERE COMPANYCODE = '"+companyCode+"'";
         
         ResultSet rs = stmt.executeQuery(query);
         

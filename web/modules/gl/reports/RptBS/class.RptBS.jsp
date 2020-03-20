@@ -1,13 +1,14 @@
+<%@page import="bean.gui.Gui"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.*"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class RptBS{
+    
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
         
     public String getModule(){
         String html = "";
@@ -21,12 +22,17 @@ final class RptBS{
         
         html += "<tr>";
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("pYear", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", system.getPeriodYear()+ "", "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("pYear", comCode+ ".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", sys.getPeriodYear(comCode)+ "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Fiscal Period")+ "</td>";
-	html += "<td>"+ gui.formMonthSelect("pMonth", system.getPeriodMonth(), "", true)+ "</td>";
+	html += "<td>"+ gui.formMonthSelect("pMonth", sys.getPeriodMonth(comCode), "", true)+ "</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("cuml", " Year Cumulitive")+ "</td>";
+	html += "<td>"+ gui.formCheckBox("cuml", "checked", "", "", "", "")+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

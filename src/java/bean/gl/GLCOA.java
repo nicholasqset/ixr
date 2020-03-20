@@ -64,7 +64,7 @@ public class GLCOA {
             bdgCreated = stmt.executeUpdate(query);
             
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return bdgCreated;

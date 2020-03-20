@@ -5,14 +5,13 @@
 
 div.menu-parent a{
     color: #000000;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     text-decoration: none;
     text-align: left;
-    padding: 0;
-    margin: 0;
+    padding: 3px;
+    margin: 3px;
     padding-left: 2px;
-    
 }
 
 div.menu-child a{
@@ -21,8 +20,8 @@ div.menu-child a{
     font-weight: bold;
     text-decoration: none;
     text-align: left;
-    padding: 0;
-    margin: 0;
+    padding: 3px;
+    margin: 3px;
 }
 
 td.menu-tree-line{
@@ -35,8 +34,8 @@ div.menu-child-link a{
     font-size: 12px;
     font-weight: normal;
     text-decoration: none;
-    padding: 0;
-    margin: 0;
+    padding: 3px;
+    margin: 3px;
 }
 div.menu-child-link a:hover{
     text-decoration: underline;

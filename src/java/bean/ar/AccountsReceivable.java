@@ -38,7 +38,7 @@ public class AccountsReceivable {
             Connection conn  = ConnectionProvider.getConnection();
             Statement stmt  = conn.createStatement();
             String query;
-            query = "SELECT SUM(AMOUNT)SM FROM VIEWARINDTLS WHERE BATCHNO = "+ batchNo+ "";
+            query = "SELECT SUM(AMOUNT)SM FROM "+schema+ ".VIEWARINDTLS WHERE BATCHNO = "+ batchNo+ "";
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -100,7 +100,7 @@ public class AccountsReceivable {
             Connection conn  = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            FinConfig finConfig = new FinConfig();
+            FinConfig finConfig = new FinConfig(schema);
             
             String query = "SELECT * FROM "+schema+".VIEWARINDTLS WHERE BATCHNO = "+ batchNo+ " ORDER BY INNO ";
             ResultSet rs = stmt.executeQuery(query);
@@ -127,8 +127,8 @@ public class AccountsReceivable {
 //                Double netAmount    = rs.getDouble("NETAMOUNT");
                 Double total        = rs.getDouble("TOTAL");
                 
-                ARCustomerGroup aRCustomerGroup = new ARCustomerGroup(cusGrpCode);
-                ARAccountSet aRAccountSet = new ARAccountSet(aRCustomerGroup.accSetCode);
+                ARCustomerGroup aRCustomerGroup = new ARCustomerGroup(cusGrpCode, schema);
+                ARAccountSet aRAccountSet = new ARAccountSet(aRCustomerGroup.accSetCode, schema);
                 
 //                ARItem aRitem = new ARItem(itemDtbCode);
                 
@@ -151,8 +151,8 @@ public class AccountsReceivable {
                     if(entryType.equals("I")){
                         
                         ICItem iCItem = new ICItem(itemDtbCode, schema);
-                        ICItemCategory iCItemCategory = new ICItemCategory(iCItem.catCode);
-                        ICAccountSet iCAccountSet = new ICAccountSet(iCItem.accSetCode); 
+                        ICItemCategory iCItemCategory = new ICItemCategory(iCItem.catCode, schema);
+                        ICAccountSet iCAccountSet = new ICAccountSet(iCItem.accSetCode, schema); 
                         
 //                        totalItemCost = qty * aRitem.unitCost;
                         totalItemCost = qty * iCItem.unitCost;
@@ -173,7 +173,7 @@ public class AccountsReceivable {
                             count++;
                         }
                     }else{
-                        ARDistribution aRDistribution = new ARDistribution(itemDtbCode);
+                        ARDistribution aRDistribution = new ARDistribution(itemDtbCode, schema);
                         for(int i = 0; i < 3; i++){
                             if(i == 0){
                                 Double newTotal = taxIncl == 1? total: total + taxAmount;
@@ -190,8 +190,8 @@ public class AccountsReceivable {
                 }else{
                     if(entryType.equals("I")){
                         ICItem iCItem = new ICItem(itemDtbCode, schema);
-                        ICItemCategory iCItemCategory = new ICItemCategory(iCItem.catCode);
-                        ICAccountSet iCAccountSet = new ICAccountSet(iCItem.accSetCode);
+                        ICItemCategory iCItemCategory = new ICItemCategory(iCItem.catCode, schema);
+                        ICAccountSet iCAccountSet = new ICAccountSet(iCItem.accSetCode, schema);
 //                        totalItemCost = qty * aRitem.unitCost;
                         totalItemCost = qty * iCItem.unitCost;
                         for(int i = 0; i < 4; i++){
@@ -207,7 +207,7 @@ public class AccountsReceivable {
                             count++;
                         }
                     }else{
-                        ARDistribution aRDistribution = new ARDistribution(itemDtbCode);
+                        ARDistribution aRDistribution = new ARDistribution(itemDtbCode, schema);
                         for(int i = 0; i < 2; i++){
                             if(i == 0){
                                 entryCreated = generalLedger.createBatchDtls(batchNo, batchDesc, "AR-IN", inNo, inDesc, customerNo+ "-"+ fullName+ "-"+ inNo, aRAccountSet.rCtlAcc, "DR", total, 0.0, pYear, pMonth, session, request);
@@ -251,7 +251,7 @@ public class AccountsReceivable {
             Connection conn  = ConnectionProvider.getConnection();
             Statement stmt  = conn.createStatement();
             String query;
-            query = "SELECT SUM(APLAMOUNT)SM FROM VIEWAPPYDTLS WHERE PYNO = '"+ pyNo+ "' AND DOCNO = '"+ inNo+ "'";
+            query = "SELECT SUM(APLAMOUNT)SM FROM "+schema+ ".VIEWAPPYDTLS WHERE PYNO = '"+ pyNo+ "' AND DOCNO = '"+ inNo+ "'";
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -278,7 +278,7 @@ public class AccountsReceivable {
         Sys system = new Sys();
         GeneralLedger generalLedger = new GeneralLedger(schema);
         
-        DefaultCoBank defaultCoBank = new DefaultCoBank();
+        DefaultCoBank defaultCoBank = new DefaultCoBank(schema);
         
         try{
             Connection conn  = ConnectionProvider.getConnection();
@@ -304,8 +304,8 @@ public class AccountsReceivable {
                 Integer pMonth      = rs.getInt("PMONTH");
                 Double aplAmount    = rs.getDouble("APLAMOUNT");
                 
-                ARCustomerGroup aRCustomerGroup = new ARCustomerGroup(cusGrpCode);
-                ARAccountSet aRAccountSet = new ARAccountSet(aRCustomerGroup.accSetCode);
+                ARCustomerGroup aRCustomerGroup = new ARCustomerGroup(cusGrpCode, schema);
+                ARAccountSet aRAccountSet = new ARAccountSet(aRCustomerGroup.accSetCode, schema);
                 
                 for(int i = 0; i < 2; i++){
                     if(i == 0){

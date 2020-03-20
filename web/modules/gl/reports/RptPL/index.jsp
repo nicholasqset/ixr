@@ -21,10 +21,10 @@
     
     try{
         User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
-        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
-            session.setAttribute("userId", null);
-            sessionExpired = true;
-        }
+//        if(! sys.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
+//            session.setAttribute("userId", null);
+//            sessionExpired = true;
+//        }
     }catch(NullPointerException e){
         e.getMessage();
     }
@@ -95,7 +95,7 @@
                 print: function(required){
                     if(module.validate(required)){
                         var printWindow = window.open(
-                                './print?'+ Form.serialize('frmModule'), '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                                './print?'+ Form.serialize('frmModule'), '', 'height=600, width=900, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
                         printWindow.focus();
                     }
                 }

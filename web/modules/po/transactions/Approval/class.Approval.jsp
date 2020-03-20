@@ -742,7 +742,7 @@ final class Approval{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                VAT vAT = new VAT(amount, true);
+                VAT vAT = new VAT(amount, true, comCode);
                 
                 Integer id = sys.generateId(comCode+".POPODTLS", "ID");
                 

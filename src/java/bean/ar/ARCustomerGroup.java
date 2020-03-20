@@ -17,11 +17,11 @@ public class ARCustomerGroup {
     public String cusGrpName;
     public String accSetCode;
     
-    public ARCustomerGroup(String cusGrpCode){
+    public ARCustomerGroup(String cusGrpCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM ARCUSGRPS WHERE CUSGRPCODE = '"+ cusGrpCode+ "' ";
+            String query = "SELECT * FROM "+comCode+".ARCUSGRPS WHERE CUSGRPCODE = '"+ cusGrpCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id                 = rs.getString("ID");			
@@ -30,9 +30,9 @@ public class ARCustomerGroup {
                 this.accSetCode         = rs.getString("ACCSETCODE");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     

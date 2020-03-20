@@ -17,11 +17,11 @@ public class APAccountSet {
     public String accSetName;
     public String pCtlAcc;
     
-    public APAccountSet(String accSetCode){
+    public APAccountSet(String accSetCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM APACCSETS WHERE ACCSETCODE = '"+ accSetCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".APACCSETS WHERE ACCSETCODE = '"+ accSetCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id             = rs.getString("ID");			
@@ -30,9 +30,9 @@ public class APAccountSet {
                 this.pCtlAcc        = rs.getString("PCTLACC");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 }

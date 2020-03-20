@@ -578,7 +578,7 @@
                         Boolean taxInclusive    = (this.taxIncl != null && this.taxIncl == 1)? true: false;
 
 //                        VAT vAT = new VAT(this.amount, taxInclusive);
-                        VAT vAT = new VAT(iCItem.unitPrice, taxInclusive);
+                        VAT vAT = new VAT(iCItem.unitPrice, taxInclusive, comCode);
 
                         if(this.sid == null){
                             Integer sid = system.generateId(comCode+".PSPYDTLS", "ID");
@@ -614,7 +614,7 @@
                                     + ")";
 
                         }else{
-                            VAT vATe = new VAT(this.amount, taxInclusive);
+                            VAT vATe = new VAT(this.amount, taxInclusive, comCode);
                             query = "UPDATE "+comCode+".PSPYDTLS SET "
                                     + "ITEMCODE     = '"+ this.itemCode+ "', "
                                     + "QTY          = "+ this.qty+ ", "

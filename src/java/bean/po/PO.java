@@ -53,7 +53,7 @@ public class PO {
                 
                 APSupplierProfile aPSupplierProfile = new APSupplierProfile(supplierNo, schema);
                 
-                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode);
+                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode, schema);
                 
                 for(int i = 0; i < 2; i++){
                     if(i == 0){
@@ -85,7 +85,7 @@ public class PO {
             
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "UPDATE ICITEMS SET QTY = (QTY + "+ qty+ ") WHERE ITEMCODE = '"+ itemCode+ "'";
+            String query = "UPDATE "+ schema+ ".ICITEMS SET QTY = (QTY + "+ qty+ ") WHERE ITEMCODE = '"+ itemCode+ "'";
             
             stmt.executeUpdate(query);
             
@@ -128,7 +128,7 @@ public class PO {
                 Double amount       = rs.getDouble("AMOUNT");
                 Double total        = rs.getDouble("TOTAL");
                 
-                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode);
+                ICAccountSet iCAccountSet = new ICAccountSet(accSetCode, schema);
                 
                 GLAccount gLAccount = new GLAccount(iCAccountSet.apClrAcc, schema);
                 

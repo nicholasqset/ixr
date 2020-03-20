@@ -43,9 +43,9 @@ public class GeneralLedger {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return drAmount;
@@ -73,9 +73,9 @@ public class GeneralLedger {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return crAmount;
@@ -97,9 +97,9 @@ public class GeneralLedger {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return drAmount;
@@ -121,9 +121,9 @@ public class GeneralLedger {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return crAmount;
@@ -162,7 +162,7 @@ public class GeneralLedger {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return batchPosted;
@@ -205,7 +205,7 @@ public class GeneralLedger {
             
             
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
              
         return entryCreated;
@@ -248,7 +248,7 @@ public class GeneralLedger {
                     batchNo = id;
                 }
             }catch(Exception e){
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         }
         
@@ -268,9 +268,9 @@ public class GeneralLedger {
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt  = conn.createStatement();
 
-                Integer id = system.generateId("GLHDR", "ID");
+                Integer id = system.generateId(schema+".GLHDR", "ID");
                 
-                entryNo_    = system.getNextNo("GLHDR", "ID", "", "", 1);
+                entryNo_    = system.getNextNo(schema+".GLHDR", "ID", "", "", 1);
                 entryNo     = Integer.parseInt(entryNo_);
 
                 String query = "INSERT INTO "+ schema+".GLHDR "
@@ -292,7 +292,7 @@ public class GeneralLedger {
                 stmt.executeUpdate(query);
                 
             }catch(SQLException | NumberFormatException e){
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         }
         
@@ -340,7 +340,7 @@ public class GeneralLedger {
             dtlsCreated = stmt.executeUpdate(query);
                 
         }catch(SQLException | NumberFormatException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return dtlsCreated;

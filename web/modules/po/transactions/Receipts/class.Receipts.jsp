@@ -527,7 +527,7 @@ final class Receipts{
                 
                 Boolean taxInclusive    = (this.taxIncl != null && this.taxIncl == 1)? true: false;
     
-                VAT vAT = new VAT(this.amount, taxInclusive);
+                VAT vAT = new VAT(this.amount, taxInclusive, comCode);
                 
                 if(this.sid == null){
 

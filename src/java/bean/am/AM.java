@@ -55,7 +55,7 @@ public class AM {
                 String supplierNo   = rs.getString("SUPPLIERNO");
                 String poNo         = rs.getString("PONO");
                 
-                APDistribution aPDistribution = new APDistribution(dtbCode);
+                APDistribution aPDistribution = new APDistribution(dtbCode, schema);
                 
                 String createAsset = this.createAsset(aqNo, aqDesc, entryDate, serialNo, depCode, depStartDate, estLife, estExpDate, depRate, opc, session, request);
                 if(createAsset.equals("1")){

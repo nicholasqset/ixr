@@ -29,8 +29,8 @@ public class POS {
         String posted = "";
         
         GeneralLedger generalLedger = new GeneralLedger(schema);
-        FinConfig finConfig = new FinConfig();
-        DefaultCoBank defaultCoBank = new DefaultCoBank();
+        FinConfig finConfig = new FinConfig(schema);
+        DefaultCoBank defaultCoBank = new DefaultCoBank(schema);
         
         try{
             Connection conn  = ConnectionProvider.getConnection();
@@ -64,8 +64,8 @@ public class POS {
                 Integer pyNoBatch   = Integer.parseInt(pyNoBatch_);
                 
                 ICItem iCItem = new ICItem(itemCode, schema);
-                ICItemCategory iCItemCategory = new ICItemCategory(iCItem.catCode);
-                ICAccountSet iCAccountSet = new ICAccountSet(iCItem.accSetCode); 
+                ICItemCategory iCItemCategory = new ICItemCategory(iCItem.catCode, schema);
+                ICAccountSet iCAccountSet = new ICAccountSet(iCItem.accSetCode, schema); 
                 
                 Double sumItemCost = qty * unitCost;
                 

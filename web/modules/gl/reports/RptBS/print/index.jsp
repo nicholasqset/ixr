@@ -19,9 +19,13 @@
 <%
     final class PrintRptBS{
         
+        HttpSession session = request.getSession();
+        String comCode      = session.getAttribute("comCode").toString();
+        
         Integer pYear   = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
         Integer pMonth  = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
-    
+        Integer cuml    = (request.getParameter("cuml") != null && request.getParameter("cuml").trim().equals("on"))? 1: 0;
+        
         String rptName  = "";
         
         public String getReportHeader(){
@@ -33,7 +37,6 @@
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat2  = new SimpleDateFormat("MMMMM dd, yyyy");
                 
-//                Date convertedDate = originalFormat.parse(system.getLogDate());
                 Date convertedDate = originalFormat.parse(this.pYear+ "-"+ this.pMonth+ "-"+ "01");
                 Calendar c = Calendar.getInstance();
                 c.setTime(convertedDate);
@@ -41,16 +44,14 @@
                 
                 this.rptName  = "Balance Sheet<br>As of "+ targetFormat2.format(c.getTime());
 
-                String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
+                if(comCode != null){
 
-                if(companyCode != null){
-
-                    Company company = new Company(companyCode);
+                    Company company = new Company(comCode);
 
                     String imgLogoSrc;
 
-                    if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
-                        imgLogoSrc = "logo.jsp?code="+companyCode;
+                    if(sys.getOne(comCode+ ".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ comCode +"'") != null){
+                        imgLogoSrc = "logo.jsp?code="+comCode;
                     }else{
                         imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
                     }
@@ -58,7 +59,7 @@
                     html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                     html += "<tr>";
-                    html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                    html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                     html += "</tr>";
 
                     html += "<tr>";
@@ -98,7 +99,7 @@
                     html += "<td colspan = \"3\"  align = \"center\">"+ this.rptName+ "</td>";
                     html += "</tr>";
 
-                    java.util.Date reportDate = originalFormat.parse(system.getLogDate());
+                    java.util.Date reportDate = originalFormat.parse(sys.getLogDate());
                     String reportDateLbl = targetFormat.format(reportDate);
 
                     html += "<tr>";
@@ -133,96 +134,96 @@
             String html = "";
             Sys sys = new Sys();
             
-            GLPL gLPL = new GLPL();
-            GLBS gLBS = new GLBS();
+            GLPL gLPL = new GLPL(comCode, this.pYear, this.pMonth, this.cuml);
+            GLBS gLBS = new GLBS(comCode, this.pYear, this.pMonth, this.cuml);
             
-            Double cashEquiv        = gLBS.getCE(this.pYear, this.pMonth);
-            Double ar               = gLBS.getAR(this.pYear, this.pMonth);
-            Double inventory        = gLBS.getInv(this.pYear, this.pMonth);
-            Double oca              = gLBS.getOCA(this.pYear, this.pMonth);
+            Double cashEquiv        = gLBS.getCE();
+            Double ar               = gLBS.getAR();
+            Double inventory        = gLBS.getInv();
+            Double oca              = gLBS.getOCA();
             
             Double ca               = cashEquiv + ar + inventory + oca;
             
-            Double fa               = gLBS.getFA(this.pYear, this.pMonth);
-            Double acmDep           = gLBS.getAcmDep(this.pYear, this.pMonth);
+            Double fa               = gLBS.getFA();
+            Double acmDep           = gLBS.getAcmDep();
             
             Double netFa            = fa - acmDep;
             
-            Double oa               = gLBS.getOA(this.pYear, this.pMonth);
+            Double oa               = gLBS.getOA();
             
             Double ta               = ca + netFa + oa;
             
-            Double ap               = gLBS.getAP(this.pYear, this.pMonth);
-            Double pfIT             = gLBS.getPfIT(this.pYear, this.pMonth);
-            Double oCL              = gLBS.getOCL(this.pYear, this.pMonth);
+            Double ap               = gLBS.getAP();
+            Double pfIT             = gLBS.getPfIT();
+            Double oCL              = gLBS.getOCL();
             
             Double cl               = ap + pfIT + oCL;
             
-            Double lTL              = gLBS.getLTL(this.pYear, this.pMonth);
-            Double dividends        = gLBS.getDividends(this.pYear, this.pMonth);
+            Double lTL              = gLBS.getLTL();
+            Double dividends        = gLBS.getDividends();
             
             Double tl               = cl + lTL + dividends;
             
-            Double sC               = gLBS.getSC(this.pYear, this.pMonth);
-            Double sE               = gLBS.getSE(this.pYear, this.pMonth);
+            Double sC               = gLBS.getSC();
+            Double sE               = gLBS.getSE();
             
-            Double pL               = gLPL.getPL(this.pYear, this.pMonth);
+            Double pL               = gLPL.getPL();
             
             Double tse              = sC + sE + pL;
             Double tlse             = tl + tse;
             
-            if(system.recordExists("VIEWGLTB", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "")){
+//            if(sys.recordExists(comCode+".VIEWGLTB", "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ "")){
 
                 html += "<table style = \"width: 100%;\" class = \"header\" cellpadding = \"3\" cellspacing = \"0\">";
                 
                 html += "<tr>";
                 html += "<td width = \"90%\">Cash And Equivalent</td>";
-                html += "<td width = \"10%\" style = \"text-align: right;\">"+ system.numberFormat(cashEquiv.toString())+ "</td>";
+                html += "<td width = \"10%\" style = \"text-align: right;\">"+ sys.numberFormat(cashEquiv.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Accounts Receivable</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(ar.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ar.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Inventory</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(inventory.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(inventory.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Other Current Assets</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(oca.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(oca.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td style = \"padding-left: 15px;\">Total Current Assets</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(ca.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ca.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Fixed Assets</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(fa.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(fa.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Less Accumulated Depreciation</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(acmDep.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(acmDep.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td style = \"padding-left: 15px;\">Net Fixed Assets</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(netFa.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(netFa.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Other Assets</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(oa.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(oa.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td class = \"bold\" style = \"padding-left: 15px;\">Total Assets</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(ta.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(ta.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
@@ -232,62 +233,62 @@
                 
                 html += "<tr>";
                 html += "<td>Accounts Payables</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(ap.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ap.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Provision for Income Taxes</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(pfIT.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(pfIT.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Other Current Liabilities</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(oCL.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(oCL.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td style = \"padding-left: 15px;\">Total Current Liabilities</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(cl.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(cl.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Long Term Liabilities</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(lTL.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(lTL.toString())+ "</td>";
                 html += "</tr>";
     
                 html += "<tr>";
                 html += "<td>Dividends</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(dividends.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(dividends.toString())+ "</td>";
                 html += "</tr>";
     
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td style = \"padding-left: 15px;\">Total Liabilities</td>";
-                html += "<td style = \"font-weight: bold; text-align: right;\">"+ system.numberFormat(tl.toString())+ "</td>";
+                html += "<td style = \"font-weight: bold; text-align: right;\">"+ sys.numberFormat(tl.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Share Capital</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(sC.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(sC.toString())+ "</td>";
                 html += "</tr>";
     
                 html += "<tr>";
                 html += "<td>Shareholder's Equity</td>";
-                html += "<td style = \"text-align: right;\">"+ system.numberFormat(sE.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(sE.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
                 html += "<td>Profit (Loss) for period</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(pL.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(pL.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td style = \"padding-left: 15px;\">Total Shareholder's Equity</td>";
-                html += "<td class = \"u\" style = \"text-align: right;\">"+ system.numberFormat(tse.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"text-align: right;\">"+ sys.numberFormat(tse.toString())+ "</td>";
                 html += "</tr>";
                 
                 html += "<tr bgcolor = \"#F7F7F7\">";
                 html += "<td class = \"bold\" style = \"padding-left: 15px;\">Total Liabilities and Shareholder's Equity</td>";
-                html += "<td class = \"u\" style = \"font-weight: bold; text-align: right;\">"+ system.numberFormat(tlse.toString())+ "</td>";
+                html += "<td class = \"u\" style = \"font-weight: bold; text-align: right;\">"+ sys.numberFormat(tlse.toString())+ "</td>";
                 html += "</tr>";
     
                 html += "<tr>";
@@ -296,9 +297,9 @@
                 html += "</tr>";
     
                 html += "</table>";
-            }else{
-                html += "No record found.";
-            }
+//            }else{
+//                html += "No record found.";
+//            }
         
         return html;
         }

@@ -19,11 +19,11 @@ public class ARDistribution {
     public String invAcc;
     public String cosAcc;
     
-    public ARDistribution(String dtbCode){
+    public ARDistribution(String dtbCode, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM ARDTBS WHERE DTBCODE = '"+ dtbCode+ "' ";
+            String query = "SELECT * FROM "+ comCode+ ".ARDTBS WHERE DTBCODE = '"+ dtbCode+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id             = rs.getString("ID");			
@@ -34,9 +34,9 @@ public class ARDistribution {
                 this.cosAcc         = rs.getString("COSACC");			
             }
         }catch (SQLException  e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch (Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 }

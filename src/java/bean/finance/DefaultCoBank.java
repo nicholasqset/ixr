@@ -18,12 +18,12 @@ public class DefaultCoBank {
     public String bkAcc;
     public String woAcc;
     
-    public DefaultCoBank(){
+    public DefaultCoBank(String comCode){
         try{
             
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWFNCOBANKS WHERE ISDEFAULT = 1";
+            String query = "SELECT * FROM "+ comCode+ ".VIEWFNCOBANKS WHERE ISDEFAULT = 1";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.bKBranchCode   = rs.getString("BKBRANCHCODE");			

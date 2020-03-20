@@ -47,9 +47,9 @@ public class AccountsPayable {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return amount;
@@ -98,9 +98,9 @@ public class AccountsPayable {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return amount;
@@ -112,7 +112,7 @@ public class AccountsPayable {
         Sys system = new Sys();
         GeneralLedger generalLedger = new GeneralLedger(schema);
         
-        FinConfig finConfig = new FinConfig();
+        FinConfig finConfig = new FinConfig(schema);
         
         try{
             Connection conn  = ConnectionProvider.getConnection();
@@ -141,9 +141,9 @@ public class AccountsPayable {
                 Double netAmount    = rs.getDouble("NETAMOUNT");
                 Double total        = rs.getDouble("TOTAL");
                 
-                APSupplierGroup aPSupplierGroup = new APSupplierGroup(supGrpCode);
-                APAccountSet APAccountSet = new APAccountSet(aPSupplierGroup.accSetCode);
-                APDistribution aPDistribution = new APDistribution(dtbCode);
+                APSupplierGroup aPSupplierGroup = new APSupplierGroup(supGrpCode, schema);
+                APAccountSet APAccountSet = new APAccountSet(aPSupplierGroup.accSetCode, schema);
+                APDistribution aPDistribution = new APDistribution(dtbCode, schema);
                 
                 if(taxAmount > 0){
                     for(int i = 0; i < 3; i++){
@@ -175,7 +175,7 @@ public class AccountsPayable {
             }
             
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return batchPosted;
     }
@@ -202,9 +202,9 @@ public class AccountsPayable {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return amount;
@@ -233,9 +233,9 @@ public class AccountsPayable {
             }
             
         }catch(SQLException e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         
         return amount;
@@ -248,7 +248,7 @@ public class AccountsPayable {
 //        Sys system = new Sys();
         GeneralLedger generalLedger = new GeneralLedger(schema);
         
-        DefaultCoBank defaultCoBank = new DefaultCoBank();
+        DefaultCoBank defaultCoBank = new DefaultCoBank(schema);
         
         try{
             Connection conn  = ConnectionProvider.getConnection();
@@ -273,8 +273,8 @@ public class AccountsPayable {
                 Integer pMonth      = rs.getInt("PMONTH");
                 Double aplAmount    = rs.getDouble("APLAMOUNT");
                 
-                APSupplierGroup aPSupplierGroup = new APSupplierGroup(supGrpCode);
-                APAccountSet APAccountSet = new APAccountSet(aPSupplierGroup.accSetCode);
+                APSupplierGroup aPSupplierGroup = new APSupplierGroup(supGrpCode, schema);
+                APAccountSet APAccountSet = new APAccountSet(aPSupplierGroup.accSetCode, schema);
                 
                 for(int i = 0; i < 2; i++){
                     if(i == 0){
@@ -293,7 +293,7 @@ public class AccountsPayable {
             }
             
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return batchPosted;
     }

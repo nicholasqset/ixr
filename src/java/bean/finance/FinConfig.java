@@ -15,12 +15,12 @@ public class FinConfig {
     public String taxLbAcc = "";
     public Double vatRate = 0.0;
     
-    public FinConfig(){
+    public FinConfig(String schema){
         
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM FNCONFIG";
+            String query = "SELECT * FROM "+ schema+ ".FNCONFIG";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.taxAth         = rs.getString("TAXATH");			

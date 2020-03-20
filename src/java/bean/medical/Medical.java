@@ -73,7 +73,7 @@ public class Medical {
         Double vatRate = 0.00;
         
         if(medicalItem.vatable){
-            FinConfig finConfig = new FinConfig();
+            FinConfig finConfig = new FinConfig(schema);
             vatRate = finConfig.vatRate / 100;
         }
         
