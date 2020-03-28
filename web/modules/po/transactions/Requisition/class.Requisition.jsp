@@ -181,7 +181,7 @@ final class Requisition{
                     String supplierNo       = rs.getString("SUPPLIERNO");
                     String supplierName     = rs.getString("SUPPLIERNAME");
                     
-                    String amount_ = sys.getOneAgt("VIEWPORQDTLS", "SUM", "AMOUNT", "SM", "RQNO = '"+ rqNo+ "'");
+                    String amount_ = sys.getOneAgt(this.comCode+ ".VIEWPORQDTLS", "SUM", "AMOUNT", "SM", "RQNO = '"+ rqNo+ "'");
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 

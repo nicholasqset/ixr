@@ -529,7 +529,7 @@ final class ReceiptBc{
                     query = "UPDATE "+comCode+".ICPYDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "QTY          = "+ this.qty+ ", "
-                            + "UNITCOST     = "+ this.unitCost+ ", "
+                            + "UNITCOST     = "+ (this.qty * this.unitCost)+ ", "
                             + "AMOUNT       = "+ this.amount+ " "
                             + "WHERE ID     = "+this.sid;
                 }
@@ -623,7 +623,7 @@ final class ReceiptBc{
             html += "<tr>";
             html += "<th>#</th>";
             html += "<th>Item #</th>";
-            html += "<th>Item</th>";
+            html += "<th>Name</th>";
             html += "<th style = \"text-align: right;\">Quantity</th>";
             html += "<th style = \"text-align: right;\">Cost</th>";
             html += "<th style = \"text-align: right;\">Amount</th>";

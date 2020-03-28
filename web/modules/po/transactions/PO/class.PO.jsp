@@ -186,7 +186,7 @@ final class PO{
 //                    String fullName         = rs.getString("SUPPLIERNAME");
                     String supplierName     = rs.getString("SUPPLIERNAME");
                     
-                    String amount_ = sys.getOneAgt("VIEWPOPODTLS", "SUM", "AMOUNT", "SM", "PONO = '"+ poNo+ "'");
+                    String amount_ = sys.getOneAgt(this.comCode+ ".VIEWPOPODTLS", "SUM", "AMOUNT", "SM", "PONO = '"+ poNo+ "'");
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 

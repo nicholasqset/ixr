@@ -188,7 +188,7 @@ final class Approval{
                     Integer approved        = rs.getInt("APPROVED");
                     Integer posted          = rs.getInt("POSTED");
                     
-                    String amount_ = sys.getOneAgt("VIEWPORQDTLS", "SUM", "AMOUNT", "SM", "RQNO = '"+ rqNo+ "'");
+                    String amount_ = sys.getOneAgt(this.comCode+ ".VIEWPORQDTLS", "SUM", "AMOUNT", "SM", "RQNO = '"+ rqNo+ "'");
                     
                     String approvedUi = "";
                     if(approved == 1){
