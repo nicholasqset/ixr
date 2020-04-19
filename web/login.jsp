@@ -59,7 +59,12 @@
                 <div class="cont-actions">
                     <div>
                         <span class="inputs-lbl">&nbsp;</span>
-                            <span class="inputs-ia"><% out.print(gui.formButton(request.getContextPath(), "button", "btnLogin", "Login", "go-next-view.png", "onclick = \"login.auth();\"", "btn-info")); %></span>
+                            <span class="inputs-ia">
+                                <% 
+//                                    out.print(gui.formButton(request.getContextPath(), "button", "btnLogin", "Login", "go-next-view.png", "onclick = \"login.auth();\"", "btn-info")); 
+                                %>
+                                <button type="button" class="btn btn-info" onclick="login.auth();">Login</button>
+                            </span>
                     </div>
                 </div>
                     

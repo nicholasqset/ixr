@@ -5,11 +5,14 @@
 
 div.menu-parent a{
     color: #000000;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
     text-decoration: none;
     text-align: left;
-    padding: 3px;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    /*padding-left: 3px;*/
     margin: 3px;
     padding-left: 2px;
 }

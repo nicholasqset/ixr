@@ -94,7 +94,7 @@
             </div> 
         </div> 
         <div class="footer"> 
-            iXR &trade; 2011 - <%= dateFormat.format(calendar.getTime()) %>. All rights reserved. <a href="#" style="color: #808080; text-decoration: none;">Terms & Conditions. </a><a href="#" style="color: #808080; text-decoration: none;">Privacy Policy. </a>
+            iXR &trade; 2011 - <%= dateFormat.format(calendar.getTime()) %>. All rights reserved. <a href="legal/iIX-terms.pdf" style="color: #808080; text-decoration: none;" target="_blank">Terms & Conditions. </a><a href="legal/iXR-privacy.pdf" style="color: #808080; text-decoration: none;" target="_blank">Privacy Policy. </a>
             <span style="">
                 <a href="https://www.qset.co.ke/#contact" target="_blank" style="color: #808080; text-decoration: none;">Inquire</a>
             </span>

@@ -131,8 +131,9 @@
                                 html +="</div>";
 
                                 html += "<div style=\"padding-left: 10px; padding-top: 20px; padding-bottom: 20px; border: 0;\" >";
-                                html += gui.formButton(request.getContextPath(), "button", "btnSave", "Register", "sign-up.png", "onclick = \"reg.save('compName email cellphone password confPassword'); return false;\"", "btn-info");
-                                
+//                                html += gui.formButton(request.getContextPath(), "button", "btnSave", "Register", "sign-up.png", "onclick = \"reg.save('compName email cellphone password confPassword'); return false;\"", "btn-info");
+                                html += "<button type=\"button\" class=\"btn btn-info\" onclick = \"reg.save('compName email cellphone password confPassword'); return false;\">Register</button>";
+                                html += "<a href = \"../\" style = \"padding-left: 20px; color: #808080; font-weight: bold;\">Login</a>";
                                 html += "</div>";
 
                                 html += "</div>";
