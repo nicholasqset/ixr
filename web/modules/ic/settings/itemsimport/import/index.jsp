@@ -167,7 +167,7 @@
                 String idExisting = system.getOne(comCode+".icitems", "id", "itemcode = '"+ itemCode+ "'");
 
                if(idExisting == null){
-                   Integer id = system.generateId("icitems", "ID");
+                   Integer id = system.generateId(comCode+ ".icitems", "ID");
 
                    query = "INSERT INTO "+ comCode+".icitems "
                            + "("

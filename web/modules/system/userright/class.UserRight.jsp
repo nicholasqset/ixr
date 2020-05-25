@@ -29,7 +29,8 @@ final class UserRight{
         html += "<tr>";
 //	html += "<td width = \"20%\" nowrap><i class=\"fa fa-user\"></i>"+ gui.formLabel("userId", "User ID")+ "</td>";
         html += "<td width = \"20%\" nowrap>"+gui.formIcon(request.getContextPath(),"user.png", "", "")+" "+gui.formLabel("userId", "User ID")+"</td>";
-        html += "<td>"+gui.formSelect("userId", "qset.SYSUSRS", "USERID", "USERNAME", "", "", "", "onchange = \"userRight.getUserGrpRights();\"", true)+"</td>";
+//        html += "<td>"+gui.formSelect("userId", "qset.SYSUSRS", "USERID", "USERNAME", "", "", "", "onchange = \"userRight.getUserGrpRights();\"", true)+"</td>";
+        html += "<td>"+gui.formSelect("userId", session.getAttribute("comCode")+".SYSUSRS", "USERID", "USERNAME", "", "", "", "onchange = \"userRight.getUserGrpRights();\"", true)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
