@@ -162,7 +162,7 @@
                itemCode = itemCode != null? itemCode.replaceAll("(?<=^\\d+)\\.0*$", ""): "";
 
                System.out.println("itemCode=="+ itemCode+ ", itemName=="+ itemName+ ", qty=="+ qty+ ", unitCost=="+ unitPrice);
-
+               itemName = itemName.replace("'","''");
    //            ===
                 String idExisting = system.getOne(comCode+".icitems", "id", "itemcode = '"+ itemCode+ "'");
 
