@@ -1,9 +1,9 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="bean.security.Security"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.security.NoSuchAlgorithmException"%>
 <%@page import="bean.user.User"%>
 <%@page import="bean.gui.Gui"%>
@@ -77,7 +77,7 @@ final class Profile{
         return html;
     }
     
-    public Object save() throws NoSuchAlgorithmException{
+    public Object save() throws Exception{
         Integer saved = 0;
         
         JSONObject obj = new JSONObject();
