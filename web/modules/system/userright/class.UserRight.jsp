@@ -1,10 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.user.User"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.gui.Gui"%>
 <%
 
@@ -44,7 +44,7 @@ final class UserRight{
         return html;
     }
     
-    public Object getUserGrpRights(){
+    public Object getUserGrpRights() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.userId != ""){
@@ -113,7 +113,7 @@ final class UserRight{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj  = new JSONObject();
 
         Sys sys = new Sys();

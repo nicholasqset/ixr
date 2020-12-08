@@ -1,4 +1,4 @@
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.io.UnsupportedEncodingException"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="bean.security.EncryptionUtil"%>
@@ -265,7 +265,7 @@
             return html;
         }
         
-        public Object checkMenuSession(){
+        public Object checkMenuSession() throws Exception{
             JSONObject obj  = new JSONObject();
             
             HttpSession session     = request.getSession();

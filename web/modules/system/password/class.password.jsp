@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -6,7 +7,6 @@
 <%@page import="java.security.NoSuchAlgorithmException"%>
 <%@page import="bean.user.User"%>
 <%@page import="bean.security.Security"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -251,7 +251,7 @@ final class Password{
     }
     
     
-    public Object save() throws NoSuchAlgorithmException{
+    public Object save() throws Exception{
         Integer saved = 0;
         
         JSONObject obj = new JSONObject();

@@ -1,11 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.user.User"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%
 
@@ -45,7 +44,7 @@ final class Privilege{
         return html;
     }
     
-    public Object getUserGrpRights(){
+    public Object getUserGrpRights() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.roleCode != ""){
@@ -369,7 +368,7 @@ final class Privilege{
 //        return obj;
 //    }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj  = new JSONObject();
 
 //        Sys sys   = new Sys();
