@@ -1,9 +1,11 @@
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class Sub{
@@ -45,7 +47,8 @@ final class Sub{
                         session.setAttribute("startRecord", startRecord);
 
                         ArrayList<String> list = new ArrayList();
-                         list.add("py_id");
+                         
+                        list.add("py_id");
                         list.add("comcode");
                         list.add("compname");
                         list.add("py_ref_no");
@@ -191,7 +194,7 @@ final class Sub{
                     count++;
                 }
                 html += "</table>";
-            }catch(SQLException e){
+            }catch(Exception e){
                 html += e.getMessage();
             }
         }else{
@@ -265,7 +268,7 @@ final class Sub{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         Integer saved = 0;
         
@@ -302,7 +305,7 @@ final class Sub{
                 obj.put("message", "Oops! An Un-expected error occured while saving record.");
             }
             
-        }catch (SQLException e){
+        }catch (Exception e){
               obj.put("success", new Integer(0));
             obj.put("message", e.getMessage());
 
@@ -310,7 +313,7 @@ final class Sub{
         return obj;
    }
     
-    public Object purge(){
+    public Object purge() throws Exception{
         
          Connection conn = ConnectionProvider.getConnection();
          Statement stmt = null;
@@ -336,7 +339,7 @@ final class Sub{
                 obj.put("message", "An error occured while deleting record.");
             }
             
-        }catch (SQLException e){
+        }catch (Exception e){
             obj.put("success", new Integer(0));
             obj.put("message", e.getMessage());
         }

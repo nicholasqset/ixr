@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.sys.Threader"%>
 <%@page import="com.africastalking.sms.Recipient"%>
 <%@page import="java.util.List"%>
@@ -17,7 +18,6 @@
 <%@page import="bean.hr.StaffProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
   
@@ -36,7 +36,7 @@ final class ConfirmPwd{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj      = new JSONObject();      
         
         if(! password.equals(confPassword)){

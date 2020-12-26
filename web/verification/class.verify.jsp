@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Base64"%>
 <%@page import="bean.sys.Threader"%>
 <%@page import="com.africastalking.sms.Recipient"%>
@@ -18,7 +19,6 @@
 <%@page import="bean.hr.StaffProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
   
@@ -38,7 +38,7 @@ final class Verify{
         return html;
     }
     
-    public Object verify(){
+    public Object verify() throws Exception{
         JSONObject obj      = new JSONObject();     
         
         try{
