@@ -135,7 +135,7 @@ final class Sub{
                 ResultSet rs = stmt.executeQuery(gridSql);
 
                 Integer startRecordHidden = Integer.parseInt(session.getAttribute("startRecord").toString()) + Integer.parseInt(session.getAttribute("maxRecord").toString());
-               html +="<div class=\"col-md-8\">";
+               html +="<div class=\"col-md-12\">";
                 html += gui.formInput("hidden", "maxRecord", 10, session.getAttribute("maxRecord").toString(), "", "");
                 html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
                 html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
