@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -7,7 +8,6 @@
 <%@page import="bean.hr.StaffProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -524,7 +524,7 @@ final class Staff{
         return html;
     }
     
-    public Object getStaffProfile(){
+    public Object getStaffProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.pfNo == null || this.pfNo.equals("")){
@@ -634,7 +634,7 @@ final class Staff{
         return html;
     }
     
-    public Object getSectionsUI(){
+    public Object getSectionsUI() throws Exception{
         JSONObject obj      = new JSONObject();
         Gui gui = new Gui();
         
@@ -654,7 +654,7 @@ final class Staff{
         return obj;
     }
     
-    public Object getPositionsUI(){
+    public Object getPositionsUI() throws Exception{
         JSONObject obj      = new JSONObject();
         Gui gui = new Gui();
         
@@ -686,7 +686,7 @@ final class Staff{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj      = new JSONObject();
         Sys sys       = new Sys();
@@ -819,7 +819,7 @@ final class Staff{
         return obj;
     }
     
-    public Object purgePhoto(){
+    public Object purgePhoto() throws Exception{
         
          Connection con = ConnectionProvider.getConnection();
          Statement stmt = null;

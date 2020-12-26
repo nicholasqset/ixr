@@ -1,9 +1,12 @@
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class ItemExempt{
@@ -284,7 +287,7 @@ final class ItemExempt{
         return html;
     }
     
-    public Object getItemDtls(){
+    public Object getItemDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -306,7 +309,7 @@ final class ItemExempt{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -366,10 +369,7 @@ final class ItemExempt{
         return obj;
     }
     
-    public Object purge(){
-        
-         
-         
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

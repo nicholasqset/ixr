@@ -1,10 +1,12 @@
-
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class Grades{
@@ -244,8 +246,7 @@ final class Grades{
     }
     
     
-    public Object save(){
-        
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -300,10 +301,7 @@ final class Grades{
         return obj;
     }
     
-    public Object purge(){
-        
-         
-         
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

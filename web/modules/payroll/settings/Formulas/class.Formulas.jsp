@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.gl.GLAccount"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="bean.gui.Gui"%>
@@ -5,7 +6,6 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -304,7 +304,7 @@ final class Formulas{
         return html;
     }
     
-    public Object getGLAccount(){
+    public Object getGLAccount() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.accountCode == null || this.accountCode.equals("")){
@@ -325,7 +325,7 @@ final class Formulas{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -390,10 +390,7 @@ final class Formulas{
         return obj;
     }
     
-    public Object purge(){
-        
-         
-         
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

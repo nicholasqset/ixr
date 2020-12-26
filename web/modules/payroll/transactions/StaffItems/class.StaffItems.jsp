@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -5,7 +6,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.hr.StaffProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -305,7 +305,7 @@ final class StaffItems{
         return html;
     }
     
-    public Object getStaffDtls(){
+    public Object getStaffDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.pfNo == null || this.pfNo.trim().equals("")){
@@ -337,7 +337,7 @@ final class StaffItems{
         return html;
     }
     
-    public Object getItemDtls(){
+    public Object getItemDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -358,7 +358,7 @@ final class StaffItems{
         return obj;
     }   
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         HttpSession session = request.getSession();
@@ -429,9 +429,7 @@ final class StaffItems{
         return obj;
     }
     
-    public Object purge(){
-        
-         
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

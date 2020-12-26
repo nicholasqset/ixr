@@ -1,10 +1,13 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.hr.StaffProfile"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class StaffBanks{
@@ -283,7 +286,7 @@ final class StaffBanks{
         return html;
     }
     
-    public Object getBkBranchDtls(){
+    public Object getBkBranchDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -316,7 +319,7 @@ final class StaffBanks{
         return html;
     }
     
-    public Object getStaffDtls(){
+    public Object getStaffDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.pfNo == null || this.pfNo.trim().equals("")){
@@ -337,7 +340,7 @@ final class StaffBanks{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -395,10 +398,7 @@ final class StaffBanks{
         return obj;
     }
     
-    public Object purge(){
-        
-         
-         
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
