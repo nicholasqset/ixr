@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -6,7 +7,6 @@
 <%@page import="bean.ar.ARCustomerProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -427,7 +427,7 @@ final class Customers{
         return html;
     }
     
-    public Object getCustomerProfile(){
+    public Object getCustomerProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.customerNo == null || this.customerNo.equals("")){
@@ -473,7 +473,7 @@ final class Customers{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj      = new JSONObject();
         Sys sys       = new Sys();
         HttpSession session = request.getSession();

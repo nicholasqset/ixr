@@ -215,7 +215,7 @@
                         String itemName;
                     
                         if(entryType.equals("S")){
-                            ARDistribution aRDistribution = new ARDistribution(itemDtbCode);
+                            ARDistribution aRDistribution = new ARDistribution(itemDtbCode, comCode);
                             itemName = aRDistribution.dtbName;
                         }else{
                             ICItem iCItem = new ICItem(itemDtbCode, comCode);

@@ -1,10 +1,10 @@
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.finance.FinConfig"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class Config{
@@ -56,7 +56,7 @@ final class Config{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         Integer saved = 0;
         
@@ -70,9 +70,9 @@ final class Config{
         
         try{
             stmt = conn.createStatement();
-            if(!system.recordExists(this.table, "")){
+            if(!sys.recordExists(this.table, "")){
             
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, TAXATH, TAXLBACC, VATRATE)"

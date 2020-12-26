@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -6,7 +7,6 @@
 <%@page import="bean.hr.StaffProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -199,7 +199,7 @@ final class Profile{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj      = new JSONObject();
         Sys sys       = new Sys();
@@ -249,7 +249,7 @@ final class Profile{
         return obj;
     }
     
-    public Object purgeLogo(){
+    public Object purgeLogo() throws Exception{
         
          Connection conn = ConnectionProvider.getConnection();
          Statement stmt = null;

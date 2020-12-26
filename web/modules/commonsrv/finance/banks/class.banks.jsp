@@ -1,12 +1,16 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="java.io.File"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class Banks{
@@ -410,7 +414,7 @@ final class Banks{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj      = new JSONObject();
         Sys sys       = new Sys();
         
@@ -463,7 +467,7 @@ final class Banks{
         return obj;
     }
     
-    public Object removeTemplate(){
+    public Object removeTemplate() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
@@ -515,7 +519,7 @@ final class Banks{
         return obj;
     }
     
-    public Object doDefault(){
+    public Object doDefault() throws Exception{
         JSONObject obj = new JSONObject();
         try{
             Connection conn = ConnectionProvider.getConnection();
@@ -559,7 +563,7 @@ final class Banks{
          return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
         JSONObject obj = new JSONObject();
 
         try{

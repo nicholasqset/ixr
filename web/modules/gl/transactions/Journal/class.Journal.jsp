@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -12,7 +13,6 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -423,7 +423,7 @@ final class Journal{
         return html;
     }
     
-    public Object getBatchProfile(){
+    public Object getBatchProfile() throws Exception{
         JSONObject obj = new JSONObject();
         Gui gui = new Gui();
         
@@ -468,7 +468,7 @@ final class Journal{
         return html;
     }
     
-    public Object getGLAccount(){
+    public Object getGLAccount() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.accountCode == null || this.accountCode.equals("")){
@@ -489,7 +489,7 @@ final class Journal{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -738,7 +738,7 @@ final class Journal{
         return html;
     }
     
-    public Object editJEDtls(){
+    public Object editJEDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
@@ -795,7 +795,7 @@ final class Journal{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

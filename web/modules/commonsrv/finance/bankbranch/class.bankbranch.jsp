@@ -1,10 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -243,7 +243,7 @@ final class BankBranch{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         Integer saved = 0;
         
@@ -298,7 +298,7 @@ final class BankBranch{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
         
          JSONObject obj = new JSONObject();
          

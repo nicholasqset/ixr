@@ -1,6 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Base64"%>
-<%@page import="org.json.simple.JSONArray"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="bean.gui.Gui"%>
@@ -56,7 +55,7 @@
     jSONObject.put("email", email);
     jSONObject.put("password", password);
                         
-    String data_ = Base64.getEncoder().encodeToString(jSONObject.toJSONString().getBytes()); 
+    String data_ = Base64.getEncoder().encodeToString(jSONObject.toString().getBytes()); 
     
     Gui gui = new Gui();
 %>
@@ -155,9 +154,9 @@
                                     html += "<input type='hidden' name='amount' value='10'> ";
                                     html += "<input type='hidden' name='no_shipping' value='1'> ";
                                     html += "<input type='hidden' name='currency_code' value='USD'> ";
-                                    html += "<input type='hidden' name='notify_url' value='https://api.p.qset.co.ke/ixr/payment/register/notify.php'>";
-                                    html += "<input type='hidden' name='cancel_return' value='https://api.p.qset.co.ke/ixr/payment/register/cancel.php'>";
-                                    html += "<input type='hidden' name='return'  value='https://api.p.qset.co.ke/ixr/payment/register/return.php?invoiceno="+cellphone+"&&customerno="+cellphone+"&&invoiceamount=10'>";
+                                    html += "<input type='hidden' name='notify_url' value='https://api.p.qset.co.ke/payment/paypal/ixr/register/notify.php'>";
+                                    html += "<input type='hidden' name='cancel_return' value='https://api.p.qset.co.ke/payment/paypal/ixr/register/cancel.php'>";
+                                    html += "<input type='hidden' name='return'  value='https://api.p.qset.co.ke/payment/paypal/ixr/register/return.php?invoiceno="+cellphone+"&&customerno="+cellphone+"&&invoiceamount=10'>";
                                     html += "<input type=\"hidden\" name=\"cmd\" value=\"_xclick\"> ";
                                     html += "<button  type=\"submit\"  class=\"btn btn-info\"><i class=\"fa fa-bars\"></i> Pay using PayPal</button>";
                                 html += "</form>";

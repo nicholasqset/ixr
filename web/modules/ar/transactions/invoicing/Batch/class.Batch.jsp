@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -5,7 +6,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.ar.AccountsReceivable"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -280,7 +280,7 @@ final class Batch{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -333,7 +333,7 @@ final class Batch{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge()  throws Exception{
          
          JSONObject obj = new JSONObject();
          
@@ -369,7 +369,7 @@ final class Batch{
         
     }
     
-    public Object rtp(){
+    public Object rtp()  throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
          
@@ -424,7 +424,7 @@ final class Batch{
         
     }
     
-    public Object post(){
+    public Object post() throws Exception{
         JSONObject obj = new JSONObject();
         HttpSession session = request.getSession();
          

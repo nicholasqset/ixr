@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -6,7 +7,6 @@
 <%@page import="bean.gui.Gui"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -303,8 +303,7 @@ final class Accounts{
         return html;
     }
     
-    public Object save(){
-        
+    public Object save() throws Exception{
         JSONObject obj      = new JSONObject();
         Sys sys       = new Sys();
         
@@ -363,7 +362,7 @@ final class Accounts{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge()throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

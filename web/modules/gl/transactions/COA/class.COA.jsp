@@ -1,13 +1,15 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.gl.GLCOA"%>
 <%@page import="bean.gl.GLAccount"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class COA{
@@ -99,7 +101,7 @@ final class COA{
         return html;
     }
     
-    public Object getGLAccount(){
+    public Object getGLAccount() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.accountCode == null || this.accountCode.equals("")){
@@ -119,7 +121,7 @@ final class COA{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         GLCOA gLCOA = new GLCOA(comCode);

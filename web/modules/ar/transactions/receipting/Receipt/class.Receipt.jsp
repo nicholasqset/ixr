@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -13,7 +14,6 @@
 <%@page import="bean.ar.ARCustomerProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -437,7 +437,7 @@ final class Receipt{
         return html;
     }
     
-    public Object getBatchProfile(){
+    public Object getBatchProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.batchNo == null || this.batchNo.equals("")){
@@ -470,7 +470,7 @@ final class Receipt{
         return html;
     }
     
-    public Object getCustomerProfile(){
+    public Object getCustomerProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.customerNo == null || this.customerNo.equals("")){
@@ -492,7 +492,7 @@ final class Receipt{
         return obj;
     }
     
-    public Object getSrcBatch(){
+    public Object getSrcBatch() throws Exception{
         JSONObject obj = new JSONObject();
         Gui gui = new Gui();
         
@@ -507,7 +507,7 @@ final class Receipt{
         return obj;
     }
     
-    public Object getInBatchDocs(){
+    public Object getInBatchDocs() throws Exception{
         JSONObject obj = new JSONObject();
         Gui gui = new Gui();
         
@@ -529,7 +529,7 @@ final class Receipt{
         return obj;
     }
     
-    public Object getPyUnAplAmount(){
+    public Object getPyUnAplAmount() throws Exception{
         JSONObject obj = new JSONObject();
         AccountsReceivable accountsReceivable = new AccountsReceivable(comCode);
         
@@ -542,7 +542,7 @@ final class Receipt{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -823,7 +823,7 @@ final class Receipt{
         return html;
     }
     
-    public Object editReceiptDtls(){
+    public Object editReceiptDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
@@ -866,7 +866,7 @@ final class Receipt{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          
