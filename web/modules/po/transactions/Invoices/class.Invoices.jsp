@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.po.PoInHdr"%>
 <%@page import="bean.po.PO"%>
 <%@page import="bean.finance.VAT"%>
@@ -12,7 +13,6 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -425,7 +425,7 @@ final class Invoices{
         return html;
     }
     
-    public Object getSupplierProfile(){
+    public Object getSupplierProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.supplierNo == null || this.supplierNo.equals("")){
@@ -473,7 +473,7 @@ final class Invoices{
         return html;
     }
     
-    public Object getItemPyDtls(){
+    public Object getItemPyDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         Sys sys = new Sys();
@@ -497,7 +497,7 @@ final class Invoices{
         return obj;
     }
     
-    public Object getItemTotalAmount(){
+    public Object getItemTotalAmount() throws Exception{
         JSONObject obj = new JSONObject();
         
 //        ICItem iCItem = new ICItem(this.itemCode);
@@ -509,7 +509,7 @@ final class Invoices{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -758,7 +758,7 @@ final class Invoices{
         return html;
     }
     
-    public Object editInDtls(){
+    public Object editInDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
@@ -804,7 +804,7 @@ final class Invoices{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
@@ -838,7 +838,7 @@ final class Invoices{
          return obj;
     }
     
-    public Object post(){
+    public Object post() throws Exception{
         JSONObject obj = new JSONObject();
         HttpSession session = request.getSession();
         

@@ -1,7 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.hr.StaffProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%

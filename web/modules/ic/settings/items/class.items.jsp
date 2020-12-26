@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.ap.APSupplierProfile"%>
 <%@page import="java.sql.SQLException"%>
@@ -6,7 +7,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%
 
@@ -355,7 +355,7 @@ final class Items{
         return html;
     }
     
-    public Object getSupplierProfile(){
+    public Object getSupplierProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.supplierNo == null || this.supplierNo.equals("")){
@@ -375,7 +375,7 @@ final class Items{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys system = new Sys();
         HttpSession session = request.getSession();
@@ -472,7 +472,7 @@ final class Items{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

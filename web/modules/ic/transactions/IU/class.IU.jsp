@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.ic.IC"%>
 <%@page import="bean.ic.ICItem"%>
 <%@page import="java.sql.SQLException"%>
@@ -9,7 +10,6 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -367,7 +367,7 @@ final class IU{
         return html;
     }
     
-    public Object getItemDtls(){
+    public Object getItemDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         ICItem iCItem = new ICItem(this.itemCode, comCode);
@@ -386,7 +386,7 @@ final class IU{
         return obj;
     }
     
-    public Object getItemTotalAmount(){
+    public Object getItemTotalAmount() throws Exception{
         JSONObject obj = new JSONObject();
         
 //        ICItem iCItem = new ICItem(this.itemCode);
@@ -398,7 +398,7 @@ final class IU{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys system = new Sys();
         HttpSession session = request.getSession();
@@ -604,7 +604,7 @@ final class IU{
         return html;
     }
     
-    public Object editIuDtls(){
+    public Object editIuDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys system = new Sys();
         Gui gui = new Gui();
@@ -647,7 +647,7 @@ final class IU{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          try{
             Connection conn = ConnectionProvider.getConnection();
@@ -680,7 +680,7 @@ final class IU{
         return obj;
     }
     
-    public Object post(){
+    public Object post() throws Exception{
         JSONObject obj = new JSONObject();
         HttpSession session = request.getSession();
         

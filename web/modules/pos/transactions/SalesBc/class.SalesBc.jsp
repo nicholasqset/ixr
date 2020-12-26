@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.time.Instant"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="bean.ic.IC"%>
@@ -6,7 +7,6 @@
 <%@page import="bean.ar.ARCustomerProfile"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.sql.SQLException"%>
@@ -471,7 +471,7 @@
             return html;
         }
 
-        public Object getCustomerProfile(){
+        public Object getCustomerProfile() throws Exception{
             JSONObject obj = new JSONObject();
 
             if(this.customerNo == null || this.customerNo.equals("")){
@@ -502,7 +502,7 @@
             return html;
         }
 
-        public Object getItemProfile(){
+        public Object getItemProfile() throws Exception{
             JSONObject obj = new JSONObject();
 
             if(this.itemCode == null || this.itemCode.trim().equals("")){
@@ -523,7 +523,7 @@
             return obj;
         }
         
-        public Object hasPhoto(){
+        public Object hasPhoto() throws Exception{
             JSONObject obj = new JSONObject();
             Sys system = new Sys();
 
@@ -543,7 +543,7 @@
             return obj;
         }
 
-        public Object getItemTotalAmount(){
+        public Object getItemTotalAmount() throws Exception{
             JSONObject obj = new JSONObject();
 
     //        ICItem iCItem = new ICItem(this.itemCode);
@@ -557,7 +557,7 @@
             return obj;
         }
 
-        public Object save(){
+        public Object save() throws Exception{
             JSONObject obj = new JSONObject();
             Sys system = new Sys();
             HttpSession session = request.getSession();
@@ -867,7 +867,7 @@
             return html;
         }
 
-        public Object editPoDtls(){
+        public Object editPoDtls() throws Exception{
             JSONObject obj = new JSONObject();
             Sys system = new Sys();
             Gui gui = new Gui();
@@ -917,7 +917,7 @@
             return obj;
         }
 
-        public Object purge(){
+        public Object purge() throws Exception{
              JSONObject obj = new JSONObject();
 
              try{
@@ -1008,7 +1008,7 @@
             return html;
         }
         
-        public Object savePayment(){
+        public Object savePayment() throws Exception{
             JSONObject obj = new JSONObject();
             
             try{
@@ -1072,7 +1072,7 @@
             return html;
         }
 
-        public Object post(){
+        public Object post() throws Exception{
             JSONObject obj = new JSONObject();
             HttpSession session = request.getSession();
 

@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
 <%@page import="java.sql.SQLException"%>
@@ -10,7 +11,6 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -386,7 +386,7 @@ final class PO{
         return html;
     }
     
-    public Object getSupplierProfile(){
+    public Object getSupplierProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.supplierNo == null || this.supplierNo.equals("")){
@@ -406,7 +406,7 @@ final class PO{
         return obj;
     }
     
-    public Object getItemAmount(){
+    public Object getItemAmount() throws Exception{
         JSONObject obj = new JSONObject();
         
         ICItem iCItem = new ICItem(this.itemCode, comCode);
@@ -416,7 +416,7 @@ final class PO{
         return obj;
     }
     
-    public Object getItemTotalAmount(){
+    public Object getItemTotalAmount() throws Exception{
         JSONObject obj = new JSONObject();
         
 //        ICItem iCItem = new ICItem(this.itemCode);
@@ -428,7 +428,7 @@ final class PO{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -664,7 +664,7 @@ final class PO{
         return html;
     }
     
-    public Object editPoDtls(){
+    public Object editPoDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
@@ -710,7 +710,7 @@ final class PO{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

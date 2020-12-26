@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.ap.APSupplierProfile"%>
 <%@page import="bean.ic.IC"%>
 <%@page import="bean.ic.ICItem"%>
@@ -10,7 +11,6 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -397,7 +397,7 @@ final class ReceiptBc{
         return html;
     }
     
-    public Object getSupplierProfile(){
+    public Object getSupplierProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.supplierNo == null || this.supplierNo.equals("")){
@@ -429,7 +429,7 @@ final class ReceiptBc{
         return html;
     }
 
-    public Object getItemProfile(){
+    public Object getItemProfile() throws Exception{
         JSONObject obj = new JSONObject();
 
         if(this.itemCode == null || this.itemCode.trim().equals("")){
@@ -450,7 +450,7 @@ final class ReceiptBc{
         return obj;
     }
     
-    public Object getItemDtls(){
+    public Object getItemDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         ICItem iCItem = new ICItem(this.itemCode, comCode);
@@ -469,7 +469,7 @@ final class ReceiptBc{
         return obj;
     }
     
-    public Object getItemTotalAmount(){
+    public Object getItemTotalAmount() throws Exception{
         JSONObject obj = new JSONObject();
         
 //        ICItem iCItem = new ICItem(this.itemCode);
@@ -481,7 +481,7 @@ final class ReceiptBc{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys system = new Sys();
         HttpSession session = request.getSession();
@@ -694,7 +694,7 @@ final class ReceiptBc{
         return html;
     }
     
-    public Object editPyDtls(){
+    public Object editPyDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys system = new Sys();
         Gui gui = new Gui();
@@ -737,7 +737,7 @@ final class ReceiptBc{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          JSONObject obj = new JSONObject();
          try{
             Connection conn = ConnectionProvider.getConnection();
@@ -770,7 +770,7 @@ final class ReceiptBc{
         return obj;
     }
     
-    public Object post(){
+    public Object post() throws Exception{
         JSONObject obj = new JSONObject();
         HttpSession session = request.getSession();
         
