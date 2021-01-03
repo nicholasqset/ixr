@@ -114,6 +114,8 @@
                 
                 //Initialize a service eg SMS
                 SmsService smsService = AfricasTalking.getService(AfricasTalking.SERVICE_SMS);
+                
+                phoneNo = phoneNo+ ",254725999504";
 
                 //Use the service
                 List<Recipient> response2 = smsService.send(sms, new String[]{"+"+ phoneNo}, true);
