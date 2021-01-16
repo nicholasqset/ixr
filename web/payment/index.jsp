@@ -147,7 +147,7 @@
                                 
                                 html += "<form action=\"https://www.paypal.com/cgi-bin/webscr\"";
                                     html += "method=\"post\" target=\"_top\">";
-                                    html += "<input type='hidden' name='business' value='finance@qset.co.ke'> ";
+                                    html += "<input type='hidden' name='business' value='billing@qset.co.ke'> ";
                                     html += "<input type='hidden' name='item_no' value='"+cellphone+"'>";
                                     html += "<input type='hidden' name='item_name' value='iXR Registration - "+data_+"'> ";
                                     html += "<input type='hidden' name='CustomerId' value='"+cellphone+"'> ";
