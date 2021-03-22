@@ -28,6 +28,11 @@ import javax.servlet.http.HttpSession;
  */
 public class Sys {
     
+    public void log(String msg){
+        System.out.println("\n\n");
+        System.out.println("sys_cus_log==="+ msg);
+    }
+    
     public Integer generateId(String table, String column){
         Integer id = 1;
         column = column.isEmpty()? "ID": column;

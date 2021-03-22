@@ -4,6 +4,11 @@
     Author     : nicholas
 --%>
 
+<%@page import="okhttp3.Response"%>
+<%@page import="okhttp3.Request"%>
+<%@page import="okhttp3.RequestBody"%>
+<%@page import="okhttp3.MediaType"%>
+<%@page import="okhttp3.OkHttpClient"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Base64"%>
@@ -38,6 +43,7 @@
         String email        = request.getParameter("email");
         
         String data         = request.getParameter("data");
+        String holdAcc      = request.getParameter("holdAcc");
         
         public JSONObject subscribe(){
             JSONObject jSONObject = new JSONObject();
@@ -315,6 +321,87 @@
                 e.printStackTrace();
                 System.out.println(e.getMessage());
             }
+        }
+        
+        public JSONObject logMpesaTrans() throws Exception{
+            JSONObject jSONObject = new JSONObject();
+            Sys sys = new Sys();
+            try{
+                Double setAmount = 1000.0;
+
+                Double bal = amount - setAmount;
+
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt  = conn.createStatement();
+
+                Integer pyActive = bal >= 0? 1: null;
+
+                SimpleDateFormat  simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.MONTH, 1);
+                String endDate = (String)(simpleDateFormat.format(calendar.getTime()));
+                
+//                String paybillNo = "4042017";
+                String paybillNo = holdAcc;
+
+                String query = ""
+                        + "INSERT INTO "+ this.table+ " "
+                        + "("
+                        + "py_ref_no, py_date, py_cellphone, py_amount, py_active,"
+                        + "py_start_date, py_end_date, py_opt_fld4"
+                        + ")"
+                        + "VALUES"
+                        + "("
+                        + "'"+this.refNo+"', "
+                        + "now(), "
+                        + "'"+this.phoneNo+"', "
+                        + this.amount+", "
+                        + pyActive+", "
+                        + "now(), "
+                        + "'"+ endDate+ "', "
+                        + "'"+ paybillNo+ "' "
+                        + ")";
+
+                Integer  saved = stmt.executeUpdate(query);
+
+                if(saved == 1){
+                    jSONObject.put("success", new Integer(1));
+                    jSONObject.put("message", "Entry successfully made.");
+
+//                    sendSubscriptionSms(this.phoneNo, sys.numberFormat(this.amount.toString()), pyActive);
+
+                
+
+                    OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                      MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                      RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
+                              + "email=nicholasgakumo@gmail.com&"
+                              + "cc=info@qsetinc.com&"
+                              + "bcc=nicholasqset@gmail.com&"
+                              + "subject="+paybillNo+" - "+this.phoneNo+ "&"
+                              + "message= Hi, "+ this.refNo + " - "+ this.amount+ " paid."
+                      );
+                      Request request = new Request.Builder()
+                        .url("https://api.goqset.com/")
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                      Response response = client.newCall(request).execute();
+                      
+                      sys.log("response="+ response);
+
+                }else{
+                    jSONObject.put("success", new Integer(0));
+                    jSONObject.put("message", "Oops! An Un-expected error occured while saving record.");
+                }
+
+            }catch(Exception e){
+                jSONObject.put("success", new Integer(0));
+                jSONObject.put("message", e.getMessage());
+            }
+          
+            return jSONObject;
         }
         
     }

@@ -172,6 +172,11 @@ final class Sub{
                     String active       = rs.getString("py_active");
                     String startDate    = rs.getString("py_start_date");
                     String endDate      = rs.getString("py_end_date");
+                    String optFld4      = rs.getString("py_opt_fld4");
+                    
+                    if(optFld4 != null){
+                        paybillNo = optFld4;
+                    }
 
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 
