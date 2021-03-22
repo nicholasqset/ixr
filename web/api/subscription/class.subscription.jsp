@@ -63,12 +63,14 @@
                     Calendar calendar = Calendar.getInstance();
                     calendar.add(Calendar.MONTH, 1);
                     String endDate = (String)(simpleDateFormat.format(calendar.getTime()));
+                    
+                    String paybillNo = "939537";
 
                     String query = ""
                             + "INSERT INTO "+ this.table+ " "
                             + "("
                             + "py_ref_no, py_date, py_cellphone, py_amount, py_active,"
-                            + "py_start_date, py_end_date"
+                            + "py_start_date, py_end_date, py_opt_fld4"
                             + ")"
                             + "VALUES"
                             + "("
@@ -78,7 +80,8 @@
                             + this.amount+", "
                             + pyActive+", "
                             + "now(), "
-                            + "'"+ endDate+ "' "
+                            + "'"+ endDate+ "', "
+                            + "'"+ paybillNo+ "' "
                             + ")";
 
                     Integer  saved = stmt.executeUpdate(query);
@@ -88,6 +91,28 @@
                         jSONObject.put("message", "Entry successfully made.");
 
                         sendSubscriptionSms(this.phoneNo, sys.numberFormat(this.amount.toString()), pyActive);
+                        
+//                        ==
+                        
+                        OkHttpClient client = new OkHttpClient().newBuilder()
+                            .build();
+                          MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                          RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
+                                  + "email=nicholasgakumo@gmail.com&"
+                                  + "cc=info@qsetinc.com&"
+                                  + "bcc=nicholasqset@gmail.com&"
+                                  + "subject="+paybillNo+" - "+this.phoneNo+ "&"
+                                  + "message= Hi, "+ this.refNo + " - "+ this.amount+ " paid."
+                          );
+                          Request request = new Request.Builder()
+                            .url("https://api.goqset.com/")
+                            .method("POST", body)
+                            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                            .build();
+                          Response response = client.newCall(request).execute();
+
+                          sys.log("response="+ response);
+    //                        ==
 
                     }else{
                         jSONObject.put("success", new Integer(0));
