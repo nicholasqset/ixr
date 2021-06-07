@@ -10,7 +10,7 @@
 
 final class Privilege{
     HttpSession session =request.getSession();
-    String table    = ""+session.getAttribute("comCode")+".SYSPVGS";
+    String table        = session.getAttribute("comCode")+".SYSPVGS";
 
     Integer id;
     String rightStatus  = request.getParameter("rightStatus");

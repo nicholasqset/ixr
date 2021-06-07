@@ -220,7 +220,7 @@ final class Users{
         
         html += "<tr>";
 	html += "<td width = \"15%\">"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+" "+gui.formLabel("userId", "User ID")+"</td>";
-	html += "<td>"+gui.formInput("text", "userId", 25, this.id != null? this.userId: "", "", "")+"<span style = \"color: grey;\"> ...put email</span></td>";
+	html += "<td>"+gui.formInput("text", "userId", 25, this.id != null? this.userId: "", "", "")+"<span style = \"color: grey;\"> ...can be email</span></td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -299,10 +299,10 @@ final class Users{
             }
             
             if(! sys.emailValid(this.userId)){
-                obj.put("success", new Integer(0));
-                obj.put("message", "Invalid email");
+//                obj.put("success", new Integer(0));
+//                obj.put("message", "Invalid email");
                 
-                return obj;
+//                return obj;
             }
             
             saved = stmt.executeUpdate(query);
