@@ -20,7 +20,7 @@
     Sys sys = new Sys();
     
     try{
-//        User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
+        User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
 //        if(! sys.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
 //            session.setAttribute("userId", null);
 //            sessionExpired = true;
@@ -39,21 +39,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Food Categories</title>
         <link rel="shortcut icon" href="<%= rootPath %>favicon.ico" />
+        <title>Departments</title>
         <% 
             out.print(gui.loadCss(request.getContextPath(), "Growler"));
             out.print(gui.loadCss(request.getContextPath(), "module"));
             out.print(gui.loadCss(request.getContextPath(), "buttons"));
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
+            
         %>
         <script type="text/javascript"> 
             <%
-            if(sessionExpired){
+//            if(sessionExpired){
                 %>
-                    window.top.location  = '<%= rootPath %>';
+//                    window.top.location  = '<%= rootPath %>';
                 <%
-            }
+//            }
             %>
         </script>
     </head>
@@ -98,7 +99,8 @@
             
             var g = new Growler( {location : 'br' , width:'' });
             
-            var foodCats = {
+            var departments = {
+                
                 save: function(required){
                     var data = Form.serialize('frmModule');
                     if(module.validate(required)){

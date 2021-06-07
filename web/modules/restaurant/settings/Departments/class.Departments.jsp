@@ -9,20 +9,22 @@
 <%@page import="bean.sys.Sys"%>
 <%
 
-final class Category{
-    HttpSession session     = request.getSession();
-    String comCode          = session.getAttribute("comCode").toString();
-    String table        = comCode+".RTCATS";
-    String view         = comCode+".VIEWRTCATS";
+final class Departments{
+   HttpSession session  = request.getSession();
+    String table        = ""+session.getAttribute("comCode")+".RTDEPTS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
-    String catCode      = request.getParameter("category");
-    String deptCode     = request.getParameter("department");
+    String deptCode     = request.getParameter("code");
+    String deptName     = request.getParameter("name");
     
     public String getGrid(){
+        
         String html = "";
         
         Gui gui = new Gui();
+        
+        
+        
         Sys sys = new Sys();
         
         Integer recordCount = sys.getRecordCount(this.table, "");
@@ -48,10 +50,10 @@ final class Category{
                     if(find != null){
                         session.setAttribute("startRecord", startRecord);
 
-                        ArrayList<String> list = new ArrayList();
+                        ArrayList<String> list = new ArrayList<String>();
 
-                        list.add("CATCODE");
-                        list.add("CATNAME");
+                        list.add("DEPTCODE");
+                        list.add("DEPTNAME");
                         for(int i = 0; i < list.size(); i++){
                             if(i == 0){
                                 filterSql += " WHERE ( UPPER("+list.get(i)+") LIKE '%"+ find.toUpperCase()+ "%' ";
@@ -106,8 +108,8 @@ final class Category{
             }else{
                 session.setAttribute("startRecord", 0);
             }
-
-            String orderBy = "CATNAME ";
+            
+            String orderBy = "DEPTCODE ";
             String limitSql = "";
 
             String dbType = ConnectionProvider.getDBType();
@@ -121,7 +123,7 @@ final class Category{
                     break;
             }
 
-            gridSql = "SELECT * FROM "+ this.view+ " "+ filterSql+ " ORDER BY "+ orderBy+ limitSql;
+            gridSql = "SELECT * FROM "+this.table+" "+filterSql+" ORDER BY "+ orderBy+ limitSql;
 
             try{
                 Connection conn = ConnectionProvider.getConnection();
@@ -135,12 +137,12 @@ final class Category{
                 html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
                 html += gui.formInput("hidden", "startRecord", 10, startRecordHidden.toString(), "", "");
 
-                html += "<table class = \"grid\" width=\"100%\" cellpadding = \"2\" cellspacing = \"0\" border = \"0\">";
+                html += "<table class = \"grid\" width=\"100%\" cellpadding=\"2\" cellspacing=\"0\" border=\"0\">";
 
                 html += "<tr>";
                 html += "<th>#</th>";
-                html += "<th>Item Category</th>";
-                html += "<th>Department</th>";
+                html += "<th>Code</th>";
+                html += "<th>Name</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
 
@@ -148,25 +150,25 @@ final class Category{
 
                 while(rs.next()){
 
-                    Integer id              = rs.getInt("ID");
-                    String catName          = rs.getString("CATNAME");
-                    String deptName         = rs.getString("DEPTNAME");
+                    Integer id          = rs.getInt("ID");
+                    String deptCode    = rs.getString("DEPTCODE");
+                    String deptName    = rs.getString("DEPTNAME");
 
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 
                     String edit = gui.formHref("onclick = \"module.editModule("+id+")\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
-                    html += "<tr bgcolor = \""+ bgcolor +"\">";
-                    html += "<td>"+ count +"</td>";
-                    html += "<td>"+ catName +"</td>";
-                    html += "<td>"+ deptName +"</td>";
-                    html += "<td>"+ edit +"</td>";
+                    html += "<tr bgcolor = \""+ bgcolor+ "\">";
+                    html += "<td>"+ count+ "</td>";
+                    html += "<td>"+ deptCode+ "</td>";
+                    html += "<td>"+ deptName+ "</td>";
+                    html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
 
                     count++;
                 }
                 html += "</table>";
-            }catch(Exception e){
+            }catch(SQLException e){
                 html += e.getMessage();
             }
         }else{
@@ -177,28 +179,30 @@ final class Category{
     }
     
     public String getModule(){
-        String html = "";
+        
         Gui gui = new Gui();
         
-        String catName = "";
+        Connection conn = ConnectionProvider.getConnection();
+        Statement stmt = null;
         
         if(this.id != null){
+            
             try{
-                Connection conn = ConnectionProvider.getConnection();
-                Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM "+ this.view+ " WHERE ID = "+ this.id;
+                stmt = conn.createStatement();
+                String query = "SELECT * FROM "+this.table+" WHERE ID = "+this.id;
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
-                    this.catCode        = rs.getString("CATCODE");		
-                    catName             = rs.getString("CATNAME");
-                    this.deptCode       = rs.getString("DEPTCODE");
+                    this.deptCode      = rs.getString("DEPTCODE");		
+                    this.deptName      = rs.getString("DEPTNAME");		
                 }
-            }catch (Exception e){
-                html += e.getMessage();
+            }catch (SQLException e){
+
             }
         }
         
-        html += gui.formStart("frmModule", "void%200", "post", "onSubmit = \"javascript: return false;\"");
+        String html = "";
+        
+        html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
         
         if(this.id != null){
             html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");
@@ -207,21 +211,21 @@ final class Category{
         html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
         
         html += "<tr>";
-	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "ui-breadcrumb-bread.png", "", "")+ gui.formLabel("category", " Item Category")+ "</td>";
-	html += "<td>"+ gui.formSelect("category", comCode+".ICITEMCATS", "CATCODE", "CATNAME", null, null, this.id != null? this.catCode: "", null, false)+ "</td>";
+	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(),"page.png", "", "")+" "+gui.formLabel("code", "Department Code")+"</td>";
+	html += "<td>"+gui.formInput("text", "code", 10, this.id != null? this.deptCode: "" , "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+" "+gui.formLabel("department", "Section")+"</td>";
-	html += "<td>"+ gui.formSelect("department", comCode+".CSDEPTS", "DEPTCODE", "DEPTNAME", null, null, this.id != null? this.deptCode: "", null, false)+"</td>";
+	html += "<td>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+" "+gui.formLabel("name", "Department Name")+"</td>";
+	html += "<td>"+gui.formInput("text", "name", 30, this.id != null? this.deptName: "", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>&nbsp;</td>";
 	html += "<td>";
-	html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"foodCats.save('category');\"", "");
+	html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"departments.save('code name');\"", "");
         if(this.id != null){
-            html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"foodCats.purge("+this.id+",'"+ catName+ "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"departments.purge("+this.id+",'"+this.deptName+"');\"", "");
         }
 	html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
 	html += "</td>";
@@ -233,35 +237,42 @@ final class Category{
         return html;
     }
     
+    
     public Object save() throws Exception{
+        
         Integer saved = 0;
         
         JSONObject obj = new JSONObject();
         
         Sys sys = new Sys();
         
+        Connection conn = ConnectionProvider.getConnection();
+        Statement stmt = null;
+        
         try{
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
+            
+            Integer id;
+                    
+            id = sys.generateId(this.table, "ID");
             
             String query;
             
             if(this.id == null){
-                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
-                        + "(ID, CATCODE, DEPTCODE)"
-                        + "VALUES"
-                        + "("
-                        + id+ ","
-                        + "'"+ this.catCode+ "', "
-                        + "'"+ this.deptCode+ "'"
-                        + ")";
+                    + "(ID, DEPTCODE, DEPTNAME)"
+                    + "VALUES"
+                    + "("
+                    + id+","
+                    + "'"+this.deptCode+"',"
+                    + "'"+this.deptName+"'"
+                    + ")";
             }else{
                 
-                query = "UPDATE "+ this.table+ " SET "
-                        + "CATCODE     = '"+ this.catCode+ "', "
-                        + "DEPTCODE     = '"+ this.deptCode+ "'"
-                        + "WHERE ID    = "+ this.id;
+                query = "UPDATE "+this.table+" SET "
+                    + "DEPTCODE    = '"+this.deptCode+"',"
+                    + "DEPTNAME    = '"+this.deptName+"'"
+                    + "WHERE ID         = "+this.id;
             }
             
             saved = stmt.executeUpdate(query);
@@ -274,46 +285,44 @@ final class Category{
                 obj.put("message", "Oops! An Un-expected error occured while saving record.");
             }
             
-        }catch (Exception e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
+        }catch (SQLException e){
+
         }
         
         return obj;
     }
     
-    public Object purge()throws Exception{
-        JSONObject obj = new JSONObject();
-
-        try{
-           Connection conn = ConnectionProvider.getConnection();
-           Statement stmt = conn.createStatement();
-
-           if(this.id != null){
-               String query = "DELETE FROM "+this.table+" WHERE ID = "+this.id;
-
-               Integer purged = stmt.executeUpdate(query);
-               if(purged == 1){
-                   obj.put("success", new Integer(1));
-                   obj.put("message", "Entry successfully deleted.");
-               }else{
-                   obj.put("success", new Integer(0));
-                   obj.put("message", "An error occured while deleting record.");
-               }
-           }else{
-               obj.put("success", new Integer(0));
-               obj.put("message", "An error occured while deleting record.");
-           }
-
+    public Object purge() throws Exception{
+        
+         Connection conn = ConnectionProvider.getConnection();
+         Statement stmt = null;
+         
+         JSONObject obj = new JSONObject();
+         
+         try{
+            stmt = conn.createStatement();
+            
+            if(this.id != null){
+                String query = "DELETE FROM "+this.table+" WHERE ID = "+this.id;
+            
+                Integer purged = stmt.executeUpdate(query);
+                if(purged == 1){
+                    obj.put("success", new Integer(1));
+                    obj.put("message", "Entry successfully deleted.");
+                }else{
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "An error occured while deleting record.");
+                }
+            }else{
+                obj.put("success", new Integer(0));
+                obj.put("message", "An error occured while deleting record.");
+            }
+            
         }catch (SQLException e){
-           obj.put("success", new Integer(0));
-           obj.put("message", e.getMessage());
-        }catch (Exception e){
-           obj.put("success", new Integer(0));
-           obj.put("message", e.getMessage());
-        }
 
-        return obj;
+        }
+         
+         return obj;
         
     }
     
