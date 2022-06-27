@@ -378,7 +378,7 @@ final class OutPatients{
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM HMTRIAGE WHERE REGNO = '"+ this.regNo +"'";
+            String query = "SELECT * FROM "+this.comCode+".HMTRIAGE WHERE REGNO = '"+ this.regNo +"'";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 pulseRate       = rs.getString("PULSERATE");		
@@ -435,7 +435,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("HMPTCOMPLAINTS", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists(""+this.comCode+".HMPTCOMPLAINTS", "REGNO = '"+this.regNo+"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -447,7 +447,7 @@ final class OutPatients{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWPTCOMPLAINTS WHERE REGNO = '"+this.regNo+"' ";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPTCOMPLAINTS WHERE REGNO = '"+this.regNo+"' ";
                 ResultSet rs = stmt.executeQuery(query);
                 Integer count = 1;
                 while(rs.next()){
@@ -495,7 +495,7 @@ final class OutPatients{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt;
                 stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWPTCOMPLAINTS WHERE ID = "+rid;
+                String query = "SELECT * FROM "+this.comCode+".VIEWPTCOMPLAINTS WHERE ID = "+rid;
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     this.regNo      = rs.getString("REGNO");	
@@ -521,7 +521,7 @@ final class OutPatients{
         
         html += "<tr>";
 	html += "<td width = \"22%\" class = \"bold\" >"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "") + gui.formLabel("complaint", " Complaint") +"</td>";
-        html += "<td >"+gui.formSelect("complaint", "HMCOMPLAINTS", "COMPLCODE", "COMPLNAME", "", "", complCode, "", false)+"</td>";
+        html += "<td >"+gui.formSelect("complaint", ""+this.comCode+".HMCOMPLAINTS", "COMPLCODE", "COMPLNAME", "", "", complCode, "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -561,8 +561,8 @@ final class OutPatients{
             String query;
             
             if(rid == null){
-                Integer id = sys.generateId("HMPTCOMPLAINTS", "ID");
-                query = "INSERT INTO HMPTCOMPLAINTS "
+                Integer id = sys.generateId(""+this.comCode+".HMPTCOMPLAINTS", "ID");
+                query = "INSERT INTO "+this.comCode+".HMPTCOMPLAINTS "
                     + "(ID, REGNO, COMPLCODE, REMARKS, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                     + "VALUES"
@@ -578,7 +578,7 @@ final class OutPatients{
                     + ")";
                 
             }else{
-                query = "UPDATE HMPTCOMPLAINTS SET "
+                query = "UPDATE "+this.comCode+".HMPTCOMPLAINTS SET "
                     + "COMPLCODE    = '"+ complCode +"', "
                     + "REMARKS      = '"+ remarks +"' "
                     + "WHERE ID     = "+ rid +"";
@@ -616,7 +616,7 @@ final class OutPatients{
             Statement stmt = conn.createStatement();
 
             if(rid != null){
-                String query = "DELETE FROM HMPTCOMPLAINTS WHERE ID = "+ rid;
+                String query = "DELETE FROM "+this.comCode+".HMPTCOMPLAINTS WHERE ID = "+ rid;
 
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){
@@ -645,7 +645,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("HMPTDIAGNOSIS", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists(""+this.comCode+".HMPTDIAGNOSIS", "REGNO = '"+this.regNo+"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -657,7 +657,7 @@ final class OutPatients{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWPTDIAGNOSIS WHERE REGNO = '"+this.regNo+"' ";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPTDIAGNOSIS WHERE REGNO = '"+this.regNo+"' ";
                 ResultSet rs = stmt.executeQuery(query);
                 Integer count = 1;
                 while(rs.next()){
@@ -704,7 +704,7 @@ final class OutPatients{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWPTDIAGNOSIS WHERE ID = "+rid;
+                String query = "SELECT * FROM "+this.comCode+".VIEWPTDIAGNOSIS WHERE ID = "+rid;
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     this.regNo      = rs.getString("REGNO");	
@@ -730,7 +730,7 @@ final class OutPatients{
         
         html += "<tr>";
 	html += "<td width = \"22%\" class = \"bold\" >"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "") + gui.formLabel("diagnosis", " Diagnosis") +"</td>";
-        html += "<td >"+gui.formSelect("diagnosis", "HMDIAGNOSIS", "DIAGCODE", "DIAGNAME", "", "", diagCode, "", false)+"</td>";
+        html += "<td >"+gui.formSelect("diagnosis", ""+this.comCode+".HMDIAGNOSIS", "DIAGCODE", "DIAGNAME", "", "", diagCode, "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -772,7 +772,7 @@ final class OutPatients{
             if(rid == null){
                 Integer id = sys.generateId("HMPTDIAGNOSIS", "ID");
                 
-                query = "INSERT INTO HMPTDIAGNOSIS "
+                query = "INSERT INTO "+this.comCode+".HMPTDIAGNOSIS "
                     + "(ID, REGNO, DIAGCODE, REMARKS, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                     + "VALUES"
@@ -788,7 +788,7 @@ final class OutPatients{
                     + ")";
                 
             }else{
-                query = "UPDATE HMPTDIAGNOSIS SET "
+                query = "UPDATE "+this.comCode+".HMPTDIAGNOSIS SET "
                     + "DIAGCODE     = '"+ diagCode +"', "
                     + "REMARKS      = '"+ remarks +"' "
                     + "WHERE ID     = "+ rid +"";
@@ -826,7 +826,7 @@ final class OutPatients{
             Statement stmt = conn.createStatement();
 
             if(rid != null){
-                String query = "DELETE FROM HMPTDIAGNOSIS WHERE ID = "+ rid;
+                String query = "DELETE FROM "+this.comCode+".HMPTDIAGNOSIS WHERE ID = "+ rid;
 
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){
@@ -855,7 +855,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("HMMEDICATION", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists(""+this.comCode+".HMMEDICATION", "REGNO = '"+this.regNo+"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -869,7 +869,7 @@ final class OutPatients{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWPTMEDICATION WHERE REGNO = '"+this.regNo+"' ";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPTMEDICATION WHERE REGNO = '"+this.regNo+"' ";
                 ResultSet rs = stmt.executeQuery(query);
                 Integer count = 1;
                 while(rs.next()){
@@ -923,7 +923,7 @@ final class OutPatients{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWPTMEDICATION WHERE ID = "+rid;
+                String query = "SELECT * FROM "+this.comCode+".VIEWPTMEDICATION WHERE ID = "+rid;
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     this.regNo      = rs.getString("REGNO");	
@@ -953,7 +953,7 @@ final class OutPatients{
         html += "<tr>";
 	html += "<td width = \"22%\" class = \"bold\" >"+gui.formIcon(request.getContextPath(),"pill.png", "", "") + gui.formLabel("drug", " Drug") +"</td>";
 //        html += "<td >"+gui.formSelect("drug", "HMITEMS", "ITEMCODE", "ITEMNAME", "", "ISDRUG = 1", drugCode, "", false)+"</td>";
-        html += "<td >"+gui.formSelect("drug", "VIEWHMITEMS", "ITEMCODE", "ITEMNAME", "", "", drugCode, "", false)+"</td>";
+        html += "<td >"+gui.formSelect("drug", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "", drugCode, "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -1011,9 +1011,9 @@ final class OutPatients{
             String query;
             
             if(rid == null){
-                Integer id = sys.generateId("HMMEDICATION", "ID");
+                Integer id = sys.generateId(""+this.comCode+".HMMEDICATION", "ID");
                 
-                query = "INSERT INTO HMMEDICATION "
+                query = "INSERT INTO "+this.comCode+".HMMEDICATION "
                     + "(ID, REGNO, DRUGCODE, DAYS, QTY, INSTRUCTION, ADVICE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                     + "VALUES"
@@ -1032,7 +1032,7 @@ final class OutPatients{
                     + ")";
                 
             }else{
-                query = "UPDATE HMMEDICATION SET "
+                query = "UPDATE "+this.comCode+".HMMEDICATION SET "
                     + "DRUGCODE     = '"+ drugCode +"', "
                     + "DAYS         = "+ days +", "
                     + "QTY          = "+ qty +", "
@@ -1077,7 +1077,7 @@ final class OutPatients{
             Statement stmt = conn.createStatement();
 
             if(rid != null){
-                String query = "DELETE FROM HMMEDICATION WHERE ID = "+ rid;
+                String query = "DELETE FROM "+this.comCode+".HMMEDICATION WHERE ID = "+ rid;
 
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

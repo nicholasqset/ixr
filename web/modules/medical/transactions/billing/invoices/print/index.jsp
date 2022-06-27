@@ -19,14 +19,14 @@
         public String getReportHeader(){
             String html = "";
             Sys sys = new Sys();
-            String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
+            String companyCode = sys.getOne("CSCOPROFILE", "COMPANYCODE", "");
             if(companyCode != null){
                 
                 Company company = new Company(companyCode);
                 
                 String imgLogoSrc;
                 
-                if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
+                if(sys.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
                     imgLogoSrc = "logo.jsp?code="+companyCode;
                 }else{
                     imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
@@ -35,7 +35,7 @@
                 html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                 html += "<tr>";
-                html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
@@ -78,7 +78,7 @@
                 html += "<tr>";
                 html += "<td>&nbsp;</td>";
                 html += "<td>&nbsp;</td>";
-                html += "<td>"+ system.getLogDate() +"</td>";
+                html += "<td>"+ sys.getLogDate() +"</td>";
                 html += "</tr>";
 
                 html += "</table>";
@@ -120,7 +120,7 @@
         
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHMINVSDETAILS", "INVNO = '"+ invNo +"'")){
+        if(sys.recordExists("VIEWHMINVSDETAILS", "INVNO = '"+ invNo +"'")){
             
             html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
             

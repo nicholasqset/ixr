@@ -12,7 +12,8 @@
 <%@page import="bean.sys.Sys"%>
 <%
     final class PrintRptBill{
-        
+        HttpSession session = request.getSession();
+        String comCode      = session.getAttribute("comCode").toString();
         String pyNo     = request.getParameter("billNo") != null && ! request.getParameter("billNo").trim().equals("")? request.getParameter("billNo"): null;
     
         String rptName  = "Patient Bill";
@@ -24,7 +25,7 @@
             try{
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                 
-                String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
+                String companyCode = sys.getOne(""+this.comCode+".CSCOPROFILE", "COMPANYCODE", "");
 
                 if(companyCode != null){
 
@@ -32,7 +33,7 @@
 
                     String imgLogoSrc;
 
-                    if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
+                    if(sys.getOne(""+this.comCode+".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
                         imgLogoSrc = "logo.jsp?code="+companyCode;
                     }else{
                         imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
@@ -41,7 +42,7 @@
                     html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                     html += "<tr>";
-                    html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                    html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                     html += "</tr>";
 
                     html += "<tr>";
@@ -108,7 +109,7 @@
             
             Sys sys = new Sys();
             
-            HmPyHdr hmPyHdr = new HmPyHdr(pyNo);
+            HmPyHdr hmPyHdr = new HmPyHdr(pyNo, this.comCode);
             
             String entryDateLbl = "";
             
@@ -162,7 +163,7 @@
             String html = "";
             Sys sys = new Sys();
 
-            if(system.recordExists("VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+            if(sys.recordExists(""+this.comCode+".VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
 
                 html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
 
@@ -185,7 +186,7 @@
 
                     String query;
 
-                    query = "SELECT * FROM VIEWHMPYDTLS WHERE PYNO = '"+ this.pyNo+ "' ORDER BY ITEMCODE";
+                    query = "SELECT * FROM "+this.comCode+".VIEWHMPYDTLS WHERE PYNO = '"+ this.pyNo+ "' ORDER BY ITEMCODE";
 
                     ResultSet rs = stmt.executeQuery(query);
 
@@ -206,10 +207,10 @@
                         html += "<tr>";
                         html += "<td>"+ count +"</td>";
                         html += "<td>"+ itemName +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(qty.toString()) +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(unitPrice.toString()) +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(taxAmountAlt.toString()) +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(amount.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(qty.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(unitPrice.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(taxAmountAlt.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(amount.toString()) +"</td>";
                         
                         html += "</tr>";
 
@@ -223,8 +224,8 @@
                     html += "<tr>";
                     html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"4\">Total</td>";
                     
-                    html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumTax.toString()) +"</td>";
-                    html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumAmount.toString()) +"</td>";
+                    html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumTax.toString()) +"</td>";
+                    html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumAmount.toString()) +"</td>";
                     html += "</tr>";
                 
                 }catch (Exception e){

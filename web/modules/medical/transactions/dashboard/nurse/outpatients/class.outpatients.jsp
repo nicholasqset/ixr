@@ -492,7 +492,7 @@ final class OutPatients{
                     obj.put("message", "Entry successfully made.");
                     
                     obj.put("pulseRate", pulseRate);
-                    stmt.executeUpdate("UPDATE HMREGISTRATION SET TRIAGED = 1 WHERE REGNO = '"+this.regNo+"'");
+                    stmt.executeUpdate("UPDATE "+this.comCode+".HMREGISTRATION SET TRIAGED = 1 WHERE REGNO = '"+this.regNo+"'");
                 }else{
                     obj.put("success", new Integer(0));
                     obj.put("message", "Oops! An Un-expected error occured while saving record.");

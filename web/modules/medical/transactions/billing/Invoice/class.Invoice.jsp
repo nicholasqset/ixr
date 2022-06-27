@@ -505,7 +505,7 @@ final class Invoice{
             
             String saveErrMsg = "";
             
-            if(sys.recordExists("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'")){
+            if(sys.recordExists(""+this.comCode+".VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'")){
                 if(this.regType.equals("N")){
                     rts = 0;
                     saveErrMsg = "Try 'Return Patient'";
@@ -580,7 +580,7 @@ final class Invoice{
         
         String regNo = sys.getOne(this.table, "REGNO", "ID = "+ this.id);
         
-        if(sys.recordExists("VIEWHMPYHDR", "REGNO = '"+ regNo +"'")){
+        if(sys.recordExists(""+this.comCode+".VIEWHMPYHDR", "REGNO = '"+ regNo +"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -598,7 +598,7 @@ final class Invoice{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHMPYHDR WHERE REGNO = '"+ regNo +"' ORDER BY PYNO DESC ";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMPYHDR WHERE REGNO = '"+ regNo +"' ORDER BY PYNO DESC ";
                 ResultSet rs = stmt.executeQuery(query);
                 
                 Integer count  = 1;
@@ -613,7 +613,7 @@ final class Invoice{
                     
                     Double amount = 0.00;
                     
-                    String amountInvDtls_    = sys.getOneAgt("VIEWHMPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo +"'");
+                    String amountInvDtls_    = sys.getOneAgt(""+this.comCode+".VIEWHMPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo +"'");
                     
                     if(amountInvDtls_ != null){
                         amount = Double.parseDouble(amountInvDtls_);
@@ -690,7 +690,7 @@ final class Invoice{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWHMPYHDR WHERE ID = "+ this.bid;
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMPYHDR WHERE ID = "+ this.bid;
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     this.pyNo           = rs.getString("PYNO");
@@ -733,7 +733,7 @@ final class Invoice{
         
         html += "<tr>";
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-        html += "<td width = \"35%\">"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.bid != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
+        html += "<td width = \"35%\">"+ gui.formSelect("pYear", ""+this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.bid != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
 	
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
 	html += "<td>"+ gui.formMonthSelect("pMonth", this.bid != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
@@ -791,7 +791,7 @@ final class Invoice{
         
 //        html += this.pyNo;
 
-        if(sys.recordExists("VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
             html += "<div id = \"dvPyEntries-a\">";
 
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
@@ -818,7 +818,7 @@ final class Invoice{
 
                 Integer count  = 1;
 
-                String query = "SELECT * FROM VIEWHMPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -893,7 +893,8 @@ final class Invoice{
 
         this.itemCode = request.getParameter("itemNoHd");
 
-        html += gui.getAutoColsSearch("VIEWHMITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+//        html += gui.getAutoColsSearch("VIEWHMITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+        html += gui.getAutoColsSearch(""+this.comCode+".ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
 
         return html;
     }
@@ -950,9 +951,9 @@ final class Invoice{
                 VAT vAT = new VAT(this.amount, taxInclusive, this.comCode);
 
                 if(this.sid == null){
-                    Integer sid = sys.generateId("HMPYDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".HMPYDTLS", "ID");
 
-                    query = "INSERT INTO HMPYDTLS "
+                    query = "INSERT INTO "+this.comCode+".HMPYDTLS "
                             + "(ID, PYNO, ITEMCODE, "
                             + "QTY, UNITCOST, UNITPRICE, TAXINCL, "
                             + "TAXRATE, TAXAMOUNT, NETAMOUNT, AMOUNT, TOTAL, "
@@ -978,7 +979,7 @@ final class Invoice{
                             + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
-                    query = "UPDATE HMPYDTLS SET "
+                    query = "UPDATE "+this.comCode+".HMPYDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "QTY          = "+ this.qty+ ", "
                             + "UNITPRICE     = "+ this.unitPrice+ ", "
@@ -1023,8 +1024,8 @@ final class Invoice{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
 
-                Integer id = sys.generateId("HMPYHDR", "ID");
-                this.pyNo = sys.getNextNo("HMPYHDR", "ID", "", "", 7);
+                Integer id = sys.generateId(""+this.comCode+".HMPYHDR", "ID");
+                this.pyNo = sys.getNextNo(""+this.comCode+".HMPYHDR", "ID", "", "", 7);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -1032,7 +1033,7 @@ final class Invoice{
                 java.util.Date entryDate = originalFormat.parse(this.entryDate);
                 this.entryDate = targetFormat.format(entryDate);
                 
-                String query = "INSERT INTO HMPYHDR "
+                String query = "INSERT INTO "+this.comCode+".HMPYHDR "
                         + "("
                         + "ID, REGNO, PYNO, PYDESC, "
                         + "ENTRYDATE, PYEAR, PMONTH, TILLNO, "
@@ -1073,13 +1074,13 @@ final class Invoice{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("HMPYDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".HMPYDTLS", "ID = "+ this.sid +"")){
             try{
 
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
 
-                String query = "SELECT * FROM VIEWHMPYDTLS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMPYDTLS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -1118,7 +1119,7 @@ final class Invoice{
                 Statement stmt = conn.createStatement();
 
                 if(this.id != null){
-                    String query = "DELETE FROM HMPYDTLS WHERE ID = "+ this.id;
+                    String query = "DELETE FROM "+this.comCode+".HMPYDTLS WHERE ID = "+ this.id;
 
                     Integer purged = stmt.executeUpdate(query);
                     if(purged == 1){

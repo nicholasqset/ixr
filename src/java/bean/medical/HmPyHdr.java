@@ -32,11 +32,11 @@ public class HmPyHdr {
     public Boolean cleared;
     public Boolean posted;
     
-    public HmPyHdr(String pyNo){
+    public HmPyHdr(String pyNo, String schema){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWHMPYHDR WHERE PYNO = '"+ pyNo+ "' ";
+            String query = "SELECT * FROM "+schema+".VIEWHMPYHDR WHERE PYNO = '"+ pyNo+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.pyNo               = rs.getString("PYNO");			
