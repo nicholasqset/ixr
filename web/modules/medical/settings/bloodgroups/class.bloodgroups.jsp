@@ -1,16 +1,19 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class BloodGroups{
-    String table        = "HMBLOODGRPS";
+//    String table        = "HMBLOODGRPS";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMBLOODGRPS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String bloodGrpCode = request.getParameter("code");
@@ -24,7 +27,7 @@ final class BloodGroups{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -245,9 +248,7 @@ final class BloodGroups{
         return html;
     }
     
-    
-    public Object save(){
-        
+    public Object save() throws Exception{
         Integer saved = 0;
         
         JSONObject obj = new JSONObject();
@@ -262,7 +263,7 @@ final class BloodGroups{
             
             Integer id;
                     
-            id = system.generateId(this.table, "ID");
+            id = sys.generateId(this.table, "ID");
             
             String query;
             
@@ -300,8 +301,7 @@ final class BloodGroups{
         return obj;
     }
     
-    public Object purge(){
-        
+    public Object purge() throws Exception{
          Connection conn = ConnectionProvider.getConnection();
          Statement stmt = null;
          

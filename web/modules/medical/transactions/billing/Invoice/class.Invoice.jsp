@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
 <%@page import="java.util.HashMap"%>
@@ -13,14 +14,16 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Invoice{
-    String table        = "HMREGISTRATION";
-    String view         = "VIEWHMREGOPDS";
+//    String table        = "HMREGISTRATION";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMREGISTRATION";
+    String view         = comCode+".VIEWHMREGOPDS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String ptNo         = request.getParameter("ptNoHd");
@@ -56,7 +59,7 @@ final class Invoice{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -288,7 +291,7 @@ final class Invoice{
         String drName = "";
         String nrName = "";
         
-//        this.regType = system.getRecordCount("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'") > 0? "R": "N";
+//        this.regType = sys.getRecordCount("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'") > 0? "R": "N";
         
         if(this.id != null){
             try{
@@ -298,7 +301,7 @@ final class Invoice{
                 while(rs.next()){
                     this.ptNo       = rs.getString("PTNO");
                     
-                    PatientProfile patientProfile = new PatientProfile(this.ptNo);
+                    PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
                     fullName        = patientProfile.fullName;
                     genderName      = patientProfile.genderName;
                     dob             = patientProfile.dob;
@@ -388,7 +391,7 @@ final class Invoice{
         return html;
     }
     
-    public Object getPatientProfile(){
+    public Object getPatientProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.ptNo == null || this.ptNo.equals("")){
@@ -396,7 +399,7 @@ final class Invoice{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PatientProfile patientProfile = new PatientProfile(this.ptNo);
+            PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
             
             obj.put("fullName", patientProfile.fullName);
             obj.put("gender", patientProfile.genderName);
@@ -432,7 +435,7 @@ final class Invoice{
         return html;
     }
     
-    public Object getDoctorProfile(){
+    public Object getDoctorProfile() throws Exception {
         JSONObject obj = new JSONObject();
         
         if(this.drNo == null || this.drNo.equals("")){
@@ -440,7 +443,7 @@ final class Invoice{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HMStaffProfile hMStaffProfile = new HMStaffProfile(this.drNo);
+            HMStaffProfile hMStaffProfile = new HMStaffProfile(this.drNo, this.comCode);
             
             obj.put("fullName", hMStaffProfile.fullName);
             
@@ -461,7 +464,7 @@ final class Invoice{
         return html;
     }
     
-    public Object getNurseProfile(){
+    public Object getNurseProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.nrNo == null || this.nrNo.equals("")){
@@ -469,7 +472,7 @@ final class Invoice{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HMStaffProfile hMStaffProfile = new HMStaffProfile(this.nrNo);
+            HMStaffProfile hMStaffProfile = new HMStaffProfile(this.nrNo, this.comCode);
             
             obj.put("fullName", hMStaffProfile.fullName);
             
@@ -481,7 +484,7 @@ final class Invoice{
         return obj;
     }
     
-    public Object save(){        
+    public Object save() throws Exception{        
         HttpSession session = request.getSession();
         
         JSONObject obj = new JSONObject();
@@ -493,8 +496,8 @@ final class Invoice{
             Statement stmt = conn.createStatement();
             Integer saved = 0;
             
-            Integer id      = system.generateId(this.table, "ID");
-            String regNo    = system.getNextNo(this.table, "ID", "", "R", 7);
+            Integer id      = sys.generateId(this.table, "ID");
+            String regNo    = sys.getNextNo(this.table, "ID", "", "R", 7);
             
             String query;
             
@@ -502,7 +505,7 @@ final class Invoice{
             
             String saveErrMsg = "";
             
-            if(system.recordExists("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'")){
+            if(sys.recordExists("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'")){
                 if(this.regType.equals("N")){
                     rts = 0;
                     saveErrMsg = "Try 'Return Patient'";
@@ -526,15 +529,15 @@ final class Invoice{
                         + "'"+this.regType+"', "
                         + "'"+this.ptNo+"', "
                         + "'OUT', "
-                        + system.getPeriodYear()+ ", "
-                        + system.getPeriodMonth()+ ", "
-                        + "'"+system.getLogDate()+"', "
+                        + sys.getPeriodYear(this.comCode)+ ", "
+                        + sys.getPeriodMonth(this.comCode)+ ", "
+                        + "'"+sys.getLogDate()+"', "
                         + "'"+this.drNo+"', "
                         + "'"+this.nrNo+"', "
-                        + "'"+system.getLogUser(session)+"', "
-                        + "'"+system.getLogDate()+"', "
-                        + "'"+system.getLogTime()+"', "
-                        + "'"+system.getClientIpAdr(request)+"'"
+                        + "'"+sys.getLogUser(session)+"', "
+                        + "'"+sys.getLogDate()+"', "
+                        + "'"+sys.getLogTime()+"', "
+                        + "'"+sys.getClientIpAdr(request)+"'"
                         + ")";
 
                 saved = stmt.executeUpdate(query);
@@ -575,9 +578,9 @@ final class Invoice{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        String regNo = system.getOne(this.table, "REGNO", "ID = "+ this.id);
+        String regNo = sys.getOne(this.table, "REGNO", "ID = "+ this.id);
         
-        if(system.recordExists("VIEWHMPYHDR", "REGNO = '"+ regNo +"'")){
+        if(sys.recordExists("VIEWHMPYHDR", "REGNO = '"+ regNo +"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -610,7 +613,7 @@ final class Invoice{
                     
                     Double amount = 0.00;
                     
-                    String amountInvDtls_    = system.getOneAgt("VIEWHMPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo +"'");
+                    String amountInvDtls_    = sys.getOneAgt("VIEWHMPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo +"'");
                     
                     if(amountInvDtls_ != null){
                         amount = Double.parseDouble(amountInvDtls_);
@@ -672,7 +675,7 @@ final class Invoice{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
 
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -711,7 +714,7 @@ final class Invoice{
         }
         html += "</div>";
         
-        PatientProfile patientProfile= new PatientProfile(this.ptNo);
+        PatientProfile patientProfile= new PatientProfile(this.ptNo, this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -730,10 +733,10 @@ final class Invoice{
         
         html += "<tr>";
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-        html += "<td width = \"35%\">"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.bid != null? ""+ this.pYear: ""+system.getPeriodYear(), "", false)+"</td>";
+        html += "<td width = \"35%\">"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.bid != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
 	
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
-	html += "<td>"+ gui.formMonthSelect("pMonth", this.bid != null? this.pMonth: system.getPeriodMonth(), "", true)+ "</td>";
+	html += "<td>"+ gui.formMonthSelect("pMonth", this.bid != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -788,7 +791,7 @@ final class Invoice{
         
 //        html += this.pyNo;
 
-        if(system.recordExists("VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+        if(sys.recordExists("VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
             html += "<div id = \"dvPyEntries-a\">";
 
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
@@ -847,11 +850,11 @@ final class Invoice{
                     html += "<tr>";
                     html += "<td>"+ count +"</td>";
                     html += "<td>"+ itemName +"</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(qty.toString()) +"</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(unitPrice.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(qty.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(unitPrice.toString()) +"</td>";
                     html += "<td style = \"text-align: center;\">"+ taxInclLbl+"</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(taxAmountAlt.toString()) +"</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(amount.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(taxAmountAlt.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(amount.toString()) +"</td>";
 
                     html += "<td style = \"text-align: center;\">"+ opts +"</td>";
                     html += "</tr>";
@@ -868,8 +871,8 @@ final class Invoice{
 
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"5\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumTax.toString()) +"</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumAmount.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumTax.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumAmount.toString()) +"</td>";
             html += "<td>&nbsp;</td>";
             html += "</tr>";
 
@@ -895,14 +898,14 @@ final class Invoice{
         return html;
     }
 
-    public Object getItemProfile(){
+    public Object getItemProfile() throws Exception{
         JSONObject obj = new JSONObject();
 
         if(this.itemCode == null || this.itemCode.trim().equals("")){
             obj.put("success", new Integer(0));
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
-            ICItem iCItem = new ICItem(this.itemCode);
+            ICItem iCItem = new ICItem(this.itemCode, this.comCode);
 
             obj.put("itemName", iCItem.itemName);
             obj.put("quantity", 1.0);
@@ -916,7 +919,7 @@ final class Invoice{
         return obj;
     }
     
-    public Object getItemTotalAmount(){
+    public Object getItemTotalAmount() throws Exception {
         JSONObject obj = new JSONObject();
 
         Double itemTotalPrice = this.qty * this.unitPrice;
@@ -925,7 +928,7 @@ final class Invoice{
 
         return obj;
     }
-    public Object saveBill(){
+    public Object saveBill() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -940,14 +943,14 @@ final class Invoice{
                 String query;
                 Integer saved = 0;
 
-                ICItem iCItem = new ICItem(this.itemCode);
+                ICItem iCItem = new ICItem(this.itemCode, this.comCode);
 
                 Boolean taxInclusive    = (this.taxIncl != null && this.taxIncl == 1)? true: false;
 
-                VAT vAT = new VAT(this.amount, taxInclusive);
+                VAT vAT = new VAT(this.amount, taxInclusive, this.comCode);
 
                 if(this.sid == null){
-                    Integer sid = system.generateId("HMPYDTLS", "ID");
+                    Integer sid = sys.generateId("HMPYDTLS", "ID");
 
                     query = "INSERT INTO HMPYDTLS "
                             + "(ID, PYNO, ITEMCODE, "
@@ -969,10 +972,10 @@ final class Invoice{
                             + vAT.netAmount+ ", "
                             + this.amount+ ", "
                             + vAT.total+ ", "
-                            + "'"+ system.getLogUser(session)+"', "
-                            + "'"+ system.getLogDate()+ "', "
-                            + "'"+ system.getLogTime()+ "', "
-                            + "'"+ system.getClientIpAdr(request)+ "'"
+                            + "'"+ sys.getLogUser(session)+"', "
+                            + "'"+ sys.getLogDate()+ "', "
+                            + "'"+ sys.getLogTime()+ "', "
+                            + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
                     query = "UPDATE HMPYDTLS SET "
@@ -1020,8 +1023,8 @@ final class Invoice{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
 
-                Integer id = system.generateId("HMPYHDR", "ID");
-                this.pyNo = system.getNextNo("HMPYHDR", "ID", "", "", 7);
+                Integer id = sys.generateId("HMPYHDR", "ID");
+                this.pyNo = sys.getNextNo("HMPYHDR", "ID", "", "", 7);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -1045,10 +1048,10 @@ final class Invoice{
                         + this.pYear+", "
                         + this.pMonth+ ", "
                         + "'0', "
-                        + "'"+ system.getLogUser(session)+"', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + system.getLogTime()+ ", "
-                        + "'"+ system.getClientIpAdr(request)+ "'"
+                        + "'"+ sys.getLogUser(session)+"', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + sys.getLogTime()+ ", "
+                        + "'"+ sys.getClientIpAdr(request)+ "'"
                         + ")";
                 
                 Integer pyHdrCreated = stmt.executeUpdate(query);
@@ -1066,11 +1069,11 @@ final class Invoice{
         return this.pyNo;
     }
     
-    public Object editPyDtls(){
+    public Object editPyDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("HMPYDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("HMPYDTLS", "ID = "+ this.sid +"")){
             try{
 
                 Connection conn = ConnectionProvider.getConnection();
@@ -1107,7 +1110,7 @@ final class Invoice{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
              JSONObject obj = new JSONObject();
 
              try{

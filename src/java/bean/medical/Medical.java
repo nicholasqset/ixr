@@ -61,11 +61,11 @@ public class Medical {
         
         MedRegistration medRegistration = new MedRegistration(regNo);
         
-        if(! sys.recordExists("HMINVSHDR", "REGNO = '"+ regNo +"' AND INVTYPE = '"+ invType +"'")){
+        if(! sys.recordExists(this.schema+".HMINVSHDR", "REGNO = '"+ regNo +"' AND INVTYPE = '"+ invType +"'")){
             this.createInvHdr(regNo, invType, session, request);
         }
         
-        String invNo = sys.getOne("HMINVSHDR", "INVNO", "REGNO = '"+ regNo +"' AND INVTYPE = '"+ invType +"'");
+        String invNo = sys.getOne(this.schema+".HMINVSHDR", "INVNO", "REGNO = '"+ regNo +"' AND INVTYPE = '"+ invType +"'");
         
         MedInvHeader medInvHeader = new MedInvHeader(invNo);
         
@@ -89,7 +89,7 @@ public class Medical {
             Double vatAmount = vatRate * amount;
             Double netAmount = amount - vatAmount;
             
-            String query = "INSERT INTO HMINVSDTLS "
+            String query = "INSERT INTO "+this.schema+".HMINVSDTLS "
                     + "(ID, INVNO, ITEMCODE, QTY, RATE, VATRATE, VATAMOUNT, NETAMOUNT, AMOUNT, "
                     + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                     + "VALUES"

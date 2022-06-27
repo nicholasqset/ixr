@@ -1,10 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.io.File"%>
 <%@page import="java.io.UnsupportedEncodingException"%>
 <%@page import="bean.security.EncryptionUtil"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="bean.user.User"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -360,7 +360,7 @@ final class Reports{
         return html;
     }
     
-    public Object delSubReport(){
+    public Object delSubReport() throws Exception{
         
          JSONObject obj = new JSONObject();
          Sys sys  = new Sys();
@@ -658,7 +658,7 @@ final class Reports{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         
@@ -741,7 +741,7 @@ final class Reports{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
         
          JSONObject obj = new JSONObject();
          Sys sys  = new Sys();

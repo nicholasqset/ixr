@@ -1,15 +1,17 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Complaints{
-    String table        = "HMCOMPLAINTS";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMCOMPLAINTS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String complCode    = request.getParameter("code");
@@ -23,7 +25,7 @@ final class Complaints{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -238,7 +240,7 @@ final class Complaints{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         Integer saved = 0;
         
@@ -254,7 +256,7 @@ final class Complaints{
             
             Integer id;
                     
-            id = system.generateId(this.table, "ID");
+            id = sys.generateId(this.table, "ID");
             
             String query;
             
@@ -292,7 +294,7 @@ final class Complaints{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
         
          Connection conn = ConnectionProvider.getConnection();
          Statement stmt = null;

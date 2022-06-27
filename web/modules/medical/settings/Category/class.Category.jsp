@@ -1,17 +1,20 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Category{
-    String table        = "HMCATS";
-    String view         = "VIEWHMCATS";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMCATS";
+    
+    String view         = comCode+".VIEWHMCATS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String catCode      = request.getParameter("category");
@@ -22,7 +25,7 @@ final class Category{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -201,7 +204,7 @@ final class Category{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "ui-breadcrumb-bread.png", "", "")+ gui.formLabel("category", " Item Category")+ "</td>";
-	html += "<td>"+ gui.formSelect("category", "ICITEMCATS", "CATCODE", "CATNAME", null, null, this.id != null? this.catCode: "", null, false)+ "</td>";
+	html += "<td>"+ gui.formSelect("category", this.comCode+".ICITEMCATS", "CATCODE", "CATNAME", null, null, this.id != null? this.catCode: "", null, false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -221,7 +224,7 @@ final class Category{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         Integer saved = 0;
         
         JSONObject obj = new JSONObject();
@@ -235,7 +238,7 @@ final class Category{
             String query;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, CATCODE)"
                         + "VALUES"
@@ -268,7 +271,7 @@ final class Category{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge()throws Exception {
         JSONObject obj = new JSONObject();
 
         try{

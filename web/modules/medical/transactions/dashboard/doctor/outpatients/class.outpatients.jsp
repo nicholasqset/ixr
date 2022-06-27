@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.medical.Medical"%>
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="bean.medical.HMStaffProfile"%>
@@ -5,7 +6,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -13,8 +13,11 @@
 <%
 
 final class OutPatients{
-    String table    = "HMREGISTRATION";
-    String view     = "VIEWDOCTOROPDS";
+//    String table    = "HMREGISTRATION";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMREGISTRATION";
+    String view     = comCode+".VIEWDOCTOROPDS";
         
     Integer id      = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String regNo    = request.getParameter("regNo");
@@ -32,7 +35,7 @@ final class OutPatients{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -261,7 +264,7 @@ final class OutPatients{
             html += e.getMessage();
         }
           
-        PatientProfile patientProfile = new PatientProfile(this.ptNo);
+        PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
         
         String regTypeLbl = "Unknown";
                     
@@ -322,7 +325,7 @@ final class OutPatients{
         String html = "";
         Gui gui = new Gui();
         
-        PatientProfile patientProfile = new PatientProfile(this.ptNo);
+        PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -432,7 +435,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("HMPTCOMPLAINTS", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists("HMPTCOMPLAINTS", "REGNO = '"+this.regNo+"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -543,7 +546,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object saveComplaint(){
+    public Object saveComplaint() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -558,7 +561,7 @@ final class OutPatients{
             String query;
             
             if(rid == null){
-                Integer id = system.generateId("HMPTCOMPLAINTS", "ID");
+                Integer id = sys.generateId("HMPTCOMPLAINTS", "ID");
                 query = "INSERT INTO HMPTCOMPLAINTS "
                     + "(ID, REGNO, COMPLCODE, REMARKS, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
@@ -568,10 +571,10 @@ final class OutPatients{
                     + "'"+ this.regNo +"', "
                     + "'"+ complCode +"', "
                     + "'"+ remarks +"', "
-                    + "'"+ system.getLogUser(session) +"', "
-                    + "'"+ system.getLogDate() +"', "
-                    + "'"+ system.getLogTime() +"', "
-                    + "'"+ system.getClientIpAdr(request) +"'"
+                    + "'"+ sys.getLogUser(session) +"', "
+                    + "'"+ sys.getLogDate() +"', "
+                    + "'"+ sys.getLogTime() +"', "
+                    + "'"+ sys.getClientIpAdr(request) +"'"
                     + ")";
                 
             }else{
@@ -604,7 +607,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object delComplaint(){
+    public Object delComplaint() throws Exception{
 
         JSONObject obj = new JSONObject();
         Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
@@ -642,7 +645,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("HMPTDIAGNOSIS", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists("HMPTDIAGNOSIS", "REGNO = '"+this.regNo+"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -752,7 +755,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object saveDiagnosis(){
+    public Object saveDiagnosis() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -767,7 +770,7 @@ final class OutPatients{
             String query;
             
             if(rid == null){
-                Integer id = system.generateId("HMPTDIAGNOSIS", "ID");
+                Integer id = sys.generateId("HMPTDIAGNOSIS", "ID");
                 
                 query = "INSERT INTO HMPTDIAGNOSIS "
                     + "(ID, REGNO, DIAGCODE, REMARKS, "
@@ -778,10 +781,10 @@ final class OutPatients{
                     + "'"+ this.regNo +"', "
                     + "'"+ diagCode +"', "
                     + "'"+ remarks +"', "
-                    + "'"+ system.getLogUser(session) +"', "
-                    + "'"+ system.getLogDate() +"', "
-                    + "'"+ system.getLogTime() +"', "
-                    + "'"+ system.getClientIpAdr(request) +"'"
+                    + "'"+ sys.getLogUser(session) +"', "
+                    + "'"+ sys.getLogDate() +"', "
+                    + "'"+ sys.getLogTime() +"', "
+                    + "'"+ sys.getClientIpAdr(request) +"'"
                     + ")";
                 
             }else{
@@ -814,7 +817,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object delDiagnosis(){
+    public Object delDiagnosis() throws Exception{
 
         JSONObject obj = new JSONObject();
         Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
@@ -852,7 +855,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("HMMEDICATION", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists("HMMEDICATION", "REGNO = '"+this.regNo+"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -990,7 +993,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object saveMedication(){
+    public Object saveMedication() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -1008,7 +1011,7 @@ final class OutPatients{
             String query;
             
             if(rid == null){
-                Integer id = system.generateId("HMMEDICATION", "ID");
+                Integer id = sys.generateId("HMMEDICATION", "ID");
                 
                 query = "INSERT INTO HMMEDICATION "
                     + "(ID, REGNO, DRUGCODE, DAYS, QTY, INSTRUCTION, ADVICE, "
@@ -1022,10 +1025,10 @@ final class OutPatients{
                     +  qty +", "
                     + "'"+ instruction +"', "
                     + "'"+ advice +"', "
-                    + "'"+ system.getLogUser(session) +"', "
-                    + "'"+ system.getLogDate() +"', "
-                    + "'"+ system.getLogTime() +"', "
-                    + "'"+ system.getClientIpAdr(request) +"'"
+                    + "'"+ sys.getLogUser(session) +"', "
+                    + "'"+ sys.getLogDate() +"', "
+                    + "'"+ sys.getLogTime() +"', "
+                    + "'"+ sys.getClientIpAdr(request) +"'"
                     + ")";
                 
             }else{
@@ -1035,10 +1038,10 @@ final class OutPatients{
                     + "QTY          = "+ qty +", "
                     + "INSTRUCTION  = '"+ instruction +"', "
                     + "ADVICE       = '"+ advice +"', "
-                    + "AUDITUSER    = '"+ system.getLogUser(session) +"', "
-                    + "AUDITDATE    = '"+ system.getLogDate() +"', "
-                    + "AUDITTIME    = '"+ system.getLogTime() +"', "
-                    + "AUDITIPADR   = '"+ system.getClientIpAdr(request) +"' "
+                    + "AUDITUSER    = '"+ sys.getLogUser(session) +"', "
+                    + "AUDITDATE    = '"+ sys.getLogDate() +"', "
+                    + "AUDITTIME    = '"+ sys.getLogTime() +"', "
+                    + "AUDITIPADR   = '"+ sys.getClientIpAdr(request) +"' "
                     + "WHERE ID     = "+ rid +"";
             }
             
@@ -1065,7 +1068,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object delMedication(){
+    public Object delMedication() throws Exception{
 
         JSONObject obj = new JSONObject();
         Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
@@ -1103,7 +1106,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists(this.table, "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists(this.table, "REGNO = '"+this.regNo+"'")){
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -1140,7 +1143,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception {
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -1154,10 +1157,10 @@ final class OutPatients{
                 query = "UPDATE "+ this.table +" SET "
                         + "DISCHARGED   = "+ new Integer(1) +", "
                         + "REMARKS      = '"+ this.remarks +"', "
-                        + "AUDITUSER    = '"+ system.getLogUser(session) +"', "
-                        + "AUDITDATE    = '"+ system.getLogDate() +"', "
-                        + "AUDITTIME    = '"+ system.getLogTime() +"', "
-                        + "AUDITIPADR   = '"+ system.getClientIpAdr(request) +"' "
+                        + "AUDITUSER    = '"+ sys.getLogUser(session) +"', "
+                        + "AUDITDATE    = '"+ sys.getLogDate() +"', "
+                        + "AUDITTIME    = '"+ sys.getLogTime() +"', "
+                        + "AUDITIPADR   = '"+ sys.getClientIpAdr(request) +"' "
                         + "WHERE ID     = "+ id +"";
                 
                 Integer saved = stmt.executeUpdate(query);
@@ -1183,12 +1186,12 @@ final class OutPatients{
     }
     
     public void invoicePatient(String regNo){
-        Medical medical = new Medical();
+        Medical medical = new Medical(this.comCode);
         HttpSession session = request.getSession();
         try{
             Connection conn  = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWPTMEDICATION WHERE REGNO = '"+ regNo +"'";
+            String query = "SELECT * FROM "+this.comCode+".VIEWPTMEDICATION WHERE REGNO = '"+ regNo +"'";
             ResultSet rs = stmt.executeQuery(query);
 
             while(rs.next()){

@@ -1,15 +1,19 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class StaffTypes{
-    String table            = "HMSTAFFTYPES";
+//    String table            = "HMSTAFFTYPES";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMSTAFFTYPES";
+        
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String staffTypeCode    = request.getParameter("code");
@@ -25,7 +29,7 @@ final class StaffTypes{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -252,7 +256,7 @@ final class StaffTypes{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         Integer saved = 0;
         
@@ -272,7 +276,7 @@ final class StaffTypes{
             
             if(this.id == null){
                 
-                id = system.generateId(this.table, "ID");
+                id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, STAFFTYPECODE, STAFFTYPENAME, ISDOCTOR, ISNURSE)"
@@ -312,7 +316,7 @@ final class StaffTypes{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
         
          Connection conn = ConnectionProvider.getConnection();
          Statement stmt = null;

@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -8,14 +9,16 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class OutPatients{
-    String table    = "HMTRIAGE";
-    String view     = "VIEWNURSEOPDS";
+//    String table    = "HMTRIAGE";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMTRIAGE";
+    String view     = comCode+".VIEWNURSEOPDS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String regNo            = request.getParameter("regNo");
@@ -39,7 +42,7 @@ final class OutPatients{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -272,7 +275,7 @@ final class OutPatients{
         
         html += gui.formInput("hidden", "id", 15, ""+this.id, "", "");
           
-        PatientProfile patientProfile = new PatientProfile(this.ptNo);
+        PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
         
         String regTypeLbl = "Unknown";
                     
@@ -333,7 +336,7 @@ final class OutPatients{
         String html = "";
         Gui gui = new Gui();
         
-        PatientProfile patientProfile = new PatientProfile(this.ptNo);
+        PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -378,7 +381,7 @@ final class OutPatients{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists(this.table, "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists(this.table, "REGNO = '"+this.regNo+"'")){
             
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt;
@@ -442,7 +445,7 @@ final class OutPatients{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         HttpSession session = request.getSession();
         
@@ -454,12 +457,12 @@ final class OutPatients{
         Statement stmt ;
         
         try{
-            if(! system.recordExists(this.table, "REGNO = '"+this.regNo+"'")){
+            if(! sys.recordExists(this.table, "REGNO = '"+this.regNo+"'")){
                 
                 stmt = conn.createStatement();
             
-                Integer id          = system.generateId(this.table, "ID");
-                String pulseRate    = system.getNextNo(this.table, "ID", "", "RCP", 7);
+                Integer id          = sys.generateId(this.table, "ID");
+                String pulseRate    = sys.getNextNo(this.table, "ID", "", "RCP", 7);
 
                 String query;
 
@@ -476,10 +479,10 @@ final class OutPatients{
                     + "'"+this.respiration+"', "
                     + "'"+this.height+"', "
                     + "'"+this.weight+"', "
-                    + "'"+system.getLogUser(session)+"', "
-                    + "'"+system.getLogDate()+"', "
-                    + "'"+system.getLogTime()+"', "
-                    + "'"+system.getClientIpAdr(request)+"'"
+                    + "'"+sys.getLogUser(session)+"', "
+                    + "'"+sys.getLogDate()+"', "
+                    + "'"+sys.getLogTime()+"', "
+                    + "'"+sys.getClientIpAdr(request)+"'"
                     + ")";
                 
                 Integer saved = stmt.executeUpdate(query);

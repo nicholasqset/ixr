@@ -47,13 +47,13 @@ public class PatientProfile{
     public String nhifNo;
 
 
-    public PatientProfile(String ptNo){
+    public PatientProfile(String ptNo, String schema){
         Connection conn = ConnectionProvider.getConnection();
         Statement stmt;
 
         try{
             stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWPATIENTPROFILE WHERE PTNO = '"+ptNo+"' ";
+            String query = "SELECT * FROM "+schema+".VIEWPATIENTPROFILE WHERE PTNO = '"+ptNo+"' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.ptNo               = rs.getString("PTNO");			

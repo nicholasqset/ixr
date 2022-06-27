@@ -43,11 +43,11 @@ public class HMStaffProfile{
     public String cmnt;
 
 
-    public HMStaffProfile(String staffNo){
+    public HMStaffProfile(String staffNo, String schema){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWHMSTAFFPROFILE WHERE STAFFNO = '"+staffNo+"' ";
+            String query = "SELECT * FROM "+schema+".VIEWHMSTAFFPROFILE WHERE STAFFNO = '"+staffNo+"' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.staffNo            = rs.getString("STAFFNO");			

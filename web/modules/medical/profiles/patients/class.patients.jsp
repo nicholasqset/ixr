@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -6,14 +7,16 @@
 <%@page import="bean.medical.PatientProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Patients{
-    String table            = "HMPTPROFILE";
-    String view             = "VIEWPATIENTPROFILE";
+//    String table            = "HMPTPROFILE";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMPTPROFILE";
+    String view             = comCode+".VIEWPATIENTPROFILE";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String ptNo             = this.id != null? request.getParameter("ptNoHd"): request.getParameter("ptNo");
@@ -53,7 +56,7 @@ final class Patients{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -284,7 +287,7 @@ final class Patients{
                 html += e.getMessage();
             }
             
-            PatientProfile patientProfile = new PatientProfile(this.ptNo);
+            PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
             
             this.salutationCode     = patientProfile.salutationCode;
             this.firstName          = patientProfile.firstName;
@@ -345,7 +348,7 @@ final class Patients{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"personal-information.png", "", "")+" "+gui.formLabel("salutation", "Salutation")+"</td>";
-	html += "<td colspan = \"2\">"+gui.formSelect("salutation", "CSSALUTATION", "SALUTATIONCODE", "SALUTATIONNAME", null, null, this.id != null? this.salutationCode: "", null, false)+"</td>";
+	html += "<td colspan = \"2\">"+gui.formSelect("salutation", comCode+".CSSALUTATION", "SALUTATIONCODE", "SALUTATIONNAME", null, null, this.id != null? this.salutationCode: "", null, false)+"</td>";
         if(this.id != null){
             String imgPhotoSrc;
             if(hasPhoto(this.ptNo)){
@@ -377,7 +380,7 @@ final class Patients{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"gender.png", "", "")+" "+gui.formLabel("gender", "Gender")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("gender", "CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("gender", comCode+".CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -387,7 +390,7 @@ final class Patients{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"globe-medium-green.png", "", "")+" "+gui.formLabel("country", "Country")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("country", "CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: "", null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("country", comCode+".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -403,7 +406,7 @@ final class Patients{
 	html += "<td>"+gui.formInput("text", "nhifNo", 15, this.id != null? this.nhifNo: "", "", "")+"</td>";
         
 	html += "<td>"+gui.formIcon(request.getContextPath(),"blood-drop.png", "", "")+" "+gui.formLabel("bloodGroup", "Blood Group")+"</td>";
-	html += "<td>"+gui.formSelect("bloodGroup", "HMBLOODGRPS", "BLOODGRPCODE", "BLOODGRPNAME", "", "", this.id != null? this.bloodGrpCode: "", null, false)+"</td>";
+	html += "<td>"+gui.formSelect("bloodGroup", comCode+".HMBLOODGRPS", "BLOODGRPCODE", "BLOODGRPNAME", "", "", this.id != null? this.bloodGrpCode: "", null, false)+"</td>";
         html += "</tr>";
         
         html += "<tr>";
@@ -411,7 +414,7 @@ final class Patients{
 	html += "<td>"+gui.formCheckBox("physChald", (this.id != null && this.physChald == 1)? "checked": "", null, "onchange = \"patients.toggleDisab();\"", "", "")+"</td>";
 	
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"apps-accessibility.png", "", "")+" "+gui.formLabel("disability", "Physical Disability")+"</td>";
-	html += "<td>"+gui.formSelect("disability", "CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null? this.disabCode: "", (this.id != null && this.physChald == 1) ? "": "disabled", false)+"</td>";
+	html += "<td>"+gui.formSelect("disability", comCode+".CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null? this.disabCode: "", (this.id != null && this.physChald == 1) ? "": "disabled", false)+"</td>";
 	html += "</tr>";
         
         html += "</table>";
@@ -565,7 +568,7 @@ final class Patients{
         return html;
     }
     
-    public Object getPatientProfile(){
+    public Object getPatientProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.ptNo == null || this.ptNo.equals("")){
@@ -573,7 +576,7 @@ final class Patients{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PatientProfile patientProfile = new PatientProfile(this.ptNo);
+            PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
             
             obj.put("salutation", patientProfile.salutationCode);
             obj.put("firstName", patientProfile.firstName);
@@ -613,7 +616,7 @@ final class Patients{
     public Object save(){
         
         JSONObject obj      = new JSONObject();
-        System system       = new System();
+        Sys system       = new Sys();
         HttpSession session = request.getSession();
         
         Connection conn = ConnectionProvider.getConnection();
