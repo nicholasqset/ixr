@@ -12,6 +12,8 @@
 <%@page import="bean.sys.Sys"%>
 <%
     final class PrintRptReceipt{
+        HttpSession session = request.getSession();
+        String comCode      = session.getAttribute("comCode").toString();
         
         String pyNo     = request.getParameter("receiptNo") != null && ! request.getParameter("receiptNo").trim().equals("")? request.getParameter("receiptNo"): null;
     
@@ -25,7 +27,7 @@
 //                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                 
-                String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
+                String companyCode = system.getOne(this.comCode+".CSCOPROFILE", "COMPANYCODE", "");
 
                 if(companyCode != null){
 
@@ -33,7 +35,7 @@
 
                     String imgLogoSrc;
 
-                    if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
+                    if(system.getOne(this.comCode+".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
                         imgLogoSrc = "logo.jsp?code="+companyCode;
                     }else{
                         imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
@@ -42,7 +44,7 @@
                     html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                     html += "<tr>";
-                    html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                    html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                     html += "</tr>";
 
                     html += "<tr>";
@@ -116,7 +118,7 @@
             
             Sys system = new Sys();
             
-            PsPyHdr psPyHdr = new PsPyHdr(pyNo);
+            PsPyHdr psPyHdr = new PsPyHdr(pyNo, this.comCode);
             
             String entryDateLbl = "";
             
@@ -180,7 +182,7 @@
             String html = "";
             Sys system = new Sys();
 
-            if(system.recordExists("VIEWPSPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+            if(system.recordExists(this.comCode+".VIEWPSPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
 
                 html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
 
@@ -206,7 +208,7 @@
 
                     String query;
 
-                    query = "SELECT * FROM VIEWPSPYDTLS WHERE PYNO = '"+ this.pyNo+ "' ORDER BY ITEMCODE";
+                    query = "SELECT * FROM "+this.comCode+".VIEWPSPYDTLS WHERE PYNO = '"+ this.pyNo+ "' ORDER BY ITEMCODE";
 
                     ResultSet rs = stmt.executeQuery(query);
 

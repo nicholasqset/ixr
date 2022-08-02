@@ -13,23 +13,23 @@
     Boolean sessionExpired = false;
     
     if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
-        sessionExpired = true;
+//        sessionExpired = true;
     }
     
     if(request.getParameter("n") == null){
         session.setAttribute("userid", null);
-        sessionExpired = true;
+//        sessionExpired = true;
     }
     
     EncryptionUtil encryptionUtil = new EncryptionUtil();
     Sys system = new Sys();
     
     try{
-        User user = new User(session.getAttribute("userid").toString());
-        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
-            session.setAttribute("userid", null);
-            sessionExpired = true;
-        }
+//        User user = new User(session.getAttribute("userid").toString());
+//        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
+//            session.setAttribute("userid", null);
+//            sessionExpired = true;
+//        }
     }catch(NullPointerException e){
         e.getMessage();
     }
