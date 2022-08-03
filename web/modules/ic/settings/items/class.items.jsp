@@ -388,7 +388,7 @@ final class Items{
             Integer saved = 0;
             
             if(this.id == null){
-                System.out.println("========inserting");
+                system.log("========inserting");
                 Integer id = system.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                         + "("
@@ -422,7 +422,7 @@ final class Items{
                         + "'"+ system.getClientIpAdr(request)+ "'"
                         + ")";
             }else{
-                System.out.println("========updating");
+                system.log("========updating");
                 query = "UPDATE "+ this.table+ " SET "
 //                        + "ITEMCODE     = '"+ this.itemCode+ "', "
                         + "ITEMNAME     = '"+ this.itemName+ "', "
@@ -445,11 +445,11 @@ final class Items{
                         + "AUDITTIME    = "+ system.getLogTime()+ ", "
                         + "AUDITIPADR   = '"+ system.getClientIpAdr(request)+ "' "
                         + "WHERE ID     = "+ this.id;
-                System.out.println("========query=="+ query);
+                system.log("========query=="+ query);
             }
             
             saved = stmt.executeUpdate(query);
-            System.out.println("saved e="+ saved);
+            system.log("saved e="+ saved);
             
             if(saved > 0){
                 obj.put("success", new Integer(1));
@@ -462,11 +462,11 @@ final class Items{
         }catch (SQLException e){
             obj.put("success", new Integer(0));
             obj.put("message", e.getMessage());
-            System.out.println("small e="+e.getMessage());
+            system.log("small e="+e.getMessage());
         }catch (Exception e){
             obj.put("success", new Integer(0));
             obj.put("message", e.getMessage());
-            System.out.println("big e="+e.getMessage());
+            system.log("big e="+e.getMessage());
         }
         
         return obj;

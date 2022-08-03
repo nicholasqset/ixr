@@ -1,3 +1,4 @@
+<%@page import="bean.sys.Sys"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.io.UnsupportedEncodingException"%>
 <%@page import="java.net.URLEncoder"%>
@@ -119,6 +120,9 @@
         
         public Boolean menuHasChildren(Integer menuCode){
             Boolean hasChildren = false;
+            
+            Sys sys = new Sys();
+            
             Integer count = 0;
             try{
                 Connection conn = ConnectionProvider.getConnection();
@@ -129,7 +133,8 @@
                     count = rs.getInt("CT");			
                 }
             }catch (Exception e){
-                System.out.println(e.getMessage());
+//                out.println(e.getMessage());
+                sys.logV2(e.getMessage());
             }
 
             if(count > 0){

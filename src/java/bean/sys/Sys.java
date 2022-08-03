@@ -33,6 +33,13 @@ public class Sys {
         System.out.println("sys_cus_log==="+ msg);
     }
     
+    public void logV2(Object obj){
+        System.out.println("\n\n");
+        System.out.println("object log start...");
+        System.out.println(obj);
+        System.out.println("...object log end");
+    }
+    
     public Integer generateId(String table, String column){
         Integer id = 1;
         column = column.isEmpty()? "ID": column;
