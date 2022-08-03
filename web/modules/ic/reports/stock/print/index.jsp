@@ -51,6 +51,7 @@
         String webRootPath = application.getRealPath("/").replace('\\', '/');
         
         String tempPath = webRootPath + "/tmp/reports/jasper/log/";
+        //create file
         File theDir = new File(tempPath);
         if (!theDir.exists()) {
             theDir.mkdirs();
@@ -121,6 +122,7 @@
         }
     } catch (Exception e) {
         out.println(e.getMessage());
+        
     }
 
 %>
