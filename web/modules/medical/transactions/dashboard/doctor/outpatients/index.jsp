@@ -212,6 +212,53 @@
                 addMedication: function(regNo){
                     module.execute('addMedication', "regNo="+regNo, 'divMedication');
                 },
+                searchItem: function(){
+                    var count = Ajax.activeRequestCount;
+                    if(count <= 0){
+                        var getResultTo = 'drugDiv';
+                        new Ajax.Autocompleter(
+                                'drug', getResultTo, module.ajaxUrl,{
+                                paramName  : 'drugHd',
+                                parameters : 'function=searchItem',
+                                minChars   : 2,
+                                frequency  : 1.0,
+                                afterUpdateElement : dashboard.setItem
+                            });
+                    }
+                },
+                setItem: function(text, item){
+                    if(item.id !== ''){
+                        if($('drugHd')) $('drugHd').value= item.id;
+                        dashboard.getItemProfile(item.id);
+                    }
+                },
+                getItemProfile: function(itemNo){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getItemProfile&itemNo='+ itemNo,
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            if(typeof response.success === 'number' && response.success === 1){
+                                
+                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+//                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+//                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+//                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                
+//                                dashboard.getItemPhoto(itemNo);
+                                
+                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                            }else{
+                                if(typeof response.message !== 'undefined'){
+                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                }else{
+                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                }
+                            }
+                        }
+                    });
+                },
                 saveMedication: function(required){
                     if(module.validate(required)){
                         if($('frmMedication'))  $('frmMedication').disabled = true;  
@@ -294,7 +341,6 @@
                         if($('btnSave')) { $('btnSave').disabled = false;}
                     }
                 }
-                
             };
             
         </script>
