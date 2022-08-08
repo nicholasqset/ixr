@@ -16,7 +16,7 @@ final class Patients{
     HttpSession session = request.getSession();
     String comCode      = session.getAttribute("comCode").toString();
     String table        = comCode+".HMPTPROFILE";
-    String view             = comCode+".VIEWPATIENTPROFILE";
+    String view         = comCode+".VIEWPATIENTPROFILE";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String ptNo             = this.id != null? request.getParameter("ptNoHd"): request.getParameter("ptNo");
@@ -26,6 +26,7 @@ final class Patients{
     String middleName       = request.getParameter("middleName");
     String lastName         = request.getParameter("lastName");
     String genderCode       = request.getParameter("gender");
+    String age              = request.getParameter("age");
     String dob              = request.getParameter("dob");
     String countryCode      = request.getParameter("country");
     String nationalId       = request.getParameter("nationalId");
@@ -179,7 +180,8 @@ final class Patients{
                 html += "<th>Student No</th>";
                 html += "<th>Name</th>";
                 html += "<th>Gender</th>";
-                html += "<th>DOB</th>";
+                html += "<th>Age</th>";
+//                html += "<th>DOB</th>";
                 html += "<th>Blood Group</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
@@ -192,6 +194,7 @@ final class Patients{
                     String ptNo         = rs.getString("PTNO");
                     String fullName     = rs.getString("FULLNAME");
                     String genderName   = rs.getString("GENDERNAME");
+                    String age          = rs.getString("AGE");
                     String dob          = rs.getString("DOB");
                     String bloodGrpName = rs.getString("BLOODGRPNAME");
                     
@@ -214,7 +217,8 @@ final class Patients{
                     html += "<td>"+ ptNo+ "</td>";
                     html += "<td>"+ fullName+ "</td>";
                     html += "<td>"+ genderName+ "</td>";
-                    html += "<td>"+ dob+ "</td>";
+                    html += "<td>"+ age+ "</td>";
+//                    html += "<td>"+ dob+ "</td>";
                     html += "<td>"+ bloodGrpName+ "</td>";
                     html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
@@ -295,6 +299,7 @@ final class Patients{
             this.lastName           = patientProfile.lastName;
             this.genderCode         = patientProfile.genderCode;
             this.dob                = patientProfile.dob;
+            this.age                = patientProfile.age;
             this.countryCode        = patientProfile.countryCode;
             this.nationalId         = patientProfile.nationalId;
             this.bloodGrpCode       = patientProfile.bloodGrpCode;
@@ -384,8 +389,10 @@ final class Patients{
 	html += "</tr>";
         
         html += "<tr>";
+	html += "<td>"+gui.formIcon(request.getContextPath(),"calendar.png", "", "")+" "+gui.formLabel("age", "Age")+"</td>";
+	html += "<td>"+gui.formInput("text", "age", 25, this.id != null? this.age: "", "", "")+"</td>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"calendar.png", "", "")+" "+gui.formLabel("dob", "Date of Birth")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formDateTime(request.getContextPath(), "dob", 15, this.id != null? this.dob: "", false, "")+"</td>";
+	html += "<td>"+gui.formDateTime(request.getContextPath(), "dob", 15, this.id != null? this.dob: "", false, "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -650,7 +657,7 @@ final class Patients{
                 query += "INSERT INTO "+this.table+" "
                         + "("
                         + "ID, PTNO, SALUTATIONCODE, FIRSTNAME, MIDDLENAME, LASTNAME, FULLNAME, "
-                        + "GENDERCODE, DOB, COUNTRYCODE, NATIONALID, PASSPORTNO, BLOODGRPCODE, PHYSCHALD, DISABCODE, "
+                        + "GENDERCODE, DOB, AGE, COUNTRYCODE, NATIONALID, PASSPORTNO, BLOODGRPCODE, PHYSCHALD, DISABCODE, "
                         + "POSTALADDR, POSTALCODE, PHYSICALADDR, TELEPHONE, CELLPHONE, EMAIL, "
                         + "ALLERGIES, WARNS, FAMILYHIST, SELFHIST, PASTMEDHIST, SOCIALHIST,"
                         + "NHIFNO"
@@ -666,6 +673,7 @@ final class Patients{
                         + "'"+this.firstName+" "+this.middleName+" "+this.lastName+"',"
                         + "'"+this.genderCode+"',"
                         + "'"+this.dob+"',"
+                        + "'"+this.age+"',"
                         + "'"+this.countryCode+"',"
                         + "'"+this.nationalId+"',"
                         + "'"+this.passportNo+"',"
@@ -705,6 +713,7 @@ final class Patients{
                             + "FULLNAME         = '"+this.firstName+" "+this.middleName+" "+this.lastName+"', "
                             + "GENDERCODE       = '"+this.genderCode+"', "
                             + "DOB              = '"+this.dob+"', "
+                            + "AGE              = '"+this.age+"', "
                             + "COUNTRYCODE      = '"+this.countryCode+"', "
                             + "NATIONALID       = '"+this.nationalId+"', "
                             + "PASSPORTNO       = '"+this.passportNo+"', "

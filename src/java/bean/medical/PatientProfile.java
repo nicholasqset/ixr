@@ -22,6 +22,7 @@ public class PatientProfile{
     public String genderCode;
     public String genderName;
     public String dob;
+    public String age;
     public String countryCode;
     public String countryName;
     public String nationalId;
@@ -66,6 +67,7 @@ public class PatientProfile{
                 this.genderCode         = rs.getString("GENDERCODE");			
                 this.genderName         = rs.getString("GENDERNAME");			
                 this.dob                = rs.getString("DOB");			
+                this.age                = rs.getString("AGE");			
                 this.countryCode        = rs.getString("COUNTRYCODE");			
                 this.countryName        = rs.getString("COUNTRYNAME");			
                 this.nationalId         = rs.getString("NATIONALID");			
