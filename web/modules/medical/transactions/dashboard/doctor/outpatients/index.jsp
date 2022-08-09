@@ -94,7 +94,6 @@
             var g = new Growler( {location : 'br' , width:'' });
             
             var dashboard = {
-                
                 addComplaint: function(regNo){
                     module.execute('addComplaint', "regNo="+regNo, 'divComplaints');
                 },
@@ -141,6 +140,63 @@
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
                                     dashboard.getComplaints(regNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                addLab: function(regNo){
+                    module.execute('addLab', "regNo="+regNo, 'divLab');
+                },
+                saveLab: function(required){
+                    if(module.validate(required)){
+                        if($('frmLab'))  $('frmLab').disabled = true;  
+                        if($('btnSaveLab')) $('btnSaveLab').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveLab&'+ Form.serialize("frmLab"),
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmLab')) { $('frmLab').disabled = false; }
+                        if($('btnSaveLab')) { $('btnSaveLab').disabled = false;}
+                    }
+                },
+                getLab: function(regNo){
+                    module.execute('getLab', "regNo="+regNo, 'divLab');
+                },
+                editLab: function(id){
+                    module.execute('addLab', "rid="+id, 'divLab');
+                },
+                delLab: function(id, name, regNo){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=delLab&rid='+ id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    dashboard.getLab(regNo);
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });

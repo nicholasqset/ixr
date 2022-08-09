@@ -220,7 +220,7 @@
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getHistoryTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getVitalParamTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divComplaints\">" + this.getComplaintsTab() + "</div></div>";
-            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divLab\">" + this.getComplaintsTab() + "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divLab\">" + this.getLabTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDiagnosis\">" + this.getDiagnosisTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divMedication\">" + this.getMedicationTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getDischargeTab() + "</div>";
@@ -647,6 +647,227 @@
 
             return obj;
         }
+        
+        //lab start
+        public String getLabTab() {
+            String html = "";
+
+            Gui gui = new Gui();
+            Sys sys = new Sys();
+
+            if (sys.recordExists("" + this.comCode + ".HMPTLAB", "REGNO = '" + this.regNo + "'")) {
+                html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
+
+                html += "<tr>";
+                html += "<th>#</th>";
+                html += "<th>Lab Item</th>";
+                html += "<th>Results</th>";
+                html += "<th>Options</th>";
+                html += "</tr>";
+
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+//                String query = "SELECT * FROM "+this.comCode+".VIEWPTCOMPLAINTS WHERE REGNO = '"+this.regNo+"' ";
+                    String query = "SELECT * FROM " + this.comCode + ".HMPTLAB WHERE REGNO = '" + this.regNo + "' ";
+                    ResultSet rs = stmt.executeQuery(query);
+                    Integer count = 1;
+                    while (rs.next()) {
+
+                        String id = rs.getString("ID");
+                        String labItemName = rs.getString("LABITEMNAME");
+                        String results = rs.getString("RESULTS");
+
+                        String editLink = gui.formHref("onclick = \"dashboard.editLab(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+
+                        html += "<tr>";
+                        html += "<td>" + count + "</td>";
+                        html += "<td>" + labItemName + "</td>";
+                        html += "<td>" + results + "</td>";
+                        html += "<td>" + editLink + "</td>";
+                        html += "</tr>";
+
+                        count++;
+                    }
+
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+                html += "</table>";
+
+            } else {
+                html += gui.formWarningMsg("No lab record found.");
+            }
+            html += "<br>";
+            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addLab('" + this.regNo + "');\"", "");
+
+            return html;
+        }
+
+        public String addLab() {
+            String html = "";
+
+            Gui gui = new Gui();
+
+            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            String labItemCode = "";
+            String labItemName = "";
+            String remarks = "";
+            if (rid != null) {
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt;
+                    stmt = conn.createStatement();
+//                String query = "SELECT * FROM "+this.comCode+".VIEWPTCOMPLAINTS WHERE ID = "+rid;
+                    String query = "SELECT * FROM " + this.comCode + ".HMPTLAB WHERE ID = " + rid;
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        this.regNo = rs.getString("REGNO");
+                        labItemCode = rs.getString("LABITEMCODE");
+                        labItemName = rs.getString("LABITEMNAME");
+                        remarks = rs.getString("REMARKS");
+                    }
+                } catch (SQLException e) {
+                    html += e.getMessage();
+                }
+
+            }
+
+            html += gui.formStart("frmLab", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            if (rid != null) {
+                html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
+            }
+
+            html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
+
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItem", " Lab Item") + "</td>";
+//        html += "<td >"+gui.formSelect("labItem", ""+this.comCode+".HMCOMPLAINTS", "LABITEMCODE", "LABITEMNAME", "", "", labItemCode, "", false)+"</td>";
+            html += "<td >" + gui.formInput("textarea", "labItem", 40, labItemName, "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("remarks", " Remarks") + "</td>";
+            html += "<td >" + gui.formInput("textarea", "remarks", 40, remarks, "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td>&nbsp;</td>";
+            html += "<td>";
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('labItem');\"", "");
+            if (rid != null) {
+                html += gui.formButton(request.getContextPath(), "button", "btnDelLab", "Delete", "delete.png", "onclick = \"dashboard.delLab(" + rid + ", '" + labItemName + "', '" + this.regNo + "');\"", "");
+            }
+            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getLab('" + this.regNo + "');\"", "");
+            html += "</td>";
+            html += "</tr>";
+
+            html += "</table>";
+
+            html += gui.formEnd();
+            return html;
+        }
+
+        public Object saveLab() throws Exception {
+            JSONObject obj = new JSONObject();
+            Sys sys = new Sys();
+            HttpSession session = request.getSession();
+
+            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            String labItemCode = request.getParameter("labItem");
+            String remarks = request.getParameter("remarks");
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+                String query;
+
+                if (rid == null) {
+                    Integer id = sys.generateId("" + this.comCode + ".HMPTLAB", "ID");
+                    query = "INSERT INTO " + this.comCode + ".HMPTLAB "
+                            + "(ID, REGNO, LABITEMCODE, LABITEMNAME, REMARKS, "
+                            + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
+                            + "VALUES"
+                            + "("
+                            + id + ", "
+                            + "'" + this.regNo + "', "
+                            //                    + "'"+ labItemCode +"', "
+                            + "'" + id + "', "
+                            + "'" + labItemCode + "', "
+                            + "'" + remarks + "', "
+                            + "'" + sys.getLogUser(session) + "', "
+                            + "'" + sys.getLogDate() + "', "
+                            + "'" + sys.getLogTime() + "', "
+                            + "'" + sys.getClientIpAdr(request) + "'"
+                            + ")";
+
+                } else {
+                    query = "UPDATE " + this.comCode + ".HMPTLAB SET "
+                            //                    + "LABITEMCODE    = '"+ labItemCode +"', "
+                            + "LABITEMNAME    = '" + labItemCode + "', "
+                            + "REMARKS      = '" + remarks + "' "
+                            + "WHERE ID     = " + rid + "";
+                }
+
+                Integer saved = stmt.executeUpdate(query);
+
+                if (saved == 1) {
+                    obj.put("success", new Integer(1));
+                    obj.put("message", "Lab entry successfully made.");
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "Oops! An Un-expected error occured while saving record." + query);
+                }
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            }
+
+            return obj;
+        }
+
+        public String getLab() {
+            String html = "";
+            html += this.getLabTab();
+            return html;
+        }
+
+        public Object delLab() throws Exception {
+
+            JSONObject obj = new JSONObject();
+            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                if (rid != null) {
+                    String query = "DELETE FROM " + this.comCode + ".HMPTLAB WHERE ID = " + rid;
+
+                    Integer purged = stmt.executeUpdate(query);
+                    if (purged == 1) {
+                        obj.put("success", new Integer(1));
+                        obj.put("message", "Lab entry successfully deleted.");
+                    } else {
+                        obj.put("success", new Integer(0));
+                        obj.put("message", "An error occured while deleting record.");
+                    }
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "An error occured while deleting record.");
+                }
+
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            }
+
+            return obj;
+        }
+        //lab end
 
         public String getDiagnosisTab() {
             String html = "";
