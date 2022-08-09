@@ -19,6 +19,7 @@ final class StaffTypes{
     String staffTypeCode    = request.getParameter("code");
     String staffTypeName    = request.getParameter("name");
     Integer isdoctor        = request.getParameter("isdoctor") != null? 1: null;
+    Integer islabtech       = request.getParameter("islabtech") != null? 1: null;
     Integer isnurse         = request.getParameter("isnurse") != null? 1: null;
     
     public String getGrid(){
@@ -203,6 +204,7 @@ final class StaffTypes{
                     this.staffTypeCode      = rs.getString("STAFFTYPECODE");		
                     this.staffTypeName      = rs.getString("STAFFTYPENAME");		
                     this.isdoctor           = rs.getInt("ISDOCTOR");		
+                    this.islabtech          = rs.getInt("ISLABTECH");		
                     this.isnurse            = rs.getInt("ISNURSE");		
                 }
             }catch (Exception e){
@@ -231,6 +233,11 @@ final class StaffTypes{
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+" "+gui.formLabel("isdoctor", "Is Doctor")+"</td>";
 	html += "<td>"+gui.formCheckBox("isdoctor", (this.id != null && this.isdoctor == 1)? "checked": "", null, "", "", "")+"</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+" "+gui.formLabel("islabtech", "Is Lab Technician")+"</td>";
+	html += "<td>"+gui.formCheckBox("islabtech", (this.id != null && this.islabtech == 1)? "checked": "", null, "", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -279,13 +286,14 @@ final class StaffTypes{
                 id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
-                    + "(ID, STAFFTYPECODE, STAFFTYPENAME, ISDOCTOR, ISNURSE)"
+                    + "(ID, STAFFTYPECODE, STAFFTYPENAME, ISDOCTOR, ISLABTECH, ISNURSE)"
                     + "VALUES"
                     + "("
                     + id+","
                     + "'"+this.staffTypeCode+"',"
                     + "'"+this.staffTypeName+"',"
                     + this.isdoctor+","
+                    + this.islabtech+","
                     + this.isnurse+""
                     + ")";
                 
@@ -295,6 +303,7 @@ final class StaffTypes{
                     + "STAFFTYPECODE    = '"+this.staffTypeCode+"', "
                     + "STAFFTYPENAME    = '"+this.staffTypeName+"', "
                     + "ISDOCTOR         = "+this.isdoctor+", "
+                    + "ISLABTECH         = "+this.islabtech+", "
                     + "ISNURSE          = "+this.isnurse+" "
                     + "WHERE ID         = "+this.id;
             }

@@ -14,8 +14,6 @@
 <%
 
     final class OutPatients {
-//    String table    = "HMREGISTRATION";
-
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
         String table = comCode + ".HMREGISTRATION";
@@ -220,7 +218,6 @@
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getHistoryTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getVitalParamTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divComplaints\">" + this.getComplaintsTab() + "</div></div>";
-            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divLab\">" + this.getComplaintsTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDiagnosis\">" + this.getDiagnosisTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divMedication\">" + this.getMedicationTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getDischargeTab() + "</div>";
@@ -234,7 +231,7 @@
             html += "</div>";
 
             html += "<script type = \"text/javascript\">";
-            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Medication\', \'Discharge\'), 0, 625, 365, Array(false));";
+            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Diagnosis\', \'Medication\', \'Discharge\'), 0, 625, 365, Array(false));";
             html += "</script>";
 
             return html;
