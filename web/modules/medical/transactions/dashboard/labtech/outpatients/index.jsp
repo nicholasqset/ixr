@@ -47,8 +47,26 @@
             out.print(gui.loadCss(request.getContextPath(), "buttons"));
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
             out.print(gui.loadCss(request.getContextPath(), "tab-view"));
+            out.print(gui.loadCss(request.getContextPath(), "datepicker"));
             
         %>
+        <style>
+            div#dvPyEntries{
+                height: 112px;
+                padding: 2px;
+                overflow: scroll;
+                overflow-y: auto;
+                overflow-x: hidden;
+                border: 1px solid #919B9C;
+            }
+            div#dvPyEntries-a{
+                height: 96px;
+                padding: 2px;
+                overflow: scroll;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+        </style>
         <script type="text/javascript"> var rootPath = '<%= request.getContextPath() %>';</script>
     </head>
     <body>
@@ -86,6 +104,8 @@
             out.print(gui.loadJs(request.getContextPath(), "tab-view/ajax"));
             out.print(gui.loadJs(request.getContextPath(), "tab-view/tab-view"));
             out.print(gui.loadJs(request.getContextPath(), "module"));
+            out.print(gui.loadJs(request.getContextPath(), "prototype-date-extensions"));
+            out.print(gui.loadJs(request.getContextPath(), "datepicker"));
         %> 
         <script type="text/javascript">
             
@@ -396,6 +416,171 @@
                         if($('frmModule')) { $('frmModule').disabled = false; }
                         if($('btnSave')) { $('btnSave').disabled = false;}
                     }
+                }
+            };
+            
+            let registration = {
+                manageBill: function(regNo, ptNo){
+                    module.execute('manageBill', 'regNo='+regNo+'&ptNo='+ptNo, 'dvBills');
+                },
+                searchItem: function(){
+                    var count = Ajax.activeRequestCount;
+                    if(count <= 0){
+                        var getResultTo = 'itemNoDiv';
+                        new Ajax.Autocompleter(
+                                'itemNo', getResultTo, module.ajaxUrl,{
+                                paramName  : 'itemNoHd',
+                                parameters : 'function=searchItem',
+                                minChars   : 2,
+                                frequency  : 1.0,
+                                afterUpdateElement : registration.setItem
+                            });
+                    }
+                },
+                setItem: function(text, item){
+                    if(item.id !== ''){
+                        if($('itemNoHd')) $('itemNoHd').value= item.id;
+                        registration.getItemProfile(item.id);
+                    }
+                },
+                getItemProfile: function(itemNo){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getItemProfile&itemNo='+ itemNo,
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            if(typeof response.success === 'number' && response.success === 1){
+                                
+                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                
+                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                            }else{
+                                if(typeof response.message !== 'undefined'){
+                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                }else{
+                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                }
+                            }
+                        }
+                    });
+                },
+                getItemTotalAmount: function(){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getItemTotalAmount&'+ Form.serialize('frmBill'),
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            
+                            if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                            
+                        }
+                    });
+                },
+                saveBill: function(required){
+                    var data = Form.serialize('frmBill');
+                    var amount = $('amount')? $F('amount'): '';
+                    data = data+ '&amount='+ amount;
+                    if(module.validate(required)){
+                        if($('frmModule'))  $('frmModule').disabled = true;  
+                        if($('btnSave')) $('btnSave').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveBill&'+data,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    
+                                    if(typeof response.billNo !== 'undefined'){
+                                        if($('billNo')) $('billNo').value = response.billNo;
+                                        if($('billNoHd')) $('billNoHd').value = response.billNo;
+                                    }
+                                    
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    if($('dvPyEntries')) registration.getPyEntries(response.billNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An unexpected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmModule')) { $('frmModule').disabled = false; }
+                        if($('btnSave')) { $('btnSave').disabled = false;}
+                    }
+                },
+                listBills: function(){
+                    let id = $F('id');
+                    module.execute('listBills', 'id='+ id, 'dvBills');
+                },
+                getPyEntries: function(billNo=''){
+                    if(billNo === ''){
+                        billNo = $F('billNo');
+                    }
+                    module.execute('getPyEntries', 'billNoHd='+ billNo, 'dvPyEntries');
+                },
+                editBill: function(id, bid, billNoHd){
+                    module.execute('manageBill', 'id='+ id+ '&bid='+ bid+ '&billNoHd='+ billNoHd, 'dvBills');
+                },
+                editPyDtls: function(sid){
+                    new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=editPyDtls&sid='+ sid,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                    
+                                    if(typeof response.sidUi !== 'undefined' && $('dvPyEntrySid')) $('dvPyEntrySid').update(response.sidUi);
+                                    if(typeof response.itemNo !== 'undefined' && $('itemNo')) $('itemNo').value = response.itemNo;
+                                    if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+                                    if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+                                    if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                },
+                purge: function(id, name){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=purge&id='+id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    if($('dvPyEntries')) registration.getPyEntries();
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An unexpected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                print: function(billNo){
+                    var printWindow = window.open(
+                            './print?billNo='+ billNo, '', 'height=464, width=525, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                    printWindow.focus();
                 }
             };
             
