@@ -1,5 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -7,8 +7,10 @@
 <%
 
 final class StudentPeriods{
-    String table        = "PRSTUDPRDS";
-    String view         = "VIEWPRSTUDPRDS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRSTUDPRDS";
+    String view         = comCode+".VIEWPRSTUDPRDS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String classCode    = request.getParameter("studentClass");
@@ -24,7 +26,7 @@ final class StudentPeriods{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -214,12 +216,12 @@ final class StudentPeriods{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", this.id != null? this.classCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentClass", this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", this.id != null? this.classCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -245,8 +247,7 @@ final class StudentPeriods{
     }
     
     
-    public Object save(){
-        
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -258,7 +259,7 @@ final class StudentPeriods{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, STUDPRDCODE, STUDPRDNAME, CLASSCODE, TERMCODE)"
                     + "VALUES"
@@ -300,7 +301,7 @@ final class StudentPeriods{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

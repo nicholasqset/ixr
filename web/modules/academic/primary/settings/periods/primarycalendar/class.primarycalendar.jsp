@@ -1,7 +1,7 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -9,8 +9,10 @@
 <%
 
 final class PrimaryCalendar{
-    String table            = "PRCALENDAR";
-    String view             = "VIEWPRCALENDAR";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRCALENDAR";
+    String view             = comCode+".VIEWPRCALENDAR";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = request.getParameter("academicYear") != null? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -27,7 +29,7 @@ final class PrimaryCalendar{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -261,7 +263,7 @@ final class PrimaryCalendar{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -297,7 +299,7 @@ final class PrimaryCalendar{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -327,7 +329,7 @@ final class PrimaryCalendar{
             
             if(this.id == null){
                 
-             Integer id = system.generateId(this.table, "ID");
+             Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, ACADEMICYEAR, TERMCODE, STARTDATE, ENDDATE, ACTIVE)"
@@ -375,7 +377,7 @@ final class PrimaryCalendar{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          
