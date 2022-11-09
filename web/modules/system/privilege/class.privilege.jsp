@@ -285,7 +285,7 @@ final class Privilege{
             }
         }catch (SQLException e){
             e.printStackTrace();
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         }
 
         if(count > 0){

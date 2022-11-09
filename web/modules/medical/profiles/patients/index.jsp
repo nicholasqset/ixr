@@ -252,8 +252,8 @@
                 save: function(required){
                     var data = Form.serialize('frmModule');
                     if(module.validate(required)){
-                        if($('frmModule'))  $('frmModule').disabled = true;  
-                        if($('btnSave')) $('btnSave').disabled = true; 
+//                        if($('frmModule'))  $('frmModule').disabled = true;  
+//                        if($('btnSave')) $('btnSave').disabled = true; 
 			
 			new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
@@ -264,7 +264,10 @@
                                 if(typeof response.success==='number' && response.success===1){
                                     if(typeof response.ptNo !== 'undefined' && response.ptNo !== '' && $('autoPtNo').checked === true){
                                         if($('ptNo')) $('ptNo').value = response.ptNo;
-                                        if($('btnSave')) $('btnSave').disabled = true;
+//                                        if($('id')) $('id').value = response.id;
+                                        module.editModule(response.id)
+//                                        if($('btnSave')) $('btnSave').disabled = true;
+//                                        module.getGrid();
                                     }
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
                                 }else{
@@ -276,8 +279,8 @@
                                 }
                             }
 			});
-                        if($('frmModule')) { $('frmModule').disabled = false; }
-                        if($('btnSave')) { $('btnSave').disabled = false;}
+//                        if($('frmModule')) { $('frmModule').disabled = false; }
+//                        if($('btnSave')) { $('btnSave').disabled = false;}
                     }
                 }
             };

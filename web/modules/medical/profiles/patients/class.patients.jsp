@@ -397,7 +397,7 @@ final class Patients{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"globe-medium-green.png", "", "")+" "+gui.formLabel("country", "Country")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("country", comCode+".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: "", null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("country", comCode+".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: "KE", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -696,6 +696,7 @@ final class Patients{
                         + ")";
                 
                 obj.put("ptNo", this.ptNo);
+                obj.put("id", id);
                 
             }else{
                 
@@ -738,6 +739,8 @@ final class Patients{
                             + "AUDITTIME        = '"+system.getLogTime()+"', "
                             + "AUDITIP          = '"+system.getClientIpAdr(request)+"' "
                             + "WHERE PTNO       = '"+this.ptNo+"'";
+                            
+                            obj.put("id", this.id);
                 }
             }
             

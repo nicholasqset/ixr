@@ -1,3 +1,9 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.ic.ICItem"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="bean.medical.Medical"%>
@@ -6,11 +12,8 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="java.util.*"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
     final class OutPatients {
@@ -65,6 +68,7 @@
                             list.add("REGNO");
                             list.add("PTNO");
                             list.add("FULLNAME");
+                            list.add("CELLPHONE");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     if (dbType.equals("postgres")) {
@@ -162,6 +166,7 @@
                     html += "<th>Reg Type</th>";
                     html += "<th>Patient No</th>";
                     html += "<th>Patient Name</th>";
+                    html += "<th>Phone No</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
 
@@ -174,6 +179,7 @@
                         String regType = rs.getString("REGTYPE");
                         String ptNo = rs.getString("PTNO");
                         String fullName = rs.getString("FULLNAME");
+                        String cellphone = rs.getString("CELLPHONE");
 
                         String regTypeLbl = "Unknown";
 
@@ -193,6 +199,7 @@
                         html += "<td>" + regTypeLbl + "</td>";
                         html += "<td>" + ptNo + "</td>";
                         html += "<td>" + fullName + "</td>";
+                        html += "<td>" + cellphone + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
 
@@ -299,6 +306,11 @@
             html += "<td>" + patientProfile.genderName + "</td>";
             html += "</tr>";
 
+            html += "<tr>";
+            html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + " Age</td>";
+            html += "<td>" + patientProfile.age + "</td>";
+            html += "</tr>";
+            
             html += "<tr>";
             html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + " Date of Birth</td>";
             html += "<td>" + patientProfile.dob + "</td>";
@@ -1097,21 +1109,23 @@
                 html += "<tr>";
                 html += "<th>#</th>";
                 html += "<th>Medication</th>";
-                html += "<th>Days</th>";
-                html += "<th>Quantity</th>";
+				html += "<th>Quantity</th>";
+                html += "<th>Days</th>";                
                 html += "<th>Options</th>";
                 html += "</tr>";
 
                 try {
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.comCode + ".VIEWPTMEDICATION WHERE REGNO = '" + this.regNo + "' ";
+//                    String query = "SELECT * FROM " + this.comCode + ".VIEWPTMEDICATION WHERE REGNO = '" + this.regNo + "' ";
+                    String query = "SELECT * FROM " + this.comCode + ".HMMEDICATION WHERE REGNO = '" + this.regNo + "' ";
                     ResultSet rs = stmt.executeQuery(query);
                     Integer count = 1;
                     while (rs.next()) {
 
                         String id = rs.getString("ID");
-                        String drugName = rs.getString("DRUGNAME");
+//                        String drugName = rs.getString("DRUGNAME");
+                        String drugName = rs.getString("DRUGCODE");
                         String days = rs.getString("DAYS");
                         String qty = rs.getString("QTY");
 
@@ -1120,8 +1134,8 @@
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
                         html += "<td>" + drugName + "</td>";
-                        html += "<td>" + days + "</td>";
-                        html += "<td>" + qty + "</td>";
+						html += "<td>" + qty + "</td>";
+                        html += "<td>" + days + "</td>";                        
                         html += "<td>" + editLink + "</td>";
                         html += "</tr>";
 
@@ -1190,7 +1204,8 @@
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pill.png", "", "") + gui.formLabel("drug", " Drug") + "</td>";
 //        html += "<td >"+gui.formSelect("drug", "HMITEMS", "ITEMCODE", "ITEMNAME", "", "ISDRUG = 1", drugCode, "", false)+"</td>";
 //        html += "<td >"+gui.formSelect("drug", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "", drugCode, "", false)+"</td>";
-            html += "<td nowrap>" + gui.formAutoComplete("drug", 17, drugCode, "dashboard.searchItem", "drugHd", "") + "</td>";
+//            html += "<td nowrap>" + gui.formAutoComplete("drug", 17, drugCode, "dashboard.searchItem", "drugHd", "") + "</td>";
+            html += "<td >" + gui.formInput("text", "drug", 30, drugCode, "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1216,7 +1231,7 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveMedication", "Save", "save.png", "onclick = \"dashboard.saveMedication('drug days quantity instruction');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveMedication", "Save", "save.png", "onclick = \"dashboard.saveMedication('drug days quantity');\"", "");
             if (rid != null) {
                 html += gui.formButton(request.getContextPath(), "button", "btnDelMedication", "Delete", "delete.png", "onclick = \"dashboard.delMedication(" + rid + ", '" + drugName + "', '" + this.regNo + "');\"", "");
             }
@@ -1272,8 +1287,8 @@
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
             String drugCode = request.getParameter("drug");
-            Integer days = request.getParameter("days") != null ? Integer.parseInt(request.getParameter("days")) : 0;
-            Double qty = request.getParameter("quantity") != null ? Double.parseDouble(request.getParameter("quantity")) : 0.00;
+            String days = request.getParameter("days"); //!= null ? Integer.parseInt(request.getParameter("days")) : 0;
+            String qty = request.getParameter("quantity"); //!= null ? Double.parseDouble(request.getParameter("quantity")) : 0.00;
             String instruction = request.getParameter("instruction");
             String advice = request.getParameter("advice");
 
@@ -1293,8 +1308,8 @@
                             + id + ", "
                             + "'" + this.regNo + "', "
                             + "'" + drugCode + "', "
-                            + days + ", "
-                            + qty + ", "
+                            + "'" + days + "', "
+                            + "'" + qty + "', "
                             + "'" + instruction + "', "
                             + "'" + advice + "', "
                             + "'" + sys.getLogUser(session) + "', "
@@ -1306,8 +1321,8 @@
                 } else {
                     query = "UPDATE " + this.comCode + ".HMMEDICATION SET "
                             + "DRUGCODE     = '" + drugCode + "', "
-                            + "DAYS         = " + days + ", "
-                            + "QTY          = " + qty + ", "
+                            + "DAYS         = '" + days + "', "
+                            + "QTY          = '" + qty + "', "
                             + "INSTRUCTION  = '" + instruction + "', "
                             + "ADVICE       = '" + advice + "', "
                             + "AUDITUSER    = '" + sys.getLogUser(session) + "', "

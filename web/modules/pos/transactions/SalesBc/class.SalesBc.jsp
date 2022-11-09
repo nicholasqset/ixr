@@ -333,7 +333,7 @@
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
                     String query = "SELECT * FROM "+ this.view+ " WHERE ID = "+this.id;
-                    System.out.println(query);
+//                    System.out.println(query);
                     ResultSet rs = stmt.executeQuery(query);
                     while(rs.next()){
                         this.pyNo       = rs.getString("PYNO");

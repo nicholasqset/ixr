@@ -21,6 +21,123 @@
         
         public String getReportHeader(){
             String html = "";
+            Sys system = new Sys();
+            
+            try{
+//                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                
+//                String companyCode = system.getOne("sys.coms", "COMCODE", "");
+
+                if(comCode != null){
+
+                    Company company = new Company(comCode);
+
+                    String imgLogoSrc;
+
+                    if(system.getOne(comCode+".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ comCode +"'") != null){
+                        imgLogoSrc = "logo.jsp?code="+comCode;
+                    }else{
+                        imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
+                    }
+
+                    html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\">";
+
+                    html += "<tr>";
+//                    html += "<td colspan = \"4\" style = \"text-align: center; font-weight: bold;\">"+ company.companyName +"</td>";
+//                    html += "<td colspan = \"4\" style = \"font-weight: bold;\">"+ company.companyName +"</td>";
+                    html += "<td style = \"font-weight: bold; text-align: center;\">"+ company.compName +"</td>";
+                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td width = \"33%\">&nbsp;</td>";
+//                    html += "<td rowspan = \"5\" align = \"center\"><img id = \"imgLogo\" height = \"128\" width = \"128\" src=\""+ imgLogoSrc +"\"></td>";
+//                    html += "<td width = \"33%\">&nbsp;</td>";
+//                    html += "</tr>";
+
+                    html += "<tr>";
+                    html += "<td style = \"text-align: center;\">"+ company.physicalAdr +"</td>";
+                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td style = \"text-align: center;\">"+ company.postalAdr +" - "+ company.postalCode +"</td>";
+//                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td>"+ company.email +"</td>";
+//                    html += "</tr>";
+//
+//                    html += "<tr>";
+//                    html += "<td>"+ company.website +"</td>";
+//                    html += "</tr>";
+
+                    html += "<tr>";
+//                    html += "<td>"+ company.telephone +"</td>";
+                    html += "</tr>";
+
+                    html += "<tr>";
+                    html += "<td style = \"text-align: center;\">"+ company.cellphone +"</td>";
+                    html += "</tr>";
+                     
+//                    html += "Mobile : "+ company.cellphone +" ";
+//                    html += "";
+                    
+//                    html += "<td width = \"33%\">";
+//                    html += "</td>";
+//                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "</tr>";
+
+//                    html += "<tr>";
+//                    html += "<td colspan = \"3\"  align = \"center\">"+ this.rptName+ "</td>";
+//                    html += "<td>"+ this.rptName+ "</td>";
+//                    html += "</tr>";
+                    
+//                    java.util.Date now = new java.util.Date();
+//
+//                    String reportDateLbl = targetFormat.format(now);
+
+//                    html += "<tr>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "<td>&nbsp;</td>";
+//                    html += "<td>"+ reportDateLbl+ "</td>";
+//                    html += "</tr>";
+
+                    html += "</table>";
+                    
+                    //                    html += "<tr>";
+//                    html += "<td colspan = \"3\"  align = \"center\">"+ this.rptName+ "</td>";
+//                    html += "<td>"+ this.rptName+ "</td>";
+//                    html += "</tr>";
+                
+                    html += "<div style = \"width: 100%; padding: 7px; border-top: 1px solid #000; border-bottom: 1px solid #000; text-align:center;\">"+ this.rptName+ "</div>";
+
+                }else{
+                    html += "Company details not defined.";
+                }
+                
+            }catch (Exception e){
+                html += e.getMessage();
+            }
+            
+            return html;
+        }
+        
+        public String getReportHeaderx(){
+            String html = "";
             Sys sys = new Sys();
             
             try{
@@ -228,6 +345,14 @@
                     html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumTax.toString()) +"</td>";
                     html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumAmount.toString()) +"</td>";
                     html += "</tr>";
+                    
+                    html += "<table>";
+                    
+                    html += "<tr>";
+                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
+                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
+                    
+                    html += "</table>";
                 
                 }catch (Exception e){
                     html += e.getMessage();

@@ -1,25 +1,25 @@
 <%@page import="java.lang.reflect.InvocationTargetException"%>
 <%@page import="java.lang.reflect.Method"%>
-<%@include file="class.outpatients.jsp" %>
+<%@include file="class.DaySales.jsp" %>
 <%
-OutPatients outPatients = new OutPatients();
-
 String function = request.getParameter("function");
 
-Object obj = outPatients;
+Object obj = new DaySales();
 
 try{
     Method method = obj.getClass().getMethod(function);
-    try {
+    try{
         out.print(method.invoke(obj));
-    } catch (IllegalArgumentException e) {
+    }catch (IllegalArgumentException e) {
         out.print(e.getMessage());
-    } catch (IllegalAccessException e) {
+    }catch (IllegalAccessException e) {
         out.print(e.getMessage());
-    } catch (InvocationTargetException e) {
+    }catch (InvocationTargetException e) {
         out.print(e.getMessage());
     }
 }catch (NoSuchMethodException e) {
+    out.print(e.getMessage());
+}catch (Exception e) {
     out.print(e.getMessage());
 }
 
