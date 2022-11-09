@@ -1,6 +1,6 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -8,8 +8,10 @@
 <%
 
 final class FS{
-    String table            = "PRFSHDR";
-    String view             = "VIEWPRFSHEADER";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRFSHDR";
+    String view             = comCode+".VIEWPRFSHEADER";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer sid             = request.getParameter("sid") != null? Integer.parseInt(request.getParameter("sid")): null;
@@ -28,7 +30,7 @@ final class FS{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -318,7 +320,7 @@ final class FS{
         Sys sys = new Sys();
         
         
-        if(system.recordExists("VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.recordExists("VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
 
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
@@ -393,11 +395,11 @@ final class FS{
         return html;
     }
     
-    public Object editFSDtls(){
+    public Object editFSDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("PRFSDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("PRFSDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
@@ -434,7 +436,7 @@ final class FS{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -448,7 +450,7 @@ final class FS{
 
                 if(this.sid == null){
 
-                    Integer sid = system.generateId("PRFSDTLS", "ID");
+                    Integer sid = sys.generateId("PRFSDTLS", "ID");
 
                     query = "INSERT INTO PRFSDTLS "
                                 + "(ID, ACADEMICYEAR, TERMCODE, CLASSCODE, STUDTYPECODE, ITEMCODE, AMOUNT)"
@@ -502,7 +504,7 @@ final class FS{
         
         Sys sys = new Sys();
         
-        if(system.getRecordCount(this.table, "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.getRecordCount(this.table, "ACADEMICYEAR = "+ this.academicYear+ " AND "
 
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
@@ -515,7 +517,7 @@ final class FS{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
 
                 String query = "INSERT INTO "+this.table+" "
                                 + "(ID, ACADEMICYEAR, TERMCODE, CLASSCODE, STUDTYPECODE)"
@@ -540,7 +542,7 @@ final class FS{
         return fSHdrCreated;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

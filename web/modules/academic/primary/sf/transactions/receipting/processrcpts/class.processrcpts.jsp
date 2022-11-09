@@ -1,6 +1,5 @@
 <%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -85,7 +84,7 @@ final class ProcessRcpts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWPRVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') ")){
+        if(sys.recordExists("VIEWPRVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procRcpts.checkAll();\"", "", "");
             
@@ -117,7 +116,7 @@ final class ProcessRcpts{
                     String rcptDesc     = rs.getString("RCPTDESC");
                     Double amount       = rs.getDouble("AMOUNT");
                     
-                    String amountLbl = system.numberFormat(amount.toString());
+                    String amountLbl = sys.numberFormat(amount.toString());
                     
                     String checkEach = gui.formArrayCheckBox("checkEach", "", rcptNo, "", "", "");
                     
@@ -141,7 +140,7 @@ final class ProcessRcpts{
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"5\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\" >"+ system.numberFormat(total.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\" >"+ sys.numberFormat(total.toString()) +"</td>";
             html += "</tr>";
             
             html += "</table>";

@@ -1,6 +1,5 @@
 <%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -96,7 +95,7 @@ final class PresetExam{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWPRSTUDSUBJECTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND CLASSCODE = '"+ this.formCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'")){
+        if(sys.recordExists("VIEWPRSTUDSUBJECTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND CLASSCODE = '"+ this.formCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"presetExam.checkAll();\"", "", "");
             
@@ -120,7 +119,7 @@ final class PresetExam{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    String registered   = system.getOne("PRSTUDENTMARKS", "STUDENTNO", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ");
+                    String registered   = sys.getOne("PRSTUDENTMARKS", "STUDENTNO", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ");
                     
                     String checked      = registered != null? "checked": ""; 
                     

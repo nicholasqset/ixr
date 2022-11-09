@@ -1,9 +1,9 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="bean.primary.PRStudentProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -11,8 +11,10 @@
 <%
 
 final class Verify{
-    String table            = "PRRCPTS";
-    String view             = "VIEWPRUNVERFDRCPTS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRRCPTS";
+    String view             = comCode+".VIEWPRUNVERFDRCPTS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studentNo        = request.getParameter("studentNo");
@@ -33,7 +35,7 @@ final class Verify{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -177,7 +179,7 @@ final class Verify{
                     String termName         = rs.getString("TERMNAME");
                     String amount           = rs.getString("AMOUNT");
                     
-                    String amountLbl = system.numberFormat(amount);
+                    String amountLbl = sys.numberFormat(amount);
 
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 
@@ -291,7 +293,7 @@ final class Verify{
         
         PrimaryCalendar primaryCalendar = new PrimaryCalendar();
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
                 java.util.Date today = originalFormat.parse(defaultDate);
@@ -387,7 +389,7 @@ final class Verify{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -410,7 +412,7 @@ final class Verify{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         
         try{

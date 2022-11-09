@@ -1,7 +1,6 @@
 <%@page import="bean.primary.PRStudentProfile"%>
 <%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -86,7 +85,7 @@ final class ProcessInvs{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
+        if(sys.recordExists("PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procInvs.checkAll();\"", "", "");
             
@@ -119,10 +118,10 @@ final class ProcessInvs{
                     
                     PRStudentProfile pRStudentProfile = new PRStudentProfile(studentNo);
                     
-//                    Double amount = Double.parseDouble(system.getOne("PRINVSDTLS", "SUM(AMOUNT)", "INVNO = '"+ invNo+ "'"));
-                    Double amount = Double.parseDouble(system.getOneAgt("PRINVSDTLS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo+ "'"));
+//                    Double amount = Double.parseDouble(sys.getOne("PRINVSDTLS", "SUM(AMOUNT)", "INVNO = '"+ invNo+ "'"));
+                    Double amount = Double.parseDouble(sys.getOneAgt("PRINVSDTLS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo+ "'"));
                     
-                    String amountLbl = system.numberFormat(amount.toString());
+                    String amountLbl = sys.numberFormat(amount.toString());
                     
                     String checkEach = gui.formArrayCheckBox("checkEach", "", invNo, "", "", "");
                     
@@ -146,7 +145,7 @@ final class ProcessInvs{
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"5\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\" >"+ system.numberFormat(total.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\" >"+ sys.numberFormat(total.toString()) +"</td>";
             html += "</tr>";
             
             html += "</table>";

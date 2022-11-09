@@ -4,7 +4,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.primary.PrimaryCalendar"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -103,7 +102,7 @@ final class PerFS{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
+        if(sys.recordExists("VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perFS.checkAll();\"", "", "");
             
@@ -127,7 +126,7 @@ final class PerFS{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    Boolean autoInvoiced = system.recordExists("VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+                    Boolean autoInvoiced = sys.recordExists("VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                             + "TERMCODE     = '"+ this.termCode+"' AND "
                             + "STUDENTNO    = '"+ studentNo+"' AND "
                             + "INVTYPE      = 'AT' "
@@ -164,7 +163,7 @@ final class PerFS{
         
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.recordExists("VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
                 + "STUDTYPECODE = '"+ this.studTypeCode+ "' ")){
@@ -197,7 +196,7 @@ final class PerFS{
                     String itemName     = rs.getString("ITEMNAME");
                     Double amount       = rs.getDouble("AMOUNT");
                     
-                    String amountLbl    = system.numberFormat(amount.toString());
+                    String amountLbl    = sys.numberFormat(amount.toString());
                     
                     html += "<tr>";
                     html += "<td>"+ count +"</td>";
@@ -215,7 +214,7 @@ final class PerFS{
                 html += e.getMessage();
             }
             
-            String totalLbl    = system.numberFormat(total.toString());
+            String totalLbl    = sys.numberFormat(total.toString());
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"2\">Total</td>";

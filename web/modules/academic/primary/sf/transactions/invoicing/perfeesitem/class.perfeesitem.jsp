@@ -1,10 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.primary.PrimaryCalendar"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -101,11 +101,11 @@ final class PerFeesItem{
         return html;
     }
     
-    public Object getItemAmount(){
+    public Object getItemAmount() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        String amount = system.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
                 + "STUDTYPECODE = '"+ this.studTypeCode+ "' AND "
@@ -124,7 +124,7 @@ final class PerFeesItem{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
+        if(sys.recordExists("VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perFeesItem.checkAll();\"", "", "");
             
@@ -150,7 +150,7 @@ final class PerFeesItem{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    Boolean autoInvoiced = system.recordExists("VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+                    Boolean autoInvoiced = sys.recordExists("VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                             + "TERMCODE     = '"+ this.termCode+"' AND "
                             + "STUDENTNO    = '"+ studentNo+"' AND "
                             + "INVTYPE      = 'PI' AND "

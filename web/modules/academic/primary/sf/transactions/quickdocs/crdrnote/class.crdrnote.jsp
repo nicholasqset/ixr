@@ -1,10 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.primary.PrimarySchool"%>
 <%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="bean.primary.PRStudentProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -12,8 +12,10 @@
 <%
 
 final class CrDrNote{
-    String table            = "PRQDHDR";
-    String view             = "VIEWPRQDHEADER";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRQDHDR";
+    String view             = comCode+".VIEWPRQDHEADER";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer sid             = request.getParameter("sid") != null? Integer.parseInt(request.getParameter("sid")): null;
@@ -37,7 +39,7 @@ final class CrDrNote{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -177,9 +179,9 @@ final class CrDrNote{
                     String termName         = rs.getString("TERMNAME");
                     Integer posted          = rs.getInt("POSTED");
                     
-//                    String amountLbl = system.getOne("PRQDDTLS", "SUM(AMOUNT)", "DOCNO = '"+ docNo+ "'");
-                    String amountLbl = system.getOneAgt("PRQDDTLS", "SUM", "AMOUNT", "SM", "DOCNO = '"+ docNo+ "'");
-                    amountLbl = system.numberFormat(amountLbl);
+//                    String amountLbl = sys.getOne("PRQDDTLS", "SUM(AMOUNT)", "DOCNO = '"+ docNo+ "'");
+                    String amountLbl = sys.getOneAgt("PRQDDTLS", "SUM", "AMOUNT", "SM", "DOCNO = '"+ docNo+ "'");
+                    amountLbl = sys.numberFormat(amountLbl);
                     
                     String postedLbl = posted == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
  
@@ -314,7 +316,7 @@ final class CrDrNote{
         quickDocs.put("CN", "Credit Note");
         quickDocs.put("DN", "Debit Note");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -418,7 +420,7 @@ final class CrDrNote{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -458,7 +460,7 @@ final class CrDrNote{
                     + "(POSTED IS NULL OR POSTED = 0)";
         }
         
-        if(system.recordExists("VIEWPRQDDETAILS", filterSql)){
+        if(sys.recordExists("VIEWPRQDDETAILS", filterSql)){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -534,13 +536,13 @@ final class CrDrNote{
         return html;
     }
     
-    public Object getItemAmount(){
+    public Object getItemAmount() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
         PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
         
-        String amount = system.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ pRStudentProfile.classCode+ "' AND "
                 + "STUDTYPECODE = '"+ pRStudentProfile.studTypeCode+ "' AND "
@@ -555,11 +557,11 @@ final class CrDrNote{
         return obj;
     }
     
-    public Object editQDDtls(){
+    public Object editQDDtls() throws Exception {
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("PRQDDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("PRQDDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
@@ -596,7 +598,7 @@ final class CrDrNote{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -613,7 +615,7 @@ final class CrDrNote{
 
                 if(this.sid == null){
 
-                    Integer sid = system.generateId("PRQDDTLS", "ID");
+                    Integer sid = sys.generateId("PRQDDTLS", "ID");
 
                     query = "INSERT INTO PRQDDTLS "
                                 + "(ID, DOCNO, ITEMCODE, AMOUNT, "
@@ -625,10 +627,10 @@ final class CrDrNote{
                                 + "'"+ docNo+ "', "
                                 + "'"+ this.itemCode+ "', "
                                 + this.amount+ ", "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                 }else{
@@ -670,7 +672,7 @@ final class CrDrNote{
         Sys sys = new Sys();
         HttpSession session = request.getSession();
         
-        String docNo = system.getOne(this.table, "DOCNO", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        String docNo = sys.getOne(this.table, "DOCNO", "STUDENTNO = '"+ this.studentNo+ "' AND "
                         + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                         + "TERMCODE     = '"+ this.termCode+ "' AND "
                         + "DOCTYPE      = '"+ this.docType+ "' AND "
@@ -681,8 +683,8 @@ final class CrDrNote{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id = system.generateId(this.table, "ID");
-//                docNo = system.getNextNo(this.table, "ID", this.docType, 7);
+                Integer id = sys.generateId(this.table, "ID");
+//                docNo = sys.getNextNo(this.table, "ID", this.docType, 7);
                 docNo = this.getNextNo(this.table, "DOCNO", this.docType, this.docType, 7);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -705,10 +707,10 @@ final class CrDrNote{
                                 + "'"+ this.docType+ "', "
                                 + "'"+ this.docDesc+ "', "
                                 + "'"+ this.docDate+ "', "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                 Integer docHdrCreated = stmt.executeUpdate(query);
@@ -766,7 +768,7 @@ final class CrDrNote{
         return nextNo;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          
@@ -802,7 +804,7 @@ final class CrDrNote{
         
     }
     
-    public Object post(){
+    public Object post() throws Exception{
          
          JSONObject obj = new JSONObject();
          Sys sys = new Sys();
@@ -812,7 +814,7 @@ final class CrDrNote{
          String filterSql = "DOCNO  = '"+ this.docNo+ "'";
          
          if(this.docNo != null && ! this.docNo.trim().equals("")){
-             if(system.recordExists("VIEWPRQDDETAILS", filterSql)){
+             if(sys.recordExists("VIEWPRQDDETAILS", filterSql)){
                  try{
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
