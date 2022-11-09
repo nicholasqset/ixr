@@ -1,7 +1,7 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.high.HGStudentProfile"%>
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -100,11 +100,11 @@ final class PerFeesItem{
         return html;
     }
     
-    public Object getItemAmount(){
+    public Object getItemAmount() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        String amount = system.getOne("VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne("VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE = '"+ this.termCode+ "' AND "
                 + "FORMCODE = '"+ this.formCode+ "' AND "
                 + "STUDTYPECODE = '"+ this.studTypeCode+ "' AND "
@@ -124,7 +124,7 @@ final class PerFeesItem{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWHGSTUDENTPROFILE", "FORMCODE = '"+ this.formCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
+        if(sys.recordExists("VIEWHGSTUDENTPROFILE", "FORMCODE = '"+ this.formCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perFeesItem.checkAll();\"", "", "");
             
@@ -150,7 +150,7 @@ final class PerFeesItem{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    Boolean autoInvoiced = system.recordExists("VIEWHGINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+                    Boolean autoInvoiced = sys.recordExists("VIEWHGINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                             + "TERMCODE     = '"+ this.termCode+"' AND "
                             + "STUDENTNO    = '"+ studentNo+"' AND "
                             + "INVTYPE      = 'PI' AND "

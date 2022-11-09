@@ -1,8 +1,8 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.high.HGStudentProfile"%>
 <%@page import="bean.academic.Academic"%>
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -10,7 +10,9 @@
 <%
 
 final class PerStudent{
-    String table            = "HGSTUDENTMARKS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGSTUDENTMARKS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studentNo        = request.getParameter("studentNo");
@@ -118,7 +120,7 @@ final class PerStudent{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -146,7 +148,7 @@ final class PerStudent{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWHGSTUDENTMARKS", "STUDENTNO = '"+ this.studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' ")){
+        if(sys.recordExists("VIEWHGSTUDENTMARKS", "STUDENTNO = '"+ this.studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' ")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -201,7 +203,7 @@ final class PerStudent{
         return html;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         

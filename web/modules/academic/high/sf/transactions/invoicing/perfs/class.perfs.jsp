@@ -1,6 +1,5 @@
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -8,8 +7,10 @@
 <%
 
 final class PerFS{
-    String table            = "HGFSHDR";
-    String view             = "VIEWHGFSHEADER";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGFSHDR";
+    String view             = comCode+".VIEWHGFSHEADER";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -107,7 +108,7 @@ final class PerFS{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHGSTUDENTPROFILE", "FORMCODE = '"+ this.formCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
+        if(sys.recordExists("VIEWHGSTUDENTPROFILE", "FORMCODE = '"+ this.formCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perFS.checkAll();\"", "", "");
             
@@ -133,7 +134,7 @@ final class PerFS{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    Boolean autoInvoiced = system.recordExists("VIEWHGINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+                    Boolean autoInvoiced = sys.recordExists("VIEWHGINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                             + "TERMCODE     = '"+ this.termCode+"' AND "
                             + "STUDENTNO    = '"+ studentNo+"' AND "
                             + "INVTYPE      = 'AT' "
@@ -172,7 +173,7 @@ final class PerFS{
         
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHGFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.recordExists("VIEWHGFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "FORMCODE     = '"+ this.formCode+ "' AND "
                 + "STUDTYPECODE = '"+ this.studTypeCode+ "' ")){
@@ -207,7 +208,7 @@ final class PerFS{
                     String itemName     = rs.getString("ITEMNAME");
                     Double amount       = rs.getDouble("AMOUNT");
                     
-                    String amountLbl    = system.numberFormat(amount.toString());
+                    String amountLbl    = sys.numberFormat(amount.toString());
                     
                     html += "<tr>";
                     html += "<td>"+ count +"</td>";
@@ -226,7 +227,7 @@ final class PerFS{
                 html += e.getMessage();
             }
             
-            String totalLbl    = system.numberFormat(total.toString());
+            String totalLbl    = sys.numberFormat(total.toString());
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"2\">Total</td>";

@@ -1,9 +1,9 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.high.HGStudentProfile"%>
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -11,8 +11,10 @@
 <%
 
 final class Receipts{
-    String table            = "HGRCPTS";
-    String view             = "VIEWHGRECEIPTS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGRCPTS";
+    String view             = comCode+".VIEWHGRECEIPTS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studentNo        = request.getParameter("studentNo");
@@ -33,7 +35,7 @@ final class Receipts{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -184,7 +186,7 @@ final class Receipts{
                     String termName         = rs.getString("TERMNAME");
                     String amount           = rs.getString("AMOUNT");
                     
-                    String amountLbl = system.numberFormat(amount);
+                    String amountLbl = sys.numberFormat(amount);
 
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 
@@ -300,7 +302,7 @@ final class Receipts{
         
         HighCalendar highCalendar = new HighCalendar();
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -396,7 +398,7 @@ final class Receipts{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -419,7 +421,7 @@ final class Receipts{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -433,9 +435,9 @@ final class Receipts{
 
             if(this.id == null){
 
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
-                String rcptNo = system.getNextNo(this.table, "ID", "", "RC", 7);
+                String rcptNo = sys.getNextNo(this.table, "ID", "", "RC", 7);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -462,10 +464,10 @@ final class Receipts{
                             + "'"+ this.docNo+ "', "
                             + "'"+ this.bkBranchCode+ "', "
                             + this.amount+ ", "
-                            + "'"+ system.getLogUser(session)+"', "
-                            + "'"+ system.getLogDate()+ "', "
-                            + "'"+ system.getLogTime()+ "', "
-                            + "'"+ system.getClientIpAdr(request)+ "'"
+                            + "'"+ sys.getLogUser(session)+"', "
+                            + "'"+ sys.getLogDate()+ "', "
+                            + "'"+ sys.getLogTime()+ "', "
+                            + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 
                 saved = stmt.executeUpdate(query);

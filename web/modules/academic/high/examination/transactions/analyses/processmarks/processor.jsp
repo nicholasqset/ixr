@@ -42,7 +42,7 @@ final class Process{
     
     public void getCoreSubjects(){
         Sys sys = new Sys();
-        if(system.recordExists("VIEWHGGRPSBJS", "FORMCODE = '"+ this.formCode+ "'")){
+        if(sys.recordExists("VIEWHGGRPSBJS", "FORMCODE = '"+ this.formCode+ "'")){
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -69,7 +69,7 @@ final class Process{
         
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHGSTUDENTMARKS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTGRPCODE = '"+ subjectGrpCode+ "'")){
+        if(sys.recordExists("VIEWHGSTUDENTMARKS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTGRPCODE = '"+ subjectGrpCode+ "'")){
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -124,10 +124,10 @@ final class Process{
         Sys sys = new Sys();
         try{
             Integer minFormSbjs = 0;
-            minFormSbjs = Integer.parseInt(system.getOne("HGFORMSBJS", "MINFORMSBJS", "FORMCODE = '"+ this.formCode+ "'")); 
+            minFormSbjs = Integer.parseInt(sys.getOne("HGFORMSBJS", "MINFORMSBJS", "FORMCODE = '"+ this.formCode+ "'")); 
             
             Integer minGrpSbjs = 0;
-            minGrpSbjs = Integer.parseInt(system.getOne("HGGRPSBJS", "SUM(MINGRPSBJS)", "FORMCODE = '"+ this.formCode+ "'"));
+            minGrpSbjs = Integer.parseInt(sys.getOne("HGGRPSBJS", "SUM(MINGRPSBJS)", "FORMCODE = '"+ this.formCode+ "'"));
             
             Integer electiveSbjs = minFormSbjs - minGrpSbjs;
             
@@ -232,7 +232,7 @@ final class Process{
         Academic academic = new Academic();
         
         Integer minFormSbjs = 0;
-        minFormSbjs = Integer.parseInt(system.getOne("HGFORMSBJS", "MINFORMSBJS", "FORMCODE = '"+ this.formCode+ "'"));
+        minFormSbjs = Integer.parseInt(sys.getOne("HGFORMSBJS", "MINFORMSBJS", "FORMCODE = '"+ this.formCode+ "'"));
         
         try{
             Connection conn = ConnectionProvider.getConnection();
@@ -252,181 +252,181 @@ final class Process{
                 String grade = academic.getGrade((double)Math.round(studAvg));
                 
                 
-                String engStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ENG' ");
-                String engSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ENG' ");
+                String engStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ENG' ");
+                String engSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ENG' ");
                 String engAst = (engStr != null && engSbj == null)? "*": "";
                 engStr = engStr != null? engStr: "0";
                 Double eng  = Double.parseDouble(engStr);
-                String engGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ENG' ");
+                String engGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ENG' ");
                 engGrd = (engGrd != null && ! engGrd.trim().equals(""))? engGrd+ engAst: "na";
                 
-                String kisStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'KIS' ");
-                String kisSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'KIS' ");
+                String kisStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'KIS' ");
+                String kisSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'KIS' ");
                 String kisAst = (kisStr != null && kisSbj == null)? "*": "";
                 kisStr = kisStr != null? kisStr: "0";
                 Double kis  = Double.parseDouble(kisStr);
-                String kisGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'KIS' ");
+                String kisGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'KIS' ");
                 kisGrd = (kisGrd != null && ! kisGrd.trim().equals(""))? kisGrd+ kisAst: "na";
                 
-                String matStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MAT' ");
-                String matSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MAT' ");
+                String matStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MAT' ");
+                String matSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MAT' ");
                 String matAst = (matStr != null && matSbj == null)? "*": "";
                 matStr = matStr != null? matStr: "0";
                 Double mat  = Double.parseDouble(matStr);
-                String matGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MAT' ");
+                String matGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MAT' ");
                 matGrd = (matGrd != null && ! matGrd.trim().equals(""))? matGrd+ matAst: "na";
                 
-                String bioStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BIO' ");
-                String bioSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BIO' ");
+                String bioStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BIO' ");
+                String bioSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BIO' ");
                 String bioAst = (bioStr != null && bioSbj == null)? "*": "";
                 bioStr = bioStr != null? bioStr: "0";
                 Double bio  = Double.parseDouble(bioStr);
-                String bioGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BIO' ");
+                String bioGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BIO' ");
                 bioGrd = (bioGrd != null && ! bioGrd.trim().equals(""))? bioGrd+ bioAst: "na";
 
-                String phyStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'PHY' ");
-                String phySbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'PHY' ");
+                String phyStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'PHY' ");
+                String phySbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'PHY' ");
                 String phyAst = (phyStr != null && phySbj == null)? "*": "";
                 phyStr = phyStr != null? phyStr: "0";
                 Double phy  = Double.parseDouble(phyStr);
-                String phyGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'PHY' ");
+                String phyGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'PHY' ");
                 phyGrd = (phyGrd != null && ! phyGrd.trim().equals(""))? phyGrd+ phyAst: "na";
                 
-                String cheStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CHE' ");
-                String cheSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CHE' ");
+                String cheStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CHE' ");
+                String cheSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CHE' ");
                 String cheAst = (cheStr != null && cheSbj == null)? "*": "";
                 cheStr = cheStr != null? cheStr: "0";
                 Double che  = Double.parseDouble(cheStr);
-                String cheGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CHE' ");
+                String cheGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CHE' ");
                 cheGrd = (cheGrd != null && ! cheGrd.trim().equals(""))? cheGrd+ cheAst: "na";
                 
-                String gscStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GSC' ");
-                String gscSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GSC' ");
+                String gscStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GSC' ");
+                String gscSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GSC' ");
                 String gscAst = (gscStr != null && gscSbj == null)? "*": "";
                 gscStr = gscStr != null? gscStr: "0";
                 Double gsc  = Double.parseDouble(gscStr);
                 gsc = (gsc != null)? gsc : 0.0;
-                String gscGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GSC' ");
+                String gscGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GSC' ");
                 gscGrd = (gscGrd != null && ! gscGrd.trim().equals(""))? gscGrd+ gscAst: "na";
                 
-                String higStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HIG' ");
-                String higSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HIG' ");
+                String higStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HIG' ");
+                String higSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HIG' ");
                 String higAst = (higStr != null && higSbj == null)? "*": "";
                 higStr = higStr != null? higStr: "0";
                 Double hig  = Double.parseDouble(higStr);
-                String higGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HIG' ");
+                String higGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HIG' ");
                 higGrd = (higGrd != null && ! higGrd.trim().equals(""))? higGrd+ higAst: "na";
                 
-                String geoStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GEO' ");
-                String geoSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GEO' ");
+                String geoStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GEO' ");
+                String geoSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GEO' ");
                 String geoAst = (geoStr != null && geoSbj == null)? "*": "";
                 geoStr = geoStr != null? geoStr: "0";
                 Double geo  = Double.parseDouble(geoStr);
-                String geoGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GEO' ");
+                String geoGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GEO' ");
                 geoGrd = (geoGrd != null && ! geoGrd.trim().equals(""))? geoGrd+ geoAst: "na";
                 
-                String creStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CRE' ");
-                String creSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CRE' ");
+                String creStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CRE' ");
+                String creSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CRE' ");
                 String creAst = (creStr != null && creSbj == null)? "*": "";
                 creStr = creStr != null? creStr: "0";
                 Double cre  = Double.parseDouble(creStr);
-                String creGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CRE' ");
+                String creGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CRE' ");
                 creGrd = (creGrd != null && ! creGrd.trim().equals(""))? creGrd+ creAst: "na";
                 
-                String ireStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'IRE' ");
-                String ireSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'IRE' ");
+                String ireStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'IRE' ");
+                String ireSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'IRE' ");
                 String ireAst = (ireStr != null && ireSbj == null)? "*": "";
                 ireStr = ireStr != null? ireStr: "0";
                 Double ire  = Double.parseDouble(ireStr);
-                String ireGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'IRE' ");
+                String ireGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'IRE' ");
                 ireGrd = (ireGrd != null && ! ireGrd.trim().equals(""))? ireGrd+ ireAst: "na";
                 
-                String hreStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HRE' ");
-                String hreSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HRE' ");
+                String hreStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HRE' ");
+                String hreSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HRE' ");
                 String hreAst = (hreStr != null && hreSbj == null)? "*": "";
                 hreStr = hreStr != null? hreStr: "0";
                 Double hre  = Double.parseDouble(hreStr);
-                String hreGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HRE' ");
+                String hreGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HRE' ");
                 hreGrd = (hreGrd != null && ! hreGrd.trim().equals(""))? hreGrd+ hreAst: "na";
                 
-                String hscStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HSC' ");
-                String hscSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HSC' ");
+                String hscStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HSC' ");
+                String hscSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HSC' ");
                 String hscAst = (hscStr != null && hscSbj == null)? "*": "";
                 hscStr = hscStr != null? hscStr: "0";
                 Double hsc  = Double.parseDouble(hscStr);
-                String hscGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HSC' ");
+                String hscGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'HSC' ");
                 hscGrd = (hscGrd != null && ! hscGrd.trim().equals(""))? hscGrd+ hscAst: "na";
                 
-                String atdStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ATD' ");
-                String atdSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ATD' ");
+                String atdStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ATD' ");
+                String atdSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ATD' ");
                 String atdAst = (atdStr != null && atdSbj == null)? "*": "";
                 atdStr = atdStr != null? atdStr: "0";
                 Double atd  = Double.parseDouble(atdStr);
-                String atdGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ATD' ");
+                String atdGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ATD' ");
                 atdGrd = (atdGrd != null && ! atdGrd.trim().equals(""))? atdGrd+ atdAst: "na";
                 
-                String agrStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AGR' ");
-                String agrSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AGR' ");
+                String agrStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AGR' ");
+                String agrSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AGR' ");
                 String agrAst = (agrStr != null && agrSbj == null)? "*": "";
                 agrStr = agrStr != null? agrStr: "0";
                 Double agr  = Double.parseDouble(agrStr);
-                String agrGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AGR' ");
+                String agrGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AGR' ");
                 agrGrd = (agrGrd != null && ! agrGrd.trim().equals(""))? agrGrd+ agrAst: "na";
                 
-                String cstStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CST' ");
-                String cstSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CST' ");
+                String cstStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CST' ");
+                String cstSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CST' ");
                 String cstAst = (cstStr != null && cstSbj == null)? "*": "";
                 cstStr = cstStr != null? cstStr: "0";
                 Double cst  = Double.parseDouble(cstStr);
-                String cstGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CST' ");
+                String cstGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'CST' ");
                 cstGrd = (cstGrd != null && ! cstGrd.trim().equals(""))? cstGrd+ cstAst: "";
                 
-                String avtStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AVT' ");
-                String avtSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AVT' ");
+                String avtStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AVT' ");
+                String avtSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AVT' ");
                 String avtAst = (avtStr != null && avtSbj == null)? "*": "";
                 avtStr = avtStr != null? avtStr: "0";
                 Double avt  = Double.parseDouble(avtStr);
-                String avtGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AVT' ");
+                String avtGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'AVT' ");
                 avtGrd = (avtGrd != null && ! avtGrd.trim().equals(""))? avtGrd+ avtAst: "na";
                 
-                String frnStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'FRN' ");
-                String frnSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'FRN' ");
+                String frnStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'FRN' ");
+                String frnSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'FRN' ");
                 String frnAst = (frnStr != null && frnSbj == null)? "*": "";
                 frnStr = frnStr != null? frnStr: "0";
                 Double frn  = Double.parseDouble(frnStr);
-                String frnGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'FRN' ");
+                String frnGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'FRN' ");
                 frnGrd = (frnGrd != null && ! frnGrd.trim().equals(""))? frnGrd+ frnAst: "na";
                 
-                String gmnStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GMN' ");
-                String gmnSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GMN' ");
+                String gmnStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GMN' ");
+                String gmnSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GMN' ");
                 String gmnAst = (gmnStr != null && gmnSbj == null)? "*": "";
                 gmnStr = gmnStr != null? gmnStr: "0";
                 Double gmn  = Double.parseDouble(gmnStr);
-                String gmnGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GMN' ");
+                String gmnGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'GMN' ");
                 gmnGrd = (gmnGrd != null && ! gmnGrd.trim().equals(""))? gmnGrd+ gmnAst: "na";
                 
-                String arbStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ABR' ");
-                String arbSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ABR' ");
+                String arbStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ABR' ");
+                String arbSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ABR' ");
                 String arbAst = (arbStr != null && arbSbj == null)? "*": "";
                 arbStr = arbStr != null? arbStr: "0";
                 Double arb  = Double.parseDouble(arbStr);
-                String arbGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ARB' ");
+                String arbGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'ARB' ");
                 arbGrd = (arbGrd != null && ! arbGrd.trim().equals(""))? arbGrd+ arbAst: "na";
                 
-                String musStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MUS' ");
-                String musSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MUS' ");
+                String musStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MUS' ");
+                String musSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MUS' ");
                 String musAst = (musStr != null && musSbj == null)? "*": "";
                 musStr = musStr != null? musStr: "0";
                 Double mus  = Double.parseDouble(musStr);
-                String musGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MUS' ");
+                String musGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'MUS' ");
                 musGrd = (musGrd != null && ! musGrd.trim().equals(""))? musGrd+ musAst: "na";
                 
-                String bstStr = system.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BST' ");
-                String bstSbj = system.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BST' ");
+                String bstStr = sys.getOne("HGSTUDENTMARKS", "SCORE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BST' ");
+                String bstSbj = sys.getOne("VIEWHGSELSBJS", "SUBJECTCODE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BST' ");
                 String bstAst = (bstStr != null && bstSbj == null)? "*": "";
                 bstStr = bstStr != null? bstStr: "0";
                 Double bst  = Double.parseDouble(bstStr);
-                String bstGrd = system.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BST' ");
+                String bstGrd = sys.getOne("HGSTUDENTMARKS", "GRADE", "STUDENTNO = '"+ studentNo+"' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = 'BST' ");
                 bstGrd = (bstGrd != null && ! bstGrd.trim().equals(""))? bstGrd+ bstAst: "na";
                 
                 highSchool.createMkSheetEntry(studentNo, this.academicYear, this.termCode, this.examCode, eng, engGrd, kis, kisGrd, mat, matGrd, bio, bioGrd, phy, phyGrd, che, cheGrd, gsc, gscGrd, hig, higGrd, geo, geoGrd, cre, creGrd, ire, ireGrd, hre, hreGrd, hsc, hscGrd, atd, atdGrd, agr, agrGrd, cst, cstGrd, avt, avtGrd, frn, frnGrd, gmn, gmnGrd, arb, arbGrd, mus, musGrd, bst, bstGrd, total, studAvg, grade, session, request);

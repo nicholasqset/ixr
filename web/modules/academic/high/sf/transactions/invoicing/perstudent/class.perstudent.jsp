@@ -1,7 +1,7 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.high.HGStudentProfile"%>
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -9,7 +9,9 @@
 <%
 
 final class PerStudent{
-    String table            = "HGINVSHDR";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGINVSHDR";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer sid             = request.getParameter("sid") != null? Integer.parseInt(request.getParameter("sid")): null;
@@ -161,7 +163,7 @@ final class PerStudent{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -189,7 +191,7 @@ final class PerStudent{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHGINVSDETAILS", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        if(sys.recordExists("VIEWHGINVSDETAILS", "STUDENTNO = '"+ this.studentNo+ "' AND "
                 + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "INVTYPE      = 'PS' AND "
@@ -268,13 +270,13 @@ final class PerStudent{
         return html;
     }
     
-    public Object getItemAmount(){
+    public Object getItemAmount() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
         HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
         
-        String amount = system.getOne("VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne("VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE = '"+ this.termCode+ "' AND "
                 + "FORMCODE = '"+ hGStudentProfile.formCode+ "' AND "
                 + "STUDTYPECODE = '"+ hGStudentProfile.studTypeCode+ "' AND "
@@ -289,11 +291,11 @@ final class PerStudent{
         return obj;
     }
     
-    public Object editInvDtls(){
+    public Object editInvDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("HGINVSDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("HGINVSDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
@@ -332,7 +334,7 @@ final class PerStudent{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -349,7 +351,7 @@ final class PerStudent{
 
                 if(this.sid == null){
 
-                    Integer sid = system.generateId("HGINVSDTLS", "ID");
+                    Integer sid = sys.generateId("HGINVSDTLS", "ID");
 
                     query = "INSERT INTO HGINVSDTLS "
                                 + "(ID, INVNO, ITEMCODE, AMOUNT, "
@@ -361,10 +363,10 @@ final class PerStudent{
                                 + "'"+ invNo+ "', "
                                 + "'"+ this.itemCode+ "', "
                                 + this.amount+ ", "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                 }else{
@@ -406,7 +408,7 @@ final class PerStudent{
         Sys sys = new Sys();
         HttpSession session = request.getSession();
         
-        String invNo = system.getOne(this.table, "INVNO", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        String invNo = sys.getOne(this.table, "INVNO", "STUDENTNO = '"+ this.studentNo+ "' AND "
                         + "INVTYPE = 'PS' AND "
                         + "(PROCESSED IS NULL OR PROCESSED = 0)");
         
@@ -415,8 +417,8 @@ final class PerStudent{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id = system.generateId(this.table, "ID");
-                invNo = system.getNextNo(this.table, "ID", "", "IN", 7);
+                Integer id = sys.generateId(this.table, "ID");
+                invNo = sys.getNextNo(this.table, "ID", "", "IN", 7);
                 
                 String invType = "PS";
 
@@ -433,11 +435,11 @@ final class PerStudent{
                                 + "'"+ invNo+ "', "
                                 + "'"+ this.invDesc+ "', "
                                 + "'"+ invType+ "', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                 Integer invHdrCreated = stmt.executeUpdate(query);
@@ -459,7 +461,7 @@ final class PerStudent{
         return invNo;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

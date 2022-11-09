@@ -1,6 +1,5 @@
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -90,7 +89,7 @@ final class PerSubject{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWHGREGISTRATION", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND FORMCODE = '"+ this.formCode+ "' ")){
+        if(sys.recordExists("VIEWHGREGISTRATION", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND FORMCODE = '"+ this.formCode+ "' ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perSubject.checkAll();\"", "", "");
             
@@ -114,7 +113,7 @@ final class PerSubject{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    String registered   = system.getOne("HGSTUDSUBJECTS", "STUDENTNO", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ");
+                    String registered   = sys.getOne("HGSTUDSUBJECTS", "STUDENTNO", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ");
                     
                     String checked      = registered != null? "checked": ""; 
                     

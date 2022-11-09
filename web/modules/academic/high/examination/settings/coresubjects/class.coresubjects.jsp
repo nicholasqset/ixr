@@ -1,5 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -7,8 +7,10 @@
 <%
 
 final class CoreSubjects{
-    String table            = "HGCORESUBJECTS";
-    String view             = "VIEWHGCORESUBJECTS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGCORESUBJECTS";
+    String view             = comCode+".VIEWHGCORESUBJECTS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String formCode         = request.getParameter("studentForm");
@@ -20,7 +22,7 @@ final class CoreSubjects{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -226,7 +228,7 @@ final class CoreSubjects{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -239,7 +241,7 @@ final class CoreSubjects{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, FORMCODE, SUBJECTCODE)"
                         + "VALUES"
@@ -277,7 +279,7 @@ final class CoreSubjects{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

@@ -1,6 +1,6 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.high.HGExamConfig"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -9,7 +9,9 @@
 
     final class GlobalConfig {
 
-        String table = "HGEXAMCONFIG";
+        HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGEXAMCONFIG";
 
         Integer id;
         Integer minSbjs = (request.getParameter("minSubjects") != null && ! request.getParameter("minSubjects").trim().equals(""))? Integer.parseInt(request.getParameter("minSubjects")): null;
@@ -45,7 +47,7 @@
             return html;
         }
 
-        public Object save() {
+        public Object save() throws Exception{
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             try {
@@ -53,9 +55,9 @@
                 Statement stmt = conn.createStatement();
                 String query;
                 Integer saved = 0;
-                if (!system.recordExists(this.table, "")) {
+                if (!sys.recordExists(this.table, "")) {
 
-                    Integer id = system.generateId(this.table, "ID");
+                    Integer id = sys.generateId(this.table, "ID");
 
                     query = "INSERT INTO " + this.table + " "
                             + "(ID, MINSBJS)"

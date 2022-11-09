@@ -1,8 +1,8 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.high.HGStudentProfile"%>
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -10,8 +10,10 @@
 <%
 
 final class StudentInquiry{
-    String table            = "HGFSHDR";
-    String view             = "VIEWHGFSHEADER";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGFSHDR";
+    String view             = comCode+".VIEWHGFSHEADER";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studentNo        = request.getParameter("studentNo");
@@ -88,7 +90,7 @@ final class StudentInquiry{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -133,7 +135,7 @@ final class StudentInquiry{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        if(system.recordExists("VIEWHGOBS", "STUDENTNO = '"+ this.studentNo+ "'")){
+        if(sys.recordExists("VIEWHGOBS", "STUDENTNO = '"+ this.studentNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -208,12 +210,12 @@ final class StudentInquiry{
                     java.util.Date docDate = originalFormat.parse(entryDate);
                     entryDate = targetFormat.format(docDate);
                     
-                    String drLbl = system.numberFormat(dr.toString());
-                    String crLbl = system.numberFormat(cr.toString());
+                    String drLbl = sys.numberFormat(dr.toString());
+                    String crLbl = sys.numberFormat(cr.toString());
                     
                     grossTotal = grossTotal +totalAcc;
                     
-                    grossTotalLbl = system.numberFormat(grossTotal.toString());
+                    grossTotalLbl = sys.numberFormat(grossTotal.toString());
                     
                     html += "<tr>";
                     html += "<td>"+ docNo+ "</td>";
@@ -232,7 +234,7 @@ final class StudentInquiry{
                 html += e.getMessage();
             }
             
-            grossTotalLbl = system.numberFormat(grossTotal.toString());
+            grossTotalLbl = sys.numberFormat(grossTotal.toString());
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"6\">Total</td>";

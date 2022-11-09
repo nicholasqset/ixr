@@ -1,7 +1,7 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -9,7 +9,9 @@
 <%
 
 final class AcademicYears{
-    String table            = "HGACADEMICYEARS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGACADEMICYEARS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = request.getParameter("academicYear") != null? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -24,7 +26,7 @@ final class AcademicYears{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -283,7 +285,7 @@ final class AcademicYears{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -309,7 +311,7 @@ final class AcademicYears{
             
             if(this.id == null){
                 
-             Integer id = system.generateId(this.table, "ID");
+             Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, ACADEMICYEAR, STARTDATE, ENDDATE)"
@@ -353,7 +355,7 @@ final class AcademicYears{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

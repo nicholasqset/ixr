@@ -1,6 +1,5 @@
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -8,8 +7,10 @@
 <%
 
 final class ProcessRcpts{
-    String table            = "HGFSHDR";
-    String view             = "VIEWHGFSHEADER";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGFSHDR";
+    String view             = comCode+".VIEWHGFSHEADER";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -91,7 +92,7 @@ final class ProcessRcpts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWHGVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') ")){
+        if(sys.recordExists("VIEWHGVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procRcpts.checkAll();\"", "", "");
             
@@ -123,7 +124,7 @@ final class ProcessRcpts{
                     String rcptDesc     = rs.getString("RCPTDESC");
                     Double amount       = rs.getDouble("AMOUNT");
                     
-                    String amountLbl = system.numberFormat(amount.toString());
+                    String amountLbl = sys.numberFormat(amount.toString());
                     
                     String checkEach = gui.formArrayCheckBox("checkEach", "", rcptNo, "", "", "");
                     
@@ -147,7 +148,7 @@ final class ProcessRcpts{
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"5\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\" >"+ system.numberFormat(total.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\" >"+ sys.numberFormat(total.toString()) +"</td>";
             html += "</tr>";
             
             html += "</table>";

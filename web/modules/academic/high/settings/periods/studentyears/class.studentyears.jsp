@@ -1,5 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -7,7 +7,9 @@
 <%
 
 final class StudentYears{
-    String table        = "HGSTUDYEARS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGSTUDYEARS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studYrCode   = request.getParameter("code");
@@ -22,7 +24,7 @@ final class StudentYears{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -252,7 +254,7 @@ final class StudentYears{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -265,7 +267,7 @@ final class StudentYears{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, STUDYRCODE, STUDYRNAME, STUDYRLEVEL)"
                     + "VALUES"
@@ -305,7 +307,7 @@ final class StudentYears{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

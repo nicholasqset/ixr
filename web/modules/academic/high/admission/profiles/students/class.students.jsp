@@ -1,10 +1,10 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.high.HighCalendar"%>
 <%@page import="bean.high.HighSchool"%>
 <%@page import="bean.high.HGStudentProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -12,8 +12,10 @@
 <%
 
 final class Students{
-    String table            = "HGSTUDENTS";
-    String view             = "VIEWHGSTUDENTPROFILE";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGSTUDENTS";
+    String view             = comCode+".VIEWHGSTUDENTPROFILE";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     
@@ -50,7 +52,7 @@ final class Students{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
         
@@ -318,7 +320,7 @@ final class Students{
             html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");
         }
         
-        String defaultCountryCode = system.getOne("CSCOUNTRIES", "COUNTRYCODE", "ISDEFAULT = 1");
+        String defaultCountryCode = sys.getOne("CSCOUNTRIES", "COUNTRYCODE", "ISDEFAULT = 1");
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -561,7 +563,7 @@ final class Students{
         return html;
     }
     
-    public Object getStudentProfile(){
+    public Object getStudentProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.studentNo == null || this.studentNo.equals("")){
@@ -612,7 +614,7 @@ final class Students{
         return obj;
     }
     
-    public Object getStudPrdsUi(){
+    public Object getStudPrdsUi() throws Exception{
         JSONObject obj = new JSONObject();
         Gui gui = new Gui();
         HashMap<String, String> studentPeriods = new HashMap();
@@ -650,10 +652,10 @@ final class Students{
         return obj;
     }
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj      = new JSONObject();
-        System system       = new System();
+        Sys sys       = new Sys();
         HttpSession session = request.getSession();
         
         try{
@@ -671,7 +673,7 @@ final class Students{
             Integer saved = 0;
 	            
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 if(this.autoStudentNo == 1){
                     this.studentNo = this.getNextStudentNo();
@@ -710,10 +712,10 @@ final class Students{
                         + "'"+ this.studPrdCode+ "', "
                         + "'"+ this.studTypeCode+ "', "
                         + "'"+ this.statusCode+ "', "
-                        + "'"+ system.getLogUser(session)+ "', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogTime()+ "', "
-                        + "'"+ system.getClientIpAdr(request)+ "'"
+                        + "'"+ sys.getLogUser(session)+ "', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogTime()+ "', "
+                        + "'"+ sys.getClientIpAdr(request)+ "'"
                         + ")";
                 
                 obj.put("studentNo", this.studentNo);
@@ -750,10 +752,10 @@ final class Students{
                             + "STUDPRDCODE      = '"+ this.studPrdCode+ "', "
                             + "STUDTYPECODE     = '"+ this.studTypeCode+ "', "
                             + "STATUSCODE       = '"+ this.statusCode+ "', "
-                            + "AUDITUSER        = '"+ system.getLogUser(session)+ "', "
-                            + "AUDITDATE        = '"+ system.getLogDate()+ "', "
-                            + "AUDITTIME        = '"+ system.getLogTime()+ "', "
-                            + "AUDITIPADR       = '"+ system.getClientIpAdr(request)+ "' "
+                            + "AUDITUSER        = '"+ sys.getLogUser(session)+ "', "
+                            + "AUDITDATE        = '"+ sys.getLogDate()+ "', "
+                            + "AUDITTIME        = '"+ sys.getLogTime()+ "', "
+                            + "AUDITIPADR       = '"+ sys.getClientIpAdr(request)+ "' "
                             
                             + "WHERE STUDENTNO    = '"+ this.studentNo+ "'";
                 }
@@ -844,7 +846,7 @@ final class Students{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            Integer id = system.generateId("HGSTUDNOS", "ID");
+            Integer id = sys.generateId("HGSTUDNOS", "ID");
             String query = "INSERT INTO HGSTUDNOS "
                         + "(ID, ACADEMICYEAR, CURNO)"
                         + "VALUES"
@@ -865,7 +867,7 @@ final class Students{
         return noInitialised;
     }
     
-    public Object purgePhoto(){
+    public Object purgePhoto() throws Exception{
          
          JSONObject obj = new JSONObject();
          

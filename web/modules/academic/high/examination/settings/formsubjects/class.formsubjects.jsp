@@ -1,5 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -7,8 +7,10 @@
 <%
 
 final class FormSubjects{
-    String table            = "HGFORMSBJS";
-    String view             = "VIEWHGFORMSBJS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGFORMSBJS";
+    String view             = comCode+".VIEWHGFORMSBJS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String formCode         = request.getParameter("studentForm");
@@ -22,7 +24,7 @@ final class FormSubjects{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -240,8 +242,7 @@ final class FormSubjects{
     }
     
     
-    public Object save(){
-        
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -253,7 +254,7 @@ final class FormSubjects{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, FORMCODE, MINFORMSBJS)"
                         + "VALUES"
@@ -291,7 +292,7 @@ final class FormSubjects{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

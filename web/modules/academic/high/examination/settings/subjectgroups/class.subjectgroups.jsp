@@ -1,5 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -7,7 +7,9 @@
 <%
 
 final class SubjectGroups{
-    String table            = "HGSUBJECTGRPS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGSUBJECTGRPS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String subjectGrpCode   = request.getParameter("code");
@@ -23,7 +25,7 @@ final class SubjectGroups{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -258,8 +260,7 @@ final class SubjectGroups{
     }
     
     
-    public Object save(){
-        
+    public Object save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -271,7 +272,7 @@ final class SubjectGroups{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, SUBJECTGRPCODE, SUBJECTGRPNAME, MANDATORY, MINSUBJECTS)"
                         + "VALUES"
@@ -309,7 +310,7 @@ final class SubjectGroups{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          
