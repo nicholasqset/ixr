@@ -436,10 +436,19 @@
             html += "<td id = \"tdQuantity\" colspan = \"3\">"+ gui.formInput("text", "quantity", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
             html += "</tr>";
 
+//            html += "<tr>";
+//            html += "<td>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Price")+ "</td>";
+//            html += "<td id = \"tdCost\" colspan = \"3\" nowrap>"+ gui.formInput("text", "price", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
+//            html += "</tr>";
+            
             html += "<tr>";
             html += "<td>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Price")+ "</td>";
-            html += "<td id = \"tdCost\" colspan = \"3\" nowrap>"+ gui.formInput("text", "price", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
+            html += "<td id = \"tdPrice\" nowrap>"+ gui.formInput("text", "price", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
+            
+            html += "<td>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Cost")+ "</td>";
+            html += "<td id = \"tdCost\"  nowrap>&nbsp;</td>";
             html += "</tr>";
+
 
             String taxInclUi = gui.formCheckBox("taxInclusive", "checked", "", "", "", "")+ gui.formLabel("taxInclusive", " Tax Inclusive");
 
@@ -513,6 +522,7 @@
 
                 obj.put("itemName", iCItem.itemName);
                 obj.put("quantity", 1.0);
+                obj.put("cost", iCItem.unitCost);
                 obj.put("price", iCItem.unitPrice);
                 obj.put("amount", (1.0 * iCItem.unitPrice));
 
