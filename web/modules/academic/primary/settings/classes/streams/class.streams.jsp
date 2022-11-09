@@ -1,5 +1,5 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.gui.*"%>
@@ -7,8 +7,11 @@
 <%
 
 final class Streams{
-    String table        = "PRSTREAMS";
-    String view         = "VIEWPRSTREAMS";
+    HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
+    
+    String table        = ""+session.getAttribute("comCode")+".PRSTREAMS";
+    String view         = ""+session.getAttribute("comCode")+".VIEWPRSTREAMS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String classCode    = request.getParameter("studClass");
@@ -23,7 +26,7 @@ final class Streams{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -218,7 +221,7 @@ final class Streams{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"building.png", "", "")+ gui.formLabel("studClass", " Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", this.id != null? this.classCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studClass", this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", this.id != null? this.classCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -249,7 +252,7 @@ final class Streams{
     }
     
     
-    public Object save(){
+    public Object save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -262,7 +265,7 @@ final class Streams{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, CLASSCODE, STREAMCODE, STREAMNAME)"
                     + "VALUES"
@@ -302,7 +305,7 @@ final class Streams{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          
