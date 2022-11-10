@@ -235,7 +235,7 @@ final class Classes{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentYear", " Class Year")+"</td>";
-	html += "<td>"+ gui.formSelect("studentYear", "PRSTUDYEARS", "STUDYRCODE", "STUDYRNAME", "STUDYRLEVEL", "", this.id != null? this.studYrCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentYear", this.comCode+".PRSTUDYEARS", "STUDYRCODE", "STUDYRNAME", "STUDYRLEVEL", "", this.id != null? this.studYrCode: "", "", false)+ "</td>";
 //	html += "<td>"+ gui.formArraySelect("studentYear", 120, classYears, this.id != null? this.studYrCode: "", false, "", true)+ "</td>";
 	html += "</tr>";
         
