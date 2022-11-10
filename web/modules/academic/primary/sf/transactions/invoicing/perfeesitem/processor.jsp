@@ -32,6 +32,8 @@
 <%
 
 final class Process{
+    HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
     
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
@@ -85,7 +87,7 @@ final class Process{
         
         if(this.createInvHdr(studentNo) == 1){
             String invType = "PI";
-            String invNo = system.getOne("PRINVSHDR", "INVNO", "ACADEMICYEAR = "+ this.academicYear+" AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO = '"+ studentNo+ "' AND INVTYPE = '"+ invType+ "'");
+            String invNo = sys.getOne(""+this.comCode+".PRINVSHDR", "INVNO", "ACADEMICYEAR = "+ this.academicYear+" AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO = '"+ studentNo+ "' AND INVTYPE = '"+ invType+ "'");
             if(invNo != null && ! invNo.trim().equals("")){
                 this.insertInvDtls(invNo, this.itemCode, this.amount);
             }
@@ -102,17 +104,17 @@ final class Process{
         
         String invType = "PI";
         
-        if(system.recordExists("PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+" AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO = '"+ studentNo+ "' AND INVTYPE = '"+ invType+ "'")){
+        if(sys.recordExists(""+this.comCode+".PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+" AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO = '"+ studentNo+ "' AND INVTYPE = '"+ invType+ "'")){
             invHdrCreated = 1;
         }else{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("PRINVSHDR", "ID");
-                String invNo    = system.getNextNo("PRINVSHDR", "ID", "", "IN", 7);
+                Integer id      = sys.generateId(""+this.comCode+".PRINVSHDR", "ID");
+                String invNo    = sys.getNextNo(""+this.comCode+".PRINVSHDR", "ID", "", "IN", 7);
 
-                String query = "INSERT INTO PRINVSHDR "
+                String query = "INSERT INTO "+this.comCode+".PRINVSHDR "
                                 + "(ID, ACADEMICYEAR, TERMCODE, STUDENTNO, INVNO, INVDESC, INVTYPE, INVDATE, "
                                 + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                                 + ")"
@@ -125,11 +127,11 @@ final class Process{
                                 + "'"+ invNo+ "', "
                                 + "'Auto Invoice "+ this.academicYear+ "-"+ this.termCode+ "-"+ this.classCode+ "', "
                                 + "'"+ invType+ "', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                 invHdrCreated = stmt.executeUpdate(query);
@@ -148,16 +150,16 @@ final class Process{
         Integer invDtlsInserted = 0;
         Sys sys = new Sys();
         HttpSession session = request.getSession();
-        if(system.recordExists("PRINVSDTLS", "INVNO = '"+ invNo+ "' AND ITEMCODE = '"+ itemCode+ "'")){
+        if(sys.recordExists(""+this.comCode+".PRINVSDTLS", "INVNO = '"+ invNo+ "' AND ITEMCODE = '"+ itemCode+ "'")){
             invDtlsInserted = 1;
         }else{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("PRINVSDTLS", "ID");
+                Integer id      = sys.generateId("PRINVSDTLS", "ID");
 
-                String query = "INSERT INTO PRINVSDTLS "
+                String query = "INSERT INTO "+this.comCode+".PRINVSDTLS "
                                 + "(ID, INVNO, ITEMCODE, AMOUNT, "
                                 + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                                 + ")"
@@ -167,10 +169,10 @@ final class Process{
                                 + "'"+ invNo+ "', "
                                 + "'"+ itemCode+ "', "
                                 + amount+ ", "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                 invDtlsInserted = stmt.executeUpdate(query);

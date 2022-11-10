@@ -283,7 +283,7 @@ final class Students{
                 html += e.getMessage();
             }
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             this.firstName          = pRStudentProfile.firstName;
             this.middleName         = pRStudentProfile.middleName;
@@ -517,7 +517,7 @@ final class Students{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM PRSTUDPRDS WHERE CLASSCODE IN(SELECT CLASSCODE FROM PRSTREAMS WHERE STREAMCODE = '"+ this.streamCode+ "')";
+                String query = "SELECT * FROM "+this.comCode+".PRSTUDPRDS WHERE CLASSCODE IN(SELECT CLASSCODE FROM "+this.comCode+".PRSTREAMS WHERE STREAMCODE = '"+ this.streamCode+ "')";
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
 
@@ -539,12 +539,12 @@ final class Students{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("admissionGroup", " Admission Group")+ "</td>";
-        html += "<td>"+ gui.formSelect("admissionGroup", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.admGrp: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("admissionGroup", this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.admGrp: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td width = \"20%\">"+ gui.formIcon(request.getContextPath(),"house.png", "", "")+ gui.formLabel("stream", " Class Stream")+"</td>";
-        html += "<td width = \"30%\">"+ gui.formSelect("stream", "VIEWPRSTREAMS", "STREAMCODE", "STREAMNAME", "STUDYRLEVEL, STREAMCODE", "", this.id != null? this.streamCode: "", "onchange = \"students.getStudPrdsUi();\"", false)+ "</td>";
+        html += "<td width = \"30%\">"+ gui.formSelect("stream", this.comCode+".VIEWPRSTREAMS", "STREAMCODE", "STREAMNAME", "STUDYRLEVEL, STREAMCODE", "", this.id != null? this.streamCode: "", "onchange = \"students.getStudPrdsUi();\"", false)+ "</td>";
 	
 	html += "<td width = \"20%\">"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentPeriod", " Student Period")+"</td>";
 	html += "<td id = \"tdStudentPeriod\">"+ gui.formArraySelect("studentPeriod", 150, studentPeriods, this.id != null? this.studPrdCode: "", false, "", true)+ "</td>";
@@ -552,12 +552,12 @@ final class Students{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("studentType", " Student Type")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("studentType", "PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("studentType", this.comCode+".PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("studentStatus", " Student Status")+"</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("studentStatus", "PRSTUDSTATUS", "STATUSCODE", "STATUSNAME", "", "", this.id != null? this.statusCode: "", "", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("studentStatus", this.comCode+".PRSTUDSTATUS", "STATUSCODE", "STATUSNAME", "", "", this.id != null? this.statusCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "</table>";
@@ -573,7 +573,7 @@ final class Students{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             obj.put("id", pRStudentProfile.id);
             obj.put("firstName", pRStudentProfile.firstName);
@@ -641,7 +641,7 @@ final class Students{
         }
         
         if(this.id != null){
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             this.studPrdCode = pRStudentProfile.studPrdCode;
         }
         

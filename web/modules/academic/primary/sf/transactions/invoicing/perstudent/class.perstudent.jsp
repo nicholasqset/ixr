@@ -11,7 +11,9 @@
 <%
 
 final class PerStudent{
-    String table            = "PRINVSHDR";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRINVSHDR";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer sid             = request.getParameter("sid") != null? Integer.parseInt(request.getParameter("sid")): null;
@@ -113,10 +115,10 @@ final class PerStudent{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -130,7 +132,7 @@ final class PerStudent{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("item", "PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"perStudent.getItemAmount();\"", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("item", ""+this.comCode+".PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"perStudent.getItemAmount();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -158,7 +160,7 @@ final class PerStudent{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -171,7 +173,7 @@ final class PerStudent{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", pRStudentProfile.fullName);
             
@@ -191,7 +193,7 @@ final class PerStudent{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWPRINVSDETAILS", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        if(sys.recordExists(""+this.comCode+".VIEWPRINVSDETAILS", "STUDENTNO = '"+ this.studentNo+ "' AND "
                 + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "INVTYPE      = 'PS' AND "
@@ -216,7 +218,7 @@ final class PerStudent{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWPRINVSDETAILS WHERE STUDENTNO = '"+ this.studentNo+ "' AND "
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRINVSDETAILS WHERE STUDENTNO = '"+ this.studentNo+ "' AND "
                         + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                         + "TERMCODE     = '"+ this.termCode+ "' AND "
                         + "INVTYPE      = 'PS' AND "
@@ -274,9 +276,9 @@ final class PerStudent{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+        PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
         
-        String amount = sys.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne(""+this.comCode+".VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ pRStudentProfile.classCode+ "' AND "
                 + "STUDTYPECODE = '"+ pRStudentProfile.studTypeCode+ "' AND "
@@ -295,13 +297,13 @@ final class PerStudent{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("PRINVSDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".PRINVSDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWPRINVSDETAILS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRINVSDETAILS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -351,9 +353,9 @@ final class PerStudent{
 
                 if(this.sid == null){
 
-                    Integer sid = sys.generateId("PRINVSDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".PRINVSDTLS", "ID");
 
-                    query = "INSERT INTO PRINVSDTLS "
+                    query = "INSERT INTO "+this.comCode+".PRINVSDTLS "
                                 + "(ID, INVNO, ITEMCODE, AMOUNT, "
                                 + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                                 + ")"
@@ -371,7 +373,7 @@ final class PerStudent{
 
                 }else{
 
-                    query = "UPDATE PRINVSDTLS SET "
+                    query = "UPDATE "+this.comCode+".PRINVSDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "AMOUNT       = "+ this.amount+ " "
                             
@@ -470,7 +472,7 @@ final class PerStudent{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM PRINVSDTLS WHERE ID = "+this.id;
+                String query = "DELETE FROM "+this.comCode+".PRINVSDTLS WHERE ID = "+this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

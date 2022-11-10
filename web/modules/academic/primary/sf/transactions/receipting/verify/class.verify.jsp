@@ -266,7 +266,7 @@ final class Verify{
                     this.academicYear   = rs.getInt("ACADEMICYEAR");		
                     this.termCode       = rs.getString("TERMCODE");
                     
-                    PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+                    PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
                     
                     fullName            = pRStudentProfile.fullName;
                     studPrdName         = pRStudentProfile.studPrdName;
@@ -332,10 +332,10 @@ final class Verify{
         
         html += "<tr>";
 	html += "<td >"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td >"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
+        html += "<td >"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
 	
 	html += "<td >"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -354,12 +354,12 @@ final class Verify{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("payMode", " Payment Mode")+"</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("payMode", "FNPAYMODES", "PMCODE", "PMNAME", "", "", this.id != null? this.pmCode: "", "", false)+"</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("payMode", ""+this.comCode+".FNPAYMODES", "PMCODE", "PMNAME", "", "", this.id != null? this.pmCode: "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"building.png", "", "")+ gui.formLabel("bank", " Bank")+"</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("bank", "FNBANKBRANCH", "BKBRANCHCODE", "BKBRANCHNAME", "", "", this.id != null? this.bkBranchCode: "", "", true)+"</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("bank", ""+this.comCode+".FNBANKBRANCH", "BKBRANCHCODE", "BKBRANCHNAME", "", "", this.id != null? this.bkBranchCode: "", "", true)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -384,7 +384,7 @@ final class Verify{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -397,7 +397,7 @@ final class Verify{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", pRStudentProfile.fullName);
             

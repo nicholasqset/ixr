@@ -240,7 +240,7 @@ final class FeeItems{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+" "+gui.formLabel("glAcc", "GL Account")+"</td>";
-	html += "<td>"+ gui.formSelect("glAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.accountCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("glAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.accountCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

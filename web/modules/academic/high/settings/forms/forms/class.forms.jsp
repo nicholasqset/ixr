@@ -227,7 +227,7 @@ final class Forms{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentYear", " Form Year")+"</td>";
-	html += "<td>"+ gui.formSelect("studentYear", "HGSTUDYEARS", "STUDYRCODE", "STUDYRNAME", "", "", this.id != null? this.studYrCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentYear", ""+this.comCode+".HGSTUDYEARS", "STUDYRCODE", "STUDYRNAME", "", "", this.id != null? this.studYrCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

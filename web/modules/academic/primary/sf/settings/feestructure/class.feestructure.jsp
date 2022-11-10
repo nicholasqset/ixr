@@ -273,27 +273,27 @@ final class FS{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", this.id != null? this.classCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentClass", ""+this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", this.id != null? this.classCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("studentType", " Student Type")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentType", "PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentType", ""+this.comCode+".PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td>"+ gui.formSelect("item", "PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("item", ""+this.comCode+".PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -320,7 +320,7 @@ final class FS{
         Sys sys = new Sys();
         
         
-        if(sys.recordExists("VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.recordExists(""+this.comCode+".VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
 
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
@@ -344,7 +344,7 @@ final class FS{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWPRFSDETAILS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND "
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRFSDETAILS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND "
                         + "TERMCODE     = '"+ this.termCode+ "' AND "
                         + "CLASSCODE    = '"+ this.classCode+ "' AND "
                         + "STUDTYPECODE = '"+ this.studTypeCode+ "' ";
@@ -399,13 +399,13 @@ final class FS{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("PRFSDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".PRFSDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM PRFSDTLS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".PRFSDTLS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -452,7 +452,7 @@ final class FS{
 
                     Integer sid = sys.generateId("PRFSDTLS", "ID");
 
-                    query = "INSERT INTO PRFSDTLS "
+                    query = "INSERT INTO "+this.comCode+".PRFSDTLS "
                                 + "(ID, ACADEMICYEAR, TERMCODE, CLASSCODE, STUDTYPECODE, ITEMCODE, AMOUNT)"
                                 + "VALUES"
                                 + "("
@@ -467,7 +467,7 @@ final class FS{
 
                 }else{
 
-                    query = "UPDATE PRFSDTLS SET "
+                    query = "UPDATE "+this.comCode+".PRFSDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "AMOUNT       = "+ this.amount+ " "
                             
@@ -551,7 +551,7 @@ final class FS{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM PRFSDTLS WHERE ID = "+this.id;
+                String query = "DELETE FROM "+this.comCode+".PRFSDTLS WHERE ID = "+this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

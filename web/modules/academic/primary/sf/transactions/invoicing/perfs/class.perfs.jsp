@@ -9,6 +9,8 @@
 <%
 
 final class PerFS{
+    HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -54,22 +56,22 @@ final class PerFS{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", "", "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentClass", ""+this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", "", "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("studentType", " Student Type")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentType", "PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", "", "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentType", ""+this.comCode+".PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", "", "onchange = \"perFS.getFSDtls();perFS.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -102,7 +104,7 @@ final class PerFS{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perFS.checkAll();\"", "", "");
             
@@ -118,7 +120,7 @@ final class PerFS{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "' ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "' AND TERMCODE = '"+ this.termCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "' ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -126,7 +128,7 @@ final class PerFS{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    Boolean autoInvoiced = sys.recordExists("VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+                    Boolean autoInvoiced = sys.recordExists(""+this.comCode+".VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                             + "TERMCODE     = '"+ this.termCode+"' AND "
                             + "STUDENTNO    = '"+ studentNo+"' AND "
                             + "INVTYPE      = 'AT' "
@@ -163,7 +165,7 @@ final class PerFS{
         
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.recordExists(""+this.comCode+".VIEWPRFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
                 + "STUDTYPECODE = '"+ this.studTypeCode+ "' ")){
@@ -185,7 +187,7 @@ final class PerFS{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWPRFSDETAILS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND "
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRFSDETAILS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND "
                         + "TERMCODE     = '"+ this.termCode+ "' AND "
                         + "CLASSCODE     = '"+ this.classCode+ "' AND "
                         + "STUDTYPECODE = '"+ this.studTypeCode+ "' ";

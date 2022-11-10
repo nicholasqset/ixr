@@ -9,7 +9,8 @@
 <%
 
 final class StudentInquiry{
-        
+        HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studentNo        = request.getParameter("studentNo");
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -79,7 +80,7 @@ final class StudentInquiry{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -92,7 +93,7 @@ final class StudentInquiry{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", pRStudentProfile.fullName);
             
@@ -129,7 +130,7 @@ final class StudentInquiry{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        if(sys.recordExists("VIEWPROBS", "STUDENTNO = '"+ this.studentNo+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWPROBS", "STUDENTNO = '"+ this.studentNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -151,7 +152,7 @@ final class StudentInquiry{
                 Statement stmt = conn.createStatement();
                 
                 String query = "SELECT STUDENTNO, DOCNO, DOCDESC, DOCTYPE, ENTRYDATE, SUM(AMOUNT) TOTAL "
-                        + "FROM VIEWPROBS "
+                        + "FROM "+this.comCode+".VIEWPROBS "
                         + "WHERE STUDENTNO = '"+ this.studentNo+ "' "
                         + "GROUP BY STUDENTNO, DOCNO, DOCDESC, DOCTYPE, ENTRYDATE "
                         + "ORDER BY ENTRYDATE";

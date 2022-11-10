@@ -46,11 +46,11 @@ public class PRStudentProfile {
     public String statusCode;
     public String statusName;
     
-    public PRStudentProfile(String studentNo){
+    public PRStudentProfile(String studentNo, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWPRSTUDENTPROFILE WHERE STUDENTNO = '"+studentNo+"' ";
+            String query = "SELECT * FROM "+comCode+".VIEWPRSTUDENTPROFILE WHERE STUDENTNO = '"+studentNo+"' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id                 = rs.getString("ID");			

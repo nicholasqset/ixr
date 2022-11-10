@@ -220,7 +220,7 @@ final class Streams{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"building.png", "", "")+ gui.formLabel("form", " Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("form", "HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("form", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

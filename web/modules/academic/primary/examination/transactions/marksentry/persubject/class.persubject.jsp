@@ -58,23 +58,23 @@ final class PerSubject{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td width = \"35%\">"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
+        html += "<td width = \"35%\">"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
         
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "", "", "", "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("studentClass", ""+this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "", "", "", "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "book-pencil.png", "", "")+ gui.formLabel("exam", " Exam")+ "</td>";
-	html += "<td>"+ gui.formSelect("exam", "PREXAMS", "EXAMCODE", "EXAMNAME", "", "", "", "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("exam", ""+this.comCode+".PREXAMS", "EXAMCODE", "EXAMNAME", "", "", "", "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "book-open.png", "", "")+ gui.formLabel("subject", " Subject")+ "</td>";
-	html += "<td>"+ gui.formSelect("subject", "PRSUBJECTS", "SUBJECTCODE", "SUBJECTNAME", "ID", "", "", "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("subject", ""+this.comCode+".PRSUBJECTS", "SUBJECTCODE", "SUBJECTNAME", "ID", "", "", "onchange = \"perSubject.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -96,7 +96,7 @@ final class PerSubject{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("VIEWPRSTUDENTMARKS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND CLASSCODE = '"+ this.classCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ")){
+        if(sys.recordExists(""+this.comCode+".VIEWPRSTUDENTMARKS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND CLASSCODE = '"+ this.classCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -112,7 +112,7 @@ final class PerSubject{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWPRSTUDENTMARKS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND CLASSCODE = '"+ this.classCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRSTUDENTMARKS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND CLASSCODE = '"+ this.classCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'";
                 ResultSet rs = stmt.executeQuery(query);
                 
                 Integer count = 1;

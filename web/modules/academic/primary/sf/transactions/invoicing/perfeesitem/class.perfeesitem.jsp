@@ -10,6 +10,8 @@
 <%
 
 final class PerFeesItem{
+    HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
@@ -57,27 +59,27 @@ final class PerFeesItem{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", "", "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentClass", this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", "", "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("studentType", " Student Type")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentType", "PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentType", this.comCode+".PRSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "onchange = \"perFeesItem.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td>"+ gui.formSelect("item", "PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"perFeesItem.getStudents(); perFeesItem.getItemAmount();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("item", this.comCode+".PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"perFeesItem.getStudents(); perFeesItem.getItemAmount();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -105,7 +107,7 @@ final class PerFeesItem{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        String amount = sys.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne(""+this.comCode+".VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "CLASSCODE    = '"+ this.classCode+ "' AND "
                 + "STUDTYPECODE = '"+ this.studTypeCode+ "' AND "
@@ -124,7 +126,7 @@ final class PerFeesItem{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWPRSTUDENTPROFILE", "CLASSCODE = '"+ this.classCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"perFeesItem.checkAll();\"", "", "");
             
@@ -142,7 +144,7 @@ final class PerFeesItem{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "' ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "' AND STUDTYPECODE = '"+ this.studTypeCode+ "' ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -150,7 +152,7 @@ final class PerFeesItem{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    Boolean autoInvoiced = sys.recordExists("VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+                    Boolean autoInvoiced = sys.recordExists(""+this.comCode+".VIEWPRINVSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
                             + "TERMCODE     = '"+ this.termCode+"' AND "
                             + "STUDENTNO    = '"+ studentNo+"' AND "
                             + "INVTYPE      = 'PI' AND "

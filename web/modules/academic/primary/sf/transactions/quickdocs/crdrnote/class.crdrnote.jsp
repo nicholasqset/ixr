@@ -303,7 +303,7 @@ final class CrDrNote{
         String studTypeName = "";
         
         if(this.id != null){
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
                     
             fullName            = pRStudentProfile.fullName;
             studPrdName         = pRStudentProfile.studPrdName;
@@ -362,10 +362,10 @@ final class CrDrNote{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -387,7 +387,7 @@ final class CrDrNote{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("item", "PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"crDrNote.getItemAmount();\"", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("item", ""+this.comCode+".PRITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"crDrNote.getItemAmount();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -428,7 +428,7 @@ final class CrDrNote{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", pRStudentProfile.fullName);
             
@@ -540,7 +540,7 @@ final class CrDrNote{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+        PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
         
         String amount = sys.getOne("VIEWPRFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "

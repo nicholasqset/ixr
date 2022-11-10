@@ -8,7 +8,9 @@
 <%
 
 final class ProcessInvs{
-        
+    HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
+    
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
@@ -52,17 +54,17 @@ final class ProcessInvs{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", "", "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentClass", ""+this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "STUDYRLEVEL", "", "", "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -85,7 +87,7 @@ final class ProcessInvs{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
+        if(sys.recordExists(""+this.comCode+".PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procInvs.checkAll();\"", "", "");
             
@@ -106,7 +108,7 @@ final class ProcessInvs{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM PRINVSHDR WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0)  ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".PRINVSHDR WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0)  ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -116,10 +118,10 @@ final class ProcessInvs{
                     String invNo        = rs.getString("INVNO");
                     String invDesc      = rs.getString("INVDESC");
                     
-                    PRStudentProfile pRStudentProfile = new PRStudentProfile(studentNo);
+                    PRStudentProfile pRStudentProfile = new PRStudentProfile(studentNo, this.comCode );
                     
 //                    Double amount = Double.parseDouble(sys.getOne("PRINVSDTLS", "SUM(AMOUNT)", "INVNO = '"+ invNo+ "'"));
-                    Double amount = Double.parseDouble(sys.getOneAgt("PRINVSDTLS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo+ "'"));
+                    Double amount = Double.parseDouble(sys.getOneAgt(""+this.comCode+".PRINVSDTLS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo+ "'"));
                     
                     String amountLbl = sys.numberFormat(amount.toString());
                     

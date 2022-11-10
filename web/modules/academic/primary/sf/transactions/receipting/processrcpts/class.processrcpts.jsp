@@ -7,7 +7,8 @@
 <%
 
 final class ProcessRcpts{
-        
+        HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
@@ -51,17 +52,17 @@ final class ProcessRcpts{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ primaryCalendar.academicYear, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", primaryCalendar.termCode, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentClass", " Student Class")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentClass", "VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "", "", "", "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentClass", ""+this.comCode+".VIEWPRCLASSES", "CLASSCODE", "CLASSNAME", "", "", "", "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -84,7 +85,7 @@ final class ProcessRcpts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("VIEWPRVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') ")){
+        if(sys.recordExists(""+this.comCode+".VIEWPRVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procRcpts.checkAll();\"", "", "");
             
@@ -105,7 +106,7 @@ final class ProcessRcpts{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWPRVERFDRCPTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "')  ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".VIEWPRVERFDRCPTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "')  ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 

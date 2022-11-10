@@ -11,8 +11,10 @@
 <%
 
 final class Registration{
-    String table            = "PRREGISTRATION";
-    String view             = "VIEWPRREGISTRATION";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".PRREGISTRATION";
+    String view             = comCode+".VIEWPRREGISTRATION";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String studentNo        = request.getParameter("studentNo");
@@ -239,7 +241,7 @@ final class Registration{
                 while(rs.next()){
                     this.studentNo      = rs.getString("STUDENTNO");		
                     
-                    PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+                    PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
                     
                     fullName            = pRStudentProfile.fullName;
                     studPrdName         = pRStudentProfile.studPrdName;
@@ -287,10 +289,10 @@ final class Registration{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td >"+ gui.formSelect("academicYear", "PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
+        html += "<td >"+ gui.formSelect("academicYear", ""+this.comCode+".PRACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
 	
 	html += "<td >"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".PRTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: primaryCalendar.termCode, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -314,7 +316,7 @@ final class Registration{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".PRSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -327,7 +329,7 @@ final class Registration{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo);
+            PRStudentProfile pRStudentProfile = new PRStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", pRStudentProfile.fullName);
             
@@ -348,7 +350,7 @@ final class Registration{
         Sys sys = new Sys();
         HttpSession session = request.getSession();
         
-        String invAmountStr = sys.getOne("VIEWPROBS", "AMOUNT", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        String invAmountStr = sys.getOne(""+this.comCode+".VIEWPROBS", "AMOUNT", "STUDENTNO = '"+ this.studentNo+ "' AND "
                 + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "'");
         
