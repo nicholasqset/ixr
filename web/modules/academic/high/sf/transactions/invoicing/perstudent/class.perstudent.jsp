@@ -113,10 +113,10 @@ final class PerStudent{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "onchange = \"perStudent.getInvItems();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -130,7 +130,7 @@ final class PerStudent{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("item", "HGITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"perStudent.getItemAmount();\"", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("item", ""+this.comCode+".HGITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"perStudent.getItemAmount();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -158,7 +158,7 @@ final class PerStudent{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -171,7 +171,7 @@ final class PerStudent{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", hGStudentProfile.fullName);
             
@@ -191,7 +191,7 @@ final class PerStudent{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWHGINVSDETAILS", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        if(sys.recordExists(""+this.comCode+".VIEWHGINVSDETAILS", "STUDENTNO = '"+ this.studentNo+ "' AND "
                 + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "INVTYPE      = 'PS' AND "
@@ -216,7 +216,7 @@ final class PerStudent{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWHGINVSDETAILS WHERE STUDENTNO = '"+ this.studentNo+ "' AND "
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGINVSDETAILS WHERE STUDENTNO = '"+ this.studentNo+ "' AND "
                         + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                         + "TERMCODE     = '"+ this.termCode+ "' AND "
                         + "INVTYPE      = 'PS' AND "
@@ -274,9 +274,9 @@ final class PerStudent{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+        HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
         
-        String amount = sys.getOne("VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne(""+this.comCode+".VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE = '"+ this.termCode+ "' AND "
                 + "FORMCODE = '"+ hGStudentProfile.formCode+ "' AND "
                 + "STUDTYPECODE = '"+ hGStudentProfile.studTypeCode+ "' AND "
@@ -295,13 +295,13 @@ final class PerStudent{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("HGINVSDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".HGINVSDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHGINVSDETAILS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGINVSDETAILS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -351,9 +351,9 @@ final class PerStudent{
 
                 if(this.sid == null){
 
-                    Integer sid = sys.generateId("HGINVSDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".HGINVSDTLS", "ID");
 
-                    query = "INSERT INTO HGINVSDTLS "
+                    query = "INSERT INTO "+this.comCode+".HGINVSDTLS "
                                 + "(ID, INVNO, ITEMCODE, AMOUNT, "
                                 + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                                 + ")"
@@ -371,7 +371,7 @@ final class PerStudent{
 
                 }else{
 
-                    query = "UPDATE HGINVSDTLS SET "
+                    query = "UPDATE "+this.comCode+".HGINVSDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "AMOUNT       = "+ this.amount+ " "
                             
@@ -470,7 +470,7 @@ final class PerStudent{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM HGINVSDTLS WHERE ID = "+this.id;
+                String query = "DELETE FROM "+this.comCode+".HGINVSDTLS WHERE ID = "+this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

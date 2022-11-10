@@ -85,7 +85,7 @@ final class StudentInquiry{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -98,7 +98,7 @@ final class StudentInquiry{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", hGStudentProfile.fullName);
             
@@ -135,7 +135,7 @@ final class StudentInquiry{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        if(sys.recordExists("VIEWHGOBS", "STUDENTNO = '"+ this.studentNo+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWHGOBS", "STUDENTNO = '"+ this.studentNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -157,7 +157,7 @@ final class StudentInquiry{
                 Statement stmt = conn.createStatement();
                 
                 String query = "SELECT STUDENTNO, DOCNO, DOCDESC, DOCTYPE, ENTRYDATE, SUM(AMOUNT) TOTAL "
-                        + "FROM VIEWHGOBS "
+                        + "FROM "+this.comCode+".VIEWHGOBS "
                         + "WHERE STUDENTNO = '"+ this.studentNo+ "' "
                         + "GROUP BY STUDENTNO, DOCNO, DOCDESC, DOCTYPE, ENTRYDATE "
                         + "ORDER BY ENTRYDATE";

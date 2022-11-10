@@ -7,7 +7,9 @@
 <%
 
 final class StudentTypes{
-    String table        = "HGSTUDTYPES";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".HGSTUDTYPES";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String statusCode   = request.getParameter("code");
@@ -221,7 +223,7 @@ final class StudentTypes{
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("name", " Student Type Name")+"</td>";
+	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("name", " Student Type Name")+"</td>";
 	html += "<td>"+gui.formInput("text", "name", 25, this.id != null? this.statusName: "", "", "")+"</td>";
 	html += "</tr>";
         

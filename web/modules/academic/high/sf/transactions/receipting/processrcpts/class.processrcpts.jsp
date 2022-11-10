@@ -55,17 +55,17 @@ final class ProcessRcpts{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentForm", " Student Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentForm", "HGFORMS", "FORMCODE", "FORMNAME", "", "", "", "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentForm", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", "", "onchange = \"procRcpts.getReceipts();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -92,7 +92,7 @@ final class ProcessRcpts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("VIEWHGVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') ")){
+        if(sys.recordExists(""+this.comCode+".VIEWHGVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procRcpts.checkAll();\"", "", "");
             
@@ -113,7 +113,7 @@ final class ProcessRcpts{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHGVERFDRCPTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "')  ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGVERFDRCPTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "')  ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 

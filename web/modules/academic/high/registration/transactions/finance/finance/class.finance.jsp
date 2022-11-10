@@ -253,7 +253,7 @@ final class Finance{
                 while(rs.next()){
                     this.studentNo      = rs.getString("STUDENTNO");		
                     
-                    HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+                    HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
                     
                     fullName            = hGStudentProfile.fullName;
                     studPrdName         = hGStudentProfile.studPrdName;
@@ -302,10 +302,10 @@ final class Finance{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td >"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "", false)+ "</td>";
+        html += "<td >"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "", false)+ "</td>";
 	
 	html += "<td >"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -329,7 +329,7 @@ final class Finance{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -342,7 +342,7 @@ final class Finance{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", hGStudentProfile.fullName);
             
@@ -363,7 +363,7 @@ final class Finance{
         Sys sys = new Sys();
         HttpSession session = request.getSession();
         
-        String invAmountStr = sys.getOne("VIEWHGOBS", "AMOUNT", "STUDENTNO = '"+ this.studentNo+ "' AND "
+        String invAmountStr = sys.getOne(""+this.comCode+".VIEWHGOBS", "AMOUNT", "STUDENTNO = '"+ this.studentNo+ "' AND "
                 + "ACADEMICYEAR = "+ this.academicYear+ " AND "
                 + "TERMCODE = '"+ this.termCode+ "'");
         

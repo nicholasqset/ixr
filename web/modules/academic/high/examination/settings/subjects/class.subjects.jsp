@@ -227,7 +227,7 @@ final class Subjects{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"category-group.png", "", "")+ gui.formLabel("subjectGroup", " Subject Group")+ "</td>";
-	html += "<td>"+ gui.formSelect("subjectGroup", "HGSUBJECTGRPS", "SUBJECTGRPCODE", "SUBJECTGRPNAME", "", "", this.id != null? this.subjectGrpCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("subjectGroup", ""+this.comCode+".HGSUBJECTGRPS", "SUBJECTGRPCODE", "SUBJECTGRPNAME", "", "", this.id != null? this.subjectGrpCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

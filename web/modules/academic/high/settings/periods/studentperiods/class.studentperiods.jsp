@@ -215,12 +215,12 @@ final class StudentPeriods{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentForm", " Student Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentForm", "HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentForm", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "onchange = \"studentPeriods.getStudPeriodName();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

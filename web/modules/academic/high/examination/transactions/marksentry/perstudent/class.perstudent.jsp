@@ -79,10 +79,10 @@ final class PerStudent{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"perStudent.getSubjects();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"perStudent.getSubjects();\"", false)+ "</td>";
         
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"perStudent.getSubjects();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"perStudent.getSubjects();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -91,7 +91,7 @@ final class PerStudent{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "book-pencil.png", "", "")+ gui.formLabel("exam", " Exam")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("exam", "HGEXAMS", "EXAMCODE", "EXAMNAME", "", "", "", "onchange = \"perStudent.getSubjects();\"", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("exam", ""+this.comCode+".HGEXAMS", "EXAMCODE", "EXAMNAME", "", "", "", "onchange = \"perStudent.getSubjects();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -115,7 +115,7 @@ final class PerStudent{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -128,7 +128,7 @@ final class PerStudent{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", hGStudentProfile.fullName);
             
@@ -148,7 +148,7 @@ final class PerStudent{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("VIEWHGSTUDENTMARKS", "STUDENTNO = '"+ this.studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' ")){
+        if(sys.recordExists(""+this.comCode+".VIEWHGSTUDENTMARKS", "STUDENTNO = '"+ this.studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' ")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -164,7 +164,7 @@ final class PerStudent{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHGSTUDENTMARKS WHERE STUDENTNO = '"+ this.studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' ORDER BY SBJID ";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGSTUDENTMARKS WHERE STUDENTNO = '"+ this.studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' ORDER BY SBJID ";
                 ResultSet rs = stmt.executeQuery(query);
                 
                 Integer count = 1;

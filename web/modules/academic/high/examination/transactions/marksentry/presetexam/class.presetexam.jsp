@@ -9,7 +9,8 @@
 <%
 
 final class PresetExam{
-        
+         HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
@@ -55,27 +56,27 @@ final class PresetExam{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentForm", " Student Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentForm", "HGFORMS", "FORMCODE", "FORMNAME", "", "", "", "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentForm", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", "", "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "book-pencil.png", "", "")+ gui.formLabel("exam", " Exam")+ "</td>";
-	html += "<td>"+ gui.formSelect("exam", "HGEXAMS", "EXAMCODE", "EXAMNAME", "", "", "", "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("exam", ""+this.comCode+".HGEXAMS", "EXAMCODE", "EXAMNAME", "", "", "", "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "book-open.png", "", "")+ gui.formLabel("subject", " Subject")+ "</td>";
-	html += "<td>"+ gui.formSelect("subject", "HGSUBJECTS", "SUBJECTCODE", "SUBJECTNAME", "ID", "", "", "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("subject", ""+this.comCode+".HGSUBJECTS", "SUBJECTCODE", "SUBJECTNAME", "ID", "", "", "onchange = \"presetExam.getStudents();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -97,7 +98,7 @@ final class PresetExam{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("VIEWHGSTUDSUBJECTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND FORMCODE = '"+ this.formCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWHGSTUDSUBJECTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND FORMCODE = '"+ this.formCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"presetExam.checkAll();\"", "", "");
             
@@ -113,7 +114,7 @@ final class PresetExam{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHGSTUDSUBJECTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND FORMCODE = '"+ this.formCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGSTUDSUBJECTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND FORMCODE = '"+ this.formCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "'";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -121,7 +122,7 @@ final class PresetExam{
                     String studentNo    = rs.getString("STUDENTNO");
                     String fullName     = rs.getString("FULLNAME");
                     
-                    String registered   = sys.getOne("HGSTUDENTMARKS", "STUDENTNO", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ");
+                    String registered   = sys.getOne(""+this.comCode+".HGSTUDENTMARKS", "STUDENTNO", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND EXAMCODE = '"+ this.examCode+ "' AND SUBJECTCODE = '"+ this.subjectCode+ "' ");
                     
                     String checked      = registered != null? "checked": ""; 
                     

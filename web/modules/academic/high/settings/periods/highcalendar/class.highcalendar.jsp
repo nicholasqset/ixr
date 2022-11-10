@@ -270,7 +270,7 @@ final class HighCalendar{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

@@ -58,17 +58,17 @@ final class ProcessInvs{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", ""+ highCalendar.academicYear, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", highCalendar.termCode, "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentForm", " Student Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentForm", "HGFORMS", "FORMCODE", "FORMNAME", "", "", "", "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentForm", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", "", "onchange = \"procInvs.getInvHdr();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -95,7 +95,7 @@ final class ProcessInvs{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists("HGINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
+        if(sys.recordExists(""+this.comCode+".HGINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procInvs.checkAll();\"", "", "");
             
@@ -116,7 +116,7 @@ final class ProcessInvs{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM HGINVSHDR WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0)  ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".HGINVSHDR WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0)  ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -126,10 +126,10 @@ final class ProcessInvs{
                     String invNo        = rs.getString("INVNO");
                     String invDesc      = rs.getString("INVDESC");
                     
-                    HGStudentProfile hGStudentProfile = new HGStudentProfile(studentNo);
+                    HGStudentProfile hGStudentProfile = new HGStudentProfile(studentNo, this.comCode);
                     
 //                    Double amount = Double.parseDouble(sys.getOne("HGINVSDTLS", "SUM(AMOUNT)", "INVNO = '"+ invNo+ "'"));
-                    Double amount = Double.parseDouble(sys.getOneAgt("HGINVSDTLS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo+ "'"));
+                    Double amount = Double.parseDouble(sys.getOneAgt(""+this.comCode+".HGINVSDTLS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo+ "'"));
                     
                     String amountLbl = sys.numberFormat(amount.toString());
                     

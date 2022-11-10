@@ -281,7 +281,7 @@ final class Students{
                 html += e.getMessage();
             }
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             this.firstName          = hGStudentProfile.firstName;
             this.middleName         = hGStudentProfile.middleName;
@@ -320,7 +320,7 @@ final class Students{
             html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");
         }
         
-        String defaultCountryCode = sys.getOne("CSCOUNTRIES", "COUNTRYCODE", "ISDEFAULT = 1");
+        String defaultCountryCode = sys.getOne(""+this.comCode+".CSCOUNTRIES", "COUNTRYCODE", "ISDEFAULT = 1");
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -368,7 +368,7 @@ final class Students{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"gender.png", "", "")+" "+gui.formLabel("gender", "Gender")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("gender", "CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("gender", ""+this.comCode+".CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -378,7 +378,7 @@ final class Students{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"globe-medium-green.png", "", "")+ gui.formLabel("country", " Country")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("country", "CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: defaultCountryCode, null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("country", ""+this.comCode+".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: defaultCountryCode, null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -394,7 +394,7 @@ final class Students{
 	html += "<td>"+gui.formCheckBox("physChald", (this.id != null && this.physChald == 1)? "checked": "", null, "onchange = \"students.toggleDisab();\"", "", "")+"</td>";
 	
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"apps-accessibility.png", "", "")+" "+gui.formLabel("disability", "Physical Disability")+"</td>";
-	html += "<td>"+gui.formSelect("disability", "CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null? this.disabCode: "", (this.id != null && this.physChald == 1) ? "": "disabled", false)+"</td>";
+	html += "<td>"+gui.formSelect("disability", ""+this.comCode+".CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null? this.disabCode: "", (this.id != null && this.physChald == 1) ? "": "disabled", false)+"</td>";
 	html += "</tr>";
         
         html += "</table>";
@@ -434,7 +434,7 @@ final class Students{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -450,7 +450,7 @@ final class Students{
             
             try{
                 stmt = conn.createStatement();
-                String query = "SELECT COUNT(*)CT FROM HGSTUDPHOTOS WHERE STUDENTNO = '"+studentNo+"'";
+                String query = "SELECT COUNT(*)CT FROM "+this.comCode+".HGSTUDPHOTOS WHERE STUDENTNO = '"+studentNo+"'";
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     count      = rs.getInt("CT");		
@@ -515,7 +515,7 @@ final class Students{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM HGSTUDPRDS WHERE FORMCODE IN(SELECT FORMCODE FROM HGSTREAMS WHERE STREAMCODE = '"+ this.streamCode+ "')";
+                String query = "SELECT * FROM "+this.comCode+".HGSTUDPRDS WHERE FORMCODE IN(SELECT FORMCODE FROM "+this.comCode+".HGSTREAMS WHERE STREAMCODE = '"+ this.streamCode+ "')";
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
 
@@ -537,12 +537,12 @@ final class Students{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("admissionGroup", " Admission Group")+ "</td>";
-        html += "<td>"+ gui.formSelect("admissionGroup", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.admGrp: ""+ highCalendar.academicYear, "", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("admissionGroup", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.admGrp: ""+ highCalendar.academicYear, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td width = \"20%\">"+ gui.formIcon(request.getContextPath(),"house.png", "", "")+ gui.formLabel("stream", " Form Stream")+"</td>";
-        html += "<td width = \"30%\">"+ gui.formSelect("stream", "HGSTREAMS", "STREAMCODE", "STREAMNAME", "", "", this.id != null? this.streamCode: "", "onchange = \"students.getStudPrdsUi();\"", false)+ "</td>";
+        html += "<td width = \"30%\">"+ gui.formSelect("stream", ""+this.comCode+".HGSTREAMS", "STREAMCODE", "STREAMNAME", "", "", this.id != null? this.streamCode: "", "onchange = \"students.getStudPrdsUi();\"", false)+ "</td>";
 	
 	html += "<td width = \"20%\">"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentPeriod", " Student Period")+"</td>";
 	html += "<td id = \"tdStudentPeriod\">"+ gui.formArraySelect("studentPeriod", 150, studentPeriods, this.id != null? this.studPrdCode: "", false, "", true)+ "</td>";
@@ -550,12 +550,12 @@ final class Students{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("studentType", " Student Type")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("studentType", "HGSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("studentType", ""+this.comCode+".HGSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("studentStatus", " Student Status")+"</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("studentStatus", "HGSTUDSTATUS", "STATUSCODE", "STATUSNAME", "", "", this.id != null? this.statusCode: "", "", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("studentStatus", ""+this.comCode+".HGSTUDSTATUS", "STATUSCODE", "STATUSNAME", "", "", this.id != null? this.statusCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "</table>";
@@ -571,7 +571,7 @@ final class Students{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             obj.put("id", hGStudentProfile.id);
             obj.put("firstName", hGStudentProfile.firstName);
@@ -639,7 +639,7 @@ final class Students{
         }
         
         if(this.id != null){
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             this.studPrdCode = hGStudentProfile.studPrdCode;
         }
         
@@ -803,7 +803,7 @@ final class Students{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            String query   = "SELECT * FROM HGSTUDNOS WHERE ACADEMICYEAR = "+highCalendar.academicYear;
+            String query   = "SELECT * FROM "+this.comCode+".HGSTUDNOS WHERE ACADEMICYEAR = "+highCalendar.academicYear;
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -846,7 +846,7 @@ final class Students{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            Integer id = sys.generateId("HGSTUDNOS", "ID");
+            Integer id = sys.generateId(""+this.comCode+".HGSTUDNOS", "ID");
             String query = "INSERT INTO HGSTUDNOS "
                         + "(ID, ACADEMICYEAR, CURNO)"
                         + "VALUES"
@@ -876,7 +876,7 @@ final class Students{
             Statement stmt = conn.createStatement();
             
             if(this.studentNo != null && ! this.studentNo.trim().equals("")){
-                String query = "DELETE FROM HGSTUDPHOTOS WHERE STUDENTNO = '"+this.studentNo+"'";
+                String query = "DELETE FROM "+this.comCode+".HGSTUDPHOTOS WHERE STUDENTNO = '"+this.studentNo+"'";
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

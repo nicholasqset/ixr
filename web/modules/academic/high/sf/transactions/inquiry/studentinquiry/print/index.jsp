@@ -15,7 +15,8 @@
 <%@page import="bean.sys.Sys"%>
 <%
     final class RptStudentInquiry{
-        
+        HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
         public String studentNo = request.getParameter("studentNo");
         
         public String getReportHeader(){
@@ -26,7 +27,7 @@
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
 
-                String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
+                String companyCode = sys.getOne("CSCOPROFILE", "COMPANYCODE", "");
 
                 if(companyCode != null){
 
@@ -34,7 +35,7 @@
 
                     String imgLogoSrc;
 
-                    if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
+                    if(sys.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
                         imgLogoSrc = "logo.jsp?code="+companyCode;
                     }else{
                         imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
@@ -43,7 +44,7 @@
                     html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                     html += "<tr>";
-                    html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                    html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                     html += "</tr>";
 
                     html += "<tr>";
@@ -83,7 +84,7 @@
                     html += "<td colspan = \"3\"  align = \"center\">Student Statement</td>";
                     html += "</tr>";
 
-                    java.util.Date reportDate = originalFormat.parse(system.getLogDate());
+                    java.util.Date reportDate = originalFormat.parse(sys.getLogDate());
                     String reportDateLbl = targetFormat.format(reportDate);
 
                     html += "<tr>";
@@ -109,7 +110,7 @@
         public String getReportDetails(){
             String html = "";
             
-            HGStudentProfile hGStudentProfile = new  HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new  HGStudentProfile(this.studentNo, this.comCode);
                 
             html += "<table width = \"100%\" cellpadding = \"1\" cellspacing = \"0\" class = \"header\">";
 
@@ -154,7 +155,7 @@
             SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
 
-            if(system.recordExists("VIEWHGOBS", "STUDENTNO = '"+ this.studentNo+ "'")){
+            if(sys.recordExists("VIEWHGOBS", "STUDENTNO = '"+ this.studentNo+ "'")){
 
                 html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
 
@@ -229,12 +230,12 @@
                         java.util.Date docDate = originalFormat.parse(entryDate);
                         entryDate = targetFormat.format(docDate);
 
-                        String drLbl = system.numberFormat(dr.toString());
-                        String crLbl = system.numberFormat(cr.toString());
+                        String drLbl = sys.numberFormat(dr.toString());
+                        String crLbl = sys.numberFormat(cr.toString());
 
                         grossTotal = grossTotal +totalAcc;
 
-                        grossTotalLbl = system.numberFormat(grossTotal.toString());
+                        grossTotalLbl = sys.numberFormat(grossTotal.toString());
 
                         html += "<tr>";
                         html += "<td>"+ docNo+ "</td>";
@@ -253,7 +254,7 @@
                     html += e.getMessage();
                 }
 
-                grossTotalLbl = system.numberFormat(grossTotal.toString());
+                grossTotalLbl = sys.numberFormat(grossTotal.toString());
 
                 html += "<tr>";
                 html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"6\">Total</td>";

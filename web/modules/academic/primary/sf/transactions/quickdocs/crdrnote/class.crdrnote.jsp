@@ -180,7 +180,7 @@ final class CrDrNote{
                     Integer posted          = rs.getInt("POSTED");
                     
 //                    String amountLbl = sys.getOne("PRQDDTLS", "SUM(AMOUNT)", "DOCNO = '"+ docNo+ "'");
-                    String amountLbl = sys.getOneAgt("PRQDDTLS", "SUM", "AMOUNT", "SM", "DOCNO = '"+ docNo+ "'");
+                    String amountLbl = sys.getOneAgt(""+this.comCode+".PRQDDTLS", "SUM", "AMOUNT", "SM", "DOCNO = '"+ docNo+ "'");
                     amountLbl = sys.numberFormat(amountLbl);
                     
                     String postedLbl = posted == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");

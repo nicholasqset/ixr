@@ -370,7 +370,7 @@ final class Students{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"gender.png", "", "")+" "+gui.formLabel("gender", "Gender")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("gender", "CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("gender", ""+this.comCode+".CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -380,7 +380,7 @@ final class Students{
         
         html += "<tr>";
 	html += "<td>"+gui.formIcon(request.getContextPath(),"globe-medium-green.png", "", "")+ gui.formLabel("country", " Country")+"</td>";
-	html += "<td colspan = \"3\">"+gui.formSelect("country", "CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: defaultCountryCode, null, false)+"</td>";
+	html += "<td colspan = \"3\">"+gui.formSelect("country", ""+this.comCode+".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: defaultCountryCode, null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -396,7 +396,7 @@ final class Students{
 	html += "<td>"+gui.formCheckBox("physChald", (this.id != null && this.physChald == 1)? "checked": "", null, "onchange = \"students.toggleDisab();\"", "", "")+"</td>";
 	
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"apps-accessibility.png", "", "")+" "+gui.formLabel("disability", "Physical Disability")+"</td>";
-	html += "<td>"+gui.formSelect("disability", "CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null? this.disabCode: "", (this.id != null && this.physChald == 1) ? "": "disabled", false)+"</td>";
+	html += "<td>"+gui.formSelect("disability", ""+this.comCode+".CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null? this.disabCode: "", (this.id != null && this.physChald == 1) ? "": "disabled", false)+"</td>";
 	html += "</tr>";
         
         html += "</table>";

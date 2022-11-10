@@ -271,27 +271,27 @@ final class FS{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("studentForm", " Student Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentForm", "HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentForm", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("studentType", " Student Type")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentType", "HGSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentType", ""+this.comCode+".HGSTUDTYPES", "STUDTYPECODE", "STUDTYPENAME", "", "", this.id != null? this.studTypeCode: "", "onchange = \"fs.getFSDtls();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td>"+ gui.formSelect("item", "HGITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("item", ""+this.comCode+".HGITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -321,8 +321,7 @@ final class FS{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        
-        if(sys.recordExists("VIEWHGFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
+        if(sys.recordExists(""+this.comCode+".VIEWHGFSDETAILS", "ACADEMICYEAR = "+ this.academicYear+ " AND "
 
                 + "TERMCODE     = '"+ this.termCode+ "' AND "
                 + "FORMCODE     = '"+ this.formCode+ "' AND "
@@ -346,7 +345,7 @@ final class FS{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWHGFSDETAILS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND "
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGFSDETAILS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND "
                         + "TERMCODE     = '"+ this.termCode+ "' AND "
                         + "FORMCODE     = '"+ this.formCode+ "' AND "
                         + "STUDTYPECODE = '"+ this.studTypeCode+ "' ";
@@ -401,13 +400,13 @@ final class FS{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("HGFSDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".HGFSDTLS", "ID = "+ this.sid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM HGFSDTLS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".HGFSDTLS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -454,7 +453,7 @@ final class FS{
 
                     Integer sid = sys.generateId("HGFSDTLS", "ID");
 
-                    query = "INSERT INTO HGFSDTLS "
+                    query = "INSERT INTO "+this.comCode+".HGFSDTLS "
                                 + "(ID, ACADEMICYEAR, TERMCODE, FORMCODE, STUDTYPECODE, ITEMCODE, AMOUNT)"
                                 + "VALUES"
                                 + "("
@@ -469,7 +468,7 @@ final class FS{
 
                 }else{
 
-                    query = "UPDATE HGFSDTLS SET "
+                    query = "UPDATE "+this.comCode+".HGFSDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "AMOUNT       = "+ this.amount+ " "
                             
@@ -552,7 +551,7 @@ final class FS{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM HGFSDTLS WHERE ID = "+this.id;
+                String query = "DELETE FROM "+this.comCode+".HGFSDTLS WHERE ID = "+this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

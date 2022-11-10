@@ -45,7 +45,8 @@
 //}
 
 final class Process{
-    
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
     String formCode         = request.getParameter("studentForm");
@@ -74,7 +75,7 @@ final class Process{
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT * FROM VIEWHGINVSDETAILS WHERE INVNO = '"+ invNo+ "' ";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWHGINVSDETAILS WHERE INVNO = '"+ invNo+ "' ";
 
                     ResultSet rs = stmt.executeQuery(query);
                     while(rs.next()){
@@ -90,7 +91,7 @@ final class Process{
                         
                         if(obsCreated == 1){
                             Statement st = conn.createStatement();
-                            st.executeUpdate("UPDATE HGINVSHDR SET PROCESSED = 1 WHERE INVNO = '"+ invNo+ "' ");
+                            st.executeUpdate("UPDATE "+this.comCode+".HGINVSHDR SET PROCESSED = 1 WHERE INVNO = '"+ invNo+ "' ");
                         }
                     }
                     

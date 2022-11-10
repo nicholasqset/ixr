@@ -223,12 +223,12 @@ final class GroupSubjects{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("studentForm", " Student Form")+ "</td>";
-	html += "<td>"+ gui.formSelect("studentForm", "HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("studentForm", ""+this.comCode+".HGFORMS", "FORMCODE", "FORMNAME", "", "", this.id != null? this.formCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"category-group.png", "", "")+ gui.formLabel("subjectGroup", " Subject Group")+ "</td>";
-	html += "<td>"+ gui.formSelect("subjectGroup", "HGSUBJECTGRPS", "SUBJECTGRPCODE", "SUBJECTGRPNAME", "", "", this.id != null? this.subjectGrpCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("subjectGroup", ""+this.comCode+".HGSUBJECTGRPS", "SUBJECTGRPCODE", "SUBJECTGRPNAME", "", "", this.id != null? this.subjectGrpCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

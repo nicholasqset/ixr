@@ -193,7 +193,7 @@ final class CrDrNote{
                     Integer posted          = rs.getInt("POSTED");
                     
 //                    String amountLbl = sys.getOne("HGQDDTLS", "SUM(AMOUNT)", "DOCNO = '"+ docNo+ "'");
-                    String amountLbl = sys.getOneAgt("HGQDDTLS", "SUM", "AMOUNT", "SM", "DOCNO = '"+ docNo+ "'");
+                    String amountLbl = sys.getOneAgt(""+this.comCode+".HGQDDTLS", "SUM", "AMOUNT", "SM", "DOCNO = '"+ docNo+ "'");
                     amountLbl = sys.numberFormat(amountLbl);
                     
                     String postedLbl = posted == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
@@ -318,7 +318,7 @@ final class CrDrNote{
         String studTypeName = "";
         
         if(this.id != null){
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
                     
             fullName            = hGStudentProfile.fullName;
             studPrdName         = hGStudentProfile.studPrdName;
@@ -377,10 +377,10 @@ final class CrDrNote{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("academicYear", "HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("academicYear", ""+this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("term", " Term")+ "</td>";
-	html += "<td>"+ gui.formSelect("term", "HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("term", ""+this.comCode+".HGTERMS", "TERMCODE", "TERMNAME", "", "", this.id != null? this.termCode: highCalendar.termCode, "onchange = \"crDrNote.getQDItems();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -402,7 +402,7 @@ final class CrDrNote{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("item", " Fee Item")+ "</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("item", "HGITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"crDrNote.getItemAmount();\"", false)+ "</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("item", ""+this.comCode+".HGITEMS", "ITEMCODE", "ITEMNAME", "", "", "", "onchange = \"crDrNote.getItemAmount();\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -430,7 +430,7 @@ final class CrDrNote{
         
         this.studentNo = request.getParameter("studentNoHd");
         
-        html += gui.getAutoColsSearch("HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
         
         return html;
     }
@@ -443,7 +443,7 @@ final class CrDrNote{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+            HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
             
             obj.put("fullName", hGStudentProfile.fullName);
             
@@ -475,7 +475,7 @@ final class CrDrNote{
                     + "(POSTED IS NULL OR POSTED = 0)";
         }
         
-        if(sys.recordExists("VIEWHGQDDETAILS", filterSql)){
+        if(sys.recordExists(""+this.comCode+".VIEWHGQDDETAILS", filterSql)){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -496,7 +496,7 @@ final class CrDrNote{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWHGQDDETAILS WHERE "+ filterSql+ "ORDER BY ITEMNAME";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGQDDETAILS WHERE "+ filterSql+ "ORDER BY ITEMNAME";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -555,9 +555,9 @@ final class CrDrNote{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo);
+        HGStudentProfile hGStudentProfile = new HGStudentProfile(this.studentNo, this.comCode);
         
-        String amount = sys.getOne("VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
+        String amount = sys.getOne(""+this.comCode+".VIEWHGFSDETAILS", "AMOUNT", "ACADEMICYEAR = "+ this.academicYear+" AND "
                 + "TERMCODE = '"+ this.termCode+ "' AND "
                 + "FORMCODE = '"+ hGStudentProfile.formCode+ "' AND "
                 + "STUDTYPECODE = '"+ hGStudentProfile.studTypeCode+ "' AND "
@@ -582,7 +582,7 @@ final class CrDrNote{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHGQDDETAILS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGQDDETAILS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -630,9 +630,9 @@ final class CrDrNote{
 
                 if(this.sid == null){
 
-                    Integer sid = sys.generateId("HGQDDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".HGQDDTLS", "ID");
 
-                    query = "INSERT INTO HGQDDTLS "
+                    query = "INSERT INTO "+this.comCode+".HGQDDTLS "
                                 + "(ID, DOCNO, ITEMCODE, AMOUNT, "
                                 + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                                 + ")"
@@ -650,7 +650,7 @@ final class CrDrNote{
 
                 }else{
 
-                    query = "UPDATE HGQDDTLS SET "
+                    query = "UPDATE "+this.comCode+".HGQDDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "AMOUNT       = "+ this.amount+ " "
                             
@@ -792,7 +792,7 @@ final class CrDrNote{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM HGQDDTLS WHERE ID = "+this.id;
+                String query = "DELETE FROM "+this.comCode+".HGQDDTLS WHERE ID = "+this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){
@@ -829,12 +829,12 @@ final class CrDrNote{
          String filterSql = "DOCNO  = '"+ this.docNo+ "'";
          
          if(this.docNo != null && ! this.docNo.trim().equals("")){
-             if(sys.recordExists("VIEWHGQDDETAILS", filterSql)){
+             if(sys.recordExists(""+this.comCode+".VIEWHGQDDETAILS", filterSql)){
                  try{
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT * FROM VIEWHGQDDETAILS WHERE "+ filterSql;
+                    String query = "SELECT * FROM "+this.comCode+".VIEWHGQDDETAILS WHERE "+ filterSql;
 
                     ResultSet rs = stmt.executeQuery(query);
                     Integer count = 0;

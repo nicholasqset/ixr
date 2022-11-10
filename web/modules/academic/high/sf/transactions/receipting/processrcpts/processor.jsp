@@ -33,7 +33,8 @@
 <%
 
 final class Process{
-    
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
     String formCode         = request.getParameter("studentForm");
@@ -62,7 +63,7 @@ final class Process{
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT * FROM VIEWHGVERFDRCPTS WHERE RCPTNO = '"+ rcptNo+ "' ";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWHGVERFDRCPTS WHERE RCPTNO = '"+ rcptNo+ "' ";
 
                     ResultSet rs = stmt.executeQuery(query);
                     while(rs.next()){
@@ -79,7 +80,7 @@ final class Process{
                         
                         if(obsCreated == 1){
                             Statement st = conn.createStatement();
-                            st.executeUpdate("UPDATE HGRCPTS SET PROCESSED = 1 WHERE RCPTNO = '"+ rcptNo+ "' ");
+                            st.executeUpdate("UPDATE "+this.comCode+".HGRCPTS SET PROCESSED = 1 WHERE RCPTNO = '"+ rcptNo+ "' ");
                         }
                     }
                     
