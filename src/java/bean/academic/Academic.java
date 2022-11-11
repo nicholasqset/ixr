@@ -8,11 +8,11 @@ import bean.sys.Sys;
  */
 public class Academic {
 
-    public String getGrade(Double score) {
+    public String getGrade(Double score, String comCode) {
         String html = "";
         Sys system = new Sys();
 
-        html += system.getOne("AAGRADESYS", "GRADE", "(MINPER <= " + score + " AND MAXPER >= " + score + ")");
+        html += system.getOne(comCode+".AAGRADESYS", "GRADE", "(MINPER <= " + score + " AND MAXPER >= " + score + ")");
 
         return html;
     }

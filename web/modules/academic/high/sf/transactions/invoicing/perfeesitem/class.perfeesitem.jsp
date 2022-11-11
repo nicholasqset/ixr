@@ -51,7 +51,7 @@ final class PerFeesItem{
         
         Gui gui = new Gui();
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         

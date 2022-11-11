@@ -15,12 +15,12 @@ import javax.servlet.http.HttpSession;
  */
 public class HighSchool {
     
-    public Integer createHgObl(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, HttpSession session, HttpServletRequest request){
+    public Integer createHgObl(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, HttpSession session, HttpServletRequest request, String comCode){
         Integer oblCreated = 0;
         
         Sys system = new Sys();
         
-        if(system.recordExists("HGOBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
+        if(system.recordExists(comCode+".HGOBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
             oblCreated = 1;
         }else{
             try{
@@ -29,7 +29,7 @@ public class HighSchool {
                 
                 Integer id      = system.generateId("HGOBL", "ID");
 
-                String query = "INSERT INTO HGOBL "
+                String query = "INSERT INTO "+comCode+".HGOBL "
                         + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, DOCNO, DOCDESC, DOCTYPE, ENTRYDATE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -61,16 +61,16 @@ public class HighSchool {
         return oblCreated;
     }
     
-    public Integer createHgObs(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, String itemCode, Double amount, HttpSession session, HttpServletRequest request){
+    public Integer createHgObs(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, String itemCode, Double amount, HttpSession session, HttpServletRequest request, String comCode){
         Integer obsCreated = 0;
         
         Sys system = new Sys();
         
-        if(! system.recordExists("HGOBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
-            this.createHgObl(studentNo, academicYear, termCode, docNo, docDesc, docType, entryDate, session, request);
+        if(! system.recordExists(comCode+".HGOBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
+            this.createHgObl(studentNo, academicYear, termCode, docNo, docDesc, docType, entryDate, session, request, comCode);
         }
         
-        if(system.recordExists("HGOBS", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "' AND ITEMCODE = '"+ itemCode+ "'")){
+        if(system.recordExists(comCode+".HGOBS", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "' AND ITEMCODE = '"+ itemCode+ "'")){
             obsCreated = 1;
         }else{
             try{
@@ -79,7 +79,7 @@ public class HighSchool {
                 
                 Integer id      = system.generateId("HGOBS", "ID");
 
-                String query = "INSERT INTO HGOBS "
+                String query = "INSERT INTO "+comCode+".HGOBS "
                         + "(ID, STUDENTNO, DOCNO, ITEMCODE, AMOUNT, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -108,21 +108,21 @@ public class HighSchool {
         return obsCreated;
     }
     
-    public Integer registerSubject(String studentNo, Integer academicYear, String termCode, String subjectCode, HttpSession session, HttpServletRequest request){
+    public Integer registerSubject(String studentNo, Integer academicYear, String termCode, String subjectCode, HttpSession session, HttpServletRequest request, String comCode){
         Integer subjectRegistered = 0;
         
         Sys system = new Sys();
         
-        if(system.recordExists("HGSTUDSUBJECTS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
+        if(system.recordExists(""+comCode+".HGSTUDSUBJECTS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
             subjectRegistered = 1;
         }else{
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("HGSTUDSUBJECTS", "ID");
+                Integer id      = system.generateId(""+comCode+".HGSTUDSUBJECTS", "ID");
 
-                String query = "INSERT INTO HGSTUDSUBJECTS "
+                String query = "INSERT INTO "+comCode+".HGSTUDSUBJECTS "
                         + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, SUBJECTCODE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -151,24 +151,24 @@ public class HighSchool {
         return subjectRegistered;
     }
     
-    public Integer presetExam(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request){
+    public Integer presetExam(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request, String comCode){
         Integer examPreset = 0;
         
         Sys system = new Sys();
         
-        if(system.recordExists("HGSTUDENTMARKS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
+        if(system.recordExists(""+comCode+".HGSTUDENTMARKS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
             examPreset = 1;
         }else{
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("HGSTUDENTMARKS", "ID");
+                Integer id      = system.generateId(""+comCode+".HGSTUDENTMARKS", "ID");
                 
                 Double defaultScore = 0.0;
                 String defaultGrade = "E";
 
-                String query = "INSERT INTO HGSTUDENTMARKS "
+                String query = "INSERT INTO "+comCode+".HGSTUDENTMARKS "
                         + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, "
                         + "EXAMCODE, SUBJECTCODE, SCORE, GRADE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
@@ -201,20 +201,20 @@ public class HighSchool {
         return examPreset;
     }
     
-    public Integer insertCoreSubject(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request){
+    public Integer insertCoreSubject(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request, String comCode){
         Integer subjectInserted = 0;
         
         Sys system = new Sys();
         
-        system.delete("HGSTUDCORESBJS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ");
+        system.delete(""+comCode+".HGSTUDCORESBJS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ");
         
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt  = conn.createStatement();
 
-            Integer id      = system.generateId("HGSTUDCORESBJS", "ID");
+            Integer id      = system.generateId(""+comCode+".HGSTUDCORESBJS", "ID");
 
-            String query = "INSERT INTO HGSTUDCORESBJS "
+            String query = "INSERT INTO "+comCode+".HGSTUDCORESBJS "
                     + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, "
                     + "EXAMCODE, SUBJECTCODE, "
                     + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
@@ -244,19 +244,19 @@ public class HighSchool {
         return subjectInserted;
     }
     
-    public Integer insertElectiveSubject(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request){
+    public Integer insertElectiveSubject(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request, String comCode){
         Integer subjectInserted = 0;
         
         Sys system = new Sys();
-        system.delete("HGSTUDELECTSBJS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ");
+        system.delete(""+comCode+".HGSTUDELECTSBJS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ");
         
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt  = conn.createStatement();
 
-            Integer id      = system.generateId("HGSTUDELECTSBJS", "ID");
+            Integer id      = system.generateId(""+comCode+".HGSTUDELECTSBJS", "ID");
 
-            String query = "INSERT INTO HGSTUDELECTSBJS "
+            String query = "INSERT INTO "+comCode+".HGSTUDELECTSBJS "
                     + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, "
                     + "EXAMCODE, SUBJECTCODE, "
                     + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"

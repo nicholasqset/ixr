@@ -49,7 +49,7 @@ final class ProcessRcpts{
         
         Gui gui = new Gui();
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -92,7 +92,7 @@ final class ProcessRcpts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists(""+this.comCode+".VIEWHGVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') ")){
+        if(sys.recordExists(""+this.comCode+".VIEWHGVERFDRCPTS", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM "+this.comCode+".VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "') ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procRcpts.checkAll();\"", "", "");
             
@@ -113,7 +113,7 @@ final class ProcessRcpts{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM "+this.comCode+".VIEWHGVERFDRCPTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "')  ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHGVERFDRCPTS WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM "+this.comCode+".VIEWHGSTUDENTPROFILE WHERE FORMCODE = '"+ this.formCode+ "')  ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 

@@ -300,7 +300,7 @@ final class Receipts{
             }
         }
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         String defaultDate = sys.getLogDate();
         

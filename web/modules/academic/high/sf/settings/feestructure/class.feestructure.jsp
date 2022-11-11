@@ -254,7 +254,7 @@ final class FS{
             }
         }
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         if(this.id != null){
             html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");

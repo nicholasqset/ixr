@@ -325,7 +325,7 @@ final class CrDrNote{
             studTypeName        = hGStudentProfile.studTypeName;
         }
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         HashMap<String, String> quickDocs = new HashMap();
         quickDocs.put("CN", "Credit Note");
@@ -848,7 +848,7 @@ final class CrDrNote{
                         String itemCode         = rs.getString("ITEMCODE");
                         Double amount           = rs.getDouble("AMOUNT");
                         
-                        Integer obsCreated = highSchool.createHgObs(studentNo, academicYear, termCode, docNo, docDesc, this.docType, docDate, itemCode, amount, session, request);
+                        Integer obsCreated = highSchool.createHgObs(studentNo, academicYear, termCode, docNo, docDesc, this.docType, docDate, itemCode, amount, session, request, this.comCode);
                         
                         if(obsCreated == 1){
                             Statement st = conn.createStatement();

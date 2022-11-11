@@ -210,7 +210,7 @@ final class StudNumbering{
             }
         }
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
         

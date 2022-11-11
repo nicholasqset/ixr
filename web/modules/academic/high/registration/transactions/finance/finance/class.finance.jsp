@@ -271,7 +271,7 @@ final class Finance{
             }
         }
         
-        HighCalendar highCalendar = new HighCalendar();
+        HighCalendar highCalendar = new HighCalendar(this.comCode);
         
         
         if(this.id != null){
@@ -393,7 +393,7 @@ final class Finance{
 
                 Integer saved = stmt.executeUpdate(query);
 
-                if(saved == 1){
+                if(saved > 0){
                     obj.put("success", new Integer(1));
                     obj.put("message", "Entry successfully made.");
                 }else{

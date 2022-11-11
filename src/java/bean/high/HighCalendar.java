@@ -17,11 +17,11 @@ public class HighCalendar {
     public String startDate;
     public String endDate;
     
-    public HighCalendar(){
+    public HighCalendar(String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM HGCALENDAR WHERE ACTIVE = 1";
+            String query = "SELECT * FROM "+comCode+".HGCALENDAR WHERE ACTIVE = 1";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.academicYear   = rs.getInt("ACADEMICYEAR");			
@@ -31,7 +31,7 @@ public class HighCalendar {
             }
         
         }catch (SQLException  e){
-
+            System.out.print(e.getMessage());
         }
     }
 }

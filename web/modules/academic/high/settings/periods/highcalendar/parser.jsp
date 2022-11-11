@@ -4,7 +4,7 @@
 <%
 String function = request.getParameter("function");
 
-HighCalendar highCalendar = new HighCalendar();
+HighCalendar highCalendar = new HighCalendar(this.comCode);
 Object obj = highCalendar;
 
 try{

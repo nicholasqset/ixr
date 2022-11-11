@@ -76,7 +76,7 @@ final class Process{
                         
                         String itemCode = "IRC";
                         
-                        Integer obsCreated = highSchool.createHgObs(studentNo, academicYear, termCode, rcptNo, rcptDesc, "RC", rcptDate, itemCode, amount, session, request);
+                        Integer obsCreated = highSchool.createHgObs(studentNo, academicYear, termCode, rcptNo, rcptDesc, "RC", rcptDate, itemCode, amount, session, request, this.comCode);
                         
                         if(obsCreated == 1){
                             Statement st = conn.createStatement();
