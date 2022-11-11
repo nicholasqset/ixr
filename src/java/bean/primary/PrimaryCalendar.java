@@ -17,11 +17,11 @@ public class PrimaryCalendar {
     public String startDate;
     public String endDate;
     
-    public PrimaryCalendar(){
+    public PrimaryCalendar(String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM PRCALENDAR WHERE ACTIVE = 1";
+            String query = "SELECT * FROM "+comCode+".PRCALENDAR WHERE ACTIVE = 1";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.academicYear   = rs.getInt("ACADEMICYEAR");			

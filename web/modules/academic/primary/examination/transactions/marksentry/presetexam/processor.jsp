@@ -33,7 +33,8 @@
 <%
 
 final class Process{
-    
+    HttpSession session=request.getSession();
+    String comCode          = session.getAttribute("comCode").toString();
     Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
     String termCode         = request.getParameter("term");
     String examCode         = request.getParameter("exam");
@@ -60,7 +61,7 @@ final class Process{
                     
                     String studentNo = this.studentNos[(i - 1)];
                     
-                    primarySchool.presetExam(studentNo, this.academicYear, this.termCode, this.examCode, this.subjectCode, session, request);
+                    primarySchool.presetExam(studentNo, this.academicYear, this.termCode, this.examCode, this.subjectCode, session, request, this.comCode);
                     
                     if(i == recordCount){
                         html += "<script type = \"text/javascript\">";

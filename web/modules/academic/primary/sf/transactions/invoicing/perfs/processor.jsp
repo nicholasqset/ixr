@@ -91,8 +91,8 @@ final class Process{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = sys.generateId("PRINVSHDR", "ID");
-                String invNo    = sys.getNextNo("PRINVSHDR", "ID", "", "IN", 7);
+                Integer id      = sys.generateId(""+this.comCode+".PRINVSHDR", "ID");
+                String invNo    = sys.getNextNo(""+this.comCode+".PRINVSHDR", "ID", "", "IN", 7);
 
                 String query = "INSERT INTO "+this.comCode+".PRINVSHDR "
                                 + "(ID, ACADEMICYEAR, TERMCODE, STUDENTNO, INVNO, INVDESC, INVTYPE, INVDATE, "
@@ -173,7 +173,7 @@ final class Process{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = sys.generateId("PRINVSDTLS", "ID");
+                Integer id      = sys.generateId(""+this.comCode+".PRINVSDTLS", "ID");
 
                 String query = "INSERT INTO "+this.comCode+".PRINVSDTLS "
                                 + "(ID, INVNO, ITEMCODE, AMOUNT, "

@@ -48,7 +48,7 @@ final class ProcessInvs{
         
         Gui gui = new Gui();
         
-        PrimaryCalendar primaryCalendar = new PrimaryCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -87,7 +87,7 @@ final class ProcessInvs{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(sys.recordExists(""+this.comCode+".PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
+        if(sys.recordExists(""+this.comCode+".PRINVSHDR", "ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM "+this.comCode+".VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0) ")){
             
             String checkAll = gui.formCheckBox("checkall", "", "", "onchange = \"procInvs.checkAll();\"", "", "");
             
@@ -108,7 +108,7 @@ final class ProcessInvs{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM "+this.comCode+".PRINVSHDR WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0)  ORDER BY STUDENTNO";
+                String query = "SELECT * FROM "+this.comCode+".PRINVSHDR WHERE ACADEMICYEAR = "+ this.academicYear+ " AND TERMCODE = '"+ this.termCode+ "' AND STUDENTNO IN (SELECT STUDENTNO FROM "+this.comCode+".VIEWPRSTUDENTPROFILE WHERE CLASSCODE = '"+ this.classCode+ "') AND (PROCESSED IS NULL OR PROCESSED = 0)  ORDER BY STUDENTNO";
                 
                 ResultSet rs = stmt.executeQuery(query);
 

@@ -292,7 +292,7 @@ final class Receipts{
             }
         }
         
-        PrimaryCalendar primaryCalendar = new PrimaryCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         String defaultDate = sys.getLogDate();
         

@@ -259,7 +259,7 @@ final class Registration{
             }
         }
         
-        PrimaryCalendar primaryCalendar = new PrimaryCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         if(this.id != null){
             html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");

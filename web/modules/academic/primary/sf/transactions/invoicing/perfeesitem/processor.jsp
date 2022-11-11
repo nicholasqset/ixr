@@ -157,7 +157,7 @@ final class Process{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = sys.generateId("PRINVSDTLS", "ID");
+                Integer id      = sys.generateId(""+this.comCode+".PRINVSDTLS", "ID");
 
                 String query = "INSERT INTO "+this.comCode+".PRINVSDTLS "
                                 + "(ID, INVNO, ITEMCODE, AMOUNT, "

@@ -15,21 +15,21 @@ import javax.servlet.http.HttpSession;
  */
 public class PrimarySchool {
     
-    public Integer createPrObl(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, HttpSession session, HttpServletRequest request){
+    public Integer createPrObl(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, HttpSession session, HttpServletRequest request, String comCode){
         Integer oblCreated = 0;
         
         Sys system = new Sys();
         
-        if(system.recordExists("PROBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
+        if(system.recordExists(""+comCode+".PROBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
             oblCreated = 1;
         }else{
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("PROBL", "ID");
+                Integer id      = system.generateId(""+comCode+".PROBL", "ID");
 
-                String query = "INSERT INTO PROBL "
+                String query = "INSERT INTO "+comCode+".PROBL "
                         + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, DOCNO, DOCDESC, DOCTYPE, ENTRYDATE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -61,25 +61,25 @@ public class PrimarySchool {
         return oblCreated;
     }
     
-    public Integer createPrObs(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, String itemCode, Double amount, HttpSession session, HttpServletRequest request){
+    public Integer createPrObs(String studentNo, Integer academicYear, String termCode, String docNo, String docDesc, String docType, String entryDate, String itemCode, Double amount, HttpSession session, HttpServletRequest request, String comCode){
         Integer obsCreated = 0;
         
         Sys system = new Sys();
         
-        if(! system.recordExists("PROBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
-            this.createPrObl(studentNo, academicYear, termCode, docNo, docDesc, docType, entryDate, session, request);
+        if(! system.recordExists(comCode+".PROBL", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "'")){
+            this.createPrObl(studentNo, academicYear, termCode, docNo, docDesc, docType, entryDate, session, request, comCode);
         }
         
-        if(system.recordExists("PROBS", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "' AND ITEMCODE = '"+ itemCode+ "'")){
+        if(system.recordExists(comCode+".PROBS", "STUDENTNO = '"+ studentNo+ "' AND DOCNO = '"+ docNo+ "' AND ITEMCODE = '"+ itemCode+ "'")){
             obsCreated = 1;
         }else{
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("PROBS", "ID");
+                Integer id      = system.generateId(""+comCode+".PROBS", "ID");
 
-                String query = "INSERT INTO PROBS "
+                String query = "INSERT INTO "+comCode+".PROBS "
                         + "(ID, STUDENTNO, DOCNO, ITEMCODE, AMOUNT, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -108,21 +108,21 @@ public class PrimarySchool {
         return obsCreated;
     }
     
-    public Integer registerSubject(String studentNo, Integer academicYear, String termCode, String subjectCode, HttpSession session, HttpServletRequest request){
+    public Integer registerSubject(String studentNo, Integer academicYear, String termCode, String subjectCode, HttpSession session, HttpServletRequest request, String comCode){
         Integer subjectRegistered = 0;
         
         Sys system = new Sys();
         
-        if(system.recordExists("PRSTUDSUBJECTS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
+        if(system.recordExists(comCode+".PRSTUDSUBJECTS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
             subjectRegistered = 1;
         }else{
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("PRSTUDSUBJECTS", "ID");
+                Integer id      = system.generateId(comCode+".PRSTUDSUBJECTS", "ID");
 
-                String query = "INSERT INTO PRSTUDSUBJECTS "
+                String query = "INSERT INTO "+comCode+".PRSTUDSUBJECTS "
                         + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, SUBJECTCODE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -151,24 +151,24 @@ public class PrimarySchool {
         return subjectRegistered;
     }
     
-    public Integer presetExam(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request){
+    public Integer presetExam(String studentNo, Integer academicYear, String termCode, String examCode, String subjectCode, HttpSession session, HttpServletRequest request, String comCode){
         Integer examPreset = 0;
         
         Sys system = new Sys();
         
-        if(system.recordExists("PRSTUDENTMARKS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
+        if(system.recordExists(comCode+".PRSTUDENTMARKS", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "' AND SUBJECTCODE = '"+ subjectCode+ "' ")){
             examPreset = 1;
         }else{
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id      = system.generateId("PRSTUDENTMARKS", "ID");
+                Integer id      = system.generateId(comCode+".PRSTUDENTMARKS", "ID");
                 
                 Double defaultScore = 0.0;
                 String defaultGrade = "E";
 
-                String query = "INSERT INTO PRSTUDENTMARKS "
+                String query = "INSERT INTO "+comCode+".PRSTUDENTMARKS "
                         + "(ID, STUDENTNO, ACADEMICYEAR, TERMCODE, "
                         + "EXAMCODE, SUBJECTCODE, SCORE, GRADE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
@@ -222,19 +222,19 @@ public class PrimarySchool {
                                     Double studAvg, 
                                     String grade, 
                                     
-                                    HttpSession session, HttpServletRequest request){
+                                    HttpSession session, HttpServletRequest request, String comCode){
         Integer subjectInserted = 0;
         
         Sys system = new Sys();
-        system.delete("PRMARKSHEET", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "'");
+        system.delete(comCode+".PRMARKSHEET", "STUDENTNO = '"+ studentNo+ "' AND ACADEMICYEAR = "+ academicYear+ " AND TERMCODE = '"+ termCode+ "' AND EXAMCODE = '"+ examCode+ "'");
         
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt  = conn.createStatement();
 
-            Integer id      = system.generateId("PRMARKSHEET", "ID");
+            Integer id      = system.generateId(comCode+".PRMARKSHEET", "ID");
 
-            String query = "INSERT INTO PRMARKSHEET "
+            String query = "INSERT INTO "+comCode+".PRMARKSHEET "
                     + "("
                     + "ID, STUDENTNO, ACADEMICYEAR, TERMCODE, EXAMCODE, "
                     + "ENG, ENGGRD, KIS, KISGRD, MAT, MATGRD, "

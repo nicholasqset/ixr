@@ -11,105 +11,105 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
-  <title>Process Invoices Backend</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Process Invoices Backend</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
 
-<script type="text/javascript">
-  // KHTML browser don't share javascripts between iframes
-  var is_khtml = navigator.appName.match("Konqueror") || navigator.appVersion.match("KHTML");
-  if (is_khtml)
-  {
-    var prototypejs = document.createElement('script');
-    prototypejs.setAttribute('type','text/javascript');
-    prototypejs.setAttribute('src','<%=request.getContextPath()+"/js/scriptaculous/lib/prototype.js" %>');
-    var head = document.getElementsByTagName('head');
-    head[0].appendChild(prototypejs);
-  }
-  // load the comet object
-  var comet = window.parent.comet;
-</script>
-<%
+    <script type="text/javascript">
+        // KHTML browser don't share javascripts between iframes
+        var is_khtml = navigator.appName.match("Konqueror") || navigator.appVersion.match("KHTML");
+        if (is_khtml)
+        {
+            var prototypejs = document.createElement('script');
+            prototypejs.setAttribute('type', 'text/javascript');
+            prototypejs.setAttribute('src', '<%=request.getContextPath() + "/js/scriptaculous/lib/prototype.js"%>');
+            var head = document.getElementsByTagName('head');
+            head[0].appendChild(prototypejs);
+        }
+        // load the comet object
+        var comet = window.parent.comet;
+    </script>
+    <%
 
-final class Process{
-    
-    Integer academicYear    = (request.getParameter("academicYear") != null && ! request.getParameter("academicYear").toString().trim().equals(""))? Integer.parseInt(request.getParameter("academicYear")): null;
-    String termCode         = request.getParameter("term");
-    String classCode        = request.getParameter("studentClass");
-    String[] rcptNos        = request.getParameterValues("checkEach");
-    
-    public String init(){
-        String html = "";
-        
-        HttpSession session = request.getSession();
-        PrimarySchool primarySchool = new PrimarySchool();
-        
-        try{
-            Integer recordCount = this.rcptNos.length;
-            
-            if(recordCount > 0){
-                for(int i = 1; i <= recordCount; i++){
-                    
-                    if((i - 1) < recordCount){
-                        html += "<script type = \"text/javascript\">";
-                        html += "comet.showProgress("+ i+ ", "+ recordCount+ ");";
-                        html += "</script>" ;
-                    }
-                    
-                    String rcptNo = this.rcptNos[(i - 1)];
-                    
-                    Connection conn = ConnectionProvider.getConnection();
-                    Statement stmt = conn.createStatement();
+        final class Process {
 
-                    String query = "SELECT * FROM VIEWPRVERFDRCPTS WHERE RCPTNO = '"+ rcptNo+ "' ";
+            HttpSession session = request.getSession();
+            String comCode = session.getAttribute("comCode").toString();
+            Integer academicYear = (request.getParameter("academicYear") != null && !request.getParameter("academicYear").toString().trim().equals("")) ? Integer.parseInt(request.getParameter("academicYear")) : null;
+            String termCode = request.getParameter("term");
+            String classCode = request.getParameter("studentClass");
+            String[] rcptNos = request.getParameterValues("checkEach");
 
-                    ResultSet rs = stmt.executeQuery(query);
-                    while(rs.next()){
-                        String studentNo        = rs.getString("STUDENTNO");
-                        Integer academicYear    = rs.getInt("ACADEMICYEAR");
-                        String termCode         = rs.getString("TERMCODE");
-                        String rcptDesc         = rs.getString("RCPTDESC");
-                        String rcptDate         = rs.getString("RCPTDATE");
-                        Double amount           = rs.getDouble("AMOUNT");
-                        
-                        String itemCode = "IRC";
-                        
-                        Integer obsCreated = primarySchool.createPrObs(studentNo, academicYear, termCode, rcptNo, rcptDesc, "RC", rcptDate, itemCode, amount, session, request);
-                        
-                        if(obsCreated == 1){
-                            Statement st = conn.createStatement();
-                            st.executeUpdate("UPDATE PRRCPTS SET PROCESSED = 1 WHERE RCPTNO = '"+ rcptNo+ "' ");
+            public String init() {
+                String html = "";
+
+                HttpSession session = request.getSession();
+                PrimarySchool primarySchool = new PrimarySchool();
+
+                try {
+                    Integer recordCount = this.rcptNos.length;
+
+                    if (recordCount > 0) {
+                        for (int i = 1; i <= recordCount; i++) {
+
+                            if ((i - 1) < recordCount) {
+                                html += "<script type = \"text/javascript\">";
+                                html += "comet.showProgress(" + i + ", " + recordCount + ");";
+                                html += "</script>";
+                            }
+
+                            String rcptNo = this.rcptNos[(i - 1)];
+
+                            Connection conn = ConnectionProvider.getConnection();
+                            Statement stmt = conn.createStatement();
+
+                            String query = "SELECT * FROM "+this.comCode+".VIEWPRVERFDRCPTS WHERE RCPTNO = '" + rcptNo + "' ";
+
+                            ResultSet rs = stmt.executeQuery(query);
+                            while (rs.next()) {
+                                String studentNo = rs.getString("STUDENTNO");
+                                Integer academicYear = rs.getInt("ACADEMICYEAR");
+                                String termCode = rs.getString("TERMCODE");
+                                String rcptDesc = rs.getString("RCPTDESC");
+                                String rcptDate = rs.getString("RCPTDATE");
+                                Double amount = rs.getDouble("AMOUNT");
+
+                                String itemCode = "IRC";
+
+                                Integer obsCreated = primarySchool.createPrObs(studentNo, academicYear, termCode, rcptNo, rcptDesc, "RC", rcptDate, itemCode, amount, session, request, this.comCode);
+
+                                if (obsCreated == 1) {
+                                    Statement st = conn.createStatement();
+                                    st.executeUpdate("UPDATE "+this.comCode+".PRRCPTS SET PROCESSED = 1 WHERE RCPTNO = '" + rcptNo + "' ");
+                                }
+                            }
+
+                            if (i == recordCount) {
+                                html += "<script type = \"text/javascript\">";
+                                html += "comet.taskComplete();";
+                                html += "</script>";
+                            }
+
+    //                    out.flush(); // used to send the echoed data to the client
+                            Thread.sleep(7); // a little break to unload the server CPU
                         }
                     }
-                    
-                    if(i == recordCount){
-                        html += "<script type = \"text/javascript\">";
-                        html += "comet.taskComplete();";
-                        html += "</script>" ;
-                    }
 
-//                    out.flush(); // used to send the echoed data to the client
-                    Thread.sleep(7); // a little break to unload the server CPU
+                } catch (Exception e) {
+                    html += e.getMessage();
                 }
+
+                return html;
             }
 
-        }catch(Exception e){
-            html += e.getMessage();
         }
-        
-        return html;
-    }
-    
-}
 
-Process process = new Process();
-out.print(process.init());
-
-    
+        Process process = new Process();
+        out.print(process.init());
 
 
-%>
-        
-    </body>
+    %>
+
+</body>
 </html>

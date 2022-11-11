@@ -76,7 +76,7 @@ final class Process{
                         String itemCode         = rs.getString("ITEMCODE");
                         Double amount           = rs.getDouble("AMOUNT");
                         
-                        Integer obsCreated = primarySchool.createPrObs(studentNo, academicYear, termCode, invNo, invDesc, "IN", invDate, itemCode, amount, session, request);
+                        Integer obsCreated = primarySchool.createPrObs(studentNo, academicYear, termCode, invNo, invDesc, "IN", invDate, itemCode, amount, session, request, this.comCode);
                         
                         if(obsCreated == 1){
                             Statement st = conn.createStatement();

@@ -370,6 +370,8 @@ public class Sys {
                 query = "SELECT "+ col +" FROM "+ dataSrc +" LIMIT 1";
             }
             
+//            System.out.println(query);
+            
             ResultSet rs = stmt.executeQuery(query);
             
             while(rs.next()){

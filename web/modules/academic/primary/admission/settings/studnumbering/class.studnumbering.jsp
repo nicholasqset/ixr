@@ -1,5 +1,5 @@
+<%@page import="bean.primary.PrimaryCalendar"%>
 <%@page import="org.json.JSONObject"%>
-<%@page import="bean.high.HighCalendar"%>
 <%@page import="java.util.*"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
@@ -202,7 +202,7 @@ final class StudNumbering{
             }
         }
         
-        HighCalendar highCalendar = new HighCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
         
@@ -214,7 +214,7 @@ final class StudNumbering{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("academicYear", " Academic Year")+ "</td>";
-	html += "<td >"+ gui.formSelect("academicYear", this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ highCalendar.academicYear, "", false)+ "</td>";
+	html += "<td >"+ gui.formSelect("academicYear", this.comCode+".HGACADEMICYEARS", "ACADEMICYEAR", "", "ACADEMICYEAR DESC", "", this.id != null? ""+ this.academicYear: ""+ primaryCalendar.academicYear, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

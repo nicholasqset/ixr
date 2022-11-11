@@ -52,7 +52,7 @@ final class PerSubject{
         
         Gui gui = new Gui();
         
-        PrimaryCalendar primaryCalendar = new PrimaryCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -165,7 +165,7 @@ final class PerSubject{
             
             Integer saved = 0;
             
-            String grade = academic.getGrade(this.score);
+            String grade = academic.getGrade(this.score, this.comCode);
             
             query = "UPDATE "+ this.table+ " SET "
                     + "SCORE        = "+ this.score+ ", "

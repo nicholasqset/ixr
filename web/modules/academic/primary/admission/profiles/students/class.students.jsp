@@ -533,7 +533,7 @@ final class Students{
             }
         }
         
-        PrimaryCalendar primaryCalendar = new PrimaryCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
@@ -624,7 +624,7 @@ final class Students{
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM PRSTUDPRDS WHERE CLASSCODE IN(SELECT CLASSCODE FROM PRSTREAMS WHERE STREAMCODE = '"+ this.streamCode+ "')";
+            String query = "SELECT * FROM "+this.comCode+".PRSTUDPRDS WHERE CLASSCODE IN(SELECT CLASSCODE FROM "+this.comCode+".PRSTREAMS WHERE STREAMCODE = '"+ this.streamCode+ "')";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 
@@ -771,7 +771,7 @@ final class Students{
                 obj.put("message", "Entry successfully made.");
                 
                 if(this.id == null && this.autoStudentNo == 1){
-                    stmt.executeUpdate("UPDATE PRSTUDNOS SET CURNO = (CURNO + 1)");
+                    stmt.executeUpdate("UPDATE "+this.comCode+".PRSTUDNOS SET CURNO = (CURNO + 1)");
                 }
                 
             }else{
@@ -798,14 +798,14 @@ final class Students{
     public String getNextStudentNo(){
         String nextNo = null;
         
-        PrimaryCalendar primaryCalendar = new PrimaryCalendar();
+        PrimaryCalendar primaryCalendar = new PrimaryCalendar(this.comCode);
         
         Integer curNo = null;
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            String query   = "SELECT * FROM PRSTUDNOS WHERE ACADEMICYEAR = "+primaryCalendar.academicYear;
+            String query   = "SELECT * FROM "+this.comCode+".PRSTUDNOS WHERE ACADEMICYEAR = "+primaryCalendar.academicYear;
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -848,8 +848,8 @@ final class Students{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            Integer id = sys.generateId("PRSTUDNOS", "ID");
-            String query = "INSERT INTO PRSTUDNOS "
+            Integer id = sys.generateId(""+this.comCode+".PRSTUDNOS", "ID");
+            String query = "INSERT INTO "+this.comCode+".PRSTUDNOS "
                         + "(ID, ACADEMICYEAR, CURNO)"
                         + "VALUES"
                         + "("
