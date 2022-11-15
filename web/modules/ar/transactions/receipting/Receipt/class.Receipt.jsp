@@ -464,7 +464,7 @@ final class Receipt{
         
         this.customerNo = request.getParameter("customerNoHd");
         
-//        html += gui.getAutoColsSearch("ARCUSTOMERS", "CUSTOMERNO, FULLNAME", "", this.customerNo);
+//        html += gui.getAutoColsSearch("ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
         html += gui.getAutoColsSearch(comCode+".ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
         
         return html;

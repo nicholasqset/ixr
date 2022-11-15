@@ -475,7 +475,7 @@
 
             this.customerNo = request.getParameter("customerNoHd");
 
-            html += gui.getAutoColsSearch(comCode+".ARCUSTOMERS", "CUSTOMERNO, FULLNAME", "", this.customerNo);
+            html += gui.getAutoColsSearch(comCode+".ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
 
             return html;
         }
@@ -490,7 +490,8 @@
                 ARCustomerProfile aRCustomerProfile = new ARCustomerProfile(this.customerNo, comCode);
                 
 
-                obj.put("fullName", aRCustomerProfile.fullName);
+//                obj.put("fullName", aRCustomerProfile.fullName);
+                obj.put("fullName", aRCustomerProfile.customerName);
 
                 obj.put("success", new Integer(1));
                 obj.put("message", "Customer No '"+aRCustomerProfile.customerNo+"' successfully retrieved.");
