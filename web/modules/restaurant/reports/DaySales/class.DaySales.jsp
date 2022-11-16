@@ -1,7 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.hr.StaffProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
@@ -19,7 +18,7 @@ final class DaySales{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
 
         try{
             java.util.Date today = originalFormat.parse(defaultDate);

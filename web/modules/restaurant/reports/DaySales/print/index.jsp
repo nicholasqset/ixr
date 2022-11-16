@@ -32,6 +32,8 @@
 
 <%
     
+    String comCode = session.getAttribute("comCode").toString();
+    
     try{
         Connection conn = ConnectionProvider.getConnection();
         Statement stmt = null;
@@ -63,7 +65,7 @@
 
         stmt    = conn.createStatement();
             
-        query   = " SELECT * FROM VIEWRTPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDate+ "' ";
+        query   = " SELECT * FROM "+comCode+".VIEWRTPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDate+ "' ";
 
         rs      = stmt.executeQuery(query);
 

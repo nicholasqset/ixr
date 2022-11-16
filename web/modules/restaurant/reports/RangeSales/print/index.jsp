@@ -31,7 +31,7 @@
 <%@page import="bean.sys.Sys"%>
 
 <%
-    
+    String comCode = session.getAttribute("comCode").toString();
     try{
         Connection conn = ConnectionProvider.getConnection();
         Statement stmt = null;
@@ -67,7 +67,7 @@
         stmt    = conn.createStatement();
             
 //        query   = " SELECT * FROM VIEWRTPYDTLS WHERE ENTRYDATE = '"+ entryDate1+ "' ";
-        query   = " SELECT * FROM VIEWRTPYDTLS WHERE ENTRYDATE::DATE BETWEEN '"+ entryDate1+ "' AND '"+ entryDate2+ "' ";
+        query   = " SELECT * FROM "+comCode+".VIEWRTPYDTLS WHERE ENTRYDATE::DATE BETWEEN '"+ entryDate1+ "' AND '"+ entryDate2+ "' ";
 
         rs      = stmt.executeQuery(query);
 

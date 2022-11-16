@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.restaurant.Restaurant"%>
 <%@page import="bean.restaurant.RtPyHdr"%>
 <%@page import="java.util.HashMap"%>
@@ -5,7 +6,6 @@
 <%@page import="bean.ar.ARCustomerProfile"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.sql.SQLException"%>
@@ -18,8 +18,10 @@
 <%@page import="bean.gui.Gui"%>
 <%
     final class Sale{
-        String table            = "RTPYHDR";
-        String view             = "VIEWRTPYHDR";
+        HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".RTPYHDR";
+        String view             = comCode+".VIEWRTPYHDR";
 
         Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
 
@@ -54,7 +56,7 @@
 
             String dbType = ConnectionProvider.getDBType();
 
-            Integer recordCount = system.getRecordCount(this.view, "");
+            Integer recordCount = sys.getRecordCount(this.view, "");
 
             if(recordCount > 0){
 
@@ -195,7 +197,7 @@
                         Integer cleared         = rs.getInt("CLEARED");
                         Integer posted          = rs.getInt("POSTED");
 
-                        String amount_ = system.getOneAgt("VIEWRTPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
+                        String amount_ = sys.getOneAgt("VIEWRTPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
                         
                         String clearedLbl    = cleared == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
 
@@ -220,7 +222,7 @@
                         html += "<td>"+ pyDesc+ "</td>";
                         html += "<td>"+ customerNo+ "</td>";
                         html += "<td>"+ fullName+ "</td>";
-                        html += "<td>"+ system.numberFormat(amount_)+ "</td>";
+                        html += "<td>"+ sys.numberFormat(amount_)+ "</td>";
                         html += "<td>"+ clearedLbl+ "</td>";
                         html += "<td>"+ postedUi+ "</td>";
                         html += "<td>"+ edit+ "</td>";
@@ -250,9 +252,9 @@
             Boolean cleared = false;
 
             if(this.id != null){
-                this.pyNo = system.getOne(this.table, "PYNO", "ID = "+ this.id);
+                this.pyNo = sys.getOne(this.table, "PYNO", "ID = "+ this.id);
                 if(this.pyNo != null){
-                    RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo);
+                    RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo, this.comCode);
                     cleared = rtPyHdr.cleared;
                 }
             }
@@ -348,7 +350,7 @@
                 }
             }
 
-            String defaultDate = system.getLogDate();
+            String defaultDate = sys.getLogDate();
 
             try{
                 java.util.Date today = originalFormat.parse(defaultDate);
@@ -359,10 +361,10 @@
                 html += e.getMessage();
             }
             
-//            HashMap<String, String> tills = system.getArray("SELECT TILLNO, TILLDESC FROM PSTILLS WHERE TILLNO IN (SELECT TILLNO FROM PSTILLS WHERE USERID = '"+system.getLogUser(session)+"')");
-            HashMap<String, String> tills = system.getArray("SELECT TILLNO, TILLDESC FROM PSTILLS");
+//            HashMap<String, String> tills = sys.getArray("SELECT TILLNO, TILLDESC FROM PSTILLS WHERE TILLNO IN (SELECT TILLNO FROM PSTILLS WHERE USERID = '"+sys.getLogUser(session)+"')");
+            HashMap<String, String> tills = sys.getArray("SELECT TILLNO, TILLDESC FROM "+this.comCode+".PSTILLS");
 
-            String userDfltTillNo = system.getOne("PSTILLS", "TILLNO", "USERID = '"+system.getLogUser(session)+"'");
+            String userDfltTillNo = sys.getOne(""+this.comCode+".PSTILLS", "TILLNO", "USERID = '"+sys.getLogUser(session)+"'");
             
             if(this.id != null){
                 html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");
@@ -399,10 +401,10 @@
 
             html += "<tr>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-            html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+ system.getPeriodYear(), "", false)+"</td>";
+            html += "<td>"+ gui.formSelect("pYear", ""+this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+ sys.getPeriodYear(this.comCode), "", false)+"</td>";
 
             html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
-            html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: system.getPeriodMonth(), "", true)+ "</td>";
+            html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
             html += "</tr>";
             
             html += "<tr>";
@@ -410,7 +412,7 @@
             html += "<td>"+ gui.formArraySelect("till", 120, tills, this.id != null? this.tillNo: userDfltTillNo, true, "onchange = \"\"", true)+ "</td>";
             
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page.png", "", "")+ gui.formLabel("rTable", " Table No")+"</td>";
-            html += "<td>"+ gui.formSelect("rTable", "RTTABLES", "TABLENO", "TABLEDESC", "", "", this.id != null? this.tableNo: "", "onchange = \"\"", true)+ "</td>";
+            html += "<td>"+ gui.formSelect("rTable", ""+this.comCode+".RTTABLES", "TABLENO", "TABLEDESC", "", "", this.id != null? this.tableNo: "", "onchange = \"\"", true)+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -427,7 +429,7 @@
             
             html += "<tr>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("itemNo", " Item")+ "</td>";
-            html += "<td colspan = \"3\" nowrap>"+ gui.formSelect("itemNo", "ICITEMS", "ITEMCODE", "ITEMNAME", "", "CATCODE IN (SELECT CATCODE FROM RTCATS)", this.id != null? this.tableNo: "", "onchange = \"sale.getItemProfile();\"", true)+ "</td>";
+            html += "<td colspan = \"3\" nowrap>"+ gui.formSelect("itemNo", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "CATCODE IN (SELECT CATCODE FROM "+this.comCode+".RTCATS)", this.id != null? this.tableNo: "", "onchange = \"sale.getItemProfile();\"", true)+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -463,19 +465,19 @@
 
             this.customerNo = request.getParameter("customerNoHd");
 
-            html += gui.getAutoColsSearch("ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
+            html += gui.getAutoColsSearch(""+this.comCode+".ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
 
             return html;
         }
 
-        public Object getCustomerProfile(){
+        public Object getCustomerProfile() throws Exception{
             JSONObject obj = new JSONObject();
 
             if(this.customerNo == null || this.customerNo.equals("")){
                 obj.put("success", new Integer(0));
                 obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
             }else{
-                ARCustomerProfile aRCustomerProfile = new ARCustomerProfile(this.customerNo);
+                ARCustomerProfile aRCustomerProfile = new ARCustomerProfile(this.customerNo, this.comCode);
 
                 obj.put("fullName", aRCustomerProfile.fullName);
 
@@ -493,19 +495,19 @@
 
             this.itemCode = request.getParameter("itemNoHd");
 
-            html += gui.getAutoColsSearch("ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+            html += gui.getAutoColsSearch(""+this.comCode+".ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
 
             return html;
         }
 
-        public Object getItemProfile(){
+        public Object getItemProfile() throws Exception{
             JSONObject obj = new JSONObject();
 
             if(this.itemCode == null || this.itemCode.trim().equals("")){
                 obj.put("success", new Integer(0));
                 obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
             }else{
-                ICItem iCItem = new ICItem(this.itemCode);
+                ICItem iCItem = new ICItem(this.itemCode, this.comCode);
 
                 obj.put("itemName", iCItem.itemName);
                 obj.put("quantity", 1.0);
@@ -519,7 +521,7 @@
             return obj;
         }
         
-        public Object hasPhoto(){
+        public Object hasPhoto() throws Exception{
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
 
@@ -527,7 +529,7 @@
                 obj.put("success", new Integer(0));
                 obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
             }else{
-                if(system.recordExists("RTITEMPHOTOS", "ITEMCODE = '"+this.itemCode+"'")){
+                if(sys.recordExists("RTITEMPHOTOS", "ITEMCODE = '"+this.itemCode+"'")){
                     obj.put("success", new Integer(1));
                     obj.put("message", "Item No '"+ this.itemCode+"' has photo.");
                 }else{
@@ -539,7 +541,7 @@
             return obj;
         }
 
-        public Object getItemTotalAmount(){
+        public Object getItemTotalAmount() throws Exception{
             JSONObject obj = new JSONObject();
 
     //        ICItem iCItem = new ICItem(this.itemCode);
@@ -551,7 +553,7 @@
             return obj;
         }
 
-        public Object save(){
+        public Object save() throws Exception{
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             HttpSession session = request.getSession();
@@ -570,16 +572,16 @@
                         String query;
                         Integer saved = 0;
 
-                        ICItem iCItem = new ICItem(this.itemCode);
+                        ICItem iCItem = new ICItem(this.itemCode, this.comCode);
 
                         Boolean taxInclusive    = (this.taxIncl != null && this.taxIncl == 1)? true: false;
 
-                        VAT vAT = new VAT(this.amount, taxInclusive);
+                        VAT vAT = new VAT(this.amount, taxInclusive, this.comCode);
 
                         if(this.sid == null){
-                            Integer sid = system.generateId("RTPYDTLS", "ID");
+                            Integer sid = sys.generateId(""+this.comCode+".RTPYDTLS", "ID");
 
-                            query = "INSERT INTO RTPYDTLS "
+                            query = "INSERT INTO "+this.comCode+".RTPYDTLS "
                                     + "(ID, PYNO, ITEMCODE, "
                                     + "QTY, UNITCOST, UNITPRICE, TAXINCL, "
                                     + "TAXRATE, TAXAMOUNT, NETAMOUNT, AMOUNT, TOTAL, "
@@ -599,15 +601,15 @@
                                     + vAT.netAmount+ ", "
                                     + this.amount+ ", "
                                     + vAT.total+ ", "
-                                    + "'"+ system.getLogUser(session)+"', "
-                                    + "'"+ system.getLogDate()+ "', "
-                                    + "'"+ system.getLogTime()+ "', "
-                                    + "'"+ system.getClientIpAdr(request)+ "'"
+                                    + "'"+ sys.getLogUser(session)+"', "
+                                    + "'"+ sys.getLogDate()+ "', "
+                                    + "'"+ sys.getLogTime()+ "', "
+                                    + "'"+ sys.getClientIpAdr(request)+ "'"
                                     + ")";
 
                         }else{
 
-                            query = "UPDATE RTPYDTLS SET "
+                            query = "UPDATE "+this.comCode+".RTPYDTLS SET "
                                     + "ITEMCODE     = '"+ this.itemCode+ "', "
                                     + "QTY          = "+ this.qty+ ", "
                                     + "UNITPRICE     = "+ this.unitPrice+ ", "
@@ -651,7 +653,7 @@
             Sys sys = new Sys();
             HttpSession session = request.getSession();
             
-            ICItem iCItem = new ICItem(this.itemCode);
+            ICItem iCItem = new ICItem(this.itemCode, this.comCode);
             
             Double qtyBal = iCItem.qty - this.qty;
             
@@ -663,9 +665,9 @@
                         Connection conn = ConnectionProvider.getConnection();
                         Statement stmt = conn.createStatement();
 
-                        Integer id = system.generateId(this.table, "ID");
-    //                    this.pyNo = system.getNextNo(this.table, "ID", "", "PY", 7);
-                        this.pyNo = system.getNextNo(this.table, "ID", "", "", 7);
+                        Integer id = sys.generateId(this.table, "ID");
+    //                    this.pyNo = sys.getNextNo(this.table, "ID", "", "PY", 7);
+                        this.pyNo = sys.getNextNo(this.table, "ID", "", "", 7);
 
                         SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                         SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -690,10 +692,10 @@
                                 + this.pMonth+ ", "
                                 + "'"+ this.tillNo+ "', "
                                 + "'"+ this.tableNo+ "', "
-                                + "'"+ system.getLogUser(session)+"', "
-                                + "'"+ system.getLogDate()+ "', "
-                                + "'"+ system.getLogTime()+ "', "
-                                + "'"+ system.getClientIpAdr(request)+ "'"
+                                + "'"+ sys.getLogUser(session)+"', "
+                                + "'"+ sys.getLogDate()+ "', "
+                                + "'"+ sys.getLogTime()+ "', "
+                                + "'"+ sys.getClientIpAdr(request)+ "'"
                                 + ")";
 
                         Integer pyHdrCreated = stmt.executeUpdate(query);
@@ -720,7 +722,7 @@
             Gui gui = new Gui();
             Sys sys = new Sys();
 
-            if(system.recordExists("VIEWRTPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+            if(sys.recordExists(""+this.comCode+".VIEWRTPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
                 html += "<div id = \"dvPyEntries-a\">";
 
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
@@ -748,7 +750,7 @@
 
                     Integer count  = 1;
 
-                    String query = "SELECT * FROM VIEWRTPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWRTPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
 
                     ResultSet rs = stmt.executeQuery(query);
 
@@ -781,11 +783,11 @@
                         html += "<tr>";
                         html += "<td>"+ count +"</td>";
                         html += "<td>"+ itemName +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(qty.toString()) +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(unitPrice.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(qty.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(unitPrice.toString()) +"</td>";
 //                        html += "<td style = \"text-align: center;\">"+ taxInclLbl+"</td>";
-//                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(taxAmountAlt.toString()) +"</td>";
-                        html += "<td style = \"text-align: right;\">"+ system.numberFormat(amount.toString()) +"</td>";
+//                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(taxAmountAlt.toString()) +"</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(amount.toString()) +"</td>";
                         html += "<td style = \"text-align: center;\">"+ opts +"</td>";
                         html += "</tr>";
 
@@ -803,8 +805,8 @@
 
                 html += "<tr>";
                 html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"4\">Total</td>";
-//                html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumTax.toString()) +"</td>";
-                html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumAmount.toString()) +"</td>";
+//                html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumTax.toString()) +"</td>";
+                html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumAmount.toString()) +"</td>";
                 html += "<td>&nbsp;</td>";
                 html += "</tr>";
 
@@ -815,7 +817,7 @@
                 
                 html += "<div id = \"dvPyEntries-b\">";
                 
-                RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo);
+                RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo, this.comCode);
                 
                 String paymentUi = "";
                 
@@ -842,17 +844,17 @@
             return html;
         }
 
-        public Object editPoDtls(){
+        public Object editPoDtls() throws Exception{
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             Gui gui = new Gui();
-            if(system.recordExists("RTPYDTLS", "ID = "+ this.sid +"")){
+            if(sys.recordExists(""+this.comCode+".RTPYDTLS", "ID = "+ this.sid +"")){
                 try{
 
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT * FROM VIEWRTPYDTLS WHERE ID = "+ this.sid +"";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWRTPYDTLS WHERE ID = "+ this.sid +"";
                     ResultSet rs = stmt.executeQuery(query);
 
                     while(rs.next()){
@@ -888,7 +890,7 @@
             return obj;
         }
 
-        public Object purge(){
+        public Object purge() throws Exception{
              JSONObject obj = new JSONObject();
 
              try{
@@ -896,7 +898,7 @@
                 Statement stmt = conn.createStatement();
 
                 if(this.id != null){
-                    String query = "DELETE FROM RTPYDTLS WHERE ID = "+ this.id;
+                    String query = "DELETE FROM "+this.comCode+".RTPYDTLS WHERE ID = "+ this.id;
 
                     Integer purged = stmt.executeUpdate(query);
                     if(purged == 1){
@@ -928,9 +930,9 @@
             Gui gui = new Gui();
             Sys sys = new Sys();
             
-            String cashPayMode = system.getOne("FNPAYMODES", "PMCODE", "ISCASH = 1");
+            String cashPayMode = sys.getOne(""+this.comCode+".FNPAYMODES", "PMCODE", "ISCASH = 1");
             
-            String amount_ = system.getOneAgt("VIEWRTPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ this.pyNo+ "'");
+            String amount_ = sys.getOneAgt(""+this.comCode+".VIEWRTPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ this.pyNo+ "'");
             
             html += gui.formStart("frmPayment", "void%200", "post", "onSubmit=\"javascript:return false;\"");
             
@@ -945,7 +947,7 @@
             
             html += "<tr>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("payMode", " Payment Mode")+"</td>";
-            html += "<td>"+ gui.formSelect("payMode", "FNPAYMODES", "PMCODE", "PMNAME", "", "", cashPayMode, "", false)+"</td>";
+            html += "<td>"+ gui.formSelect("payMode", ""+this.comCode+".FNPAYMODES", "PMCODE", "PMNAME", "", "", cashPayMode, "", false)+"</td>";
             html += "</tr>";
             
             html += "<tr>";
@@ -979,7 +981,7 @@
             return html;
         }
         
-        public Object savePayment(){
+        public Object savePayment() throws Exception{
             JSONObject obj = new JSONObject();
             
             try{
@@ -1003,7 +1005,7 @@
                         
                         obj.put("qtyEff", this.effectItemQty(this.pyNo));
                         
-                        RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo);
+                        RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo, this.comCode);
                         
                         obj.put("id", rtPyHdr.id);
                         
@@ -1026,19 +1028,19 @@
         public String effectItemQty(String pyNo){
             String html = "";
             
-            IC iC = new IC();
+            IC iC = new IC(this.comCode);
                     
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM RTPYDTLS WHERE PYNO = '"+ pyNo+"'";
+                String query = "SELECT * FROM "+this.comCode+".RTPYDTLS WHERE PYNO = '"+ pyNo+"'";
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     
                     String itemCode = rs.getString("ITEMCODE");
                     Double qty      = rs.getDouble("QTY");
                     
-                    html += iC.effectItemQty(itemCode, qty, false);
+                    html += iC.effectItemQty(itemCode, qty, false, this.comCode);
                     
                 }
             }catch(Exception e){
@@ -1048,7 +1050,7 @@
             return html;
         }
 
-        public Object post(){
+        public Object post() throws Exception{
             JSONObject obj = new JSONObject();
             HttpSession session = request.getSession();
 
@@ -1056,7 +1058,7 @@
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
 
-                Restaurant restaurant = new Restaurant();
+                Restaurant restaurant = new Restaurant(this.comCode);
 
                 Integer rts = 1;
                 String msg = "";
@@ -1071,7 +1073,7 @@
                     msg = "An unexpected error occured";
                 }
 
-                String pyPosted = restaurant.postReceipt(this.pyNo, session, request);
+                String pyPosted = restaurant.postReceipt(this.pyNo, session, request, this.comCode);
                 if(! pyPosted.equals("1")){
                     rts = 0;
                     msg = "Entry could not be posted. "+ pyPosted;

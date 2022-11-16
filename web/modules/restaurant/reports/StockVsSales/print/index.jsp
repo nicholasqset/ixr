@@ -31,7 +31,7 @@
 <%@page import="bean.sys.Sys"%>
 
 <%
-    
+    String comCode = session.getAttribute("comCode").toString();
     try{
         Connection conn = ConnectionProvider.getConnection();
         Statement stmt = null;
@@ -63,7 +63,7 @@
 
         stmt    = conn.createStatement();
             
-        query   = "SELECT *, get_date_item_sales(itemcode, now()::timestamp::date) FROM ICITEMS WHERE CATCODE IN (SELECT CATCODE FROM RTCATS)";
+        query   = "SELECT *, get_date_item_sales(itemcode, now()::timestamp::date) FROM "+comCode+".ICITEMS WHERE CATCODE IN (SELECT CATCODE FROM "+comCode+".RTCATS)";
 
         rs      = stmt.executeQuery(query);
 

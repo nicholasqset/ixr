@@ -31,11 +31,11 @@ public class RtPyHdr {
     public String auditUser;
     public String userName;
     
-    public RtPyHdr(String pyNo){
+    public RtPyHdr(String pyNo, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWRTPYHDR WHERE PYNO = '"+ pyNo+ "' ";
+            String query = "SELECT * FROM "+comCode+".VIEWRTPYHDR WHERE PYNO = '"+ pyNo+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.id                 = rs.getInt("ID");

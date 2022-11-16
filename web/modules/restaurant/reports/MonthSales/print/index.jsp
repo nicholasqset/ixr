@@ -30,6 +30,7 @@
 <%@page import="bean.sys.Sys"%>
 
 <%
+    String comCode = session.getAttribute("comCode").toString();
     
     try{
         Connection conn = ConnectionProvider.getConnection();
@@ -57,7 +58,7 @@
 
         stmt    = conn.createStatement();
             
-        query = " SELECT * FROM VIEWRTPYDTLS WHERE PYEAR = "+ pYear+ " AND PMONTH = '"+ pMonth+ "' ";
+        query = " SELECT * FROM "+comCode+".VIEWRTPYDTLS WHERE PYEAR = "+ pYear+ " AND PMONTH = '"+ pMonth+ "' ";
 
         rs      = stmt.executeQuery(query);
 

@@ -19,7 +19,7 @@ final class StockVsSales{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
 
         try{
             java.util.Date today = originalFormat.parse(defaultDate);

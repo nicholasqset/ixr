@@ -197,7 +197,7 @@
                         Integer cleared         = rs.getInt("CLEARED");
 //                        Integer posted          = rs.getInt("POSTED");
 
-                        String amount_ = sys.getOneAgt("VIEWRTPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
+                        String amount_ = sys.getOneAgt(""+this.comCode+".VIEWRTPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
                         
                         String clearedLbl    = cleared == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
 
@@ -243,7 +243,7 @@
             if(this.id != null){
                 this.pyNo = sys.getOne(this.table, "PYNO", "ID = "+ this.id);
                 if(this.pyNo != null){
-                    RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo);
+                    RtPyHdr rtPyHdr = new RtPyHdr(this.pyNo, this.comCode);
                     cleared = rtPyHdr.cleared;
                 }
             }
@@ -352,9 +352,9 @@
             }
             
 //            HashMap<String, String> tills = sys.getArray("SELECT TILLNO, TILLDESC FROM PSTILLS WHERE TILLNO IN (SELECT TILLNO FROM PSTILLS WHERE USERID = '"+sys.getLogUser(session)+"')");
-            HashMap<String, String> tills = sys.getArray("SELECT TILLNO, TILLDESC FROM PSTILLS");
+            HashMap<String, String> tills = sys.getArray("SELECT TILLNO, TILLDESC FROM "+this.comCode+".PSTILLS");
 
-            String userDfltTillNo = sys.getOne("PSTILLS", "TILLNO", "USERID = '"+sys.getLogUser(session)+"'");
+            String userDfltTillNo = sys.getOne(""+this.comCode+".PSTILLS", "TILLNO", "USERID = '"+sys.getLogUser(session)+"'");
             
             if(this.id != null){
                 html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");
@@ -391,7 +391,7 @@
 
             html += "<tr>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-            html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+ sys.getPeriodYear(this.comCode), "", false)+"</td>";
+            html += "<td>"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+ sys.getPeriodYear(this.comCode), "", false)+"</td>";
 
             html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
             html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
@@ -402,7 +402,7 @@
             html += "<td>"+ gui.formArraySelect("till", 120, tills, this.id != null? this.tillNo: userDfltTillNo, true, "onchange = \"\"", true)+ "</td>";
             
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page.png", "", "")+ gui.formLabel("rTable", " Table No")+"</td>";
-            html += "<td>"+ gui.formSelect("rTable", "RTTABLES", "TABLENO", "TABLEDESC", "", "", this.id != null? this.tableNo: "", "onchange = \"\"", true)+ "</td>";
+            html += "<td>"+ gui.formSelect("rTable", this.comCode+".RTTABLES", "TABLENO", "TABLEDESC", "", "", this.id != null? this.tableNo: "", "onchange = \"\"", true)+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -413,7 +413,7 @@
 //            html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("itemNo", " Item No")+ "</td>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("itemNo", " Item")+ "</td>";
 //            html += "<td nowrap>"+ gui.formAutoComplete("itemNo", 13, "", "invoice.searchItem", "itemNoHd", "")+ "<span class = \"fade\"> e.g bar code </span></td>";
-            html += "<td colspan = \"3\" nowrap>"+ gui.formSelect("itemNo", "ICITEMS", "ITEMCODE", "ITEMNAME", "", "CATCODE IN (SELECT CATCODE FROM RTCATS)", this.id != null? this.tableNo: "", "onchange = \"invoice.getItemProfile();\"", true)+ "</td>";
+            html += "<td colspan = \"3\" nowrap>"+ gui.formSelect("itemNo", this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "CATCODE IN (SELECT CATCODE FROM "+this.comCode+".RTCATS)", this.id != null? this.tableNo: "", "onchange = \"invoice.getItemProfile();\"", true)+ "</td>";
             
 //            html += "<td>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ " Item Name</td>";
 //            html += "<td id = \"tdItemName\">&nbsp;</td>";
@@ -452,7 +452,7 @@
 
             this.customerNo = request.getParameter("customerNoHd");
 
-            html += gui.getAutoColsSearch("ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
+            html += gui.getAutoColsSearch(this.comCode+".ARCUSTOMERS", "CUSTOMERNO, CUSTOMERNAME", "", this.customerNo);
 
             return html;
         }
@@ -466,7 +466,8 @@
             }else{
                 ARCustomerProfile aRCustomerProfile = new ARCustomerProfile(this.customerNo, this.comCode);
 
-                obj.put("fullName", aRCustomerProfile.fullName);
+//                obj.put("fullName", aRCustomerProfile.fullName);
+                obj.put("fullName", aRCustomerProfile.customerName);
 
                 obj.put("success", new Integer(1));
                 obj.put("message", "Customer No '"+aRCustomerProfile.customerNo+"' successfully retrieved.");
@@ -482,7 +483,7 @@
 
             this.itemCode = request.getParameter("itemNoHd");
 
-            html += gui.getAutoColsSearch("ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+            html += gui.getAutoColsSearch(""+this.comCode+".ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
 
             return html;
         }
@@ -575,7 +576,7 @@
                             if(this.sid == null){
                                 Integer sid = sys.generateId("RTPYDTLS", "ID");
 
-                                query = "INSERT INTO RTPYDTLS "
+                                query = "INSERT INTO "+this.comCode+".RTPYDTLS "
                                         + "(ID, PYNO, ITEMCODE, LINENO, "
                                         + "QTY, UNITCOST, UNITPRICE, TAXINCL, "
                                         + "TAXRATE, TAXAMOUNT, NETAMOUNT, AMOUNT, TOTAL, "
@@ -586,7 +587,7 @@
                                         + sid+ ", "
                                         + "'"+ this.pyNo+ "', "
                                         + "'"+ this.itemCode+ "', "
-                                        + sys.getNextNo("RTPYDTLS", "LINENO", "PYNO = '"+ this.pyNo+ "'", null, 1)+ ", "
+                                        + sys.getNextNo(""+this.comCode+".RTPYDTLS", "LINENO", "PYNO = '"+ this.pyNo+ "'", null, 1)+ ", "
                                         + this.qty+ ", "
                                         + iCItem.unitCost+ ", "
                                         + this.unitPrice+ ", "
@@ -603,10 +604,10 @@
                                         + ")";
 
                             }else{
-                                oldQty_  = sys.getOne("RTPYDTLS", "QTY", "ID = "+ this.sid);
+                                oldQty_  = sys.getOne(""+this.comCode+".RTPYDTLS", "QTY", "ID = "+ this.sid);
                                 oldQty   = Double.parseDouble(oldQty_);
                                     
-                                query = "UPDATE RTPYDTLS SET "
+                                query = "UPDATE "+this.comCode+".RTPYDTLS SET "
                                         + "ITEMCODE     = '"+ this.itemCode+ "', "
                                         + "QTY          = "+ this.qty+ ", "
                                         + "UNITPRICE     = "+ this.unitPrice+ ", "
@@ -742,7 +743,7 @@
             Gui gui = new Gui();
             Sys sys = new Sys();
 
-            if(sys.recordExists("VIEWRTPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+            if(sys.recordExists(""+this.comCode+".VIEWRTPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
 
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
 
@@ -769,7 +770,7 @@
 
                     Integer count  = 1;
 
-                    String query = "SELECT * FROM VIEWRTPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWRTPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
 
                     ResultSet rs = stmt.executeQuery(query);
 
@@ -843,13 +844,13 @@
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             Gui gui = new Gui();
-            if(sys.recordExists("RTPYDTLS", "ID = "+ this.sid +"")){
+            if(sys.recordExists(""+this.comCode+".RTPYDTLS", "ID = "+ this.sid +"")){
                 try{
 
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT * FROM VIEWRTPYDTLS WHERE ID = "+ this.sid +"";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWRTPYDTLS WHERE ID = "+ this.sid +"";
                     ResultSet rs = stmt.executeQuery(query);
 
                     while(rs.next()){
@@ -893,7 +894,7 @@
                 Statement stmt = conn.createStatement();
 
                 if(this.id != null){
-                    String query = "DELETE FROM RTPYDTLS WHERE ID = "+ this.id;
+                    String query = "DELETE FROM "+this.comCode+".RTPYDTLS WHERE ID = "+ this.id;
 //                    String query = "DELETE FROM RTPYDTLS WHERE ID IS NULL";
 
                     Integer purged = stmt.executeUpdate(query);
