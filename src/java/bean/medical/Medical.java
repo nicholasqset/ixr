@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import bean.sys.Sys;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -48,8 +49,8 @@ public class Medical {
                     + ")";
             
             stmt.executeUpdate(query);
-        }catch(Exception e){
-            
+        }catch(SQLException e){
+            System.out.print(e.getMessage());
         }
         
         return createInvHdr;
@@ -111,8 +112,8 @@ public class Medical {
 
             createInvDtls = stmt.executeUpdate(query);
             
-        }catch (Exception e){
-            
+        }catch (SQLException e){
+            System.out.print(e.getMessage());
         }
         
         return createInvDtls;
@@ -132,8 +133,8 @@ public class Medical {
                 rate = rs.getDouble("AMOUNT");
             }
             
-        }catch(Exception e){
-            
+        }catch(SQLException e){
+            System.out.print(e.getMessage());
         }
         
         return rate;
@@ -172,8 +173,8 @@ public class Medical {
 
                 createBalanceItem = stmt.executeUpdate(query);
             
-            }catch(Exception e){
-
+            }catch(SQLException e){
+                System.out.print(e.getMessage());
             }
         }
         
@@ -210,8 +211,8 @@ public class Medical {
 
                 addItemBalance = stmt.executeUpdate(query);
             
-            }catch(Exception e){
-
+            }catch(NumberFormatException | SQLException e){
+                System.out.print(e.getMessage());
             }
         }
         
@@ -249,8 +250,8 @@ public class Medical {
 
                 reduceItemBalance = stmt.executeUpdate(query);
                 
-            }catch(Exception e){
-
+            }catch(NumberFormatException | SQLException e){
+                System.out.print(e.getMessage());
             }
         }
         

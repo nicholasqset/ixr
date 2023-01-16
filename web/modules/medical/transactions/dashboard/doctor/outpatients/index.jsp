@@ -369,6 +369,42 @@
                         });
                     }
                 },
+                saveDrNotes: function(required){
+                    var data = Form.serialize('frmDrNotes');
+                    if(module.validate(required)){
+                        if($('frmDrNotes'))  $('frmDrNotes').disabled = true;  
+                        if($('btnSave')) $('btnSave').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveDrNotes&'+data,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                    if(typeof response.receiptNo !== 'undefined' && $('receiptNo')) $('receiptNo').value = response.receiptNo;
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmDrNotes')) { $('frmDrNotes').disabled = false; }
+                        if($('btnSave')) { $('btnSave').disabled = false;}
+                    }
+                },
+                printDrNotes: function(required){
+                    var data = Form.serialize('frmDrNotes');
+                    if(module.validate(required)){
+                        var printWindow = window.open(
+                            './print_dr_notes?'+ data, '', 'height=500, width=750, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                        printWindow.focus();
+                    }
+                },
                 save: function(required){
                     var data = Form.serialize('frmModule');
                     if(module.validate(required)){

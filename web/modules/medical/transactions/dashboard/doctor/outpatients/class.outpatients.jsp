@@ -30,6 +30,7 @@
         String ptNo = "";
         String drNo = "";
         String nrNo = "";
+        String drNotes = request.getParameter("dr_notes") != null ? request.getParameter("dr_notes") : "";
         String remarks = request.getParameter("remarks") != null ? request.getParameter("remarks") : "";
 
         public String getGrid() {
@@ -230,6 +231,7 @@
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divLab\">" + this.getLabTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDiagnosis\">" + this.getDiagnosisTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divMedication\">" + this.getMedicationTab() + "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDrNotes\">" + this.getDrNotesTab()+ "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getDischargeTab() + "</div>";
 
             html += "</div>";
@@ -241,7 +243,7 @@
             html += "</div>";
 
             html += "<script type = \"text/javascript\">";
-            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Medication\', \'Discharge\'), 0, 625, 365, Array(false));";
+            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Medication\', \'Doctor Notes\',\'Discharge\'), 0, 625, 365, Array(false));";
             html += "</script>";
 
             return html;
@@ -1386,7 +1388,100 @@
 
             return obj;
         }
+        
+        public String getDrNotesTab() {
+            String html = "";
 
+            Gui gui = new Gui();
+            Sys sys = new Sys();
+
+            if (sys.recordExists(this.table, "REGNO = '" + this.regNo + "'")) {
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+                    String query = "SELECT * FROM " + this.table + " WHERE REGNO = '" + this.regNo + "'";
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        this.drNotes = rs.getString("dr_notes");
+                    }
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+            }
+
+            this.drNotes = this.drNotes != null ? this.drNotes : "";
+
+            html += gui.formStart("frmDrNotes", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            html += gui.formInput("hidden", "id", 15, "" + this.id, "", "");
+            html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
+            html += gui.formInput("hidden", "regType", 15, this.regType, "", "");
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
+
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\">" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("dr_notes", " Doctor Notes") + "</td>";
+            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"48\"  rows = \"20\"  >"+this.drNotes+"</textarea></td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td>&nbsp;</td>";
+            html += "<td>"
+                    + gui.formButton(request.getContextPath(), "button", "btnSaveDrNotes", "Save", "save.png", "onclick=\"dashboard.saveDrNotes('dr_notes');\"", "")
+                    + " "
+                    + gui.formButton(request.getContextPath(), "button", "btnPrintDrNotes", "Print", "printer.png", "onclick=\"dashboard.printDrNotes('dr_notes');\"", "")
+                    + "</td>";
+            html += "</tr>";
+
+            html += "</table>";
+
+            html += gui.formEnd();
+
+            return html;
+        }
+
+       
+        
+        public Object saveDrNotes() throws Exception {
+            JSONObject obj = new JSONObject();
+            Sys sys = new Sys();
+            HttpSession session = request.getSession();
+            
+            String query;
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                query = "UPDATE " + this.table + " SET "
+                        + "DR_NOTES     = '" + this.drNotes + "', "
+                        + "AUDITUSER    = '" + sys.getLogUser(session) + "', "
+                        + "AUDITDATE    = '" + sys.getLogDate() + "', "
+                        + "AUDITTIME    = '" + sys.getLogTime() + "', "
+                        + "AUDITIPADR   = '" + sys.getClientIpAdr(request) + "' "
+                        + "WHERE ID     = " + id + "";
+
+                Integer saved = stmt.executeUpdate(query);
+
+                if (saved == 1) {
+                    obj.put("success", 1);
+                    obj.put("message", "Entry successfully made.");
+//                    obj.put("message", "Entry successfully made."+ query);
+
+                } else {
+                    obj.put("success", 0);
+                    obj.put("message", "Oops! An Un-expected error occured while saving record.");
+                }
+
+            } catch (Exception e) {
+                obj.put("success", 0);
+                obj.put("message", e.getMessage());
+            }
+
+            return obj;
+        }
+        
         public String getDischargeTab() {
             String html = "";
 
