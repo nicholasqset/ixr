@@ -48,7 +48,7 @@
 //                html += query;
                 ResultSet rs = stmt.executeQuery(query);
                 Integer count = 1;
-                html += "<table width = \"100%\" cellpadding = \"0\" cellspacing = \"0\">";
+                html += "<table width = \"100%\" cellpadding = \"5\" cellspacing = \"3\">";
                 while(rs.next()){
                     Integer menuCode    = rs.getInt("MENUCODE");			
                     String menuName     = rs.getString("MENUNAME");	
@@ -70,7 +70,7 @@
                         html += "</td>";
                         html += "<td> ";
                         html += "<div class = \"menu-parent\" >";
-                        html += "<a href = \"javascript:;\" "+ toggleMenu+ ">";	
+                        html += "<a href = \"javascript:;\" "+ toggleMenu+ " >";	
                         html += menuName;
                         html += "</a>";
                         html += "</div>";
@@ -185,7 +185,7 @@
                 ResultSet rs = stmt.executeQuery(query);
                 Integer count = 1;
 
-                html += "<table width = \"100%\" cellpadding = \"0\" cellspacing = \"0\">";
+                html += "<table width = \"100%\" cellpadding = \"2\" cellspacing = \"2\">";
 
                 while(rs.next()){
                     Integer menuCodeChild       = rs.getInt("MENUCODE");

@@ -16,16 +16,16 @@
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.sys.Sys"%>
 <%
-    final class PrintRptBill{
+    final class PrintLabItem{
         HttpSession session = request.getSession();
         String comCode      = session.getAttribute("comCode").toString();
         String regNo = request.getParameter("regNo");
     
-        String rptName  = "Doctor Notes";
+        String rptName  = "Lab Tech Notes";
         
-        String table = comCode + ".HMREGISTRATION";
+        String table = comCode + ".HMPTLAB";
         
-        String drNotes = request.getParameter("dr_notes") != null ? request.getParameter("dr_notes") : "";
+        String id = request.getParameter("rid") != null ? request.getParameter("rid") : "";
         
         public String getReportHeader(){
             String html = "";
@@ -120,14 +120,20 @@
             
             Sys sys = new Sys();
             
-            if (sys.recordExists(this.table, "REGNO = '" + this.regNo + "'")) {
+            String labitemname = "";
+            String remarks = "";
+            String results = "";
+            
+            if (sys.recordExists(this.table, "ID = '" + this.id + "'")) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.table + " WHERE REGNO = '" + this.regNo + "'";
+                    String query = "SELECT * FROM " + this.table + " WHERE ID = '" + this.id + "'";
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-                        this.drNotes = rs.getString("dr_notes");
+                        labitemname = rs.getString("labitemname");
+                        remarks = rs.getString("remarks");
+                        results = rs.getString("results");
                     }
                 } catch (Exception e) {
                     html += e.getMessage();
@@ -135,9 +141,14 @@
 
             }
             
-            String[] arrOfStr = this.drNotes.split("\n");
-            this.drNotes = String.join("<br>", arrOfStr);
-            this.drNotes = this.drNotes != null ? this.drNotes : "";
+            String[] arrOfLabitemname = labitemname.split("\n");
+            labitemname = String.join("<br>", arrOfLabitemname);
+            
+            String[] arrOfRemarks = remarks.split("\n");
+            remarks = String.join("<br>", arrOfRemarks);
+            
+            String[] arrOfResults = results.split("\n");
+            results = String.join("<br>", arrOfResults);
             
 //            
 //            HmPyHdr hmPyHdr = new HmPyHdr(pyNo, this.comCode);
@@ -157,11 +168,22 @@
             html += "<table width = \"100%\" cellpadding = \"2\" cellspacing = \"0\" class = \"header\" style=\"margin: 16px;\">";
 
             html += "<tr>";
-            html += "<td><hr></td>";
+            html += "<td colspan=\"2\"><hr></td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>"+ this.drNotes +"</td>";
+            html += "<td width =\"17%\">Lab Item</td>";
+            html += "<td>"+ labitemname +"</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td >Doctor Note</td>";
+            html += "<td>"+ remarks +"</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td >Results</td>";
+            html += "<td>"+ results +"</td>";
             html += "</tr>";
 
 //            html += "<tr>";
@@ -204,7 +226,7 @@
         }
     }
     
-    PrintRptBill printRptBill = new PrintRptBill();
+    PrintLabItem printLabItem = new PrintLabItem();
     
     Gui gui = new Gui();
     
@@ -217,13 +239,13 @@
         <title>Doctor Notes</title>
     </head>
     <body>
-        <%= printRptBill.printRpt()%>
+        <%= printLabItem.printRpt()%>
         
         <% out.print(gui.loadJs(request.getContextPath(), "scriptaculous/lib/prototype")); %>
         
         <script language="javascript">
             Event.observe(window,'load',function(){
-                setTimeout('window.print();', '3000');
+//                setTimeout('window.print();', '3000');
             });
        </script>
     </body>

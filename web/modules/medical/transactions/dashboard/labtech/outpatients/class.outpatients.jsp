@@ -780,16 +780,24 @@
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pencil.png", "", "") + gui.formLabel("results", " Lab Results") + "</td>";
 //            html += "<td >" + gui.formInput("textarea", "results", 40, results, "", " rows=\"4\" ") + "</td>";
-            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"8\" >"+results+"</textarea>"+ "</td>";
+            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"12\" >"+results+"</textarea>"+ "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "attach.png", "", "") + gui.formLabel("attachment", " Attachment") + "</td>";
+            html += "<td >" + "<input type=\"file\" id=\"attachment\" name=\"attachment\" onchange=\"registration.uploadLabItem('');\">"+ " e.g scans, docs</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
             html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('results');\"", "");
+            html += " ";
 //            if (rid != null) {
 //                html += gui.formButton(request.getContextPath(), "button", "btnDelLab", "Delete", "delete.png", "onclick = \"dashboard.delLab(" + rid + ", '" + labItemName + "', '" + this.regNo + "');\"", "");
 //            }
+            html += gui.formButton(request.getContextPath(), "button", "btnPrintLab", "Print", "printer.png", "onclick=\"registration.printLab('results');\"", "");
+            html += " ";
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getLab('" + this.regNo + "');\"", "");
             html += "</td>";
             html += "</tr>";
@@ -867,7 +875,6 @@
         }
 
         public Object delLab() throws Exception {
-
             JSONObject obj = new JSONObject();
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
             try {

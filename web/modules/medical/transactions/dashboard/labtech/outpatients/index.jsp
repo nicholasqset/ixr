@@ -581,6 +581,29 @@
                     var printWindow = window.open(
                             './print?billNo='+ billNo, '', 'height=464, width=525, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
                     printWindow.focus();
+                },
+                printLab: function(required){
+                    var data = Form.serialize('frmLab');
+                    if(module.validate(required)){
+                        var printWindow = window.open(
+                            './print_lab?'+ data, '', 'height=500, width=750, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                        printWindow.focus();
+                    }
+                },
+                uploadLabItem: function(required){
+                    if(module.validate(required)){
+                        var frmModule = $('frmLab');
+                        var data = frmModule.serialize();
+                        frmModule.action = "./upload/?"+data;
+                        frmModule.submit();
+                    }
+                },
+                getUploadResponse: function(errorCount, errorMsg){
+                    if(typeof errorCount !== 'undefined' && errorCount > 0){
+                        g.error(errorMsg, { header : ' ' , life: 5, speedout: 2 });
+                    }else{
+                        g.info("Attachment successfully uploaded", { header : ' ' , life: 5, speedout: 2 });
+                    }
                 }
             };
             
