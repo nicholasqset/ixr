@@ -231,7 +231,7 @@
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divLab\">" + this.getLabTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDiagnosis\">" + this.getDiagnosisTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divMedication\">" + this.getMedicationTab() + "</div></div>";
-            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDrNotes\">" + this.getDrNotesTab()+ "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDrNotes\">" + this.getDrNotesTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getDischargeTab() + "</div>";
 
             html += "</div>";
@@ -312,7 +312,7 @@
             html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + " Age</td>";
             html += "<td>" + patientProfile.age + "</td>";
             html += "</tr>";
-            
+
             html += "<tr>";
             html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + " Date of Birth</td>";
             html += "<td>" + patientProfile.dob + "</td>";
@@ -508,6 +508,7 @@
             String complCode = "";
             String complName = "";
             String remarks = "";
+//            String results = "";
             if (rid != null) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
@@ -521,6 +522,7 @@
                         complCode = rs.getString("COMPLCODE");
                         complName = rs.getString("COMPLNAME");
                         remarks = rs.getString("REMARKS");
+//                        results = rs.getString("results");
                     }
                 } catch (SQLException e) {
                     html += e.getMessage();
@@ -661,7 +663,7 @@
 
             return obj;
         }
-        
+
         //lab start
         public String getLabTab() {
             String html = "";
@@ -722,12 +724,14 @@
         public String addLab() {
             String html = "";
 
+            Sys sys = new Sys();
             Gui gui = new Gui();
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
             String labItemCode = "";
             String labItemName = "";
             String remarks = "";
+            String results = "";
             if (rid != null) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
@@ -741,6 +745,7 @@
                         labItemCode = rs.getString("LABITEMCODE");
                         labItemName = rs.getString("LABITEMNAME");
                         remarks = rs.getString("REMARKS");
+                        results = rs.getString("RESULTS");
                     }
                 } catch (SQLException e) {
                     html += e.getMessage();
@@ -770,6 +775,29 @@
             html += "</tr>";
 
             html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pencil.png", "", "") + gui.formLabel("results", " Lab Results") + "</td>";
+            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"12\" readonly>" + results + "</textarea>" + "</td>";
+            html += "</tr>";
+            
+            String filePath = sys.getOne(this.comCode + ".HMPTLABDOCS", "filepath", "rid=" + rid);
+            String refNo = sys.getOne(this.comCode + ".HMPTLABDOCS", "refno", "rid=" + rid);
+
+            
+            if (filePath != null) {
+                String docLink = "<a href=\"" + request.getContextPath() + filePath + "\" target=\"blank\">download - " + refNo + "</a>";
+
+               // html += "<tr>";
+                //html += "<td colspan=\"2\" >&nbsp;</td>";
+//                html += "</tr>";
+
+                html += "<tr>";
+                html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "attach.png", "", "") + gui.formLabel("attachment", " Attachment") + "</td>";
+                html += "<td >" + docLink + "</td>";
+                html += "</tr>";
+            }
+
+
+            html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
             html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('labItem');\"", "");
@@ -780,6 +808,7 @@
             html += "</td>";
             html += "</tr>";
 
+            
             html += "</table>";
 
             html += gui.formEnd();
@@ -1111,8 +1140,8 @@
                 html += "<tr>";
                 html += "<th>#</th>";
                 html += "<th>Medication</th>";
-				html += "<th>Quantity</th>";
-                html += "<th>Days</th>";                
+                html += "<th>Quantity</th>";
+                html += "<th>Days</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
 
@@ -1136,8 +1165,8 @@
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
                         html += "<td>" + drugName + "</td>";
-						html += "<td>" + qty + "</td>";
-                        html += "<td>" + days + "</td>";                        
+                        html += "<td>" + qty + "</td>";
+                        html += "<td>" + days + "</td>";
                         html += "<td>" + editLink + "</td>";
                         html += "</tr>";
 
@@ -1388,7 +1417,7 @@
 
             return obj;
         }
-        
+
         public String getDrNotesTab() {
             String html = "";
 
@@ -1422,7 +1451,7 @@
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\">" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("dr_notes", " Doctor Notes") + "</td>";
-            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"48\"  rows = \"20\"  >"+this.drNotes+"</textarea></td>";
+            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"48\"  rows = \"20\"  >" + this.drNotes + "</textarea></td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1441,13 +1470,11 @@
             return html;
         }
 
-       
-        
         public Object saveDrNotes() throws Exception {
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             HttpSession session = request.getSession();
-            
+
             String query;
 
             try {
@@ -1481,7 +1508,7 @@
 
             return obj;
         }
-        
+
         public String getDischargeTab() {
             String html = "";
 

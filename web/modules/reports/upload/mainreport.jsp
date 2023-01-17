@@ -68,7 +68,7 @@
             
             File f = new File(saveFile);
 
-            String fileExtension = system.getFileExtension(f);
+            String fileExtension = sys.getFileExtension(f);
 
             if(! fileExtension.equals("jrxml")){
                 errorCount++;
@@ -83,7 +83,7 @@
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    Integer id = system.generateId("MDRPTS", "ID");
+                    Integer id = sys.generateId("MDRPTS", "ID");
 
                     String query;
 
@@ -96,10 +96,10 @@
                         + "'"+ rptDesc+ "', "
                         + "'"+ dataSrc+ "', "
                         + "'"+ menuCode+ "', "
-                        + "'"+ system.getLogUser(session)+ "', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogTime()+ "', "
-                        + "'"+ system.getClientIpAdr(request)+ "' "
+                        + "'"+ sys.getLogUser(session)+ "', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogTime()+ "', "
+                        + "'"+ sys.getClientIpAdr(request)+ "' "
                         + ")";
 
                     Integer saved = stmt.executeUpdate(query);

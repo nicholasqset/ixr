@@ -195,7 +195,7 @@
                 },
                 uploadPhoto: function(required){
                     if(module.validate(required)){
-                        var frmModule = $('frmModule')
+                        var frmModule = $('frmModule');
                         var data = frmModule.serialize();
                         frmModule.action = "./upload/?"+data;
                         frmModule.submit();

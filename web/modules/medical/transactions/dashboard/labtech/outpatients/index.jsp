@@ -66,6 +66,11 @@
                 overflow-y: auto;
                 overflow-x: hidden;
             }
+            iframe#upload_iframe{
+                width: 0;
+                height: 0;
+                border: 0;
+            }
         </style>
         <script type="text/javascript"> var rootPath = '<%= request.getContextPath() %>';</script>
     </head>
@@ -186,7 +191,7 @@
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success === 'number' && response.success===1){
-                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                    g.info(response.message, { header : ' ', life: 5, speedout: 2  }); 
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
@@ -419,7 +424,7 @@
                 }
             };
             
-            let registration = {
+            var registration = {
                 manageBill: function(regNo, ptNo){
                     module.execute('manageBill', 'regNo='+regNo+'&ptNo='+ptNo, 'dvBills');
                 },
@@ -592,9 +597,9 @@
                 },
                 uploadLabItem: function(required){
                     if(module.validate(required)){
-                        var frmModule = $('frmLab');
-                        var data = frmModule.serialize();
-                        frmModule.action = "./upload/?"+data;
+                        var frmModule = $('frmLabDoc');
+                        var data = frmModule.serialize()+ '&'+ Form.serialize('frmLab');
+                        frmModule.action = "./upload/?"+ data;
                         frmModule.submit();
                     }
                 },
@@ -603,6 +608,7 @@
                         g.error(errorMsg, { header : ' ' , life: 5, speedout: 2 });
                     }else{
                         g.info("Attachment successfully uploaded", { header : ' ' , life: 5, speedout: 2 });
+                        dashboard.getLab($F('regNo'));
                     }
                 }
             };

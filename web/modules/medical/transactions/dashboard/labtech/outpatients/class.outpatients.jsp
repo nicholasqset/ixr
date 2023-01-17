@@ -727,6 +727,8 @@
 
         public String addLab() {
             String html = "";
+            
+            Sys sys = new Sys();
 
             Gui gui = new Gui();
 
@@ -758,6 +760,7 @@
 
             html += gui.formStart("frmLab", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
+
             if (rid != null) {
                 html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
             }
@@ -782,12 +785,7 @@
 //            html += "<td >" + gui.formInput("textarea", "results", 40, results, "", " rows=\"4\" ") + "</td>";
             html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"12\" >"+results+"</textarea>"+ "</td>";
             html += "</tr>";
-
-            html += "<tr>";
-            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "attach.png", "", "") + gui.formLabel("attachment", " Attachment") + "</td>";
-            html += "<td >" + "<input type=\"file\" id=\"attachment\" name=\"attachment\" onchange=\"registration.uploadLabItem('');\">"+ " e.g scans, docs</td>";
-            html += "</tr>";
-
+            
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
@@ -801,10 +799,35 @@
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getLab('" + this.regNo + "');\"", "");
             html += "</td>";
             html += "</tr>";
+            
+            html += "</table>";
+                    
+            html += gui.formEnd();
+            
+            String filePath = sys.getOne(this.comCode + ".HMPTLABDOCS", "filepath", "rid="+rid);
+            String refNo = sys.getOne(this.comCode + ".HMPTLABDOCS", "refno", "rid="+rid);
+            
+            String docLink = "";
+            if(filePath != null){
+                docLink = "<a href=\""+request.getContextPath()+ filePath+"\" target=\"blank\">download - "+refNo+"</a>";
+            }
+            
+            html += "<form name = \"frmLabDoc\" id = \"frmLabDoc\" method = \"post\" action = \"./upload/\" enctype = \"multipart/form-data\" target = \"upload_iframe\">";
+//            html += "<form name = \"frmLabDoc\" id = \"frmLabDoc\" method = \"post\" action = \"./upload/\" enctype = \"multipart/form-data\" target = \"_blank\">";
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" style=\"margin-top: 12px;\">";
+            
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "attach.png", "", "") + gui.formLabel("attachment", " Attachment") + "</td>";
+            html += "<td >" + "<input type=\"file\" id=\"attachment\" name=\"attachment\" onchange=\"registration.uploadLabItem('');\">"+ " e.g scans, docs "+docLink+"</td>";
+            html += "</tr>";
 
             html += "</table>";
 
             html += gui.formEnd();
+            
+            html += "<iframe name = \"upload_iframe\" id = \"upload_iframe\"></iframe>";
+            
             return html;
         }
 

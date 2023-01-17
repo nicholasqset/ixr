@@ -14,7 +14,7 @@
     String subRptDesc       = request.getParameter("subRptDesc");
     String subRptDataSrc    = request.getParameter("subRptDataSrc");
     
-    String menuCode         = system.getOne("MDRPTS", "MENUCODE", "ID = "+idRpt);
+    String menuCode         = sys.getOne("MDRPTS", "MENUCODE", "ID = "+idRpt);
     
     try{
         String webRootPath      = application.getRealPath("/").replace('\\', '/');
@@ -69,7 +69,7 @@
             
             File f = new File(saveFile);
 
-            String fileExtension = system.getFileExtension(f);
+            String fileExtension = sys.getFileExtension(f);
 
             if(! fileExtension.equals("jrxml")){
                 errorCount++;
@@ -84,7 +84,7 @@
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
                     
-                    Integer id = system.generateId("MDSUBRPTS", "ID");
+                    Integer id = sys.generateId("MDSUBRPTS", "ID");
 
                     String query = "INSERT INTO MDSUBRPTS "
                         + "(ID, IDRPT, SUBRPTNAME, SUBRPTDESC, SUBRPTDATASRC, AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR) "
@@ -95,10 +95,10 @@
                         + "'"+ subRptName+ "', "
                         + "'"+ subRptDesc+ "', "
                         + "'"+ subRptDataSrc+ "', "
-                        + "'"+ system.getLogUser(session)+ "', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogTime()+ "', "
-                        + "'"+ system.getClientIpAdr(request)+ "' "
+                        + "'"+ sys.getLogUser(session)+ "', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogTime()+ "', "
+                        + "'"+ sys.getClientIpAdr(request)+ "' "
                         + ")";
 
                     Integer saved = stmt.executeUpdate(query);
