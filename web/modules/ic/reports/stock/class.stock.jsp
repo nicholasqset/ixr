@@ -42,6 +42,7 @@ final class Stock{
 	html += "<td>&nbsp;</td>";
 	html += "<td>";
 	html += gui.formButton(request.getContextPath(), "button", "btnPrint", "Print", "printer.png", "onclick = \"stock.print('entryDate');\"", "");
+	html += " ";
 	html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
 	html += "</td>";
 	html += "</tr>";

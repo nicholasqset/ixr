@@ -415,9 +415,9 @@ final class IU{
                 
                 if(this.sid == null){
 
-                    Integer sid = system.generateId("ICIUDTLS", "ID");
+                    Integer sid = system.generateId(""+this.comCode+".ICIUDTLS", "ID");
                     
-                    query = "INSERT INTO ICIUDTLS "
+                    query = "INSERT INTO "+this.comCode+".ICIUDTLS "
                             + "(ID, IUNO, ITEMCODE, "
                             + "QTY, UNITCOST, AMOUNT, "
                             + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
@@ -438,7 +438,7 @@ final class IU{
 
                 }else{
 
-                    query = "UPDATE ICIUDTLS SET "
+                    query = "UPDATE "+this.comCode+".ICIUDTLS SET "
                             + "ITEMCODE     = '"+ this.itemCode+ "', "
                             + "QTY          = "+ this.qty+ ", "
                             + "UNITCOST     = "+ this.unitCost+ ", "
@@ -608,7 +608,7 @@ final class IU{
         JSONObject obj = new JSONObject();
         Sys system = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("ICIUDTLS", "ID = "+ this.sid +"")){
+        if(system.recordExists(""+this.comCode+".ICIUDTLS", "ID = "+ this.sid +"")){
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -654,7 +654,7 @@ final class IU{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM ICIUDTLS WHERE ID = "+this.id;
+                String query = "DELETE FROM "+this.comCode+".ICIUDTLS WHERE ID = "+this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){
