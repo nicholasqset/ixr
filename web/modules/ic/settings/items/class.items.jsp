@@ -1,3 +1,5 @@
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="bean.sys.Sys"%>
 <%@page import="bean.ap.APSupplierProfile"%>
@@ -34,6 +36,11 @@ final class Items{
     String opt2         = request.getParameter("opt2");
     String opt3         = request.getParameter("opt3");
     String opt4         = request.getParameter("opt4");
+    
+    String mfgdt        = request.getParameter("mfgdt");
+    String expdt        = request.getParameter("expdt");
+    String wsprice      = request.getParameter("wsprice");
+    String minlevel     = request.getParameter("minlevel");
     
     public String getGrid(){
         String html = "";
@@ -210,6 +217,7 @@ final class Items{
     public String getModule(){
         String html = "";
         
+        Sys sys = new Sys();
         Gui gui = new Gui();
         
         String fullName = "";
@@ -237,9 +245,26 @@ final class Items{
                     this.opt2           = rs.getString("OPT2");
                     this.opt3           = rs.getString("OPT3");
                     this.opt4           = rs.getString("OPT4");
+                    this.mfgdt           = rs.getString("mfgdt");
+                    this.expdt           = rs.getString("expdt");
+                    this.wsprice           = rs.getString("wsprice");
+                    this.minlevel           = rs.getString("minlevel");
                     
                     APSupplierProfile aPSupplierProfile = new APSupplierProfile(this.supplierNo, comCode);
                     fullName = aPSupplierProfile.fullName;
+                    
+                    
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
+
+                    try{
+                        java.util.Date mfgdt = originalFormat.parse(this.mfgdt);
+                        this.mfgdt = targetFormat.format(mfgdt);
+                        java.util.Date expdt = originalFormat.parse(this.expdt);
+                        this.expdt = targetFormat.format(expdt);
+                    }catch(ParseException e){
+                        sys.logV2(e.getMessage());
+                    }
                 }
             }catch (SQLException e){
                 html += e.getMessage();
@@ -257,68 +282,76 @@ final class Items{
         html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
         
         html += "<tr>";
-	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(),"page.png", "", "")+ gui.formLabel("code", " Item Code")+ "</td>";
-	html += "<td>"+ gui.formInput("text", "code", 20, this.id != null? this.itemCode: "" , "", "")+"<span class = \"fade\"> i.e bar code</span></td>";
+	html += "<td >"+ gui.formIcon(request.getContextPath(),"page.png", "", "")+ gui.formLabel("code", " Item Code")+ "</td>";
+	html += "<td colspan=\"3\">"+ gui.formInput("text", "code", 20, this.id != null? this.itemCode: "" , "", "")+"<span class = \"fade\"> i.e bar code</span></td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("name", " Item Name")+"</td>";
-	html += "<td>"+ gui.formInput("text", "name", 35, this.id != null? this.itemName: "", "", "")+"</td>";
+	html += "<td colspan=\"3\">"+ gui.formInput("text", "name", 35, this.id != null? this.itemName: "", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+ gui.formLabel("category", " Item Category")+"</td>";
-	html += "<td>"+ gui.formSelect("category", comCode+".ICITEMCATS", "CATCODE", "CATNAME", "", "", this.id != null? this.catCode: "", "", false)+ "</td>";
-	html += "</tr>";
-        
-        html += "<tr>";
-	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("accSetCode", " Account Set")+"</td>";
+	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+ gui.formLabel("category", " Item Category")+"</td>";
+	html += "<td width = \"35%\">"+ gui.formSelect("category", comCode+".ICITEMCATS", "CATCODE", "CATNAME", "", "", this.id != null? this.catCode: "", "", false)+ "</td>";
+	
+	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("accSetCode", " Account Set")+"</td>";
 	html += "<td>"+ gui.formSelect("accSetCode", comCode+".ICACCSETS", "ACCSETCODE", "ACCSETNAME", "", "", this.id != null? this.accSetCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"pencil.png", "", "")+ gui.formLabel("uom", " Unit of Measure")+"</td>";
-	html += "<td>"+ gui.formSelect("uom", comCode+".ICUOM", "UOMCODE", "UOMNAME", "", "", this.id != null? this.uomCode: "", "", false)+ "</td>";
-	html += "</tr>";
-        
-        html += "<tr>";
-	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"user-properties.png", "", "")+ gui.formLabel("supplierNo", " Supplier No.")+ "</td>";
-        html += "<td>"+ gui.formAutoComplete("supplierNo", 13, this.id != null? this.supplierNo: "", "items.searchSupplier", "supplierNoHd", this.id != null? this.supplierNo: "")+ " <span id = \"spFullName\">"+ fullName+ "</span></td>";
+	html += "<td  nowrap>"+ gui.formIcon(request.getContextPath(),"pencil.png", "", "")+ gui.formLabel("uom", " Unit of Measure")+"</td>";
+	html += "<td >"+ gui.formSelect("uom", comCode+".ICUOM", "UOMCODE", "UOMNAME", "", "", this.id != null? this.uomCode: "", "", false)+ "</td>";
+	
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"user-properties.png", "", "")+ gui.formLabel("supplierNo", " Supplier")+ "</td>";
+        html += "<td >"+ gui.formAutoComplete("supplierNo", 13, this.id != null? this.supplierNo: "", "items.searchSupplier", "supplierNoHd", this.id != null? this.supplierNo: "")+ " <span id = \"spFullName\">"+ fullName+ "</span></td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "pencil.png", "", "")+ gui.formLabel("cost", " Commodity No")+"</td>";
 	html += "<td>"+ gui.formInput("text", "cmdtNo", 20, this.id != null? ""+ this.cmdtNo: "", "", "")+"</td>";
-	html += "</tr>";
-        
-        html += "<tr>";
+	
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "pencil.png", "", "")+ gui.formLabel("cost", " Serial No")+"</td>";
 	html += "<td>"+ gui.formInput("text", "serialNo", 20, this.id != null? ""+ this.serialNo: "", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("cost", " Item Cost")+"</td>";
-	html += "<td>"+ gui.formInput("text", "cost", 20, this.id != null? ""+ this.unitCost: "", "", "")+"</td>";
+	html += "<td>"+ gui.formInput("text", "cost", 20, this.id != null? ""+ this.unitCost: "0", "", "")+"</td>";
+	
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Item Price")+"</td>";
+	html += "<td>"+ gui.formInput("text", "price", 20, this.id != null? ""+ this.unitPrice: "0", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Item Price")+"</td>";
-	html += "<td>"+ gui.formInput("text", "price", 20, this.id != null? ""+ this.unitPrice: "", "", "")+"</td>";
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("wsprice", " Wholesale Price")+"</td>";
+	html += "<td colspan=\"3\">"+ gui.formInput("text", "wsprice", 20, this.id != null? ""+ this.wsprice: "0", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("stocked", " Stocked")+"</td>";
 	html += "<td>"+ gui.formCheckBox("stocked", (this.id != null && this.stocked == 1)? "checked": "", null, "", "", "")+"</td>";
-	html += "</tr>";
-        
-        html += "<tr>";
+
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "pencil.png", "", "")+ gui.formLabel("quantity", " Quantity")+"</td>";
 	html += "<td>"+ gui.formInput("text", "quantity", 20, this.id != null? ""+ this.qty: "", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "pencil.png", "", "")+ gui.formLabel("minlevel", " Minimum Threshold")+"</td>";
+	html += "<td colspan=\"3\">"+ gui.formInput("text", "minlevel", 20, this.id != null? ""+ this.minlevel: "0", "", "")+"</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("mfgdt", " Manufacture Date")+"</td>";
+	html += "<td>"+ gui.formDateTime(request.getContextPath(), "mfgdt", 20, this.id != null? ""+ this.mfgdt: "", true, "")+"</td>";
+
+	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("expdt", " Expiry Date")+"</td>";
+	html += "<td>"+ gui.formDateTime(request.getContextPath(), "expdt", 20, this.id != null? ""+ this.expdt: "", true, "")+"</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
 	html += "<td style = \"vertical-align: top;\" nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("cost", " Additional Info. ")+"</td>";
-	html += "<td>"; 
+	html += "<td colspan=\"3\">"; 
             html += gui.formInput("text", "opt1", 35, this.id != null? ""+ this.opt1: "", "", "")+ "<br>";
             html += gui.formInput("text", "opt2", 35, this.id != null? ""+ this.opt2: "", "", "")+ "<br>";
             html += gui.formInput("text", "opt3", 35, this.id != null? ""+ this.opt3: "", "", "")+ "<br>";
@@ -328,7 +361,7 @@ final class Items{
         
         html += "<tr>";
 	html += "<td>&nbsp;</td>";
-	html += "<td>";
+	html += "<td colspan=\"3\">";
 	html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"items.save('code name category accSetCode uom cost price quantity');\"", "");
         if(this.id != null){
             html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"items.purge("+this.id+",'"+this.itemName+"');\"", "");
@@ -387,6 +420,18 @@ final class Items{
             String query;
             Integer saved = 0;
             
+            SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try{
+                java.util.Date mfgdt = originalFormat.parse(this.mfgdt);
+                this.mfgdt = targetFormat.format(mfgdt);
+                java.util.Date expdt = originalFormat.parse(this.expdt);
+                this.expdt = targetFormat.format(expdt);
+            }catch(ParseException e){
+                system.logV2(e.getMessage());
+            }
+            
             if(this.id == null){
                 system.log("========inserting");
                 Integer id = system.generateId(this.table, "ID");
@@ -394,7 +439,7 @@ final class Items{
                         + "("
                         + "ID, ITEMCODE, ITEMNAME, CATCODE, ACCSETCODE, UOMCODE, SUPPLIERNO, CMDTNO, SERIALNO, "
                         + "UNITCOST, UNITPRICE, STOCKED, QTY, "
-                        + "OPT1, OPT2, OPT3, OPT4, "
+                        + "OPT1, OPT2, OPT3, OPT4, mfgdt, expdt, wsprice, minlevel,"
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                         + ")"
                         + "VALUES"
@@ -416,6 +461,10 @@ final class Items{
                         + "'"+ this.opt2+ "', "
                         + "'"+ this.opt3+ "', "
                         + "'"+ this.opt4+ "', "
+                        + "'"+ this.mfgdt+ "', "
+                        + "'"+ this.expdt+ "', "
+                        + "'"+ this.wsprice+ "', "
+                        + "'"+ this.minlevel+ "', "
                         + "'"+ system.getLogUser(session)+"', "
                         + "'"+ system.getLogDate()+ "', "
                         + "'"+ system.getLogTime()+ "', "
@@ -440,6 +489,12 @@ final class Items{
                         + "OPT2         = '"+ this.opt2+ "', "
                         + "OPT3         = '"+ this.opt3+ "', "
                         + "OPT4         = '"+ this.opt4+ "', "
+                        
+                        + "mfgdt        = '"+ this.mfgdt+ "', "
+                        + "expdt        = '"+ this.expdt+ "', "
+                        + "wsprice      = '"+ this.wsprice+ "', "
+                        + "minlevel     = '"+ this.minlevel+ "', "
+                        
                         + "AUDITUSER    = '"+ system.getLogUser(session)+ "', "
                         + "AUDITDATE    = '"+ system.getLogDate()+ "', "
                         + "AUDITTIME    = "+ system.getLogTime()+ ", "

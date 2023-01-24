@@ -46,6 +46,7 @@
             out.print(gui.loadCss(request.getContextPath(), "module"));
             out.print(gui.loadCss(request.getContextPath(), "buttons"));
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
+            out.print(gui.loadCss(request.getContextPath(), "datepicker"));
             
         %>
         <script type="text/javascript"> 
@@ -92,6 +93,8 @@
             out.print(gui.loadJs(request.getContextPath(), "Growler"));
             out.print(gui.loadJs(request.getContextPath(), "tinybox"));
             out.print(gui.loadJs(request.getContextPath(), "module"));
+            out.print(gui.loadJs(request.getContextPath(), "prototype-date-extensions"));
+            out.print(gui.loadJs(request.getContextPath(), "datepicker"));
         %> 
         <script type="text/javascript">
             
