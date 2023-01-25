@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="bean.gui.Gui"%>
 <%@page import="bean.hr.StaffProfile"%>
 <%@page import="bean.conn.ConnectionProvider"%>
@@ -8,13 +9,17 @@ final class MonthSales{
     HttpSession session = request.getSession();
     String comCode      = session.getAttribute("comCode").toString();
         
-    Integer pYear       = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
-    Integer pMonth      = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
+//    Integer pYear       = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
+//    Integer pMonth      = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
     
     public String getModule(){
         String html = "";
         Gui gui = new Gui();
         Sys system = new Sys();
+        
+        HashMap<String, String> hmPrintForm = new HashMap();
+        hmPrintForm.put("web", "Web");
+        hmPrintForm.put("xls", "Excel");
         
         html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
         
@@ -28,6 +33,11 @@ final class MonthSales{
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", "Period Month")+ "</td>";
 	html += "<td>"+ gui.formMonthSelect("pMonth", system.getPeriodMonth(comCode), "", true)+ "</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "printer.png", "", "")+ gui.formLabel("category", " Printing Output")+"</td>";
+	html += "<td>"+ gui.formArraySelect("printForm", 100, hmPrintForm, "", false, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

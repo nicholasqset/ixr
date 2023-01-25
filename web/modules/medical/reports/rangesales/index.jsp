@@ -1,8 +1,8 @@
+<%@page import="bean.gui.Gui"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="bean.user.User"%>
 <%@page import="bean.security.EncryptionUtil"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
 <%
     String rootPath = "../../../../";
     Boolean sessionExpired = false;
@@ -38,12 +38,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Month Sales</title>
+        <title>Date Range Sales</title>
         <%
             out.print(gui.loadCss(request.getContextPath(), "Growler"));
             out.print(gui.loadCss(request.getContextPath(), "module"));
             out.print(gui.loadCss(request.getContextPath(), "buttons"));
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
+            out.print(gui.loadCss(request.getContextPath(), "datepicker"));
         %>
         <script type="text/javascript">
             <%
@@ -83,6 +84,8 @@
             out.print(gui.loadJs(request.getContextPath(), "scriptaculous/src/scriptaculous"));
             out.print(gui.loadJs(request.getContextPath(), "Growler"));
             out.print(gui.loadJs(request.getContextPath(), "tinybox"));
+            out.print(gui.loadJs(request.getContextPath(), "prototype-date-extensions"));
+            out.print(gui.loadJs(request.getContextPath(), "datepicker"));
             out.print(gui.loadJs(request.getContextPath(), "module"));
         %> 
         <script type="text/javascript">
@@ -93,22 +96,22 @@
 
             var g = new Growler({location: 'br', width: ''});
 
-            var monthSales = {
+            var rangeSales = {
                 print: function (required) {
                     if (module.validate(required)) {
                         var data = Form.serialize('frmModule');
-
                         var printForm = $F('printForm');
 
                         if (printForm === 'xls') {
                             var printWindow = window.open(
                                     './print?' + data, '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
                             printWindow.focus();
-                        } else {
+                        }else{
                             var printWindow = window.open(
-                                    './printweb?' + data, '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                                    './print?' + data, '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
                             printWindow.focus();
                         }
+
                     }
                 }
             };

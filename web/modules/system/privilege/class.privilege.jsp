@@ -26,7 +26,7 @@ final class Privilege{
 
         html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
-        html += "<table width = \"50%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
+        html += "<table width = \"50%\" class = \"module\" cellpadding = \"2\" cellspacing = \"2\" >";
 
         html += "<tr>";
 	html += "<td width = \"20%\" nowrap>"+gui.formIcon(request.getContextPath(), "group.png", "", "")+" "+gui.formLabel("userRole", "User Role")+"</td>";
@@ -68,7 +68,7 @@ final class Privilege{
             stmt = conn.createStatement();
             String query = "SELECT * FROM "+session.getAttribute("comCode")+".SYSMENUS WHERE MENUPARENT = 0 AND USERVSB = 1 ORDER BY MENUPOS ";
             ResultSet rs = stmt.executeQuery(query);
-            html += "<table width=\"100%\" cellpadding=\"1\" cellspacing=\"1\">";
+            html += "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"2\">";
             while(rs.next()){
                 Integer menuCode    = rs.getInt("MENUCODE");			
                 String menuName     = rs.getString("MENUNAME");	
@@ -181,7 +181,7 @@ final class Privilege{
             ResultSet rs = stmt.executeQuery(query);
             Integer count = 1;
 
-            html += "<table width = \"100%\" cellpadding = \"1\" cellspacing = \"1\">";
+            html += "<table width = \"100%\" cellpadding = \"2\" cellspacing = \"1\">";
 
             while(rs.next()){
                 Integer menuCodeChild       = rs.getInt("MENUCODE");
