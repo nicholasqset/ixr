@@ -99,9 +99,18 @@
                 print: function(required){
                     if(module.validate(required)){
                         var data = Form.serialize('frmModule');
-                        var printWindow = window.open(
-                                './print?'+ data, '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
-                        printWindow.focus();
+                        
+                        var printForm = $F('printForm');
+                        
+                        if(printForm==='xls'){
+                            var printWindow = window.open(
+                                    './print?'+ data, '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                            printWindow.focus();
+                        }else{
+                            var printWindow = window.open(
+                                    './printweb?'+ data, '', 'height=450, width=800, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                            printWindow.focus();
+                        }
                     }
                 }
             };

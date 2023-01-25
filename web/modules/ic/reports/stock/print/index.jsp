@@ -32,6 +32,10 @@
 
 <%
     String comCode = session.getAttribute("comCode").toString();
+    String stockGroup = request.getParameter("stockGroup");
+    
+    Sys sys = new Sys();
+    
     try {
         Connection conn = ConnectionProvider.getConnection();
         Statement stmt = null;
@@ -49,14 +53,14 @@
         String rptName = "items";
 
         String webRootPath = application.getRealPath("/").replace('\\', '/');
-        
+
         String tempPath = webRootPath + "/tmp/reports/jasper/log/";
         //create file
         File theDir = new File(tempPath);
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
-        
+
         String mainReportPath = "";
 
         mainReportPath = webRootPath + "/reports/jasper/ic/" + rptName + ".jrxml";
@@ -67,10 +71,29 @@
 
         stmt = conn.createStatement();
 
-        if (catCode.trim().equals("") || catCode == null) {
-            query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS ";
+//        if (catCode.trim().equals("") || catCode == null) {
+//            query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS ";
+//        } else {
+//            query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS WHERE catcode = '" + catCode + "' ";
+//        }
+        if (stockGroup.equals("low")) {
+            if (catCode.trim().equals("") || catCode == null) {
+                query = "SELECT * FROM " + comCode + ".VIEWICITEMS WHERE qty <= minlevel AND STOCKED = 1 ORDER BY ITEMCODE";
+            } else {
+                query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS WHERE catcode = '" + catCode + "' AND qty <= minlevel AND STOCKED = 1 ";
+            }
+        } else if (stockGroup.equals("exp")) {
+            if (catCode.trim().equals("") || catCode == null) {
+                query = "SELECT * FROM " + comCode + ".VIEWICITEMS WHERE expdt < '" + sys.getLogDate() + "' ORDER BY ITEMCODE";
+            } else {
+                query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS WHERE catcode = '" + catCode + "' AND expdt < '" + sys.getLogDate() + "'";
+            }
         } else {
-            query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS WHERE catcode = '" + catCode + "' ";
+            if (catCode.trim().equals("") || catCode == null) {
+                query = "SELECT * FROM " + comCode + ".VIEWICITEMS WHERE 1 = 1 ORDER BY ITEMCODE";
+            } else {
+                query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS WHERE catcode = '" + catCode + "' ";
+            }
         }
 
         rs = stmt.executeQuery(query);
@@ -122,7 +145,7 @@
         }
     } catch (Exception e) {
         out.println(e.getMessage());
-        
+
     }
 
 %>

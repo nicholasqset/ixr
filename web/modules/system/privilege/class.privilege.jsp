@@ -68,7 +68,7 @@ final class Privilege{
             stmt = conn.createStatement();
             String query = "SELECT * FROM "+session.getAttribute("comCode")+".SYSMENUS WHERE MENUPARENT = 0 AND USERVSB = 1 ORDER BY MENUPOS ";
             ResultSet rs = stmt.executeQuery(query);
-            html += "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">";
+            html += "<table width=\"100%\" cellpadding=\"1\" cellspacing=\"1\">";
             while(rs.next()){
                 Integer menuCode    = rs.getInt("MENUCODE");			
                 String menuName     = rs.getString("MENUNAME");	
@@ -181,7 +181,7 @@ final class Privilege{
             ResultSet rs = stmt.executeQuery(query);
             Integer count = 1;
 
-            html += "<table width = \"100%\" cellpadding = \"0\" cellspacing = \"0\">";
+            html += "<table width = \"100%\" cellpadding = \"1\" cellspacing = \"1\">";
 
             while(rs.next()){
                 Integer menuCodeChild       = rs.getInt("MENUCODE");
