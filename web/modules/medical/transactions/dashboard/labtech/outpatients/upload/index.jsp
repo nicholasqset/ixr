@@ -39,8 +39,8 @@
 //   ServletContext context = pageContext.getServletContext();
 //   String filePath = context.getInitParameter("file-upload");
     String webRootPath = application.getRealPath("/").replace('\\', '/');
-    String relFilePath = "/docs/medical/labtech/";
-    String filePath = webRootPath + "docs/medical/labtech/";
+    String relFilePath = "/documents/medical/labtech/";
+    String filePath = webRootPath + "documents/medical/labtech/";
     // Verify the content type
     String contentType = request.getContentType();
 
