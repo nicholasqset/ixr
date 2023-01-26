@@ -308,10 +308,10 @@
 
                     String query;
 
-//                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
-//                    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
-//                    java.util.Date entryDate = originalFormat.parse(this.entryDate);
-//                    String entryDateLbl = targetFormat.format(entryDate);
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    java.util.Date entryDate = originalFormat.parse(this.entryDate);
+                    String entryDateLbl = targetFormat.format(entryDate);
 //                    if (stockGroup.equals("low")) {
 //                        if (catCode.trim().equals("") || catCode == null) {
 //                            query = "SELECT * FROM " + this.comCode + ".VIEWICITEMS WHERE qty <= minlevel AND STOCKED = 1 ORDER BY ITEMCODE";
@@ -331,7 +331,8 @@
 //                            query = " SELECT * FROM " + session.getAttribute("comCode") + ".VIEWICITEMS WHERE catcode = '" + catCode + "' ";
 //                        }
 //                    }
-                    query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDate+ "' AND CHANGE >= 0";
+//                    query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDate+ "' AND CHANGE >= 0";
+                    query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDateLbl+ "' AND CHANGE >= 0";
 
 //                    html += query;
                     ResultSet rs = stmt.executeQuery(query);

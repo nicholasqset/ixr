@@ -325,11 +325,13 @@
                     SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                     SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-//                    java.util.Date entryDate = originalFormat.parse(this.entryDate);
-//                    String entryDateLbl = targetFormat.format(entryDate);
+                    java.util.Date entryDate1 = originalFormat.parse(this.entryDate1);
+                    String entryDateLbl1 = targetFormat.format(entryDate1);
+                    java.util.Date entryDate2 = originalFormat.parse(this.entryDate2);
+                    String entryDateLbl2 = targetFormat.format(entryDate2);
 
 //                    query = "SELECT * FROM "+this.comCode+".VIEWHMPYDTLS WHERE ENTRYDATE = '"+entryDateLbl+"' ORDER BY PYNO DESC, ITEMCODE";
-                    query = " SELECT * FROM "+comCode+".VIEWHMPYDTLS WHERE ENTRYDATE::DATE BETWEEN '"+ entryDate1+ "' AND '"+ entryDate2+ "'  ORDER BY PYNO DESC, ITEMCODE";
+                    query = " SELECT * FROM "+comCode+".VIEWHMPYDTLS WHERE ENTRYDATE::DATE BETWEEN '"+ entryDateLbl1+ "' AND '"+ entryDateLbl2+ "'  ORDER BY PYNO DESC, ITEMCODE";
                     
 //                    html += query;
 
