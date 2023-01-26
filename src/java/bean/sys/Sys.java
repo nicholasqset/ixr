@@ -424,9 +424,8 @@ public class Sys {
             } else {
                 query = "SELECT " + agt + "(" + col + ")" + colAlias + " FROM " + dataSrc + " LIMIT 1";
             }
-            
-//            this.logV2(query);
 
+//            this.logV2(query);
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -742,6 +741,40 @@ public class Sys {
         }
 
         return emailValid;
+    }
+
+    public Boolean logUser(String comCode, String sesId, String userId, String logType) {
+        Boolean logged = false;
+
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt = conn.createStatement();
+
+            String query;
+
+            query = "INSERT INTO " + comCode + ".sysses "
+                    + "(sesid, userid, logtype, logdt)"
+                    + "VALUES"
+                    + "("
+                    + "'" + sesId + "', "
+                    + "'" + userId + "', "
+                    + "'" + logType + "', "
+                    + "now() "
+                    + ")";
+
+            Integer saved = stmt.executeUpdate(query);
+
+            if (saved > 0) {
+                logged = true;
+            }
+
+        } catch (SQLException e) {
+            this.logV2(e.getMessage());
+        } catch (Exception e) {
+            this.logV2(e.getMessage());
+        }
+
+        return logged;
     }
 
 }

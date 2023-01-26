@@ -26,6 +26,8 @@
         }else{
             session.setAttribute("comCode", comCode);
             message = "ok";
+            
+            sys.logUser(comCode, session.getId(), userId, "in");
         }
         response.sendRedirect("../");
     }else{
