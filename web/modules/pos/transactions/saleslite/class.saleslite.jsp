@@ -259,6 +259,10 @@
                     posted = psPyHdr.posted;
                 }
             }
+            
+//            String _todaySales = system.getOne(this.comCode+ ".VIEWPSPYDTLS", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
+            String _todaySales = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
+            _todaySales = _todaySales != null? _todaySales: "0";
 
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
@@ -281,7 +285,7 @@
                     html += "<div class = \"cell\" style = \"width: 50%;\">";
                         html += "<div class = \"table\">";
                             html += "<div class = \"row\">";
-                                html += "<div class = \"cell\" style = \"height: 90px;\">";
+                                html += "<div class = \"cell\" style = \"height: 40px;\">";
                                     html += "&nbsp;";
                                 html += "</div>";
                             html += "</div>";
@@ -290,6 +294,11 @@
                                     html += "<div id = \"dv_itm_img\">";
                                         html += "<div class = \"divPhoto\"><img id = \"imgPhoto\" src=\""+ imgPhotoSrc+ "\"></div>";
                                     html += "</div>";
+                                html += "</div>";
+                            html += "</div>";
+                            html += "<div class = \"row\">";
+                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 24px;\">";
+                                    html += "Today Sales: "+ system.numberFormat(_todaySales);
                                 html += "</div>";
                             html += "</div>";
                         html += "</div>";                        
@@ -387,13 +396,15 @@
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"1\" cellspacing = \"0\" >";
 
-            html += "<tr>";
-            html += "<td  nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("receiptNo", " Sale No.")+"</td>";
-            html += "<td >"+ gui.formInput("text", "receiptNo", 15, this.id != null? this.pyNo: "", "", "disabled")+ gui.formInput("hidden", "receiptNoHd", 15, this.id != null? this.pyNo: "", "", "")+ "</td>";
+//            html += "<tr>";
+//            html += "<td  nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("receiptNo", " Sale No.")+"</td>";
+//            html += "<td >"+ gui.formInput("text", "receiptNo", 15, this.id != null? this.pyNo: "", "", "disabled")+ gui.formInput("hidden", "receiptNoHd", 15, this.id != null? this.pyNo: "", "", "")+ "</td>";
 //            html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("entryDate", " Date")+"</td>";
 //            html += "<td>"+gui.formDateTime(request.getContextPath(), "entryDate", 15, this.id != null? this.entryDate: defaultDate, false, "")+"</td>";
-            html += "</tr>";
+//            html += "</tr>";
             
+            html += gui.formInput("hidden", "receiptNo", 30, this.id != null? this.pyNo: "", "", "");
+            html += gui.formInput("hidden", "receiptNoHd", 30, this.id != null? this.pyNo: "", "", "");
             html += gui.formInput("hidden", "entryDate", 30, this.id != null? this.entryDate: defaultDate, "", "");
 
 //            html += "<tr>";
@@ -431,9 +442,9 @@
             
             html += gui.formInput("hidden", "till", 30, this.id != null? this.tillNo: userDfltTillNo, "", "");
 
-            html += "<tr>";
-            html += "<td colspan = \"4\"><div class = \"hr\"></div></td>";
-            html += "</tr>";
+//            html += "<tr>";
+//            html += "<td colspan = \"4\"><div class = \"hr\"></div></td>";
+//            html += "</tr>";
 
             html += "<tr>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("itemNo", " Item No")+ "</td>";
@@ -445,14 +456,17 @@
 
             html += "<tr>";
             html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("quantity", " Quantity")+ "</td>";
-            html += "<td id = \"tdQuantity\" colspan = \"3\">"+ gui.formInput("text", "quantity", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
+            html += "<td id = \"tdQuantity\" >"+ gui.formInput("text", "quantity", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
+            
+            html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ " Expiry Date</td>";
+            html += "<td id = \"tdExpdt\" nowrap>&nbsp;</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Price")+ "</td>";
             html += "<td  id = \"tdPrice\" width = \"35%\" nowrap>"+ gui.formInput("text", "price", 15, "", "onkeyup = \"sales.getItemTotalAmount();\"", "")+ "</td>";
             
-            html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("price", " Cost")+ "</td>";
+            html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ " Cost</td>";
             html += "<td id = \"tdCost\"  nowrap>&nbsp;</td>";
             html += "</tr>";
 
@@ -517,6 +531,7 @@
 
         public Object getItemProfile() throws Exception{
             JSONObject obj = new JSONObject();
+            Sys sys = new Sys();
 
             if(this.itemCode == null || this.itemCode.trim().equals("")){
                 obj.put("success", new Integer(0));
@@ -529,7 +544,9 @@
                 obj.put("cost", iCItem.unitCost);
                 obj.put("price", iCItem.unitPrice);
                 obj.put("amount", (1.0 * iCItem.unitPrice));
-
+                
+                obj.put("expdt", sys.getFormatedDate(iCItem.expdt));
+                
                 obj.put("success", new Integer(1));
                 obj.put("message", "Item No '"+ iCItem.itemCode+"' successfully retrieved.");
             }

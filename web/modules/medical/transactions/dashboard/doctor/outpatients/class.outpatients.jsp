@@ -230,8 +230,8 @@
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divComplaints\">" + this.getComplaintsTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divLab\">" + this.getLabTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDiagnosis\">" + this.getDiagnosisTab() + "</div></div>";
-            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divMedication\">" + this.getMedicationTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divDrNotes\">" + this.getDrNotesTab() + "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divMedication\">" + this.getMedicationTab() + "</div></div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getDischargeTab() + "</div>";
 
             html += "</div>";
@@ -243,7 +243,8 @@
             html += "</div>";
 
             html += "<script type = \"text/javascript\">";
-            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Medication\', \'Doctor Notes\',\'Discharge\'), 0, 625, 365, Array(false));";
+//            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Medication\', \'Doctor Notes\',\'Discharge\'), 0, 625, 365, Array(false));";
+            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Doctor Notes\', \'Medication\',\'Discharge\'), 0, 625, 365, Array(false));";
             html += "</script>";
 
             return html;
@@ -1200,6 +1201,7 @@
             String qty = "";
             String instruction = "";
             String advice = "";
+            String pxdate = "";
             if (rid != null) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
@@ -1214,8 +1216,19 @@
                         qty = rs.getString("QTY");
                         instruction = rs.getString("INSTRUCTION");
                         advice = rs.getString("ADVICE");
+                        
+                        pxdate = rs.getString("pxdate");
+                        
+                        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+                        java.util.Date pxdate2 = originalFormat.parse(pxdate);
+                        pxdate = targetFormat.format(pxdate2);
+                            
+                        
+                        
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     html += e.getMessage();
                 }
 
@@ -1257,6 +1270,11 @@
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "package.png", "", "") + gui.formLabel("advice", " Advice") + "</td>";
             html += "<td >" + gui.formInput("textarea", "advice", 40, advice, "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("pxdate", " Prescription Date") + "</td>";
+            html += "<td >" + gui.formDateTime(request.getContextPath(), "pxdate", 20, pxdate, true, "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1322,17 +1340,25 @@
             String qty = request.getParameter("quantity"); //!= null ? Double.parseDouble(request.getParameter("quantity")) : 0.00;
             String instruction = request.getParameter("instruction");
             String advice = request.getParameter("advice");
+            String pxdate = request.getParameter("pxdate");
 
             try {
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 String query;
+                
+                SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                java.util.Date pxdate2 = originalFormat.parse(pxdate);
+                pxdate = targetFormat.format(pxdate2);
+                    
 
                 if (rid == null) {
                     Integer id = sys.generateId("" + this.comCode + ".HMMEDICATION", "ID");
 
                     query = "INSERT INTO " + this.comCode + ".HMMEDICATION "
-                            + "(ID, REGNO, DRUGCODE, DAYS, QTY, INSTRUCTION, ADVICE, "
+                            + "(ID, REGNO, DRUGCODE, DAYS, QTY, INSTRUCTION, ADVICE, pxdate,"
                             + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                             + "VALUES"
                             + "("
@@ -1343,6 +1369,7 @@
                             + "'" + qty + "', "
                             + "'" + instruction + "', "
                             + "'" + advice + "', "
+                            + "'" + pxdate + "', "
                             + "'" + sys.getLogUser(session) + "', "
                             + "'" + sys.getLogDate() + "', "
                             + "'" + sys.getLogTime() + "', "
@@ -1356,6 +1383,7 @@
                             + "QTY          = '" + qty + "', "
                             + "INSTRUCTION  = '" + instruction + "', "
                             + "ADVICE       = '" + advice + "', "
+                            + "pxdate       = '" + pxdate + "', "
                             + "AUDITUSER    = '" + sys.getLogUser(session) + "', "
                             + "AUDITDATE    = '" + sys.getLogDate() + "', "
                             + "AUDITTIME    = '" + sys.getLogTime() + "', "

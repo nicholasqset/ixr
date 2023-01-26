@@ -27,587 +27,614 @@ import javax.servlet.http.HttpSession;
  * @author nicholas
  */
 public class Sys {
-    
-    public void log(String msg){
+
+    public void log(String msg) {
         System.out.println("\n\n");
-        System.out.println("sys_cus_log==="+ msg);
+        System.out.println("sys_cus_log===" + msg);
     }
-    
-    public void logV2(Object obj){
+
+    public void logV2(Object obj) {
         System.out.println("\n\n");
         System.out.println("object log start...");
         System.out.println(obj);
         System.out.println("...object log end");
     }
-    
-    public Integer generateId(String table, String column){
+
+    public Integer generateId(String table, String column) {
         Integer id = 1;
-        column = column.isEmpty()? "ID": column;
-        
-        try{
+        column = column.isEmpty() ? "ID" : column;
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
-            String query = "SELECT MAX("+column+")MX FROM "+table;
+
+            String query = "SELECT MAX(" + column + ")MX FROM " + table;
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                id = rs.getInt("MX") + 1;			
+            while (rs.next()) {
+                id = rs.getInt("MX") + 1;
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.getMessage();
         }
-        
+
         return id;
     }
-    
-    public Boolean userExists(String userId){
+
+    public Boolean userExists(String userId) {
         Boolean userExists = false;
-        
+
         Integer count = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT COUNT(*) FROM SYSUSRS WHERE USERID = '"+ userId+ "' ";
-            
+            String query = "SELECT COUNT(*) FROM SYSUSRS WHERE USERID = '" + userId + "' ";
+
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                count = rs.getInt("COUNT(*)");			
+            while (rs.next()) {
+                count = rs.getInt("COUNT(*)");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
 
         }
-        if(count > 0){
+        if (count > 0) {
             userExists = true;
         }
-        
+
         return userExists;
     }
-    
-    public Boolean userHasRight(String roleCode, Integer childId){
+
+    public Boolean userHasRight(String roleCode, Integer childId) {
         Boolean hasRight = false;
         Integer count = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
-            String query = "SELECT COUNT(*)CT FROM qset.SYSRIGHTS WHERE ROLECODE = '"+roleCode+"' AND CHILDID = "+childId;
+
+            String query = "SELECT COUNT(*)CT FROM qset.SYSRIGHTS WHERE ROLECODE = '" + roleCode + "' AND CHILDID = " + childId;
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                count = rs.getInt("CT");			
+            while (rs.next()) {
+                count = rs.getInt("CT");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.getMessage();
         }
-        
-        if(count > 0){
+
+        if (count > 0) {
             hasRight = true;
         }
-        
+
 //        return hasRight;
         return true;
     }
-    
+
     public String getFileExtension(File file) {
         String fileName = file.getName();
-        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0){
-            return fileName.substring(fileName.lastIndexOf(".")+1);
-        }else{
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        } else {
             return "";
         }
     }
-    
-    public String getLogUser(HttpSession session){
+
+    public String getLogUser(HttpSession session) {
         String html = "";
-        
+
         html += session.getAttribute("userId");
-        
+
         return html;
     }
-    
-    public String getLogDate(){
+
+    public String getLogDate() {
         String html = "";
-        
+
         Calendar calendar = Calendar.getInstance();
 //        SimpleDateFormat dateFormat     = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat dateFormat     = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //        SimpleDateFormat dateFormat     = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSX");
-        
-        String dateNow  =  dateFormat.format(calendar.getTime());
-	html += dateNow;
-        
+
+        String dateNow = dateFormat.format(calendar.getTime());
+        html += dateNow;
+
 //        Object zzz = new java.sql.Timestamp((dateTime).getTime());
-        
-        
         return html;
     }
-    
-    public String getLogTime(){
+
+    public String getLogDateV2() {
         String html = "";
-        
+
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat timeFormat     = new SimpleDateFormat("HHmmss");
-        
-        String timeNow  =  timeFormat.format(calendar.getTime());
-	html += timeNow;
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateNow = dateFormat.format(calendar.getTime());
+        html += dateNow;
+
         return html;
     }
-    
-    public String getClientIpAdr(HttpServletRequest request) {  
+
+    public String getFormatedDate(String sysDate) {
         String html = "";
-        String ip = request.getHeader("X-Forwarded-For");  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("Proxy-Client-IP");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("WL-Proxy-Client-IP");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_X_FORWARDED");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_CLIENT_IP");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_FORWARDED_FOR");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_FORWARDED");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("HTTP_VIA");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getHeader("REMOTE_ADDR");  
-        }  
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-            ip = request.getRemoteAddr();  
-        }  
-        
-        html += ip;  
-        
-        return html;
-    }
-    
-    public String getSysDefaultRole(){
-        String roleCode = "";
-        
-        try{
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = conn.createStatement();
-            
-            String query = "SELECT * FROM SYSROLES WHERE ISDEFAULT = 1 ";
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                roleCode = rs.getString("ROLECODE");			
-            }
-        }catch (SQLException e){
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            java.util.Date sysDateNew = originalFormat.parse(sysDate);
+            html += targetFormat.format(sysDateNew);
+        } catch (ParseException e) {
 
         }
-        
-        return roleCode;
+
+        return html;
     }
-    
-    public void createUser(String userId, String userName, String email){
-        try{
+
+    public String getLogTime() {
+        String html = "";
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
+
+        String timeNow = timeFormat.format(calendar.getTime());
+        html += timeNow;
+
+        return html;
+    }
+
+    public String getClientIpAdr(HttpServletRequest request) {
+        String html = "";
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_FORWARDED");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_VIA");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("REMOTE_ADDR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        html += ip;
+
+        return html;
+    }
+
+    public String getSysDefaultRole() {
+        String roleCode = "";
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
-            if(! this.userExists(userId)){
+
+            String query = "SELECT * FROM SYSROLES WHERE ISDEFAULT = 1 ";
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                roleCode = rs.getString("ROLECODE");
+            }
+        } catch (SQLException e) {
+
+        }
+
+        return roleCode;
+    }
+
+    public void createUser(String userId, String userName, String email) {
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt = conn.createStatement();
+
+            if (!this.userExists(userId)) {
                 Integer id = this.generateId("SYSUSERS", "ID");
                 String query = "INSERT INTO SYSUSERS "
                         + "(ID, ROLECODE, USERID, PASSWORD, USERNAME, EMAIL)"
                         + "VALUES"
                         + "("
-                        + id+","
-                        + "'"+this.getSysDefaultRole()+"',"
-                        + "'"+userId+"',"
+                        + id + ","
+                        + "'" + this.getSysDefaultRole() + "',"
+                        + "'" + userId + "',"
                         + "'******',"
-                        + "'"+userName+"',"
-                        + "'"+email+"'"
+                        + "'" + userName + "',"
+                        + "'" + email + "'"
                         + ")";
 
                 stmt.executeUpdate(query);
 
             }
-            
-        }catch (SQLException e){
 
-        }     
-        
+        } catch (SQLException e) {
+
+        }
+
     }
-    
-    public Boolean recordExists(String dataSource, String sqlWhere){
+
+    public Boolean recordExists(String dataSource, String sqlWhere) {
         Boolean recordExists = false;
-        
+
         Integer count = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
+
             String query;
-            
-            if(sqlWhere != null && ! sqlWhere.trim().equals("")){
-                query = "SELECT COUNT(*)CT FROM "+dataSource+" WHERE "+sqlWhere;
-            }else{
-                query = "SELECT COUNT(*)CT FROM "+dataSource;
+
+            if (sqlWhere != null && !sqlWhere.trim().equals("")) {
+                query = "SELECT COUNT(*)CT FROM " + dataSource + " WHERE " + sqlWhere;
+            } else {
+                query = "SELECT COUNT(*)CT FROM " + dataSource;
             }
-            
+
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                count = rs.getInt("CT");			
+            while (rs.next()) {
+                count = rs.getInt("CT");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
-        if(count > 0){
+
+        if (count > 0) {
             recordExists = true;
         }
-        
+
         return recordExists;
     }
-    
-    public Integer getRecordCount(String dataSource, String sqlWhere){
+
+    public Integer getRecordCount(String dataSource, String sqlWhere) {
         String query;
-        
+
         Integer count = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
-            if(sqlWhere != null && ! sqlWhere.trim().equals("")){
-                query = "SELECT COUNT(*)CT FROM "+dataSource+ " WHERE "+sqlWhere;
-            }else{
-                query = "SELECT COUNT(*)CT FROM "+dataSource;
+
+            if (sqlWhere != null && !sqlWhere.trim().equals("")) {
+                query = "SELECT COUNT(*)CT FROM " + dataSource + " WHERE " + sqlWhere;
+            } else {
+                query = "SELECT COUNT(*)CT FROM " + dataSource;
             }
-            
+
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                count = rs.getInt("CT");			
+            while (rs.next()) {
+                count = rs.getInt("CT");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return count;
     }
-    
-    public String getFiscalYear(String schema){
+
+    public String getFiscalYear(String schema) {
         String fiscalYear = "";
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM "+ schema+ ".FNFISCALYEAR WHERE ACTIVE = 1 ";
+            String query = "SELECT * FROM " + schema + ".FNFISCALYEAR WHERE ACTIVE = 1 ";
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                fiscalYear = rs.getString("FISCALYEAR");			
+            while (rs.next()) {
+                fiscalYear = rs.getString("FISCALYEAR");
             }
-        }catch (SQLException e){
-            System.out.println("error: "+ e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("error: " + e.getMessage());
         }
-        
+
         return fiscalYear;
     }
-    
-    public String getNextNo(String table, String col, String sqlWhere, String mask, Integer padSize){
+
+    public String getNextNo(String table, String col, String sqlWhere, String mask, Integer padSize) {
         String nextNo = "";
         Integer nextNoMax = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
+
             String query;
-            
-            if(sqlWhere != null && ! sqlWhere.trim().equals("")){
-                query   = "SELECT MAX("+ col+ ")MX FROM "+ table+ " WHERE "+ sqlWhere;
-            }else{
-                query   = "SELECT MAX("+ col+ ")MX FROM "+ table;
+
+            if (sqlWhere != null && !sqlWhere.trim().equals("")) {
+                query = "SELECT MAX(" + col + ")MX FROM " + table + " WHERE " + sqlWhere;
+            } else {
+                query = "SELECT MAX(" + col + ")MX FROM " + table;
             }
-            
+
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                nextNoMax = rs.getInt("MX");		
+            while (rs.next()) {
+                nextNoMax = rs.getInt("MX");
             }
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             nextNo += e.getMessage();
         }
-        
+
         nextNoMax = nextNoMax + 1;
-        
-        if(mask != null && ! mask.trim().equals("")){
-            nextNo = mask+String.format("%0"+ padSize+ "d", nextNoMax);
-        }else{
-            nextNo = String.format("%0"+ padSize+ "d", nextNoMax);
+
+        if (mask != null && !mask.trim().equals("")) {
+            nextNo = mask + String.format("%0" + padSize + "d", nextNoMax);
+        } else {
+            nextNo = String.format("%0" + padSize + "d", nextNoMax);
         }
-        
+
         return nextNo;
     }
-    
-    public String getOne(String dataSrc, String col, String sqlWhere){
+
+    public String getOne(String dataSrc, String col, String sqlWhere) {
         String colValue = null;
         String query;
-        try{
-            Connection conn  = ConnectionProvider.getConnection();
-            Statement stmt  = conn.createStatement();
-            
-            if(sqlWhere != null && ! sqlWhere.trim().equals("")){
-                query = "SELECT "+ col +" FROM "+ dataSrc +" WHERE "+ sqlWhere +" LIMIT 1";
-            }else{
-                query = "SELECT "+ col +" FROM "+ dataSrc +" LIMIT 1";
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt = conn.createStatement();
+
+            if (sqlWhere != null && !sqlWhere.trim().equals("")) {
+                query = "SELECT " + col + " FROM " + dataSrc + " WHERE " + sqlWhere + " LIMIT 1";
+            } else {
+                query = "SELECT " + col + " FROM " + dataSrc + " LIMIT 1";
             }
-            
+
 //            System.out.println(query);
-            
             ResultSet rs = stmt.executeQuery(query);
-            
-            while(rs.next()){
-                colValue = rs.getString(col);		
+
+            while (rs.next()) {
+                colValue = rs.getString(col);
             }
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         return colValue;
     }
-    
-    public String getOneAgt(String dataSrc, String agt, String col,  String colAlias, String sqlWhere){
+
+    public String getOneAgt(String dataSrc, String agt, String col, String colAlias, String sqlWhere) {
         String colValue = null;
-        
-        try{
-            Connection conn  = ConnectionProvider.getConnection();
-            Statement stmt  = conn.createStatement();
+
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt = conn.createStatement();
             String query;
-            if(sqlWhere != null && ! sqlWhere.trim().equals("")){
-                query = "SELECT "+ agt+ "("+ col+ ")"+ colAlias+ " FROM "+ dataSrc +" WHERE "+ sqlWhere +" LIMIT 1";
-            }else{
-                query = "SELECT "+ agt+ "("+ col+ ")"+ colAlias+ " FROM "+ dataSrc +" LIMIT 1";
+            if (sqlWhere != null && !sqlWhere.trim().equals("")) {
+                query = "SELECT " + agt + "(" + col + ")" + colAlias + " FROM " + dataSrc + " WHERE " + sqlWhere + " LIMIT 1";
+            } else {
+                query = "SELECT " + agt + "(" + col + ")" + colAlias + " FROM " + dataSrc + " LIMIT 1";
             }
             
+//            this.logV2(query);
+
             ResultSet rs = stmt.executeQuery(query);
-            
-            while(rs.next()){
-                colValue = rs.getString(colAlias);		
+
+            while (rs.next()) {
+                colValue = rs.getString(colAlias);
             }
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         return colValue;
     }
-    
-    public Integer delete(String table, String sqlWhere){
+
+    public Integer delete(String table, String sqlWhere) {
         Integer deleted = 0;
-        
-        try{
-            Connection conn  = ConnectionProvider.getConnection();
-            Statement stmt  = conn.createStatement();
+
+        try {
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt = conn.createStatement();
             String query;
-            if(sqlWhere != null && !sqlWhere.trim().equals("")){
-                query = "DELETE FROM "+ table +" WHERE "+ sqlWhere +" ";
-            }else{
-                query = "DELETE FROM "+ table +" ";
+            if (sqlWhere != null && !sqlWhere.trim().equals("")) {
+                query = "DELETE FROM " + table + " WHERE " + sqlWhere + " ";
+            } else {
+                query = "DELETE FROM " + table + " ";
             }
-            
+
             deleted = stmt.executeUpdate(query);
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return deleted;
     }
-    
-    public Integer getPeriodYear(String schema){
+
+    public Integer getPeriodYear(String schema) {
         Integer pYear = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
-            String query = "SELECT * FROM "+ schema+ ".FNFISCALPRD WHERE ACTIVE = 1 ";
+
+            String query = "SELECT * FROM " + schema + ".FNFISCALPRD WHERE ACTIVE = 1 ";
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                pYear = rs.getInt("PYEAR");			
+            while (rs.next()) {
+                pYear = rs.getInt("PYEAR");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return pYear;
     }
-    
-    public Integer getNextPeriodYear(String schema){
+
+    public Integer getNextPeriodYear(String schema) {
         Integer nxtPyear;
-        
-        Integer curPyear    = this.getPeriodYear(schema);
-        Integer curPmonth   = this.getPeriodMonth(schema);
-        
-        if(curPmonth == 12){
+
+        Integer curPyear = this.getPeriodYear(schema);
+        Integer curPmonth = this.getPeriodMonth(schema);
+
+        if (curPmonth == 12) {
             nxtPyear = curPyear + 1;
-        }else{
+        } else {
             nxtPyear = curPyear;
         }
-        
+
         return nxtPyear;
     }
-    
-    public Integer getPeriodMonth(String schema){
+
+    public Integer getPeriodMonth(String schema) {
         Integer pMonth = 0;
-        
-        try{
+
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
-            String query = "SELECT * FROM "+ schema+ ".FNFISCALPRD WHERE ACTIVE = 1 ";
+
+            String query = "SELECT * FROM " + schema + ".FNFISCALPRD WHERE ACTIVE = 1 ";
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                pMonth = rs.getInt("PMONTH");			
+            while (rs.next()) {
+                pMonth = rs.getInt("PMONTH");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return pMonth;
     }
-    
-    public Integer getNextPeriodMonth(String schema){
+
+    public Integer getNextPeriodMonth(String schema) {
         Integer nxtPmonth;
-        
+
         Integer curPmonth = this.getPeriodMonth(schema);
-        
-        if(curPmonth == 12){
+
+        if (curPmonth == 12) {
             nxtPmonth = 1;
-        }else{
+        } else {
             nxtPmonth = curPmonth + 1;
         }
-        
+
         return nxtPmonth;
     }
-    
-    public String numberFormat(String number){
+
+    public String numberFormat(String number) {
         String html = "";
-        
-        number = number != null && ! number.trim().equals("")? number: "0";
-        
+
+        number = number != null && !number.trim().equals("") ? number : "0";
+
         Double no = Double.parseDouble(number);
         DecimalFormat formatter = new DecimalFormat("#,###.00");
-        
+
         html += formatter.format(no);
-        
+
         return html;
     }
-    
-    public HashMap getArray(String sql){
+
+    public HashMap getArray(String sql) {
         HashMap<String, String> arrayMap = new HashMap();
-        try{
+        try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            
+
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                String colKey   = rs.getString(1);			
-                String colValue = rs.getString(2);	
-                
+            while (rs.next()) {
+                String colKey = rs.getString(1);
+                String colValue = rs.getString(2);
+
                 arrayMap.put(colKey, colValue);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.print(e.getMessage());
         }
-        
+
         return arrayMap;
     }
-    
-    public String getMonthName(Integer month){
+
+    public String getMonthName(Integer month) {
         String html = "";
-        
-        switch(month){
+
+        switch (month) {
             case 1:
-                html += "January" ;
+                html += "January";
                 break;
-                
+
             case 2:
-                html += "February" ;
+                html += "February";
                 break;
-                
+
             case 3:
-                html += "March" ;
+                html += "March";
                 break;
-                
+
             case 4:
-                html += "April" ;
+                html += "April";
                 break;
-                
+
             case 5:
-                html += "May" ;
+                html += "May";
                 break;
-                
+
             case 6:
-                html += "June" ;
+                html += "June";
                 break;
-                
+
             case 7:
-                html += "July" ;
+                html += "July";
                 break;
-                
+
             case 8:
-                html += "August" ;
+                html += "August";
                 break;
-                
+
             case 9:
-                html += "September" ;
+                html += "September";
                 break;
-                
+
             case 10:
-                html += "October" ;
+                html += "October";
                 break;
-                
+
             case 11:
-                html += "November" ;
+                html += "November";
                 break;
-                
+
             case 12:
-                html += "December" ;
+                html += "December";
                 break;
-                
+
             default:
                 html += "Wrong Month No.";
                 break;
         }
-        
+
         return html;
     }
-    
-    public String shorten(String s, Integer charNo){
+
+    public String shorten(String s, Integer charNo) {
         String postS = "";
-        
-        if(s.length() > charNo){
+
+        if (s.length() > charNo) {
             postS = "...";
         }
-        s = s.substring(0, Math.min(s.length(), charNo))+ postS;
-        
+        s = s.substring(0, Math.min(s.length(), charNo)) + postS;
+
         return s;
     }
-    
+
     public LocalDate getLEndDateWoW(LocalDate date, int workdays) {//without weekends
         if (workdays < 1) {
             return date;
@@ -617,22 +644,22 @@ public class Sys {
         int addedDays = 0;
         while (addedDays < workdays) {
             result = result.plusDays(1);
-            if (!(result.getDayOfWeek() == DayOfWeek.SATURDAY ||
-                  result.getDayOfWeek() == DayOfWeek.SUNDAY)) {
+            if (!(result.getDayOfWeek() == DayOfWeek.SATURDAY
+                    || result.getDayOfWeek() == DayOfWeek.SUNDAY)) {
                 ++addedDays;
             }
         }
 
         return result;
     }
-    
+
     public LocalDate getLEndDateWoWH(LocalDate date, int workdays) {//without weekends & holidays
         List<Date> holidays = this.getHolidays();
-        
+
         if (workdays < 1) {
             return date;
         }
-        
+
         Calendar cal = Calendar.getInstance();
 //        cal.set(Calendar.HOUR_OF_DAY, 0);
 //    cal.set(Calendar.MINUTE, 0);
@@ -645,76 +672,76 @@ public class Sys {
         int addedDays = 0;
         while (addedDays < workdays) {
             result = result.plusDays(1);
-            if (!(result.getDayOfWeek() == DayOfWeek.SATURDAY ||
-                  result.getDayOfWeek() == DayOfWeek.SUNDAY || 
-                  holidays.contains(cal.getTime()))) {
+            if (!(result.getDayOfWeek() == DayOfWeek.SATURDAY
+                    || result.getDayOfWeek() == DayOfWeek.SUNDAY
+                    || holidays.contains(cal.getTime()))) {
                 ++addedDays;
             }
         }
 
         return result;
     }
-    
-    public ArrayList<Date> getHolidays(){
+
+    public ArrayList<Date> getHolidays() {
         ArrayList<Date> holidays = new ArrayList();
-        
-        try{
+
+        try {
             Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat dateFormat     = new SimpleDateFormat("yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
 
             String pYear = dateFormat.format(calendar.getTime());
 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-            holidays.add(df.parse(pYear+ "-01-01"));
-            holidays.add(df.parse(pYear+ "-05-01"));
-            holidays.add(df.parse(pYear+ "-06-01"));
-            holidays.add(df.parse(pYear+ "-10-20"));
-            holidays.add(df.parse(pYear+ "-12-12"));
-            holidays.add(df.parse(pYear+ "-12-25"));
-            holidays.add(df.parse(pYear+ "-12-26"));
-            
-        }catch(ParseException e){
+            holidays.add(df.parse(pYear + "-01-01"));
+            holidays.add(df.parse(pYear + "-05-01"));
+            holidays.add(df.parse(pYear + "-06-01"));
+            holidays.add(df.parse(pYear + "-10-20"));
+            holidays.add(df.parse(pYear + "-12-12"));
+            holidays.add(df.parse(pYear + "-12-25"));
+            holidays.add(df.parse(pYear + "-12-26"));
+
+        } catch (ParseException e) {
             e.getMessage();
         }
-        
+
         return holidays;
     }
-    
-    public Integer getPrevPeriodYear(String schema){
-        Integer prevYear    = this.getPeriodYear(schema);
-        Integer pMonth      = this.getPeriodMonth(schema);
-        
-        if(pMonth == 1){
+
+    public Integer getPrevPeriodYear(String schema) {
+        Integer prevYear = this.getPeriodYear(schema);
+        Integer pMonth = this.getPeriodMonth(schema);
+
+        if (pMonth == 1) {
             prevYear = prevYear - 1;
         }
-        
+
         return prevYear;
     }
-    
-    public Integer getPrevPeriodMonth(String schema){
+
+    public Integer getPrevPeriodMonth(String schema) {
         Integer pMonth = this.getPeriodMonth(schema);
-        
-        if(pMonth == 1){
+
+        if (pMonth == 1) {
             pMonth = 12;
-        }else{
+        } else {
             pMonth = pMonth - 1;
         }
-        
+
         return pMonth;
     }
-    
-    public Boolean emailValid(String email){
+
+    public Boolean emailValid(String email) {
         Boolean emailValid = true;
-        
+
 //        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$";
 
-        if (! email.matches(emailPattern)){
+        if (!email.matches(emailPattern)) {
             emailValid = false;
         }
-        
+
         return emailValid;
     }
-    
+
 }

@@ -47,6 +47,7 @@
             out.print(gui.loadCss(request.getContextPath(), "buttons"));
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
             out.print(gui.loadCss(request.getContextPath(), "tab-view"));
+            out.print(gui.loadCss(request.getContextPath(), "datepicker"));
             
         %>
         <script type="text/javascript"> var rootPath = '<%= request.getContextPath() %>';</script>
@@ -85,6 +86,8 @@
             out.print(gui.loadJs(request.getContextPath(), "tinybox"));
             out.print(gui.loadJs(request.getContextPath(), "tab-view/ajax"));
             out.print(gui.loadJs(request.getContextPath(), "tab-view/tab-view"));
+            out.print(gui.loadJs(request.getContextPath(), "prototype-date-extensions"));
+            out.print(gui.loadJs(request.getContextPath(), "datepicker"));
             out.print(gui.loadJs(request.getContextPath(), "module"));
         %> 
         <script type="text/javascript">

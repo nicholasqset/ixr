@@ -227,6 +227,7 @@
                                 if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
                                 if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
                                 if(typeof response.cost !== 'undefined' && $('tdCost')) $('tdCost').update(response.cost);
+                                if(typeof response.expdt !== 'undefined' && $('tdExpdt')) $('tdExpdt').update(response.expdt);
                                 if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
                                 if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
                                 

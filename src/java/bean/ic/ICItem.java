@@ -18,8 +18,12 @@ public class ICItem {
     public String accSetCode;
     public Double unitCost;
     public Double unitPrice;
+    public Double wsprice;
     public Boolean stocked;
     public Double qty;
+    public Double minlevel;
+    public String mfgdt;
+    public String expdt;
     
     public ICItem(String itemCode, String schema){
         try{
@@ -37,6 +41,10 @@ public class ICItem {
                 this.unitPrice          = rs.getDouble("UNITPRICE");			
                 this.stocked            = rs.getBoolean("STOCKED");			
                 this.qty                = rs.getDouble("QTY");			
+                this.wsprice            = rs.getDouble("wsprice");			
+                this.minlevel           = rs.getDouble("minlevel");
+                this.mfgdt              = rs.getString("mfgdt");
+                this.expdt              = rs.getString("expdt");
             }
         }catch (SQLException  e){
             e.getMessage();
