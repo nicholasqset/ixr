@@ -46,7 +46,7 @@
             
                     <div class="cont-inputs">
                         <div>
-                            <span class="inputs-lbl"><% out.print(gui.formIcon(request.getContextPath(),"user-properties.png", "", "")); %> <% out.print(gui.formLabel("userId", "Email"));%></span>
+                            <span class="inputs-lbl"><% out.print(gui.formIcon(request.getContextPath(),"user-properties.png", "", "")); %> <% out.print(gui.formLabel("userId", "User ID/ Email"));%></span>
                             <span class="inputs-ia"><input type="text" name="userId" id="userId" class="form-control"  ></span>
                         </div>
 

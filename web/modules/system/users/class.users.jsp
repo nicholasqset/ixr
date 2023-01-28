@@ -338,9 +338,9 @@ final class Users{
             if(this.id != null){
                 String query = "DELETE FROM "+this.table+" WHERE ID = "+this.id;
             
-//                Integer purged = stmt.executeUpdate(query);
-                Integer purged = 0;
-                if(purged == 1){
+                Integer purged = stmt.executeUpdate(query);
+//                Integer purged = 0;
+                if(purged > 0){
                     obj.put("success", new Integer(1));
                     obj.put("message", "Entry successfully deleted.");
                 }else{

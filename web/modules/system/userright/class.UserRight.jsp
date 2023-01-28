@@ -10,6 +10,7 @@
 
 final class UserRight{
     HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
     String table        = session.getAttribute("comCode")+".SYSUSRPVGS";
 
     String userId       = request.getParameter("userId");
@@ -29,7 +30,7 @@ final class UserRight{
         html += "<tr>";
 //	html += "<td width = \"20%\" nowrap><i class=\"fa fa-user\"></i>"+ gui.formLabel("userId", "User ID")+ "</td>";
         html += "<td width = \"20%\" nowrap>"+gui.formIcon(request.getContextPath(),"user.png", "", "")+" "+gui.formLabel("userId", "User ID")+"</td>";
-//        html += "<td>"+gui.formSelect("userId", "qset.SYSUSRS", "USERID", "USERNAME", "", "", "", "onchange = \"userRight.getUserGrpRights();\"", true)+"</td>";
+//        html += "<td>"+gui.formSelect("userId", ""+this.comCode+".SYSUSRS", "USERID", "USERNAME", "", "", "", "onchange = \"userRight.getUserGrpRights();\"", true)+"</td>";
         html += "<td>"+gui.formSelect("userId", session.getAttribute("comCode")+".SYSUSRS", "USERID", "USERNAME", "", "", "", "onchange = \"userRight.getUserGrpRights();\"", true)+"</td>";
 	html += "</tr>";
         
@@ -63,13 +64,13 @@ final class UserRight{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        Integer recordCount = sys.getRecordCount("qset.SYSROLES", "");
+        Integer recordCount = sys.getRecordCount(""+this.comCode+".SYSROLES", "");
         if(recordCount > 0){
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
 
-                String query = "SELECT * FROM qset.SYSROLES ORDER BY ROLENAME ";
+                String query = "SELECT * FROM "+this.comCode+".SYSROLES ORDER BY ROLENAME ";
                 ResultSet rs = stmt.executeQuery(query);
                 
                 html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
