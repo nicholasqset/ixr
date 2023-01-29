@@ -18,6 +18,7 @@
 //        out.print(comCode);
 
         String entryDate        = request.getParameter("entryDate");
+        String pmcode           = request.getParameter("payMode");
 
         String rptName = "Stock";
 
@@ -291,6 +292,7 @@
                 html += "<th>#</th>";
                 html += "<th>Receipt #</th>";
                 html += "<th>Date</th>";
+                html += "<th nowrap>Payment Mode</th>";
                 html += "<th>Item</th>";
                 html += "<th style = \"text-align: right;\">Quantity</th>";
 //                html += "<th style = \"text-align: right;\">Cost</th>";
@@ -332,7 +334,11 @@
 //                        }
 //                    }
 //                    query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDate+ "' AND CHANGE >= 0";
-                    query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDateLbl+ "' AND CHANGE >= 0";
+                    if(pmcode.equals("all")){
+                        query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDateLbl+ "' AND CHANGE >= 0";
+                    }else{
+                        query = "SELECT * FROM "+comCode+".VIEWPSPYDTLS WHERE ENTRYDATE::DATE = '"+ entryDateLbl+ "' AND CHANGE >= 0 AND PMCODE = '"+pmcode+"'";
+                    }
 
 //                    html += query;
                     ResultSet rs = stmt.executeQuery(query);
@@ -342,7 +348,8 @@
                     while (rs.next()) {
                         Integer id = rs.getInt("ID");
                         String pyNo = rs.getString("PYNO");
-//                        String pyNo = rs.getString("ENTRYDATE");
+                        String entryDate2 = rs.getString("ENTRYDATE");
+                        String pmcode = rs.getString("pmcode");
                         String itemName = rs.getString("ITEMNAME");
                         Double qty = rs.getDouble("QTY");
 //                        Double unitCost = rs.getDouble("UNITCOST");
@@ -358,7 +365,8 @@
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
                         html += "<td>" + pyNo + "</td>";
-                        html += "<td>" + entryDate + "</td>";
+                        html += "<td>" + entryDate2 + "</td>";
+                        html += "<td>" + pmcode + "</td>";
                         html += "<td>" + itemName + "</td>";
                         html += "<td style = \"text-align: right;\">" + sys.numberFormat(qty.toString()) + "</td>";
 //                        html += "<td style = \"text-align: right;\">" + sys.numberFormat(unitCost.toString()) + "</td>";
@@ -376,23 +384,20 @@
                     }
 
                     html += "<tr>";
-                    html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"6\">Total</td>";
-
+                    html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"7\">Total</td>";
 //                    html += "<td style = \"text-align: right; font-weight: bold;\">" + sys.numberFormat(sumTax.toString()) + "</td>";
                     html += "<td style = \"text-align: right; font-weight: bold;\">" + sys.numberFormat(sumAmount.toString()) + "</td>";
                     html += "</tr>";
-
                     html += "</tr>";
 
                     html += "<br>";
 
 //                    html += "<table>";
-//                    
 //                    html += "<tr>";
 //                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
 //                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
-//                    
 //                    html += "</table>";
+
                 } catch (Exception e) {
                     html += e.getMessage();
                 }

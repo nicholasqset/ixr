@@ -25,6 +25,12 @@ final class DaySales{
             html += e.getMessage();
         }
         
+        HashMap<String, String> hmPayMode = new HashMap();
+        hmPayMode.put("all", "All");
+        hmPayMode.put("CASH", "CASH");
+        hmPayMode.put("MPESA", "MPESA");
+        hmPayMode.put("BANK", "BANK");
+        
         HashMap<String, String> hmPrintForm = new HashMap();
         hmPrintForm.put("web", "Web");
         hmPrintForm.put("xls", "Excel");
@@ -39,7 +45,12 @@ final class DaySales{
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "printer.png", "", "")+ gui.formLabel("category", " Printing Output")+"</td>";
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("payMode", " Payment Mode")+"</td>";
+	html += "<td>"+ gui.formArraySelect("payMode", 100, hmPayMode, "all", false, "", false)+ "</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "printer.png", "", "")+ gui.formLabel("printForm", " Printing Output")+"</td>";
 	html += "<td>"+ gui.formArraySelect("printForm", 100, hmPrintForm, "", false, "", false)+ "</td>";
 	html += "</tr>";
         

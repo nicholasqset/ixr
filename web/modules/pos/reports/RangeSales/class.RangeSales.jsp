@@ -29,6 +29,12 @@ final class RangeSales{
             html += e.getMessage();
         }
         
+        HashMap<String, String> hmPayMode = new HashMap();
+        hmPayMode.put("all", "All");
+        hmPayMode.put("CASH", "CASH");
+        hmPayMode.put("MPESA", "MPESA");
+        hmPayMode.put("BANK", "BANK");
+        
         HashMap<String, String> hmPrintForm = new HashMap();
         hmPrintForm.put("web", "Web");
         hmPrintForm.put("xls", "Excel");
@@ -43,6 +49,11 @@ final class RangeSales{
         
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("entryDate2", "Second Date")+ "</td>";
 	html += "<td>"+ gui.formDateTime(request.getContextPath(), "entryDate2", 15, defaultDate, false, "")+"</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "coins.png", "", "")+ gui.formLabel("payMode", " Payment Mode")+"</td>";
+	html += "<td>"+ gui.formArraySelect("payMode", 100, hmPayMode, "all", false, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
