@@ -48,7 +48,7 @@
                     </div>
 					
                     <div class="header-center" >
-                        <a href = "javascript:;"  onclick="container.toggleUsrOpt();"><%=user.userId %> <%= gui.formIcon(request.getContextPath(), "bullet-arrow-down-2.png", "", "") %></a>
+                        <a href = "javascript:;"  onclick="container.toggleUsrOpt();"><%=user.userName %> <%= gui.formIcon(request.getContextPath(), "bullet-arrow-down-2.png", "", "") %></a>
                         <div id="usr_opt" style="display: none">
                             <ul>
                                 <li><a href = "./modules/system/profile/" target="content-iframe"><%=gui.formIcon(request.getContextPath(), "user-identity.png", "", "") %> Profile</a></li>

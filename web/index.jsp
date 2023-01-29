@@ -6,7 +6,10 @@
     
     if (act != null) {
         if (act.equals("logout")) {
-            sys.logUser(session.getAttribute("comCode").toString(), session.getId(), session.getAttribute("userId").toString(), "out");
+            if(session.getAttribute("comCode") != null){
+                sys.logUser(session.getAttribute("comCode").toString(), session.getId(), session.getAttribute("userId").toString(), "out");
+            }
+            
             session.invalidate();
             response.sendRedirect("./");
             return;
