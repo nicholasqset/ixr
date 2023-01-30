@@ -263,6 +263,15 @@
 //            String _todaySales = system.getOne(this.comCode+ ".VIEWPSPYDTLS", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
             String _todaySales = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
             _todaySales = _todaySales != null? _todaySales: "0";
+            
+            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
+            _todaySalesCash = _todaySalesCash != null? _todaySalesCash: "0";
+            
+            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
+            _todaySalesMpesa = _todaySalesMpesa != null? _todaySalesMpesa: "0";
+            
+            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
+            _todaySalesBank = _todaySalesBank != null? _todaySalesBank: "0";
 
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
@@ -285,7 +294,7 @@
                     html += "<div class = \"cell\" style = \"width: 50%;\">";
                         html += "<div class = \"table\">";
                             html += "<div class = \"row\">";
-                                html += "<div class = \"cell\" style = \"height: 40px;\">";
+                                html += "<div class = \"cell\" style = \"height: 8px;\">";
                                     html += "&nbsp;";
                                 html += "</div>";
                             html += "</div>";
@@ -297,8 +306,29 @@
                                 html += "</div>";
                             html += "</div>";
                             html += "<div class = \"row\">";
-                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 24px;\">";
-                                    html += "Today Sales: "+ system.numberFormat(_todaySales);
+                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 6px;\">";
+//                                    html += "Today Sales: "+ system.numberFormat(_todaySales);
+                                    html += "<table class=\"module\" style=\"\">";
+                                        html += "<tr>";
+                                            html += "<td class=\"bold\" colspan=\"2\">Today Sales(KES)</td>";
+                                        html += "</tr>";
+                                        html += "<tr>";
+                                            html += "<td >Cash</td>";
+                                            html += "<td class=\"bold\">"+ system.numberFormat(_todaySalesCash)+"</td>";
+                                        html += "</tr>";
+                                        html += "<tr>";
+                                            html += "<td >MPesa</td>";
+                                            html += "<td class=\"bold\">"+ system.numberFormat(_todaySalesMpesa)+"</td>";
+                                        html += "</tr>";
+                                        html += "<tr>";
+                                            html += "<td >Bank</td>";
+                                            html += "<td class=\"bold\">"+ system.numberFormat(_todaySalesBank)+"</td>";
+                                        html += "</tr>";
+                                        html += "<tr>";
+                                            html += "<td class=\"bold\">Total</td>";
+                                            html += "<td class=\"bold\">"+ system.numberFormat(_todaySales)+"</td>";
+                                        html += "</tr>";
+                                    html += "</table>";
                                 html += "</div>";
                             html += "</div>";
                         html += "</div>";                        
