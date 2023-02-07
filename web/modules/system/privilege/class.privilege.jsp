@@ -68,15 +68,22 @@ final class Privilege{
             stmt = conn.createStatement();
             String query = "SELECT * FROM "+session.getAttribute("comCode")+".SYSMENUS WHERE MENUPARENT = 0 AND USERVSB = 1 ORDER BY MENUPOS ";
             ResultSet rs = stmt.executeQuery(query);
+            
+            Integer count = 0;
+            
+            
             html += "<table width=\"100%\" cellpadding=\"4\" cellspacing=\"2\">";
             while(rs.next()){
+                count++;
+                String bgcolor = (count%2 > 0)? "#FFFFFF": "#FFFFFF";
+                
                 Integer menuCode    = rs.getInt("MENUCODE");			
                 String menuName     = rs.getString("MENUNAME");	
 
                 if(this.menuHasChildren(menuCode)){
                     String toggleMenu       = "onclick=\"rights.toggleMenu('"+menuCode+"');\"";
 
-                    html += "<tr>";
+                    html += "<tr bgcolor = \""+ bgcolor+ "\">";
                     html += "<td width = \"2px\" style = \"text-align: center;\">";
                     html += "<img id = \"img"+menuCode+"\" src = \""+request.getContextPath()+"/images/menu/plus.gif\" "+toggleMenu+" />";
                     html += "</td>";
@@ -100,7 +107,7 @@ final class Privilege{
 
                 }else{
 
-                    html += "<tr>";
+                    html += "<tr bgcolor = \""+ bgcolor+ "\">";
                     html += "<td width = \"2px\" style = \"text-align: center;\">&nbsp;</td>";
                     html += "<td nowrap> ";
                     html += "<div class = \"menu-parent\">";
@@ -198,11 +205,13 @@ final class Privilege{
                 }else{
                     treeLine        = "";
                 }
+                
+                String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
 
                 if(this.menuHasChildren(menuCodeChild)){
                     rightStatus = this.hasRight(menuCode, menuCodeChild) == true ? "checked": "";
 
-                    html += "<tr>";
+                    html += "<tr bgcolor = \""+ bgcolor+ "\">";
                     html += "<td width = \"2px\" style = \"text-align: center;\">";
                     html += "<img id = \"img"+menuCodeChild+"\" src = \""+request.getContextPath()+"/images/menu/plus.gif\" "+toggleMenu+"/>";;
                     html += "</td>";
@@ -231,7 +240,7 @@ final class Privilege{
 
                     rightStatus = this.hasRight(menuCode, menuCodeChild) == true ? "checked": "";
 
-                    html += "<tr>";	
+                    html += "<tr bgcolor = \""+ bgcolor+ "\">";	
                     html += "<td width = \"5px\" valign = \"top\" nowrap>";
                     html += iconChildBranch;
                     html += "</td>";
