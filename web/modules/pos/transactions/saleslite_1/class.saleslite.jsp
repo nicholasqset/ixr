@@ -46,11 +46,7 @@
         Double bill             = (request.getParameter("bill") != null && ! request.getParameter("bill").trim().equals(""))? Double.parseDouble(request.getParameter("bill")): 0.0;
         String pmCode           = request.getParameter("payMode");
         String docNo            = request.getParameter("documentNo");
-        Double cash             = (request.getParameter("tenderCash") != null && ! request.getParameter("tenderCash").trim().equals(""))? Double.parseDouble(request.getParameter("tenderCash")): 0.0;
-        Double mpesa            = (request.getParameter("tenderMpesa") != null && ! request.getParameter("tenderMpesa").trim().equals(""))? Double.parseDouble(request.getParameter("tenderMpesa")): 0.0;
-        Double bank             = (request.getParameter("tenderBank") != null && ! request.getParameter("tenderBank").trim().equals(""))? Double.parseDouble(request.getParameter("tenderBank")): 0.0;
-//        Double tender           = (request.getParameter("tender") != null && ! request.getParameter("tender").trim().equals(""))? Double.parseDouble(request.getParameter("tender")): 0.0;
-        Double tender           = cash + mpesa + bank;
+        Double tender           = (request.getParameter("tender") != null && ! request.getParameter("tender").trim().equals(""))? Double.parseDouble(request.getParameter("tender")): 0.0;
         Double change           = (request.getParameter("change") != null && ! request.getParameter("change").trim().equals(""))? Double.parseDouble(request.getParameter("change")): 0.0;
         
         public String getGrid(){
@@ -1017,34 +1013,19 @@
             html += "<td>"+ gui.formInput("text", "bill", 15, amount_, "", "disabled")+ "</td>";
             html += "</tr>";
             
-//            html += "<tr>";
-//            html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("payMode", " Payment Mode")+"</td>";
-//            html += "<td>"+ gui.formSelect("payMode", ""+this.comCode+".FNPAYMODES", "PMCODE", "PMNAME", "", "", cashPayMode, "", false)+"</td>";
-//            html += "</tr>";
+            html += "<tr>";
+            html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("payMode", " Payment Mode")+"</td>";
+            html += "<td>"+ gui.formSelect("payMode", ""+this.comCode+".FNPAYMODES", "PMCODE", "PMNAME", "", "", cashPayMode, "", false)+"</td>";
+            html += "</tr>";
             
             html += "<tr>";
             html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("documentNo", " Document No.")+"</td>";
             html += "<td nowrap>"+gui.formInput("text", "documentNo", 15, "", "", "")+ "</td>";
             html += "</tr>";
             
-//            html += "<tr>";
-//            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "money.png", "", "")+ gui.formLabel("tender", " Amount Tendered")+"</td>";
-//            html += "<td nowrap>"+gui.formInput("text", "tender", 15, "", "onkeyup = sales.getChange();", "")+ "</td>";
-//            html += "</tr>";
-
             html += "<tr>";
-            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "money.png", "", "")+ gui.formLabel("tenderCash", " Cash")+"</td>";
-            html += "<td nowrap>"+gui.formInput("text", "tenderCash", 15, "", "onkeyup = sales.getChange();", "")+ "</td>";
-            html += "</tr>";
-
-            html += "<tr>";
-            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "phone.png", "", "")+ gui.formLabel("tenderMpesa", " Mpesa")+"</td>";
-            html += "<td nowrap>"+gui.formInput("text", "tenderMpesa", 15, "", "onkeyup = sales.getChange();", "")+ "</td>";
-            html += "</tr>";
-
-            html += "<tr>";
-            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "house.png", "", "")+ gui.formLabel("tenderBank", " Bank")+"</td>";
-            html += "<td nowrap>"+gui.formInput("text", "tenderBank", 15, "", "onkeyup = sales.getChange();", "")+ "</td>";
+            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "money.png", "", "")+ gui.formLabel("tender", " Amount Tendered")+"</td>";
+            html += "<td nowrap>"+gui.formInput("text", "tender", 15, "", "onkeyup = sales.getChange();", "")+ "</td>";
             html += "</tr>";
             
             html += "<tr>";
@@ -1071,17 +1052,6 @@
         public Object savePayment() throws Exception{
             JSONObject obj = new JSONObject();
             
-            this.pmCode = "";
-            if(this.cash > 0){
-                this.pmCode = "Cash";
-            }
-            if(this.mpesa > 0){
-                this.pmCode = this.pmCode.equals("")?"Mpesa": this.pmCode+"/"+"Mpesa";
-            }
-            if(this.bank > 0){
-                this.pmCode = this.pmCode.equals("")?"Bank": this.pmCode+"/"+"Cash";
-            }
-            
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -1091,9 +1061,6 @@
                             + "BILL     = "+ this.bill+ ", "
                             + "PMCODE   = '"+ this.pmCode+ "', "
                             + "DOCNO    = '"+ this.docNo+ "', "
-                            + "cash   = "+ this.cash+ ", "
-                            + "mpesa   = "+ this.mpesa+ ", "
-                            + "bank   = "+ this.bank+ ", "
                             + "TENDER   = "+ this.tender+ ", "
                             + "CHANGE   = "+ this.change+ ", "
                             + "CLEARED  = 1 "

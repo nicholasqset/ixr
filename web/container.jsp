@@ -30,7 +30,7 @@
     <head>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>iXR&trade; 1.1 - <%= company.compName %></title>
+        <title>&trade; 1.1 - <%= company.compName %></title>
         <link rel="shortcut icon" href="favicon.ico" />
         
         <% 
@@ -44,7 +44,7 @@
             <div class="header-body-wrapper">
                 <div class="header-body-row">
                     <div class="header-left">
-                        iXR&trade; ERP <span style="font-weight: normal">for</span> <span style="font-size: 15px;"><%= company.compName %></span>
+                        iXR&trade; <span style="font-weight: normal">for</span> <span style="font-size: 15px;"><%= company.compName %></span>
                     </div>
 					
                     <div class="header-center" >

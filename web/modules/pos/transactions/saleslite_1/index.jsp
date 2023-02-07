@@ -383,23 +383,9 @@
                     var params = 'function=getPaymentUi&receiptNoHd='+ receiptNo;
                     TINY.box.show({url: 'parser.jsp', post: params, width: 320, height: 208});
                 },
-//                getChange: function(){
-//                    var bill    = $('bill')? $F('bill'): 0;
-//                    var tender  = $('tender')? $F('tender'): 0;
-//                    var change  = tender - bill;
-//                    
-//                    $('change').value = change;
-//                },
                 getChange: function(){
                     var bill    = $('bill')? $F('bill'): 0;
-                    var tenderCash  = $('tenderCash') && $F('tenderCash') !== ''? $F('tenderCash'): 0;
-                    tenderCash = parseFloat(tenderCash);
-                    var tenderMpesa  = $('tenderMpesa') && $F('tenderMpesa') !== ''? $F('tenderMpesa'): 0;
-                    tenderMpesa = parseFloat(tenderMpesa);
-                    var tenderBank  = $('tenderBank') && $F('tenderBank') !== ''? $F('tenderBank'): 0;
-                    tenderBank = parseFloat(tenderBank);
-                    var tender  =  tenderCash + tenderMpesa + tenderBank;
-                    console.log(tender);
+                    var tender  = $('tender')? $F('tender'): 0;
                     var change  = tender - bill;
                     
                     $('change').value = change;
