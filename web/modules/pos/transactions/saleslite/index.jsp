@@ -56,6 +56,7 @@
             out.print(gui.loadCss(request.getContextPath(), "qset"));
             
         %>
+        <link rel="stylesheet" href="../../../../assets/jquery-ui/jquery-ui.min.css">
         <script type="text/javascript"> 
             <%
             if(sessionExpired){
@@ -146,7 +147,11 @@
             out.print(gui.loadJs(request.getContextPath(), "datepicker"));
         %>
         
+        <script src="../../../../assets/js/jquery.js"></script>
+        <script src="../../../../assets/jquery-ui/jquery-ui.min.js"></script>
+        
         <script type="text/javascript">
+            $.noConflict();
             
             Event.observe(window,'load',function(){module.getModule();});
             
@@ -231,8 +236,11 @@
                                 if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
                                 if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
                                 
-                                sales.getItemPhoto(itemNo);
-                                
+//                                sales.getItemPhoto(itemNo);
+//                                var sdate = new Date('2023-01-15');
+//                                var edate = new Date('2023-02-14');
+                                jQuery( "#datepicker2" ).html("");
+                                jQuery( "#datepicker" ).datepicker({ minDate: new Date(response.mfgdt_uf), maxDate: new Date(response.expdt_uf) });
                                 g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
                             }else{
                                 if(typeof response.message !== 'undefined'){

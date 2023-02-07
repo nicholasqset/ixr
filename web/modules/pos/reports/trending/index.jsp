@@ -33,7 +33,7 @@
                     + "where itemname is not null "
                     + "group by qty, itemname "
                     + "order by qty desc "
-                    + "limit 50 "
+                    + "limit 100 "
                     + "";
 
 //                            sys.logV2(query);
@@ -147,7 +147,6 @@
                                 ticks: {
                                     font: {
                                         style: 'normal',
-                                        size: 16
                                     }
                                 }
                             },
@@ -155,7 +154,6 @@
                                 ticks: {
                                     font: {
                                         style: 'normal',
-                                        size: 16
                                     }
                                 }
                             }

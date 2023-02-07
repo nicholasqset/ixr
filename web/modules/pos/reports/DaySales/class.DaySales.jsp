@@ -29,7 +29,7 @@ final class DaySales{
         hmPayMode.put("all", "All");
         hmPayMode.put("CASH", "CASH");
         hmPayMode.put("MPESA", "MPESA");
-        hmPayMode.put("BANK", "BANK");
+        hmPayMode.put("BANK", "OTHER");
         
         HashMap<String, String> hmPrintForm = new HashMap();
         hmPrintForm.put("web", "Web");

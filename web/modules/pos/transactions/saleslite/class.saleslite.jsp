@@ -305,12 +305,22 @@
                             html += "<div class = \"row\">";
                                 html += "<div class = \"cell\" style = \"\">";
                                     html += "<div id = \"dv_itm_img\">";
-                                        html += "<div class = \"divPhoto\"><img id = \"imgPhoto\" src=\""+ imgPhotoSrc+ "\"></div>";
+                                        html += "<div class = \"divPhoto\">"
+//                                                + "<img id = \"imgPhoto\" src=\""+ imgPhotoSrc+ "\">"
+                                                + "<h5>Valid Date</h5>"
+                                                + "<div id=\"datepicker\">"
+                                                + "<div id=\"datepicker2\"></div>"
+                                                + "</div>"
+                                                + "<script>"
+                                                + "jQuery( \"#datepicker2\" ).datepicker();"
+                                                + "</script>"
+                                                + "</div>";
                                     html += "</div>";
                                 html += "</div>";
                             html += "</div>";
                             html += "<div class = \"row\">";
-                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 6px;\">";
+//                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 6px;\">";
+                                html += "<div class = \"cell\" style = \"padding-left: 18px; padding-top: 12px;\">";
 //                                    html += "Today Sales: "+ system.numberFormat(_todaySales);
                                     html += "<table class=\"module\" style=\"\">";
                                         html += "<tr>";
@@ -325,7 +335,7 @@
                                             html += "<td class=\"bold\">"+ system.numberFormat(_todaySalesMpesa)+"</td>";
                                         html += "</tr>";
                                         html += "<tr>";
-                                            html += "<td >Bank</td>";
+                                            html += "<td >Other</td>";
                                             html += "<td class=\"bold\">"+ system.numberFormat(_todaySalesBank)+"</td>";
                                         html += "</tr>";
                                         html += "<tr>";
@@ -579,7 +589,11 @@
                 obj.put("price", iCItem.unitPrice);
                 obj.put("amount", (1.0 * iCItem.unitPrice));
                 
+                obj.put("mfgdt", sys.getFormatedDate(iCItem.mfgdt));
                 obj.put("expdt", sys.getFormatedDate(iCItem.expdt));
+                
+                obj.put("mfgdt_uf", iCItem.mfgdt);
+                obj.put("expdt_uf", iCItem.expdt);
                 
                 obj.put("success", new Integer(1));
                 obj.put("message", "Item No '"+ iCItem.itemCode+"' successfully retrieved.");
@@ -1043,7 +1057,7 @@
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "house.png", "", "")+ gui.formLabel("tenderBank", " Bank")+"</td>";
+            html += "<td nowrap>"+gui.formIcon(request.getContextPath(), "house.png", "", "")+ gui.formLabel("tenderBank", " Other")+"</td>";
             html += "<td nowrap>"+gui.formInput("text", "tenderBank", 15, "", "onkeyup = sales.getChange();", "")+ "</td>";
             html += "</tr>";
             
