@@ -73,6 +73,8 @@ final class UserRight{
                 String query = "SELECT * FROM "+this.comCode+".SYSROLES ORDER BY ROLENAME ";
                 ResultSet rs = stmt.executeQuery(query);
                 
+                Integer count = 0;
+                
                 html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
                 html += "<tr>";
@@ -81,6 +83,8 @@ final class UserRight{
                 html += "</tr>";
 
                 while(rs.next()){
+                    count++;
+                    
                     String roleCode = rs.getString("ROLECODE");
                     String roleName = rs.getString("ROLENAME");
                     
@@ -94,7 +98,9 @@ final class UserRight{
 //                    String checkBox = gui.formCheckBox("allowDeny["+roleCode+"]", this.rightStatus, "", "onchange = \"userRight.save('"+ roleCode+ "');\"", "", "");
                     String checkBox = gui.formCheckBox("allowDeny["+roleCode+"]", this.rightStatus, "", "onchange = \"userRight.save('"+ roleCode+ "');\"", "", "");
                     
-                    html += "<tr>";
+                    String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
+                    
+                    html += "<tr bgcolor = \""+ bgcolor+ "\">";
                     html += "<td nowrap>"+ roleName+ "</td>";
                     html += "<td>"+ checkBox+ "</td>";
                     html += "</tr>";

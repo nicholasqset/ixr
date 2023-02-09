@@ -268,13 +268,16 @@
             String _todaySales = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
             _todaySales = _todaySales != null? _todaySales: "0";
             
-            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
+//            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
+            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "cash", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
             _todaySalesCash = _todaySalesCash != null? _todaySalesCash: "0";
             
-            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
+//            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
+            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "mpesa", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
             _todaySalesMpesa = _todaySalesMpesa != null? _todaySalesMpesa: "0";
             
-            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
+//            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
+            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "bank", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
             _todaySalesBank = _todaySalesBank != null? _todaySalesBank: "0";
 
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
@@ -306,21 +309,22 @@
                                 html += "<div class = \"cell\" style = \"\">";
                                     html += "<div id = \"dv_itm_img\">";
                                         html += "<div class = \"divPhoto\">"
-//                                                + "<img id = \"imgPhoto\" src=\""+ imgPhotoSrc+ "\">"
-                                                + "<h5>Valid Date</h5>"
-                                                + "<div id=\"datepicker\">"
-                                                + "<div id=\"datepicker2\"></div>"
-                                                + "</div>"
-                                                + "<script>"
-                                                + "jQuery( \"#datepicker2\" ).datepicker();"
-                                                + "</script>"
-                                                + "</div>";
+                                                + "<img id = \"imgPhoto\" src=\""+ imgPhotoSrc+ "\">";
+//                                                + "<h5>Valid Date</h5>"
+//                                                + "<div id=\"datepicker\">"
+//                                                + "<div id=\"datepicker2\"></div>"
+//                                                + "</div>"
+//                                                + "<script>"
+//                                                + "jQuery( \"#datepicker2\" ).datepicker();"
+//                                                + "</script>"
+//                                                + "</div>";
+                                        html += "</div>";
                                     html += "</div>";
                                 html += "</div>";
                             html += "</div>";
                             html += "<div class = \"row\">";
-//                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 6px;\">";
-                                html += "<div class = \"cell\" style = \"padding-left: 18px; padding-top: 12px;\">";
+                                html += "<div class = \"cell\" style = \"padding-left: 64px; padding-top: 6px;\">";
+//                                html += "<div class = \"cell\" style = \"padding-left: 18px; padding-top: 12px;\">";
 //                                    html += "Today Sales: "+ system.numberFormat(_todaySales);
                                     html += "<table class=\"module\" style=\"\">";
                                         html += "<tr>";
@@ -1087,13 +1091,13 @@
             
             this.pmCode = "";
             if(this.cash > 0){
-                this.pmCode = "Cash";
+                this.pmCode = "CASH";
             }
             if(this.mpesa > 0){
-                this.pmCode = this.pmCode.equals("")?"Mpesa": this.pmCode+"/"+"Mpesa";
+                this.pmCode = this.pmCode.equals("")?"MPESA": this.pmCode+"/"+"MPESA";
             }
             if(this.bank > 0){
-                this.pmCode = this.pmCode.equals("")?"Bank": this.pmCode+"/"+"Cash";
+                this.pmCode = this.pmCode.equals("")?"BANK": this.pmCode+"/"+"CASH";
             }
             
             try{

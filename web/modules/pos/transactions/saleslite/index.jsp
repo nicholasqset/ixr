@@ -236,11 +236,11 @@
                                 if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
                                 if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
                                 
-//                                sales.getItemPhoto(itemNo);
+                                sales.getItemPhoto(itemNo);
 //                                var sdate = new Date('2023-01-15');
 //                                var edate = new Date('2023-02-14');
-                                jQuery( "#datepicker2" ).html("");
-                                jQuery( "#datepicker" ).datepicker({ minDate: new Date(response.mfgdt_uf), maxDate: new Date(response.expdt_uf) });
+//                                jQuery( "#datepicker2" ).html("");
+//                                jQuery( "#datepicker" ).datepicker({ minDate: new Date(response.mfgdt_uf), maxDate: new Date(response.expdt_uf) });
                                 g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
                             }else{
                                 if(typeof response.message !== 'undefined'){

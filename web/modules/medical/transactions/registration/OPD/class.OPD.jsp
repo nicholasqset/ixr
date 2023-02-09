@@ -363,7 +363,7 @@ final class OPD{
 	html += "</tr>";
         
         html += "<tr>";
-	html += "<td>"+gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+" "+gui.formLabel("regType", "Registration Type")+"</td>";
+	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+" "+gui.formLabel("regType", "Registration Type")+"</td>";
         html += "<td>"+gui.formArraySelect("regType", 150,  new  HashMap(regTypes), this.regType, false, "", true)+"</td>";
 	html += "</tr>";
         
