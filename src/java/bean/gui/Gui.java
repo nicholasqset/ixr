@@ -257,15 +257,15 @@ public class Gui {
             for(int j = 0; j < cols.length; j++){
                 if(j == 0 && j < cols.length){
                     if(dbType.equals("postgres")){
-                        searchSql += " UPPER(CAST("+ cols[j]+ " AS TEXT)) LIKE '%"+ searchIndex.toUpperCase()+ "%' ";
+                        searchSql += " (UPPER(CAST("+ cols[j]+ " AS TEXT)) LIKE '%"+ searchIndex.toUpperCase()+ "%' ";
                     }else{
-                        searchSql += " UPPER("+ cols[j]+ ") LIKE '%"+searchIndex.toUpperCase()+"%' ";
+                        searchSql += " (UPPER("+ cols[j]+ ") LIKE '%"+searchIndex.toUpperCase()+"%' ";
                     }
                 }else{
                     if(dbType.equals("postgres")){
-                        searchSql += " OR UPPER(CAST("+ cols[j]+ " AS TEXT)) LIKE '%"+searchIndex.toUpperCase()+"%' ";
+                        searchSql += " OR UPPER(CAST("+ cols[j]+ " AS TEXT)) LIKE '%"+searchIndex.toUpperCase()+"%' )";
                     }else{
-                        searchSql += " OR UPPER("+ cols[j]+ ") LIKE '%"+searchIndex.toUpperCase()+"%' ";
+                        searchSql += " OR UPPER("+ cols[j]+ ") LIKE '%"+searchIndex.toUpperCase()+"%' )";
                     }
                 }
             }
@@ -274,6 +274,8 @@ public class Gui {
             
             try{
                 stmt = conn.createStatement();
+                
+                System.out.println("searchSql="+ searchSql);
                 
                 ResultSet rs = stmt.executeQuery(searchSql);
                     

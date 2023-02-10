@@ -49,6 +49,8 @@
             out.print(gui.loadCss(request.getContextPath(), "tab-view"));
             out.print(gui.loadCss(request.getContextPath(), "datepicker"));
         %>
+        <link rel="stylesheet" href="../../../../assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../../assets/fontawesome/css/all.css">
         <style>
             iframe#upload_iframe{
                 width: 0;
@@ -302,6 +304,12 @@
 //                        if($('frmModule')) { $('frmModule').disabled = false; }
 //                        if($('btnSave')) { $('btnSave').disabled = false;}
                     }
+                },
+                addRegistration: function(id, ptNo){
+                    module.execute('addRegistration', "id="+id+"&ptNo="+ptNo, 'divRegistrations');
+                },
+                getRegistrations: function(id){
+                    module.execute('getRegistrations', "id="+id+"&ptNo="+ptNo, 'divRegistrations');
                 }
             };
 

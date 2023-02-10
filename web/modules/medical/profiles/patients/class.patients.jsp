@@ -10,9 +10,7 @@
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
-
     final class Patients {
-//    String table            = "HMPTPROFILE";
 
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
@@ -251,19 +249,27 @@
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getBioDataTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getContactTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getMedHistoryTab() + "</div>";
-            html += "<div class = \"dhtmlgoodies_aTab\">" + this.getVisitations()+ "</div>";
+
+            html += gui.formEnd();
+            if (this.id != null) {
+                html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divRegistrations\">" + this.getRegistrations() + "</div></div>";
+            }
 
             html += "</div>";
 
             html += "<div style=\"padding-left: 10px; padding-top: 40px; border: 0;\" >";
             html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"patients.save('firstName lastName gender dob country'); return false;\"", "");
+            html += "&nbsp;";
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule(); return false;\"", "");
             html += "</div>";
 
-            html += gui.formEnd();
-
             html += "<script type = \"text/javascript\">";
-            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\', \'Visitations\'), 0, 625, 365, Array(false, false, false, false));";
+            if (this.id != null) {
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\', \'Visitations\'), 0, 625, 365, Array(false, false, false, false));";
+            } else {
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\'), 0, 625, 365, Array(false, false, false));";
+            }
+
             html += "</script>";
 
             html += "<iframe name = \"upload_iframe\" id = \"upload_iframe\"></iframe>";
@@ -816,12 +822,140 @@
             return obj;
 
         }
-        
-        public String getVisitations(){
+
+        public String getRegistrations() {
             String html = "";
-            
+
+            Gui gui = new Gui();
+            Sys sys = new Sys();
+
+            this.ptNo = sys.getOne(this.table, "ptno", "id=" + this.id);
+
+            if (sys.recordExists("" + this.comCode + ".HMREGISTRATION", "ptno = '" + this.ptNo + "'")) {
+                html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
+
+                html += "<tr>";
+                html += "<th>#</th>";
+                html += "<th>Reg. #</th>";
+                html += "<th>Type</th>";
+                html += "<th>Date</th>";
+                html += "<th>Options</th>";
+                html += "</tr>";
+
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+                    String query = "SELECT * FROM " + this.comCode + ".HMREGISTRATION WHERE ptno = '" + this.ptNo + "' ";
+//                    html += query;
+                    ResultSet rs = stmt.executeQuery(query);
+                    Integer count = 1;
+                    while (rs.next()) {
+
+                        String id = rs.getString("ID");
+                        String regNo = rs.getString("regno");
+                        String regType = rs.getString("regType");
+                        String regDate = rs.getString("regdate");
+
+                        String editLink = gui.formHref("onclick = \"dashboard.editDiagnosis(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+
+                        html += "<tr>";
+                        html += "<td>" + count + "</td>";
+                        html += "<td>" + regNo + "</td>";
+                        html += "<td>" + regType + "</td>";
+                        html += "<td>" + regDate + "</td>";
+                        html += "<td>" + editLink + "</td>";
+                        html += "</tr>";
+
+                        count++;
+                    }
+
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+                html += "</table>";
+
+            } else {
+                html += gui.formWarningMsg("No diagnosis record found.");
+            }
+            html += "<br>";
+            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"patients.addRegistration("+this.id+",'" + this.ptNo + "');\"", "");
+
             return html;
         }
+
+        public String addRegistration() {
+            String html = "";
+            
+            Gui gui = new Gui();
+            Sys sys = new Sys();
+
+            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            String regNo = "";
+            String diagName = "";
+            String remarks = "";
+            if (rid != null) {
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+//                String query = "SELECT * FROM "+this.comCode+".VIEWPTDIAGNOSIS WHERE ID = "+rid;
+                    String query = "SELECT * FROM " + this.comCode + ".HMREGISTRATION WHERE ID = " + rid;
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        regNo = rs.getString("REGNO");
+                        diagName = rs.getString("DIAGNAME");
+                        remarks = rs.getString("REMARKS");
+                    }
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+            }
+            
+            Boolean regTypeExists = sys.recordExists(this.comCode + ".HMREGISTRATION", "ptno='"+this.ptNo+"'");
+            String regTypeLbl = regTypeExists? "Return": "New";
+
+            html += gui.formStart("frmDiagnosis", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            if (rid != null) {
+                html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
+            }
+
+//            html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
+
+            html += "<tr>";
+            html += "<td width = \"25%\" class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + "Registration Type</td>";
+            html += "<td >" + regTypeLbl + "</td>";
+            html += "</tr>";
+
+//            html += "<tr>";
+//            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("remarks", " Remarks") + "</td>";
+//            html += "<td >" + gui.formInput("textarea", "remarks", 40, remarks, "", "") + "</td>";
+//            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td>&nbsp;</td>";
+            html += "<td>";
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveRegistration", "Save", "save.png", "onclick = \"dashboard.saveRegistration('');\"", "");
+            if (rid != null) {
+                html += "&nbsp;";
+                html += gui.formButton(request.getContextPath(), "button", "btnDelDiagnosis", "Delete", "delete.png", "onclick = \"dashboard.delRegistration(" + rid + ", '" + diagName + "', '" + regNo + "');\"", "");
+            }
+            html += "&nbsp;";
+            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations('" + this.id + "');\"", "");
+            html += "</td>";
+            html += "</tr>";
+
+            html += "</table>";
+
+            html += gui.formEnd();
+
+            return html;
+        }
+        
+        
 
     }
 
