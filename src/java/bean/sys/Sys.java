@@ -54,7 +54,7 @@ public class Sys {
                 id = rs.getInt("MX") + 1;
             }
         } catch (SQLException e) {
-            e.getMessage();
+            this.logV2(e.getMessage());
         }
 
         return id;
@@ -287,6 +287,8 @@ public class Sys {
             } else {
                 query = "SELECT COUNT(*)CT FROM " + dataSource;
             }
+            
+//            this.logV2(query);
 
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {

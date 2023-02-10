@@ -275,7 +275,7 @@ public class Gui {
             try{
                 stmt = conn.createStatement();
                 
-                System.out.println("searchSql="+ searchSql);
+//                System.out.println("searchSql="+ searchSql);
                 
                 ResultSet rs = stmt.executeQuery(searchSql);
                     

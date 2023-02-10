@@ -39,7 +39,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Nurse Out-Patients Dashboard</title>
+        <title>Triage Out-Patients Dashboard</title>
         <% 
             out.print(gui.loadCss(request.getContextPath(), "Growler"));
             out.print(gui.loadCss(request.getContextPath(), "module"));

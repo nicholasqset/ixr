@@ -70,6 +70,38 @@
                 color: #9999F8;
             }
         </style>
+        <style>
+            div#dvPyEntries{
+                height: 157px;
+                padding: 2px;
+                overflow: scroll;
+                overflow-y: auto;
+                overflow-x: hidden;
+                border: 1px solid #919B9C;
+            }
+            div#dvPyEntries-a{
+                height: 100px;
+                padding: 2px;
+                overflow: scroll;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            div#dvPyEntries-b{
+                height: 34px;
+                padding: 4px 2px 2px;
+                overflow: scroll;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            div#dv_itm_img{
+                margin-right: 50%;
+                margin-left: 3%;
+                padding-top:  0;
+                width: 256px;
+                height: 256px;
+            }
+           
+        </style>
         <script type="text/javascript"> var rootPath = '<%= request.getContextPath()%>';</script>
     </head>
     <body>
@@ -215,7 +247,7 @@
                 },
                 uploadPhoto: function (required) {
                     if (module.validate(required)) {
-                        var frmModule = $('frmModule')
+                        var frmModule = $('frmModule');
                         var data = frmModule.serialize();
                         frmModule.action = "./upload/?" + data;
                         frmModule.submit();
@@ -233,7 +265,7 @@
                 },
                 reloadPhoto: function () {
                     var ptNo = $('ptNo') ? $F('ptNo') : '';
-                    if (ptNo != '') {
+                    if (ptNo !== '') {
                         $('imgPhoto').setAttribute('src', 'photo.jsp?ptNo=' + ptNo);
                         patients.hidePhotoOptions();
                     } else {
@@ -305,11 +337,263 @@
 //                        if($('btnSave')) { $('btnSave').disabled = false;}
                     }
                 },
-                addRegistration: function(id, ptNo){
-                    module.execute('addRegistration', "id="+id+"&ptNo="+ptNo, 'divRegistrations');
+                addRegistration: function (id, ptNo) {
+                    module.execute('addRegistration', "id=" + id + "&ptNo=" + ptNo, 'divRegistrations');
                 },
-                getRegistrations: function(id){
-                    module.execute('getRegistrations', "id="+id+"&ptNo="+ptNo, 'divRegistrations');
+                getRegistrations: function (id) {
+                    module.execute('getRegistrations', "id=" + id, 'divRegistrations');
+                },
+                saveRegistration: function (required) {
+                    if (module.validate(required)) {
+                        if ($('frmRegistration'))
+                            $('frmRegistration').disabled = true;
+                        if ($('btnSaveRegistration'))
+                            $('btnSaveRegistration').disabled = true;
+
+                        new Ajax.Request(module.ajaxUrl, {
+                            method: 'post',
+                            parameters: 'function=saveRegistration&' + Form.serialize("frmRegistration") + '&' + Form.serialize("frmModule"),
+                            requestHeaders: {Accept: 'application/json'},
+                            onSuccess: function (request) {
+                                response = request.responseText.evalJSON();
+                                if (typeof response.success === 'number' && response.success === 1) {
+                                    g.info(response.message, {header: ' ', life: 5, speedout: 2});
+//                                    console.log($F('id'));
+                                    patients.getRegistrations($F('id'));
+                                } else {
+                                    if (typeof response.message !== 'undefined') {
+                                        g.error(response.message, {header: ' ', life: 5, speedout: 2});
+                                    } else {
+                                        g.error("An un-expected error occured while saving record.", {header: ' ', life: 5, speedout: 2});
+                                    }
+                                }
+                            }
+                        });
+                        if ($('frmRegistration')) {
+                            $('frmRegistration').disabled = false;
+                        }
+                        if ($('btnSaveRegistration')) {
+                            $('btnSaveRegistration').disabled = false;
+                        }
+                    }
+                },
+                editRegistration: function (rid, id, ptNo) {
+                    module.execute('addRegistration', "rid=" + rid + '&id=' + id + '&ptNo=' + ptNo, 'divRegistrations');
+                },
+                delRegistration: function (rid, id, regNo) {
+                    if (confirm("Delete '" + regNo + "'?")) {
+                        new Ajax.Request(module.ajaxUrl, {
+                            method: 'post',
+                            parameters: 'function=delRegistration&rid=' + rid,
+                            requestHeaders: {Accept: 'application/json'},
+                            onSuccess: function (request) {
+                                response = request.responseText.evalJSON();
+                                if (typeof response.success === 'number' && response.success === 1) {
+                                    g.info(response.message, {header: ' ', life: 5, speedout: 2});
+                                    patients.getRegistrations(id);
+                                } else {
+                                    if (typeof response.message !== 'undefined') {
+                                        g.error(response.message, {header: ' ', life: 5, speedout: 2});
+                                    } else {
+                                        g.error("An un-expected error occured while deleting record.", {header: ' ', life: 5, speedout: 2});
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                manageRegistration: function (rid, id, ptNo) {
+                    module.execute('manageRegistration', "rid=" + rid + '&id=' + id + '&ptNo=' + ptNo, 'divRegistrations');
+                }
+            };
+
+            var registration = {
+                manageBill: function (rid, id, regNo, ptNo) {
+                    module.execute('manageBill', 'rid='+rid+'&id='+id+'&regNo=' + regNo + '&ptNo=' + ptNo, 'dvBills');
+                },
+                searchItem: function(){
+                    var count = Ajax.activeRequestCount;
+                    if(count <= 0){
+                        var getResultTo = 'itemNoDiv';
+                        new Ajax.Autocompleter(
+                                'itemNo', getResultTo, module.ajaxUrl,{
+                                paramName  : 'itemNoHd',
+                                parameters : 'function=searchItem',
+                                minChars   : 2,
+                                frequency  : 1.0,
+                                afterUpdateElement : registration.setItem
+                            });
+                    }
+                },
+                setItem: function(text, item){
+                    if(item.id !== ''){
+                        if($('itemNoHd')) $('itemNoHd').value= item.id;
+                        registration.getItemProfile(item.id);
+                    }
+                },
+                getItemProfile: function(itemNo){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getItemProfile&itemNo='+ itemNo,
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            if(typeof response.success === 'number' && response.success === 1){
+                                
+                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                
+                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                            }else{
+                                if(typeof response.message !== 'undefined'){
+                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                }else{
+                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                }
+                            }
+                        }
+                    });
+                },
+                getItemTotalAmount: function(){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getItemTotalAmount&'+ Form.serialize('frmBill'),
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            
+                            if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                            
+                        }
+                    });
+                },
+                saveBill: function(required){
+                    var data = Form.serialize('frmBill');
+                    var amount = $('amount')? $F('amount'): '';
+                    data = data+ '&amount='+ amount;
+                    if(module.validate(required)){
+                        if($('frmModule'))  $('frmModule').disabled = true;  
+                        if($('btnSave')) $('btnSave').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveBill&'+data,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    
+                                    if(typeof response.billNo !== 'undefined'){
+                                        if($('billNo')) $('billNo').value = response.billNo;
+                                        if($('billNoHd')) $('billNoHd').value = response.billNo;
+                                    }
+                                    
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    if($('dvPyEntries')) registration.getPyEntries(response.billNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An unexpected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmModule')) { $('frmModule').disabled = false; }
+                        if($('btnSave')) { $('btnSave').disabled = false;}
+                    }
+                },
+                listBills: function(){
+                    let id = $F('id');
+                    module.execute('listBills', 'id='+ id, 'dvBills');
+                },
+                getPyEntries: function(billNo=''){
+                    if(billNo === ''){
+                        billNo = $F('billNo');
+                    }
+                    module.execute('getPyEntries', 'billNoHd='+ billNo, 'dvPyEntries');
+                },
+                editBill: function(id, rid, bid, billNoHd, regNo, ptNo){
+//                    module.execute('manageBill', 'id='+ id+ '&bid='+ bid+ '&billNoHd='+ billNoHd, 'dvBills');
+                    module.execute('manageBill', 'id='+id+'&rid='+ rid+ '&bid='+ bid+ '&billNoHd='+ billNoHd+'&regNo=' + regNo + '&ptNo=' + ptNo, 'dvBills');
+                },
+                editPyDtls: function(sid){
+                    new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=editPyDtls&sid='+ sid,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                    
+                                    if(typeof response.sidUi !== 'undefined' && $('dvPyEntrySid')) $('dvPyEntrySid').update(response.sidUi);
+                                    if(typeof response.itemNo !== 'undefined' && $('itemNo')) $('itemNo').value = response.itemNo;
+                                    if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+                                    if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+                                    if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                },
+                purge: function(id, name){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=purge&id='+id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    if($('dvPyEntries')) registration.getPyEntries();
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An unexpected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                print: function(billNo){
+                    var printWindow = window.open(
+                            './print?billNo='+ billNo, '', 'height=464, width=525, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                    printWindow.focus();
+                },
+                printLab: function(required){
+                    var data = Form.serialize('frmLab');
+                    if(module.validate(required)){
+                        var printWindow = window.open(
+                            './print_lab?'+ data, '', 'height=500, width=750, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                        printWindow.focus();
+                    }
+                },
+                uploadLabItem: function(required){
+                    if(module.validate(required)){
+                        var frmModule = $('frmLabDoc');
+                        var data = frmModule.serialize()+ '&'+ Form.serialize('frmLab');
+                        frmModule.action = "./upload/?"+ data;
+                        frmModule.submit();
+                    }
+                },
+                getUploadResponse: function(errorCount, errorMsg){
+                    if(typeof errorCount !== 'undefined' && errorCount > 0){
+                        g.error(errorMsg, { header : ' ' , life: 5, speedout: 2 });
+                    }else{
+                        g.info("Attachment successfully uploaded", { header : ' ' , life: 5, speedout: 2 });
+                        dashboard.getLab($F('regNo'));
+                    }
                 }
             };
 

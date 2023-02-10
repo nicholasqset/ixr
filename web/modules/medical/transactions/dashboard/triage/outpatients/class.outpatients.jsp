@@ -18,7 +18,7 @@ final class OutPatients{
     HttpSession session = request.getSession();
     String comCode      = session.getAttribute("comCode").toString();
     String table        = comCode+".HMTRIAGE";
-    String view     = comCode+".VIEWNURSEOPDS";
+    String view         = comCode+".VIEWNURSEOPDS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String regNo            = request.getParameter("regNo");
