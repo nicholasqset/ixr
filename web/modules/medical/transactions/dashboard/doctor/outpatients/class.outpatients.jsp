@@ -244,7 +244,7 @@
 
             html += "<script type = \"text/javascript\">";
 //            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Medication\', \'Doctor Notes\',\'Discharge\'), 0, 625, 365, Array(false));";
-            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Doctor Notes\', \'Medication\',\'Discharge\'), 0, 625, 365, Array(false));";
+            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Profile\', \'History\', \'Vital Parameter\', \'Complaints\', \'Laboratory\', \'Diagnosis\', \'Doctor Notes\', \'Prescription\',\'Discharge\'), 0, 625, 365, Array(false));";
             html += "</script>";
 
             return html;
@@ -1181,7 +1181,7 @@
                 html += "</table>";
 
             } else {
-                html += gui.formWarningMsg("No medication record found.");
+                html += gui.formWarningMsg("No prescription record found.");
             }
             html += "<br>";
             html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addMedication('" + this.regNo + "');\"", "");

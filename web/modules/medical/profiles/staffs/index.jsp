@@ -279,6 +279,64 @@
                         if($('frmModule')) { $('frmModule').disabled = false; }
                         if($('btnSave')) { $('btnSave').disabled = false;}
                     }
+                },
+                addSpecialisation: function(staffNo){
+                    module.execute('addSpecialisation', "staffNo="+staffNo, 'divSpecialisation');
+                },
+                saveSpecialisation: function(required){
+                    if(module.validate(required)){
+                        if($('frmSpecialisation'))  $('frmSpecialisation').disabled = true;  
+                        if($('btnSaveSpecialisation')) $('btnSaveSpecialisation').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveSpecialisation&'+ Form.serialize("frmSpecialisation"),
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                    staffs.getSpecialisation($F('staffNo'));
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmSpecialisation')) { $('frmSpecialisation').disabled = false; }
+                        if($('btnSaveSpecialisation')) { $('btnSaveSpecialisation').disabled = false;}
+                    }
+                },
+                getSpecialisation: function(staffNo){
+                    module.execute('getSpecialisation', "staffNo="+staffNo, 'divSpecialisation');
+                },
+                editSpecialisation: function(id){
+                    module.execute('addSpecialisation', "rid="+id, 'divSpecialisation');
+                },
+                delSpecialisation: function(id, name, staffNo){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=delSpecialisation&rid='+ id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    staffs.getSpecialisation(staffNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
                 }
             };
             

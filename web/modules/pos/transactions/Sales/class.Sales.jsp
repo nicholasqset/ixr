@@ -198,7 +198,7 @@
                         Integer cleared         = rs.getInt("CLEARED");
                         Integer posted          = rs.getInt("POSTED");
 
-                        String amount_ = system.getOneAgt("VIEWPSPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
+                        String amount_ = system.getOneAgt(this.comCode+".VIEWPSPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
                         
                         String clearedLbl    = cleared == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
 
