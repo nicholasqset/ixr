@@ -44,7 +44,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sales</title>
+        <title>Pharmacy Sales</title>
         <link rel="shortcut icon" href="<%= rootPath %>favicon.ico" />
         <% 
             out.print(gui.loadCss(request.getContextPath(), "Growler"));

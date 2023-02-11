@@ -1,8 +1,8 @@
+<%@page import="bean.medical.HmPharmHdr"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="bean.ic.IC"%>
 <%@page import="bean.pos.POS"%>
-<%@page import="bean.pos.PsPyHdr"%>
 <%@page import="bean.ar.ARCustomerProfile"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
@@ -20,10 +20,10 @@
     final class Sales{
         HttpSession session     = request.getSession();
         String comCode          = session.getAttribute("comCode").toString();
-        String table            = comCode+".PSPYHDR";
-        String view             = comCode+".VIEWPSPYHDR";
-//        String table            = "PSPYHDR";
-//        String view             = "VIEWPSPYHDR";
+        String table            = comCode+".HMPHARMHDR";
+        String view             = comCode+".VIEWHMPHARMHDR";
+//        String table            = "HMPHARMHDR";
+//        String view             = "VIEWHMPHARMHDR";
 
         Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
 
@@ -202,7 +202,7 @@
                         Integer cleared         = rs.getInt("CLEARED");
                         Integer posted          = rs.getInt("POSTED");
 
-                        String amount_ = system.getOneAgt("VIEWPSPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
+                        String amount_ = system.getOneAgt(this.comCode+".VIEWHMPHARMDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ pyNo+ "'");
                         
                         String clearedLbl    = cleared == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
 
@@ -259,25 +259,25 @@
             if(this.id != null){
                 this.pyNo = system.getOne(this.table, "PYNO", "ID = "+ this.id);
                 if(this.pyNo != null){
-                    PsPyHdr psPyHdr = new PsPyHdr(this.pyNo, this.comCode);
-                    posted = psPyHdr.posted;
+                    HmPharmHdr hmPharmHdr = new HmPharmHdr(this.pyNo, this.comCode);
+                    posted = hmPharmHdr.posted;
                 }
             }
             
-//            String _todaySales = system.getOne(this.comCode+ ".VIEWPSPYDTLS", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
-            String _todaySales = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
+//            String _todaySales = system.getOne(this.comCode+ ".VIEWHMPHARMDTLS", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
+            String _todaySales = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"'");
             _todaySales = _todaySales != null? _todaySales: "0";
             
-//            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
-            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "cash", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
+//            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
+            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "cash", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
             _todaySalesCash = _todaySalesCash != null? _todaySalesCash: "0";
             
-//            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
-            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "mpesa", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
+//            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
+            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "mpesa", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
             _todaySalesMpesa = _todaySalesMpesa != null? _todaySalesMpesa: "0";
             
-//            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
-            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "bank", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
+//            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
+            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWHMPHARMDTLS", "SUM", "bank", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
             _todaySalesBank = _todaySalesBank != null? _todaySalesBank: "0";
 
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
@@ -661,10 +661,10 @@
                         VAT vAT = new VAT(this.amount, taxInclusive, this.comCode);
 
                         if(this.sid == null){
-                            Integer sid = system.generateId(""+this.comCode+".PSPYDTLS", "ID");
-                            String lineNo = system.getNextNo(comCode+".PSPYDTLS", "LINENO", "PYNO = '"+ this.pyNo+ "'", "", 7);
+                            Integer sid = system.generateId(""+this.comCode+".HMPHARMDTLS", "ID");
+                            String lineNo = system.getNextNo(comCode+".HMPHARMDTLS", "LINENO", "PYNO = '"+ this.pyNo+ "'", "", 7);
 
-                            query = "INSERT INTO "+this.comCode+".PSPYDTLS "
+                            query = "INSERT INTO "+this.comCode+".HMPHARMDTLS "
                                     + "(ID, PYNO, ITEMCODE, LINENO,"
                                     + "QTY, UNITCOST, UNITPRICE, TAXINCL, "
                                     + "TAXRATE, TAXAMOUNT, NETAMOUNT, AMOUNT, TOTAL, "
@@ -692,7 +692,7 @@
                                     + ")";
 
                         }else{
-                            query = "UPDATE "+this.comCode+".PSPYDTLS SET "
+                            query = "UPDATE "+this.comCode+".HMPHARMDTLS SET "
                                     + "ITEMCODE     = '"+ this.itemCode+ "', "
                                     + "QTY          = "+ this.qty+ ", "
                                     + "UNITPRICE    = "+ this.unitPrice+ ", "
@@ -799,7 +799,7 @@
             Gui gui = new Gui();
             Sys system = new Sys();
 
-            if(system.recordExists(""+this.comCode+".VIEWPSPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+            if(system.recordExists(""+this.comCode+".VIEWHMPHARMDTLS", "PYNO = '"+ this.pyNo+ "'")){
                 html += "<div id = \"dvPyEntries-a\">";
 
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
@@ -829,7 +829,7 @@
 
                     Integer count  = 1;
 
-                    String query = "SELECT * FROM "+this.comCode+".VIEWPSPYDTLS WHERE PYNO = '"+ this.pyNo+ "'";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWHMPHARMDTLS WHERE PYNO = '"+ this.pyNo+ "'";
 
                     ResultSet rs = stmt.executeQuery(query);
 
@@ -904,11 +904,11 @@
                 
                 html += "<div id = \"dvPyEntries-b\">";
                 
-                PsPyHdr psPyHdr = new PsPyHdr(this.pyNo, this.comCode);
+                HmPharmHdr hmPharmHdr = new HmPharmHdr(this.pyNo, this.comCode);
                 
                 String paymentUi = "";
                 
-                if(! psPyHdr.cleared){
+                if(! hmPharmHdr.cleared){
                     paymentUi = gui.formButton(request.getContextPath(), "button", "btnPayment", "Payment", "cross.png", "onclick = \"sales.getPaymentUi('"+ this.pyNo+ "');\"", "");
                 }else{
                     paymentUi = gui.formButton(request.getContextPath(), "button", "btnPayment", "Paid", "tick.png", "onclick = \"alert('Already Paid.');\"", "");
@@ -936,13 +936,13 @@
             JSONObject obj = new JSONObject();
             Sys system = new Sys();
             Gui gui = new Gui();
-            if(system.recordExists(""+this.comCode+".PSPYDTLS", "ID = "+ this.sid +"")){
+            if(system.recordExists(""+this.comCode+".HMPHARMDTLS", "ID = "+ this.sid +"")){
                 try{
 
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT * FROM "+this.comCode+".VIEWPSPYDTLS WHERE ID = "+ this.sid +"";
+                    String query = "SELECT * FROM "+this.comCode+".VIEWHMPHARMDTLS WHERE ID = "+ this.sid +"";
                     ResultSet rs = stmt.executeQuery(query);
 
                     while(rs.next()){
@@ -988,7 +988,7 @@
                 Statement stmt = conn.createStatement();
 
                 if(this.id != null){
-                    String query = "DELETE FROM "+this.comCode+".PSPYDTLS WHERE ID = "+ this.id;
+                    String query = "DELETE FROM "+this.comCode+".HMPHARMDTLS WHERE ID = "+ this.id;
 
                     Integer purged = stmt.executeUpdate(query);
                     if(purged == 1){
@@ -1022,7 +1022,7 @@
             
             String cashPayMode = system.getOne(""+this.comCode+".FNPAYMODES", "PMCODE", "ISCASH = 1");
             
-            String amount_ = system.getOneAgt(""+this.comCode+".VIEWPSPYDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ this.pyNo+ "'");
+            String amount_ = system.getOneAgt(""+this.comCode+".VIEWHMPHARMDTLS", "SUM", "AMOUNT", "SM", "PYNO = '"+ this.pyNo+ "'");
             
             html += gui.formStart("frmPayment", "void%200", "post", "onSubmit=\"javascript:return false;\"");
             
@@ -1147,7 +1147,7 @@
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM "+this.comCode+".PSPYDTLS WHERE PYNO = '"+ pyNo+"'";
+                String query = "SELECT * FROM "+this.comCode+".HMPHARMDTLS WHERE PYNO = '"+ pyNo+"'";
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     

@@ -1,4 +1,4 @@
-<%@page import="bean.pos.PsPyHdr"%>
+<%@page import="bean.medical.HmPharmHdr"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.sql.SQLException"%>
@@ -235,7 +235,7 @@
             
             Sys system = new Sys();
             
-            PsPyHdr psPyHdr = new PsPyHdr(pyNo, this.comCode);
+            HmPharmHdr hmPharmHdr = new HmPharmHdr(pyNo, this.comCode);
             
             String entryDateLbl = "";
             
@@ -243,7 +243,7 @@
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
 
-                java.util.Date entryDate = originalFormat.parse(psPyHdr.entryDate);
+                java.util.Date entryDate = originalFormat.parse(hmPharmHdr.entryDate);
                 entryDateLbl = targetFormat.format(entryDate);
             }catch(Exception e){
                 html += e.getMessage();
@@ -258,7 +258,7 @@
 
             html += "<tr>";
             html += "<td class = \"bold\">Description</td>";
-            html += "<td>"+ psPyHdr.pyDesc+ "</td>";
+            html += "<td>"+ hmPharmHdr.pyDesc+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -268,22 +268,22 @@
 
             html += "<tr>";
             html += "<td class = \"bold\">Period</td>";
-            html += "<td>"+ psPyHdr.pYear+ " - "+ psPyHdr.pMonth+ "</td>";
+            html += "<td>"+ hmPharmHdr.pYear+ " - "+ hmPharmHdr.pMonth+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\">Customer</td>";
-            html += "<td>"+ psPyHdr.fullName+ "</td>";
+            html += "<td>"+ hmPharmHdr.fullName+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\">Tendered</td>";
-            html += "<td>"+ system.numberFormat(psPyHdr.tender.toString())+ "</td>";
+            html += "<td>"+ system.numberFormat(hmPharmHdr.tender.toString())+ "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\">Change</td>";
-            html += "<td>"+ system.numberFormat(psPyHdr.change.toString())+ "</td>";
+            html += "<td>"+ system.numberFormat(hmPharmHdr.change.toString())+ "</td>";
             html += "</tr>";
 
             html += "</table>";
@@ -299,7 +299,7 @@
             String html = "";
             Sys system = new Sys();
 
-            if(system.recordExists(this.comCode+".VIEWPSPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
+            if(system.recordExists(this.comCode+".VIEWHMPHARMDTLS", "PYNO = '"+ this.pyNo+ "'")){
 
                 html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
 
@@ -325,7 +325,7 @@
 
                     String query;
 
-                    query = "SELECT * FROM "+this.comCode+".VIEWPSPYDTLS WHERE PYNO = '"+ this.pyNo+ "' ORDER BY ITEMCODE";
+                    query = "SELECT * FROM "+this.comCode+".VIEWHMPHARMDTLS WHERE PYNO = '"+ this.pyNo+ "' ORDER BY ITEMCODE";
 
                     ResultSet rs = stmt.executeQuery(query);
 

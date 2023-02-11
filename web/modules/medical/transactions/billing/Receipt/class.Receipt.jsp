@@ -918,7 +918,7 @@ final class Receipt{
         this.itemCode = request.getParameter("itemNoHd");
 
 //        html += gui.getAutoColsSearch("VIEWHMITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
-        html += gui.getAutoColsSearch(""+this.comCode+".ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+        html += gui.getAutoColsSearch(""+this.comCode+".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from "+this.comCode+".hmcats)", this.itemCode);
 
         return html;
     }
