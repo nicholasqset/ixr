@@ -4,6 +4,7 @@ package bean.medical;
 import bean.conn.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -21,12 +22,12 @@ public class MedMiscRcptHeader {
     public Boolean paid;
     public Double amount = 0.0;
     
-    public MedMiscRcptHeader(String rcptmNo){
+    public MedMiscRcptHeader(String rcptmNo, String schema){
         try{
             bean.sys.Sys system = new bean.sys.Sys();
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWHMMISCRCPTSHDR WHERE RCPTMNO = '"+rcptmNo+"' ";
+            String query = "SELECT * FROM "+schema+".VIEWHMMISCRCPTSHDR WHERE RCPTMNO = '"+rcptmNo+"' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.rcptmNo        = rs.getString("RCPTMNO");			
@@ -38,7 +39,7 @@ public class MedMiscRcptHeader {
                 this.docNo          = rs.getString("DOCNO");
 
 //                String amountMiscRcptDtls_   = system.getOne("HMRCPTSMISCDTLS", "SUM(AMOUNT)", "RCPTMNO = '"+ rcptmNo +"'");
-                String amountMiscRcptDtls_   = system.getOneAgt("HMRCPTSMISCDTLS", "SUM", "AMOUNT", "SM", "RCPTMNO = '"+ rcptmNo +"'");
+                String amountMiscRcptDtls_   = system.getOneAgt(""+schema+".HMRCPTSMISCDTLS", "SUM", "AMOUNT", "SM", "RCPTMNO = '"+ rcptmNo +"'");
 
                 if(amountMiscRcptDtls_ != null){
                     this.amount = Double.parseDouble(amountMiscRcptDtls_);
@@ -47,8 +48,8 @@ public class MedMiscRcptHeader {
                 this.paid               = rs.getBoolean("PAID");
 
             }
-        }catch(Exception e){
-            
+        }catch(NumberFormatException | SQLException e){
+            System.out.println(e.getMessage());
         }
     }
     

@@ -13,19 +13,22 @@
 <%@page import="bean.sys.Sys"%>
 <%
     final class RptReceipts{
+        HttpSession session = request.getSession();
+        String comCode      = session.getAttribute("comCode").toString();
         public String rcptmNo = request.getParameter("miscReceiptNo");
+        
         public String getReportHeader(){
             String html = "";
             Sys sys = new Sys();
-            String companyCode = system.getOne("CSCOPROFILE", "COMPANYCODE", "");
-            if(companyCode != null){
+//            String companyCode = sys.getOne("CSCOPROFILE", "COMPANYCODE", "");
+            if(this.comCode != null){
                 
-                Company company = new Company(companyCode);
+                Company company = new Company(this.comCode);
                 
                 String imgLogoSrc;
                 
-                if(system.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
-                    imgLogoSrc = "logo.jsp?code="+companyCode;
+                if(sys.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ this.comCode +"'") != null){
+                    imgLogoSrc = "logo.jsp?code="+this.comCode;
                 }else{
                     imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
                 }
@@ -33,7 +36,7 @@
                 html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";
 
                 html += "<tr>";
-                html += "<td align = \"center\" colspan = \"4\">"+ company.companyName +"</td>";
+                html += "<td align = \"center\" colspan = \"4\">"+ company.compName +"</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
@@ -76,7 +79,7 @@
                 html += "<tr>";
                 html += "<td>&nbsp;</td>";
                 html += "<td>&nbsp;</td>";
-                html += "<td>"+ system.getLogDate() +"</td>";
+                html += "<td>"+ sys.getLogDate() +"</td>";
                 html += "</tr>";
 
                 html += "</table>";
@@ -90,7 +93,7 @@
         public String getReportDetails(){
             String html = "";
             
-            MedMiscRcptHeader medMiscRcptHeader = new MedMiscRcptHeader(this.rcptmNo);
+            MedMiscRcptHeader medMiscRcptHeader = new MedMiscRcptHeader(this.rcptmNo, this.comCode);
                 
             html += "<table width = \"100%\" cellpadding = \"1\" cellspacing = \"0\" class = \"header\">";
 
@@ -127,7 +130,7 @@
         
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHMMISCRCPTSDTLS", "RCPTMNO = '"+ rcptmNo +"'")){
+        if(sys.recordExists(""+this.comCode+".VIEWHMMISCRCPTSDTLS", "RCPTMNO = '"+ rcptmNo +"'")){
             
             html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -149,7 +152,7 @@
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"'";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){

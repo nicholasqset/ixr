@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -10,14 +11,15 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Invoices{
-    String table        = "HMINVSDTLS";
-    String view         = "VIEWHMREGISTRATION";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMINVSDTLS";
+    String view         = comCode+".VIEWHMREGISTRATION";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String regNo        = request.getParameter("regNo");
@@ -37,7 +39,7 @@ final class Invoices{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -270,7 +272,7 @@ final class Invoices{
         
         html += gui.formInput("hidden", "id", 15, ""+this.id, "", "");
           
-        PatientProfile patientProfile = new PatientProfile(this.ptNo);
+        PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
         
         String regTypeLbl = "Unknown";
                     
@@ -343,7 +345,7 @@ final class Invoices{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWHMINVSHEADER", "REGNO = '"+ this.regNo +"'")){
+        if(sys.recordExists("VIEWHMINVSHEADER", "REGNO = '"+ this.regNo +"'")){
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
             html += "<tr>";
@@ -373,8 +375,8 @@ final class Invoices{
                     
                     Double amount = 0.00;
                     
-//                    String amountInvDtls_    = system.getOne("VIEWHMINVSDETAILS", "SUM(AMOUNT)", "INVNO = '"+ invNo +"'");
-                    String amountInvDtls_    = system.getOneAgt("VIEWHMINVSDETAILS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo +"'");
+//                    String amountInvDtls_    = sys.getOne("VIEWHMINVSDETAILS", "SUM(AMOUNT)", "INVNO = '"+ invNo +"'");
+                    String amountInvDtls_    = sys.getOneAgt("VIEWHMINVSDETAILS", "SUM", "AMOUNT", "SM", "INVNO = '"+ invNo +"'");
                     
                     if(amountInvDtls_ != null){
                         amount = Double.parseDouble(amountInvDtls_);
@@ -473,7 +475,7 @@ final class Invoices{
         
         MedInvHeader medInvHeader = new MedInvHeader(this.invNo);
         
-        if(system.recordExists("VIEWHMINVSDETAILS", "REGNO = '"+ this.regNo +"' AND INVNO = '"+ this.invNo +"'")){
+        if(sys.recordExists("VIEWHMINVSDETAILS", "REGNO = '"+ this.regNo +"' AND INVNO = '"+ this.invNo +"'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -606,12 +608,12 @@ final class Invoices{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
-        Medical medical = new Medical();
+        Medical medical = new Medical(this.comCode);
         HttpSession session = request.getSession();
         
         String rid      = request.getParameter("rid");
@@ -623,14 +625,14 @@ final class Invoices{
         
         try{
             if(rid == null){
-                if(! system.recordExists("HMINVSDTLS", "INVNO = '"+ this.invNo +"' AND ITEMCODE = '"+ itemCode +"'")){
+                if(! sys.recordExists("HMINVSDTLS", "INVNO = '"+ this.invNo +"' AND ITEMCODE = '"+ itemCode +"'")){
                     saved = medical.createInvDtls(this.regNo, invType, itemCode, qty, session, request);
                 }else{
                     obj.put("success", new Integer(0));
                     obj.put("message", "This entry already made.");
                 }
             }else{
-                system.delete("HMINVSDTLS", "INVNO = '"+ this.invNo +"' AND ITEMCODE = '"+ itemCode +"'");
+                sys.delete("HMINVSDTLS", "INVNO = '"+ this.invNo +"' AND ITEMCODE = '"+ itemCode +"'");
                 saved = medical.createInvDtls(this.regNo, invType, itemCode, qty, session, request);
             }
             
@@ -655,8 +657,7 @@ final class Invoices{
         return html;
     }
     
-    public Object delInvItem(){
-        
+    public JSONObject delInvItem() throws Exception{
         JSONObject obj = new JSONObject();
          
         String rid      = request.getParameter("rid");

@@ -1,5 +1,13 @@
+<%@page import="bean.ic.IC"%>
+<%@page import="bean.ic.ICItem"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.medical.MedMiscRcptHeader"%>
-<%@page import="bean.medical.MedicalItem"%>
 <%@page import="bean.medical.Medical"%>
 <%@page import="bean.medical.MedicalReceipt"%>
 <%@page import="bean.medical.MedInvHeader"%>
@@ -8,17 +16,15 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class MiscReceipts{
-    String table        = "HMRCPTSMISCHDR";
-    String view         = "VIEWHMMISCRCPTSHDR";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMRCPTSMISCHDR";
+    String view         = comCode+".VIEWHMMISCRCPTSHDR";
         
     String rcptmNo      = request.getParameter("miscReceiptNo");
     String itemCode     = request.getParameter("item");
@@ -40,7 +46,7 @@ final class MiscReceipts{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -236,7 +242,7 @@ final class MiscReceipts{
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM VIEWHMMISCRCPTSDTLS WHERE ID = '"+ this.rid +"'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE ID = '"+ this.rid +"'";
                 ResultSet rs = stmt.executeQuery(query);
                 while(rs.next()){
                     this.rcptmNo        = rs.getString("RCPTMNO");		
@@ -264,7 +270,7 @@ final class MiscReceipts{
         
         html += "<tr>";
 	html += "<td width = \"22%\" nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "") + gui.formLabel("item", " Medical Item") +"</td>";
-        html += "<td>"+ gui.formSelect("item", "HMITEMS", "ITEMCODE", "ITEMNAME", "", "", this.rid != null? this.itemCode: "", "", false) +"</td>";
+        html += "<td>"+ gui.formSelect("item", this.comCode+".icITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from "+this.comCode+".hmcats)", this.rid != null? this.itemCode: "", "", false) +"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -274,7 +280,8 @@ final class MiscReceipts{
         
         html += "<tr>";
 	html += "<td >"+ gui.formIcon(request.getContextPath(),"coins.png", "", "") + gui.formLabel("amount", " Amount")+"</td>";
-	html += "<td>"+ gui.formInput("text", "amount", 15, this.rid != null? ""+this.amount: "", "", "disabled") +"</td>";
+//	html += "<td>"+ gui.formInput("text", "amount", 15, this.rid != null? ""+this.amount: "", "", "disabled") +"</td>";
+	html += "<td>"+ gui.formInput("text", "amount", 15, this.rid != null? ""+this.amount: "", "", "") +"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -312,9 +319,9 @@ final class MiscReceipts{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        MedMiscRcptHeader medMiscRcptHeader = new MedMiscRcptHeader(this.rcptmNo);
+        MedMiscRcptHeader medMiscRcptHeader = new MedMiscRcptHeader(this.rcptmNo, this.comCode);
         
-        if(system.recordExists("VIEWHMMISCRCPTSDTLS", "RCPTMNO = '"+ this.rcptmNo +"'")){
+        if(sys.recordExists(""+this.comCode+".VIEWHMMISCRCPTSDTLS", "RCPTMNO = '"+ this.rcptmNo +"'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -338,7 +345,7 @@ final class MiscReceipts{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ this.rcptmNo +"'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ this.rcptmNo +"'";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -397,17 +404,17 @@ final class MiscReceipts{
         return html;
     }
     
-    public Object editMiscReceiptDtls(){
+    public JSONObject editMiscReceiptDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("VIEWHMMISCRCPTSDTLS", "ID = "+ this.rid +"")){
+        if(sys.recordExists(""+this.comCode+".VIEWHMMISCRCPTSDTLS", "ID = "+ this.rid +"")){
             try{
                 
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWHMMISCRCPTSDTLS WHERE ID = "+ this.rid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE ID = "+ this.rid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -444,7 +451,7 @@ final class MiscReceipts{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists(this.view, "RCPTMNO = '"+ this.rcptmNo +"'")){
+        if(sys.recordExists(this.view, "RCPTMNO = '"+ this.rcptmNo +"'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -469,7 +476,7 @@ final class MiscReceipts{
                     String rcptmNo      = rs.getString("RCPTMNO");
                     Integer paid        = rs.getInt("PAID");
                     
-                    Double amount       = Double.parseDouble(system.getOneAgt("VIEWHMMISCRCPTSDTLS", "SUM", "AMOUNT", "SM", "RCPTMNO = '"+ this.rcptmNo +"'"));
+                    Double amount       = Double.parseDouble(sys.getOneAgt(""+this.comCode+".VIEWHMMISCRCPTSDTLS", "SUM", "AMOUNT", "SM", "RCPTMNO = '"+ this.rcptmNo +"'"));
                     
                     String paidLbl      = paid == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
                     
@@ -504,26 +511,26 @@ final class MiscReceipts{
         return html;
     }
     
-    public Object saveMiscReceiptDtls(){
-        HttpSession session = request.getSession();
-        
+    public JSONObject saveMiscReceiptDtls() throws Exception{
         JSONObject obj = new JSONObject();
+        HttpSession session = request.getSession();
         
         Sys sys = new Sys();
         
-        Medical medical = new Medical();
+//        Medical medical = new Medical(this.comCode);
         
-        Double rate = medical.getItemRate(system.getPeriodYear(), system.getPeriodMonth(), this.itemCode);
-        obj.put("rate", rate);
-        MedicalItem medicalItem = new MedicalItem(itemCode);
+//        Double rate = medical.getItemRate(sys.getPeriodYear(this.comCode), sys.getPeriodMonth(this.comCode), this.itemCode);
+//        obj.put("rate", rate);
+         
+//        ICItem medicalItem = new ICItem(itemCode, this.comCode);
         Double vatRate = 0.00;
 
-        if(medicalItem.vatable){
-            FinConfig finConfig = new FinConfig();
-            vatRate = finConfig.vatRate / 100;
-        }
+//        if(medicalItem.vatable){
+//            FinConfig finConfig = new FinConfig(this.comCode);
+//            vatRate = finConfig.vatRate / 100;
+//        }
 
-        this.amount = this.qty * rate;
+//        this.amount = this.qty * rate;
 
         Double vatAmount = vatRate * this.amount;
         Double netAmount = this.amount - vatAmount;
@@ -533,15 +540,17 @@ final class MiscReceipts{
             Statement  stmt = conn.createStatement();
 
             String query;
+            
+             Double rate = this.amount / this.qty;
 
             if(this.rcptmNo == null){
 
-                this.rcptmNo = system.getNextNo(this.table, "ID", "", "RCPM", 6);
+                this.rcptmNo = sys.getNextNo(this.table, "ID", "", "RCPM", 6);
                 this.createMiscReceiptHdr(this.rcptmNo);
 
-                Integer id      = system.generateId("HMRCPTSMISCDTLS", "ID");
+                Integer id      = sys.generateId(""+this.comCode+".HMRCPTSMISCDTLS", "ID");
 
-                query = "INSERT INTO HMRCPTSMISCDTLS "
+                query = "INSERT INTO "+this.comCode+".HMRCPTSMISCDTLS "
                         + "(ID, RCPTMNO, ITEMCODE, QTY, RATE, VATRATE, VATAMOUNT, NETAMOUNT, AMOUNT, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -555,17 +564,17 @@ final class MiscReceipts{
                         + vatAmount +", "
                         + netAmount +", "
                         + this.amount +", "
-                        + "'"+ system.getLogUser(session) +"', "
-                        + "'"+ system.getLogDate() +"', "
-                        + "'"+ system.getLogTime() +"', "
-                        + "'"+ system.getClientIpAdr(request) +"'"
+                        + "'"+ sys.getLogUser(session) +"', "
+                        + "'"+ sys.getLogDate() +"', "
+                        + "'"+ sys.getLogTime() +"', "
+                        + "'"+ sys.getClientIpAdr(request) +"'"
                         + ")";
             }else{
                 if(this.rid == null){
 
-                    Integer id      = system.generateId("HMRCPTSMISCDTLS", "ID");
+                    Integer id      = sys.generateId(""+this.comCode+".HMRCPTSMISCDTLS", "ID");
 
-                    query = "INSERT INTO HMRCPTSMISCDTLS "
+                    query = "INSERT INTO "+this.comCode+".HMRCPTSMISCDTLS "
                             + "(ID, RCPTMNO, ITEMCODE, QTY, RATE, VATRATE, VATAMOUNT, NETAMOUNT, AMOUNT, "
                             + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                             + "VALUES"
@@ -579,13 +588,13 @@ final class MiscReceipts{
                             + vatAmount +", "
                             + netAmount +", "
                             + this.amount +", "
-                            + "'"+ system.getLogUser(session) +"', "
-                            + "'"+ system.getLogDate() +"', "
-                            + "'"+ system.getLogTime() +"', "
-                            + "'"+ system.getClientIpAdr(request) +"'"
+                            + "'"+ sys.getLogUser(session) +"', "
+                            + "'"+ sys.getLogDate() +"', "
+                            + "'"+ sys.getLogTime() +"', "
+                            + "'"+ sys.getClientIpAdr(request) +"'"
                             + ")";
                 }else{
-                    query = "UPDATE HMRCPTSMISCDTLS SET "
+                    query = "UPDATE "+this.comCode+".HMRCPTSMISCDTLS SET "
                             + "ITEMCODE         = '"+ this.itemCode +"', "
                             + "QTY              = "+ this.qty +", "
                             + "RATE             = "+ rate +", "
@@ -593,10 +602,10 @@ final class MiscReceipts{
                             + "VATAMOUNT        = "+ vatAmount +", "
                             + "NETAMOUNT        = "+ netAmount +", "
                             + "AMOUNT           = "+ this.amount +", "
-                            + "AUDITUSER        = '"+ system.getLogUser(session) +"', "
-                            + "AUDITDATE        = '"+ system.getLogDate() +"', "
-                            + "AUDITTIME        = '"+ system.getLogTime() +"', "
-                            + "AUDITIPADR       = '"+ system.getClientIpAdr(request) +"' "
+                            + "AUDITUSER        = '"+ sys.getLogUser(session) +"', "
+                            + "AUDITDATE        = '"+ sys.getLogDate() +"', "
+                            + "AUDITTIME        = '"+ sys.getLogTime() +"', "
+                            + "AUDITIPADR       = '"+ sys.getClientIpAdr(request) +"' "
 
                             + "WHERE ID         = '"+ this.rid +"'";
                 }
@@ -628,27 +637,27 @@ final class MiscReceipts{
         HttpSession session = request.getSession();
         Sys sys = new Sys();
         
-        if(! system.recordExists("HMRCPTSMISCHDR", "RCPTMNO = '"+ rcptmNo +"'")){
+        if(! sys.recordExists(""+this.comCode+".HMRCPTSMISCHDR", "RCPTMNO = '"+ rcptmNo +"'")){
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt  = conn.createStatement();
                 
-                Integer id      = system.generateId("HMRCPTSMISCHDR", "ID");
+                Integer id      = sys.generateId(""+this.comCode+".HMRCPTSMISCHDR", "ID");
 
-                String query = "INSERT INTO HMRCPTSMISCHDR "
+                String query = "INSERT INTO "+this.comCode+".HMRCPTSMISCHDR "
                         + "(ID, RCPTMNO, PYEAR, PMONTH, RCPTMDATE, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
                         + "("
                         + id +", "
                         + "'"+ rcptmNo +"', "
-                        + system.getPeriodYear()+ ", "
-                        + system.getPeriodMonth()+ ", "
-                        + "'"+ system.getLogDate() +"', "
-                        + "'"+ system.getLogUser(session) +"', "
-                        + "'"+ system.getLogDate() +"', "
-                        + "'"+ system.getLogTime() +"', "
-                        + "'"+ system.getClientIpAdr(request) +"'"
+                        + sys.getPeriodYear(this.comCode)+ ", "
+                        + sys.getPeriodMonth(this.comCode)+ ", "
+                        + "'"+ sys.getLogDate() +"', "
+                        + "'"+ sys.getLogUser(session) +"', "
+                        + "'"+ sys.getLogDate() +"', "
+                        + "'"+ sys.getLogTime() +"', "
+                        + "'"+ sys.getClientIpAdr(request) +"'"
                         + ")";
 
                 headerCreated = stmt.executeUpdate(query);
@@ -669,7 +678,7 @@ final class MiscReceipts{
         return html;
     }
     
-    public Object deleteMiscReceiptDtls(){
+    public JSONObject deleteMiscReceiptDtls() throws Exception{
          
          JSONObject obj = new JSONObject();
          
@@ -678,7 +687,7 @@ final class MiscReceipts{
              Statement stmt = conn.createStatement();
             
             if(this.rid != null){
-                String query = "DELETE FROM HMRCPTSMISCDTLS WHERE ID = "+this.rid;
+                String query = "DELETE FROM "+this.comCode+".HMRCPTSMISCDTLS WHERE ID = "+this.rid;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){
@@ -707,7 +716,7 @@ final class MiscReceipts{
         
         Gui gui = new Gui();
         
-        MedMiscRcptHeader medMiscRcptHeader = new MedMiscRcptHeader(this.rcptmNo);
+        MedMiscRcptHeader medMiscRcptHeader = new MedMiscRcptHeader(this.rcptmNo, this.comCode);
         
         html += gui.formStart("frmMiscReceiptHdr", "void%200", "post", "onSubmit=\"javascript:return false;\"");
         
@@ -722,7 +731,7 @@ final class MiscReceipts{
         
         html += "<tr>";
 	html += "<td class = \"bold\" nowrap>"+gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+gui.formLabel("payMode", " Payment Mode")+"</td>";
-	html += "<td >"+gui.formSelect("payMode", "FNPAYMODES", "PMCODE", "PMNAME", "", "", medMiscRcptHeader.pmCode != null? medMiscRcptHeader.pmCode: "", "", false)+"</td>";
+	html += "<td >"+gui.formSelect("payMode", ""+this.comCode+".FNPAYMODES", "PMCODE", "PMNAME", "", "", medMiscRcptHeader.pmCode != null? medMiscRcptHeader.pmCode: "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -750,16 +759,14 @@ final class MiscReceipts{
         return html;
     }
     
-    public Object save(){
-        
-        HttpSession session = request.getSession();
-        
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
+        HttpSession session = request.getSession();
         
         Sys sys = new Sys();
         
         try{
-            if(system.recordExists(this.table, "RCPTMNO = '"+ this.rcptmNo +"'")){
+            if(sys.recordExists(this.table, "RCPTMNO = '"+ this.rcptmNo +"'")){
                 if(this.getStockAvailability(this.rcptmNo).trim().equals("")){
                     Connection conn = ConnectionProvider.getConnection();
                     Statement  stmt = conn.createStatement();
@@ -770,10 +777,10 @@ final class MiscReceipts{
                                     + "PMCODE           = '"+ this.pmCode +"', "
                                     + "DOCNO            = '"+ this.docNo +"', "
                                     + "PAID             = "+ 1 +", "
-                                    + "AUDITUSER        = '"+ system.getLogUser(session) +"', "
-                                    + "AUDITDATE        = '"+ system.getLogDate() +"', "
-                                    + "AUDITTIME        = '"+ system.getLogTime() +"', "
-                                    + "AUDITIPADR       = '"+ system.getClientIpAdr(request) +"' "
+                                    + "AUDITUSER        = '"+ sys.getLogUser(session) +"', "
+                                    + "AUDITDATE        = '"+ sys.getLogDate() +"', "
+                                    + "AUDITTIME        = '"+ sys.getLogTime() +"', "
+                                    + "AUDITIPADR       = '"+ sys.getClientIpAdr(request) +"' "
 
                                     + "WHERE RCPTMNO    = '"+ this.rcptmNo +"'";
 
@@ -820,7 +827,8 @@ final class MiscReceipts{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
 
-            String query = "SELECT * FROM VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"' AND ISDRUG = 1";
+//            String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"' AND ISDRUG = 1";
+            String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"' ";
 
             ResultSet rs = stmt.executeQuery(query);
 
@@ -829,14 +837,14 @@ final class MiscReceipts{
                 String itemCode     = rs.getString("ITEMCODE");
                 String itemName     = rs.getString("ITEMNAME");
 
-                String balStr = system.getOne("HMINVENTBAL", "BAL", "PYEAR = "+ system.getPeriodYear()+" AND PMONTH = "+ system.getPeriodMonth()+" AND ITEMCODE = '"+ itemCode +"'");
+                String balStr = sys.getOne(this.comCode+".HMINVENTBAL", "BAL", "PYEAR = "+ sys.getPeriodYear(this.comCode)+" AND PMONTH = "+ sys.getPeriodMonth(this.comCode)+" AND ITEMCODE = '"+ itemCode +"'");
                 balStr = (balStr != null && ! balStr.trim().equals(""))? balStr: "0";
 
                 Double qtyBal = Double.parseDouble(balStr);
 
                 if(qty > qtyBal){
-                    message += count +". Medication '"+ itemName+"' out of stock. Deficit = '"+ (qty - qtyBal) +"'.";
-                    message += "<br>";
+//                    message += count +". Medication '"+ itemName+"' out of stock. Deficit = '"+ (qty - qtyBal) +"'.";
+//                    message += "<br>";
                 }
 
                 count++;
@@ -853,23 +861,27 @@ final class MiscReceipts{
     public Integer validateStock(String rcptNo){
         Integer validateStock = null;
         
-        HttpSession session = request.getSession();
-        Medical medical = new Medical();
+//        HttpSession session = request.getSession();
+//        Medical medical = new Medical(this.comCode);
+
+        IC iC = new IC(this.comCode);
         
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
 
-            String query = "SELECT * FROM VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"'";
+            String query = "SELECT * FROM "+this.comCode+".VIEWHMMISCRCPTSDTLS WHERE RCPTMNO = '"+ rcptmNo +"'";
             ResultSet rs = stmt.executeQuery(query);
 
             while(rs.next()){
                 Double qty          = rs.getDouble("QTY");
                 String itemCode     = rs.getString("ITEMCODE");
 
-                if(this.createItemDed(rcptNo, itemCode, qty) == 1){
-                    medical.reduceItemBalance(itemCode, qty, session, request);
-                }
+//                if(this.createItemDed(rcptNo, itemCode, qty) == 1){
+//                    medical.reduceItemBalance(itemCode, qty, session, request);
+//                }
+                
+                iC.effectItemQty(itemCode, qty, false, comCode);
 
             }
         }catch (Exception e){
@@ -884,17 +896,17 @@ final class MiscReceipts{
         HttpSession session = request.getSession();
         Sys sys = new Sys();
         
-        Integer pYear   = system.getPeriodYear();
-        Integer pMonth  = system.getPeriodMonth();
+        Integer pYear   = sys.getPeriodYear(this.comCode);
+        Integer pMonth  = sys.getPeriodMonth(this.comCode);
         
-        if(! system.recordExists("HMINVENTDED", "DOCNO = '"+ docNo +"' AND ITEMCODE = '"+ itemCode +"'")){
+        if(! sys.recordExists(""+this.comCode+".HMINVENTDED", "DOCNO = '"+ docNo +"' AND ITEMCODE = '"+ itemCode +"'")){
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt  = conn.createStatement();
                 
-                Integer id      = system.generateId("HMINVENTDED", "ID");
+                Integer id      = sys.generateId("HMINVENTDED", "ID");
 
-                String query = "INSERT INTO HMINVENTDED "
+                String query = "INSERT INTO "+this.comCode+".HMINVENTDED "
                         + "(ID, DOCNO, PYEAR, PMONTH, ITEMCODE, QTY, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                         + "VALUES"
@@ -905,10 +917,10 @@ final class MiscReceipts{
                         + pMonth +", "
                         + "'"+ itemCode +"', "
                         + qty +", "
-                        + "'"+ system.getLogUser(session) +"', "
-                        + "'"+ system.getLogDate() +"', "
-                        + "'"+ system.getLogTime() +"', "
-                        + "'"+ system.getClientIpAdr(request) +"'"
+                        + "'"+ sys.getLogUser(session) +"', "
+                        + "'"+ sys.getLogDate() +"', "
+                        + "'"+ sys.getLogTime() +"', "
+                        + "'"+ sys.getClientIpAdr(request) +"'"
                         + ")";
 
                 createItem = stmt.executeUpdate(query);
