@@ -1,3 +1,8 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.gui.Gui"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
 <%@page import="org.json.JSONObject"%>
@@ -7,11 +12,8 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="java.util.*"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
     final class OutPatients {
@@ -283,7 +285,7 @@
                     this.nrNo = rs.getString("NRNO");
                     nrName = rs.getString("NRNAME");
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 html += e.getMessage();
             }
 
@@ -411,7 +413,7 @@
                     height = rs.getString("HEIGHT");
                     weight = rs.getString("WEIGHT");
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 html += e.getMessage();
             }
 
@@ -528,7 +530,7 @@
                         complName = rs.getString("COMPLNAME");
                         remarks = rs.getString("REMARKS");
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     html += e.getMessage();
                 }
 
@@ -752,7 +754,7 @@
                         remarks = rs.getString("REMARKS");
                         results = rs.getString("RESULTS");
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     html += e.getMessage();
                 }
 
@@ -768,6 +770,11 @@
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
+            
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItemCode", " Lab Item") + "</td>";
+            html += "<td >"+gui.formSelect("labItemCode", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from "+this.comCode+".hmcats where islab = 1)", labItemCode, "", false)+"</td>";
+            html += "</tr>";
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItem", " Lab Item") + "</td>";
@@ -1004,7 +1011,7 @@
                         diagName = rs.getString("DIAGNAME");
                         remarks = rs.getString("REMARKS");
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     html += e.getMessage();
                 }
 
@@ -1812,7 +1819,7 @@
                     VAT vAT = new VAT(this.amount, taxInclusive, this.comCode);
 
                     if (this.sid == null) {
-                        Integer sid = sys.generateId("HMPYDTLS", "ID");
+                        Integer sid = sys.generateId(this.comCode+".HMPYDTLS", "ID");
 
                         query = "INSERT INTO " + this.comCode + ".HMPYDTLS "
                                 + "(ID, PYNO, ITEMCODE, "
