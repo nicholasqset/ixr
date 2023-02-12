@@ -18,6 +18,7 @@ final class Category{
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String catCode      = request.getParameter("category");
+    String islab      = request.getParameter("islab");
     
     public String getGrid(){
         String html = "";
@@ -178,6 +179,7 @@ final class Category{
         Gui gui = new Gui();
         
         String catName = "";
+        String islab = "";
         
         if(this.id != null){
             try{
@@ -188,11 +190,14 @@ final class Category{
                 while(rs.next()){
                     this.catCode        = rs.getString("CATCODE");		
                     catName             = rs.getString("CATNAME");		
+                    this.islab          = rs.getString("ISLAB");		
                 }
             }catch (Exception e){
                 html += e.getMessage();
             }
         }
+        
+        islab = (this.islab != null && this.islab.equals("1"))? "checked": "";
         
         html += gui.formStart("frmModule", "void%200", "post", "onSubmit = \"javascript: return false;\"");
         
@@ -205,6 +210,11 @@ final class Category{
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "ui-breadcrumb-bread.png", "", "")+ gui.formLabel("category", " Item Category")+ "</td>";
 	html += "<td>"+ gui.formSelect("category", this.comCode+".ICITEMCATS", "CATCODE", "CATNAME", null, null, this.id != null? this.catCode: "", null, false)+ "</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("islab", " Is Lab")+ "</td>";
+	html += "<td>"+ gui.formCheckBox("islab", islab, "", "", "", "")+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -231,6 +241,8 @@ final class Category{
         
         Sys sys = new Sys();
         
+        Integer islab = this.islab != null && this.islab.equals("on")? 1: 0;
+        
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
@@ -240,16 +252,18 @@ final class Category{
             if(this.id == null){
                 Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
-                        + "(ID, CATCODE)"
+                        + "(ID, CATCODE, islab)"
                         + "VALUES"
                         + "("
                         + id+ ","
-                        + "'"+ this.catCode+ "'"
+                        + "'"+ this.catCode+ "',"
+                        + ""+ islab+ ""
                         + ")";
             }else{
                 
                 query = "UPDATE "+ this.table+ " SET "
-                        + "CATCODE     = '"+ this.catCode+ "' "
+                        + "CATCODE     = '"+ this.catCode+ "', "
+                        + "islab     = '"+ islab+ "' "
                         + "WHERE ID    = "+ this.id;
             }
             

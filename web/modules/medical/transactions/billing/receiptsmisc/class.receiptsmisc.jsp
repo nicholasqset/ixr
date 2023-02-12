@@ -303,7 +303,7 @@ final class MiscReceipts{
         html += "<tr>";
 	html += "<td>&nbsp;</td>";
 	html += "<td>";
-	html += gui.formButton(request.getContextPath(), "button", "btnSaveMiscReceiptHdr", "Save", "save.png", "onclick = \"miscReceipt.saveMiscReceiptDtls('item quantity');\"", "");
+	html += gui.formButton(request.getContextPath(), "button", "btnSaveMiscReceiptHdr", "Save", "save.png", "onclick = \"miscReceipt.saveMiscReceiptDtls('item quantity amount');\"", "");
 	html += "</td>";
 	html += "</tr>";
         

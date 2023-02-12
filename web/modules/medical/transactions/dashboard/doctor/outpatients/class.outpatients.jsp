@@ -763,9 +763,14 @@
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
+            
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItemCode", " Lab Item") + "</td>";
+            html += "<td >"+gui.formSelect("labItemCode", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from "+this.comCode+".hmcats where islab = 1)", labItemCode, "", false)+"</td>";
+            html += "</tr>";
 
             html += "<tr>";
-            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItem", " Lab Item") + "</td>";
+            html += "<td width = \"22%\" class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItem", " Lab Item Description") + "</td>";
 //        html += "<td >"+gui.formSelect("labItem", ""+this.comCode+".HMCOMPLAINTS", "LABITEMCODE", "LABITEMNAME", "", "", labItemCode, "", false)+"</td>";
             html += "<td >" + gui.formInput("textarea", "labItem", 40, labItemName, "", "") + "</td>";
             html += "</tr>";
@@ -801,7 +806,7 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('labItem');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('labItemCode labItem');\"", "");
             if (rid != null) {
                 html += gui.formButton(request.getContextPath(), "button", "btnDelLab", "Delete", "delete.png", "onclick = \"dashboard.delLab(" + rid + ", '" + labItemName + "', '" + this.regNo + "');\"", "");
             }
@@ -822,7 +827,8 @@
             HttpSession session = request.getSession();
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
-            String labItemCode = request.getParameter("labItem");
+            String labItemCode = request.getParameter("labItemCode");
+            String labItemName = request.getParameter("labItem");
             String remarks = request.getParameter("remarks");
 
             try {
@@ -839,9 +845,8 @@
                             + "("
                             + id + ", "
                             + "'" + this.regNo + "', "
-                            //                    + "'"+ labItemCode +"', "
-                            + "'" + id + "', "
                             + "'" + labItemCode + "', "
+                            + "'" + labItemName + "', "
                             + "'" + remarks + "', "
                             + "'" + sys.getLogUser(session) + "', "
                             + "'" + sys.getLogDate() + "', "
@@ -851,8 +856,8 @@
 
                 } else {
                     query = "UPDATE " + this.comCode + ".HMPTLAB SET "
-                            //                    + "LABITEMCODE    = '"+ labItemCode +"', "
-                            + "LABITEMNAME    = '" + labItemCode + "', "
+                            + "LABITEMCODE    = '" + labItemCode + "', "
+                            + "LABITEMNAME    = '" + labItemName + "', "
                             + "REMARKS      = '" + remarks + "' "
                             + "WHERE ID     = " + rid + "";
                 }

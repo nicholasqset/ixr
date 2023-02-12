@@ -254,7 +254,7 @@ final class OPD{
 	html += "<div style=\"padding-left: 10px; padding-top: 37px; border: 0;\" >";
         
         if(this.id == null){
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Register", "save.png", "onclick = \"registration.save('ptNo regType drNo nrNo');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Register", "save.png", "onclick = \"registration.save('ptNo regType');\"", "");
         }
         
 //	html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getGrid();\"", "");
@@ -505,7 +505,7 @@ final class OPD{
             
             String saveErrMsg = "";
             
-            if(sys.recordExists("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'")){
+            if(sys.recordExists(this.comCode+".VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'")){
                 if(this.regType.equals("N")){
                     rts = 0;
                     saveErrMsg = "Try 'Return Patient'";
@@ -531,7 +531,8 @@ final class OPD{
                         + "'OUT', "
                         + sys.getPeriodYear(this.comCode)+ ", "
                         + sys.getPeriodMonth(this.comCode)+ ", "
-                        + "'"+sys.getLogDate()+"', "
+//                        + "'"+sys.getLogDate()+"', "
+                        + "now(), "
                         + "'"+this.drNo+"', "
                         + "'"+this.nrNo+"', "
                         + "'"+sys.getLogUser(session)+"', "
@@ -894,7 +895,7 @@ final class OPD{
         this.itemCode = request.getParameter("itemNoHd");
 
 //        html += gui.getAutoColsSearch("VIEWHMITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
-        html += gui.getAutoColsSearch(this.comCode+ ".ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+        html += gui.getAutoColsSearch(this.comCode+ ".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from "+this.comCode+".hmcats)", this.itemCode);
 
         return html;
     }
@@ -1046,7 +1047,8 @@ final class OPD{
                         + "'"+ this.regNo+ "', "
                         + "'"+ this.pyNo+ "', "
                         + "'"+ this.pyDesc+ "', "
-                        + "'"+ this.entryDate+ "', "
+//                        + "'"+ this.entryDate+ "', "
+                        + "now(), "
                         + this.pYear+", "
                         + this.pMonth+ ", "
                         + "'0', "

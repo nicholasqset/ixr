@@ -141,6 +141,8 @@
 
             }
             
+            results = (results.equals("null") || results == null || results.equals(""))? "-1": results;
+            
             String[] arrOfLabitemname = labitemname.split("\n");
             labitemname = String.join("<br>", arrOfLabitemname);
             
