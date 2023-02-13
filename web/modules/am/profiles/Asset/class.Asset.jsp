@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.am.AssetProfile"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -7,14 +8,15 @@
 <%@page import="bean.gui.Gui"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Asset{
-    String table            = "AMASSETS";
-    String view             = "VIEWAMASSETS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMASSETS";
+    String view             = comCode+".VIEWAMASSETS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String assetNo          = this.id != null? request.getParameter("assetNoHd"): request.getParameter("assetNo");
@@ -51,7 +53,7 @@ final class Asset{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -195,7 +197,7 @@ final class Asset{
                     html += "<td>"+ fullName+ "</td>";
                     html += "<td>"+ aqNo+ "</td>";
                     html += "<td>"+ catName+ "</td>";
-                    html += "<td>"+ system.numberFormat(opc.toString())+ "</td>";
+                    html += "<td>"+ sys.numberFormat(opc.toString())+ "</td>";
                     html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
 
@@ -410,7 +412,7 @@ final class Asset{
         return html;
     }
     
-    public Object getAssetProfile(){
+    public JSONObject getAssetProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.assetNo == null || this.assetNo.equals("")){
@@ -487,7 +489,7 @@ final class Asset{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -560,7 +562,7 @@ final class Asset{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -636,7 +638,7 @@ final class Asset{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("AMASSETDOCS", "ASSETNO = '"+ this.assetNo+ "'")){
+        if(sys.recordExists("AMASSETDOCS", "ASSETNO = '"+ this.assetNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -684,9 +686,9 @@ final class Asset{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj      = new JSONObject();
-        System system       = new System();
+        Sys sys       = new Sys();
         HttpSession session = request.getSession();
         
         try{
@@ -719,10 +721,10 @@ final class Asset{
                         + "INSDATE          = '"+ this.insDate+ "', "
                         + "INSV             = "+ this.insV+ ", "
                         + "COMMENTS         = '"+ this.comments+ "', "
-                        + "AUDITUSER        = '"+ system.getLogUser(session)+ "', "
-                        + "AUDITDATE        = '"+ system.getLogDate()+ "', "
-                        + "AUDITTIME        = '"+ system.getLogTime()+ "', "
-                        + "AUDITIPADR       = '"+ system.getClientIpAdr(request)+ "' "
+                        + "AUDITUSER        = '"+ sys.getLogUser(session)+ "', "
+                        + "AUDITDATE        = '"+ sys.getLogDate()+ "', "
+                        + "AUDITTIME        = '"+ sys.getLogTime()+ "', "
+                        + "AUDITIPADR       = '"+ sys.getClientIpAdr(request)+ "' "
                         + "WHERE ASSETNO    = '"+ this.assetNo+ "'";
             }
             
@@ -744,7 +746,7 @@ final class Asset{
         return obj;
     }
     
-    public Object purgePhoto(){
+    public JSONObject purgePhoto() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
@@ -775,7 +777,7 @@ final class Asset{
         return obj;
     } 
     
-    public Object purgeDoc(){
+    public JSONObject purgeDoc() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

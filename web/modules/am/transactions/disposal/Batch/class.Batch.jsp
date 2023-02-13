@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.am.AM"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -5,13 +6,14 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Batch{
-    String table        = "AMDIBATCHES";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMDIBATCHES";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     Integer batchNo     = (request.getParameter("batchNo") != null && ! request.getParameter("batchNo").trim().equals(""))? Integer.parseInt(request.getParameter("batchNo")): null;
@@ -25,7 +27,7 @@ final class Batch{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -181,7 +183,7 @@ final class Batch{
                     
                     Double batchTotal = 0.0;
 //                    
-                    String batchTotal_ = system.getOneAgt("AMDIDTLS", "SUM", "DIV", "SM", "BATCHNO = '"+ batchNo+ "'");
+                    String batchTotal_ = sys.getOneAgt("AMDIDTLS", "SUM", "DIV", "SM", "BATCHNO = '"+ batchNo+ "'");
                     if(batchTotal_ != null){
                         batchTotal = Double.parseDouble(batchTotal_);
                     }
@@ -194,7 +196,7 @@ final class Batch{
                     html += "<td>"+ batchDesc+ "</td>";
                     html += "<td>"+ rtpUi+ "</td>";
                     html += "<td>"+ postedUi+ "</td>";
-                    html += "<td>"+ system.numberFormat(batchTotal.toString())+ "</td>";
+                    html += "<td>"+ sys.numberFormat(batchTotal.toString())+ "</td>";
                     html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
 
@@ -275,7 +277,7 @@ final class Batch{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -287,7 +289,7 @@ final class Batch{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, BATCHNO, BATCHDESC, DATECREATED, DATEEDITED)"
@@ -296,14 +298,14 @@ final class Batch{
                         + id+ ","
                         + id+ ","
                         + "'"+ this.batchDesc+ "', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogDate()+ "'"
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogDate()+ "'"
                         + ")";
             }else{
                 
                 query = "UPDATE "+ this.table+ " SET "
                         + "BATCHDESC    = '"+ this.batchDesc+ "', "
-                        + "DATEEDITED   = '"+ system.getLogDate()+ "'"
+                        + "DATEEDITED   = '"+ sys.getLogDate()+ "'"
                         + "WHERE ID     = "+ this.id;
             }
             
@@ -328,7 +330,7 @@ final class Batch{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
@@ -363,7 +365,7 @@ final class Batch{
         
     }
     
-    public Object rtp(){
+    public JSONObject rtp() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
          
@@ -374,7 +376,7 @@ final class Batch{
             Integer rts = 1;
             String msg = "Ok";
             
-            String batchTotal_ = system.getOneAgt("AMDIDTLS", "SUM", "DIV", "SM", "BATCHNO = '"+ batchNo+ "'");
+            String batchTotal_ = sys.getOneAgt("AMDIDTLS", "SUM", "DIV", "SM", "BATCHNO = '"+ batchNo+ "'");
             batchTotal_ = batchTotal_ != null && batchTotal_.trim() != ""? batchTotal_: "0";
             Double batchTotal = Double.parseDouble(batchTotal_);
             if(batchTotal == 0){
@@ -412,7 +414,7 @@ final class Batch{
         return obj;
     }
     
-    public Object post(){
+    public JSONObject post() throws Exception{
          JSONObject obj = new JSONObject();
          HttpSession session = request.getSession();
          
@@ -420,7 +422,7 @@ final class Batch{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            AM aM = new AM();
+            AM aM = new AM(this.comCode);
             
             Integer rts = 1;
             String msg = "";

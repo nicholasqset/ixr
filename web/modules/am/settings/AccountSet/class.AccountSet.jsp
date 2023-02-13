@@ -1,16 +1,18 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class AccountSet{
-    String table        = "AMACCSETS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMACCSETS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String accSetCode   = request.getParameter("code");
@@ -28,7 +30,7 @@ final class AccountSet{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -229,32 +231,32 @@ final class AccountSet{
         
         html += "<tr>";
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+ gui.formLabel("astCtlAcc", " Asset Control Account")+ "</td>";
-	html += "<td>"+ gui.formSelect("astCtlAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.astCtlAcc: "", "", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("astCtlAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.astCtlAcc: "", "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("acmDepAcc", " Accumulated Depreciation Account")+ "</td>";
-	html += "<td>"+ gui.formSelect("acmDepAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.acmDepAcc: "", "", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("acmDepAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.acmDepAcc: "", "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("depExpAcc", " Depreciation Expense Account")+ "</td>";
-	html += "<td>"+ gui.formSelect("depExpAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.depExpAcc: "", "", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("depExpAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.depExpAcc: "", "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("depAdjAcc", " Depreciation Adjustment Account")+ "</td>";
-	html += "<td>"+ gui.formSelect("depAdjAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.depAdjAcc: "", "", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("depAdjAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.depAdjAcc: "", "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("diCostAcc", " Disposal Cost Account")+ "</td>";
-	html += "<td>"+ gui.formSelect("diCostAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.diCostAcc: "", "", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("diCostAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.diCostAcc: "", "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("diPrcdAcc", " Disposal Proceeds Account")+ "</td>";
-	html += "<td>"+ gui.formSelect("diPrcdAcc", "GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.diPrcdAcc: "", "", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("diPrcdAcc", ""+this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", this.id != null? this.diPrcdAcc: "", "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -274,7 +276,7 @@ final class AccountSet{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -286,7 +288,7 @@ final class AccountSet{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, ACCSETCODE, ACCSETNAME, ASTCTLACC, ACMDEPACC, DEPEXPACC, DEPADJACC, DICOSTACC, DIPRCDACC)"
                         + "VALUES"
@@ -336,7 +338,7 @@ final class AccountSet{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

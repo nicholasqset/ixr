@@ -20,11 +20,11 @@
     Sys sys = new Sys();
     
     try{
-        User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
-        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
-            session.setAttribute("userId", null);
-            sessionExpired = true;
-        }
+//        User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
+//        if(! sys.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
+//            session.setAttribute("userId", null);
+//            sessionExpired = true;
+//        }
     }catch(NullPointerException e){
         e.getMessage();
     }

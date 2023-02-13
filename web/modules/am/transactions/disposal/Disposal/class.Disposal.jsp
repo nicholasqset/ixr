@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.am.AMDiBatch"%>
 <%@page import="bean.am.AssetProfile"%>
 <%@page import="java.sql.SQLException"%>
@@ -8,14 +9,15 @@
 <%@page import="bean.gui.Gui"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Disposal{
-    String table            = "AMDIHDR";
-    String view             = "VIEWAMDIHDR";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMDIHDR";
+    String view             = comCode+".VIEWAMDIHDR";
     
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
         
@@ -46,7 +48,7 @@ final class Disposal{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -183,7 +185,7 @@ final class Disposal{
                     String entryNo          = rs.getString("ENTRYNO");
                     String entryDesc        = rs.getString("ENTRYDESC");
                     
-                    String opc_ = system.getOneAgt("VIEWAMDIDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
+                    String opc_ = sys.getOneAgt("VIEWAMDIDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
                     opc_ = (opc_ != null && ! opc_.trim().equals(""))? opc_: "0";
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
@@ -196,7 +198,7 @@ final class Disposal{
                     html += "<td>"+ batchDesc+ "</td>";
                     html += "<td>"+ entryNo+ "</td>";
                     html += "<td>"+ entryDesc+ "</td>";
-                    html += "<td>"+ system.numberFormat(opc_)+ "</td>";
+                    html += "<td>"+ sys.numberFormat(opc_)+ "</td>";
                     html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
 
@@ -278,7 +280,7 @@ final class Disposal{
             }
         }
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -328,10 +330,10 @@ final class Disposal{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+system.getPeriodYear(), "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
-	html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: system.getPeriodMonth(), "", true)+ "</td>";
+	html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -391,12 +393,12 @@ final class Disposal{
         
         this.batchNo = request.getParameter("batchNoHd");
         
-        html += gui.getAutoColsSearch("AMDIBATCHES", "BATCHNO, BATCHDESC", "", this.batchNo);
+        html += gui.getAutoColsSearch(this.comCode+".AMDIBATCHES", "BATCHNO, BATCHDESC", "", this.batchNo);
         
         return html;
     }
     
-    public Object getBatchProfile(){
+    public JSONObject getBatchProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.batchNo == null || this.batchNo.equals("")){
@@ -426,7 +428,7 @@ final class Disposal{
         return html;
     }
     
-    public Object getAssetProfile(){
+    public JSONObject getAssetProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.assetNo == null || this.assetNo.equals("")){
@@ -450,7 +452,7 @@ final class Disposal{
         return obj;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -468,7 +470,7 @@ final class Disposal{
                 
                 if(this.sid == null){
 
-                    Integer sid = system.generateId("AMDIDTLS", "ID");
+                    Integer sid = sys.generateId("AMDIDTLS", "ID");
                     
                     query = "INSERT INTO AMDIDTLS "
                             + "("
@@ -490,10 +492,10 @@ final class Disposal{
                             + "'"+ this.diClrAcc+ "', "
                             + this.div+ ", "
                             + this.adic+ ", "
-                            + "'"+ system.getLogUser(session)+"', "
-                            + "'"+ system.getLogDate()+ "', "
-                            + "'"+ system.getLogTime()+ "', "
-                            + "'"+ system.getClientIpAdr(request)+ "'"
+                            + "'"+ sys.getLogUser(session)+"', "
+                            + "'"+ sys.getLogDate()+ "', "
+                            + "'"+ sys.getLogTime()+ "', "
+                            + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
                     query = "UPDATE AMDIDTLS SET "
@@ -505,10 +507,10 @@ final class Disposal{
                             + "DICLRACC         = '"+ this.diClrAcc+ "', "
                             + "DIV              = "+ this.div+ ", "
                             + "ADIC             = "+ this.adic+ ", "
-                            + "AUDITUSER        = '"+ system.getLogUser(session)+"', "
-                            + "AUDITDATE        = '"+ system.getLogDate()+ "', "
-                            + "AUDITTIME        = '"+ system.getLogTime()+ "', "
-                            + "AUDITIPADR       = '"+ system.getClientIpAdr(request)+ "'"
+                            + "AUDITUSER        = '"+ sys.getLogUser(session)+"', "
+                            + "AUDITDATE        = '"+ sys.getLogDate()+ "', "
+                            + "AUDITTIME        = '"+ sys.getLogTime()+ "', "
+                            + "AUDITIPADR       = '"+ sys.getClientIpAdr(request)+ "'"
                             + "WHERE ID         = "+ this.sid;
                 }
                 
@@ -550,8 +552,8 @@ final class Disposal{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id = system.generateId(this.table, "ID");
-                this.entryNo = system.getNextNo(this.table, "ID", "", "", 1);
+                Integer id = sys.generateId(this.table, "ID");
+                this.entryNo = sys.getNextNo(this.table, "ID", "", "", 1);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -574,10 +576,10 @@ final class Disposal{
                         + "'"+ this.entryDate+ "', "
                         + this.pYear+", "
                         + this.pMonth+ ", "
-                        + "'"+ system.getLogUser(session)+"', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogTime()+ "', "
-                        + "'"+ system.getClientIpAdr(request)+ "'"
+                        + "'"+ sys.getLogUser(session)+"', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogTime()+ "', "
+                        + "'"+ sys.getClientIpAdr(request)+ "'"
                         + ")";
 
                 Integer aqHdrCreated = stmt.executeUpdate(query);
@@ -602,7 +604,7 @@ final class Disposal{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWAMDIDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
+        if(sys.recordExists("VIEWAMDIDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -644,7 +646,7 @@ final class Disposal{
                     html += "<td>"+ count +"</td>";
                     html += "<td>"+ assetNo+ "</td>";
                     html += "<td>"+ assetDesc+ "</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(div.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(div.toString()) +"</td>";
                     html += "<td style = \"text-align: right;\">"+ opts +"</td>";
                     html += "</tr>";
                     
@@ -660,7 +662,7 @@ final class Disposal{
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"3\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumDiv.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumDiv.toString()) +"</td>";
             html += "<td>&nbsp;</td>";
             html += "</tr>";
             
@@ -673,11 +675,11 @@ final class Disposal{
         return html;
     }
     
-    public Object editDiDtls(){
+    public JSONObject editDiDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("AMDIDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("AMDIDTLS", "ID = "+ this.sid +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -731,7 +733,7 @@ final class Disposal{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

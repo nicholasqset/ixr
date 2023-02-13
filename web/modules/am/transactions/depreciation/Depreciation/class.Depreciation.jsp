@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.am.AssetDep"%>
 <%@page import="bean.am.AssetProfile"%>
 <%@page import="bean.am.AmDpBatch"%>
@@ -11,14 +12,15 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Depreciation{
-    String table            = "AMDPHDR";
-    String view             = "VIEWAMDPHDR";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMDPHDR";
+    String view             = comCode+".VIEWAMDPHDR";
     
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
         
@@ -51,7 +53,7 @@ final class Depreciation{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -188,7 +190,7 @@ final class Depreciation{
                     String entryNo          = rs.getString("ENTRYNO");
                     String entryDesc        = rs.getString("ENTRYDESC");
                     
-                    String depV_ = system.getOneAgt("VIEWAMDPDTLS", "SUM", "DEPV", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
+                    String depV_ = sys.getOneAgt("VIEWAMDPDTLS", "SUM", "DEPV", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
                     depV_ = (depV_ != null && ! depV_.trim().equals(""))? depV_: "0";
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
@@ -201,7 +203,7 @@ final class Depreciation{
                     html += "<td>"+ batchDesc+ "</td>";
                     html += "<td>"+ entryNo+ "</td>";
                     html += "<td>"+ entryDesc+ "</td>";
-                    html += "<td>"+ system.numberFormat(depV_)+ "</td>";
+                    html += "<td>"+ sys.numberFormat(depV_)+ "</td>";
                     html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
 
@@ -283,7 +285,7 @@ final class Depreciation{
             }
         }
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -333,10 +335,10 @@ final class Depreciation{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+system.getPeriodYear(), "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
-	html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: system.getPeriodMonth(), "", true)+ "</td>";
+	html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -361,7 +363,7 @@ final class Depreciation{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("depMethod", " Depreciation Method")+ "</td>";
-        html += "<td colspan = \"3\">"+ gui.formSelect("depMethod", "AMDEPMETHODS", "DEPCODE", "DEPNAME", "", "", "", "onchange = \"\"; style = \"\"; disabled", false)+ "</td>";
+        html += "<td colspan = \"3\">"+ gui.formSelect("depMethod", this.comCode+".AMDEPMETHODS", "DEPCODE", "DEPNAME", "", "", "", "onchange = \"\"; style = \"\"; disabled", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -404,12 +406,12 @@ final class Depreciation{
         
         this.batchNo = request.getParameter("batchNoHd");
         
-        html += gui.getAutoColsSearch("AMDPBATCHES", "BATCHNO, BATCHDESC", "", this.batchNo);
+        html += gui.getAutoColsSearch(this.comCode+".AMDPBATCHES", "BATCHNO, BATCHDESC", "", this.batchNo);
         
         return html;
     }
     
-    public Object getBatchProfile(){
+    public JSONObject getBatchProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.batchNo == null || this.batchNo.equals("")){
@@ -434,12 +436,12 @@ final class Depreciation{
         
         this.assetNo = request.getParameter("assetNoHd");
         
-        html += gui.getAutoColsSearch("AMASSETS", "ASSETNO, ASSETDESC", "", this.assetNo);
+        html += gui.getAutoColsSearch(this.comCode+".AMASSETS", "ASSETNO, ASSETDESC", "", this.assetNo);
         
         return html;
     }
     
-    public Object getAssetProfile(){
+    public JSONObject getAssetProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.assetNo == null || this.assetNo.equals("")){
@@ -469,7 +471,7 @@ final class Depreciation{
         return obj;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -486,7 +488,7 @@ final class Depreciation{
                 Integer saved = 0;
                 
                 if(this.sid == null){
-                    Integer sid = system.generateId("AMDPDTLS", "ID");
+                    Integer sid = sys.generateId("AMDPDTLS", "ID");
                     
                     query = "INSERT INTO AMDPDTLS "
                             + "("
@@ -510,10 +512,10 @@ final class Depreciation{
                             + this.acmDepV+ ", "
                             + this.nbvE+ ", "
                             + this.salV+ ", "
-                            + "'"+ system.getLogUser(session)+"', "
-                            + "'"+ system.getLogDate()+ "', "
-                            + "'"+ system.getLogTime()+ "', "
-                            + "'"+ system.getClientIpAdr(request)+ "'"
+                            + "'"+ sys.getLogUser(session)+"', "
+                            + "'"+ sys.getLogDate()+ "', "
+                            + "'"+ sys.getLogTime()+ "', "
+                            + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
                     query = "UPDATE AMDPDTLS SET "
@@ -527,10 +529,10 @@ final class Depreciation{
                             + "ACMDEPV          = "+ this.acmDepV+ ", "
                             + "NBVE             = "+ this.nbvE+ ", "
                             + "SALV             = "+ this.salV+ ", "
-                            + "AUDITUSER        = '"+ system.getLogUser(session)+"', "
-                            + "AUDITDATE        = '"+ system.getLogDate()+ "', "
-                            + "AUDITTIME        = '"+ system.getLogTime()+ "', "
-                            + "AUDITIPADR       = '"+ system.getClientIpAdr(request)+ "'"
+                            + "AUDITUSER        = '"+ sys.getLogUser(session)+"', "
+                            + "AUDITDATE        = '"+ sys.getLogDate()+ "', "
+                            + "AUDITTIME        = '"+ sys.getLogTime()+ "', "
+                            + "AUDITIPADR       = '"+ sys.getClientIpAdr(request)+ "'"
                             + "WHERE ID         = "+ this.sid;
                 }
                 
@@ -571,8 +573,8 @@ final class Depreciation{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id = system.generateId(this.table, "ID");
-                this.entryNo = system.getNextNo(this.table, "ID", "", "", 1);
+                Integer id = sys.generateId(this.table, "ID");
+                this.entryNo = sys.getNextNo(this.table, "ID", "", "", 1);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -595,10 +597,10 @@ final class Depreciation{
                         + "'"+ this.entryDate+ "', "
                         + this.pYear+", "
                         + this.pMonth+ ", "
-                        + "'"+ system.getLogUser(session)+"', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogTime()+ "', "
-                        + "'"+ system.getClientIpAdr(request)+ "'"
+                        + "'"+ sys.getLogUser(session)+"', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogTime()+ "', "
+                        + "'"+ sys.getClientIpAdr(request)+ "'"
                         + ")";
 
                 Integer aqHdrCreated = stmt.executeUpdate(query);
@@ -623,7 +625,7 @@ final class Depreciation{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWAMDPDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
+        if(sys.recordExists("VIEWAMDPDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -665,7 +667,7 @@ final class Depreciation{
                     html += "<td>"+ count +"</td>";
                     html += "<td>"+ assetNo+ "</td>";
                     html += "<td>"+ assetDesc+ "</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(depV.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(depV.toString()) +"</td>";
                     html += "<td style = \"text-align: right;\">"+ opts +"</td>";
                     html += "</tr>";
                     
@@ -681,7 +683,7 @@ final class Depreciation{
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"3\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumDepV.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumDepV.toString()) +"</td>";
             html += "<td>&nbsp;</td>";
             html += "</tr>";
             
@@ -694,11 +696,11 @@ final class Depreciation{
         return html;
     }
     
-    public Object editDpDtls(){
+    public JSONObject editDpDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("AMDPDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("AMDPDTLS", "ID = "+ this.sid +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -755,7 +757,7 @@ final class Depreciation{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

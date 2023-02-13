@@ -1,16 +1,18 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Category{
-    String table        = "AMCATS";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMCATS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String catCode      = request.getParameter("code");
@@ -23,7 +25,7 @@ final class Category{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -220,7 +222,7 @@ final class Category{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+ gui.formLabel("accountSet", " Account Set")+"</td>";
-	html += "<td>"+ gui.formSelect("accountSet", "AMACCSETS", "ACCSETCODE", "ACCSETNAME", "", "", this.id != null? this.accSetCode: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("accountSet", ""+this.comCode+".AMACCSETS", "ACCSETCODE", "ACCSETNAME", "", "", this.id != null? this.accSetCode: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -240,7 +242,7 @@ final class Category{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -252,7 +254,7 @@ final class Category{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, CATCODE, CATNAME, ACCSETCODE)"
                     + "VALUES"
@@ -292,7 +294,7 @@ final class Category{
         return obj;
     }
     
-    public Object purge(){
+    public Object purge() throws Exception{
          
          JSONObject obj = new JSONObject();
          

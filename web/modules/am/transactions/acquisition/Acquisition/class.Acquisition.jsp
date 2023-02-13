@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.ap.APSupplierProfile"%>
 <%@page import="bean.am.AmAqBatch"%>
 <%@page import="java.sql.SQLException"%>
@@ -10,14 +11,15 @@
 <%@page import="bean.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Acquisition{
-    String table            = "AMAQHDR";
-    String view             = "VIEWAMAQHDR";
+    HttpSession session     = request.getSession();
+        String comCode          = session.getAttribute("comCode").toString();
+        String table            = comCode+".AMAQHDR";
+    String view             = comCode+".VIEWAMAQHDR";
     
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
         
@@ -56,7 +58,7 @@ final class Acquisition{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -192,7 +194,7 @@ final class Acquisition{
                     String entryNo          = rs.getString("ENTRYNO");
                     String entryDesc        = rs.getString("ENTRYDESC");
                     
-                    String opc_ = system.getOneAgt("VIEWAMAQDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
+                    String opc_ = sys.getOneAgt("VIEWAMAQDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
                     opc_ = (opc_ != null && ! opc_.trim().equals(""))? opc_: "0";
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
@@ -205,7 +207,7 @@ final class Acquisition{
                     html += "<td>"+ batchDesc+ "</td>";
                     html += "<td>"+ entryNo+ "</td>";
                     html += "<td>"+ entryDesc+ "</td>";
-                    html += "<td>"+ system.numberFormat(opc_)+ "</td>";
+                    html += "<td>"+ sys.numberFormat(opc_)+ "</td>";
                     html += "<td>"+ edit+ "</td>";
                     html += "</tr>";
 
@@ -302,7 +304,7 @@ final class Acquisition{
             }
         }
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -352,10 +354,10 @@ final class Acquisition{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Fiscal Year")+ "</td>";
-        html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+system.getPeriodYear(), "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
 	
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Period")+ "</td>";
-	html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: system.getPeriodMonth(), "", true)+ "</td>";
+	html += "<td>"+ gui.formMonthSelect("pMonth", this.id != null? this.pMonth: sys.getPeriodMonth(this.comCode), "", true)+ "</td>";
 	html += "</tr>";
         
         html += "</table>";
@@ -370,12 +372,12 @@ final class Acquisition{
         
         this.batchNo = request.getParameter("batchNoHd");
         
-        html += gui.getAutoColsSearch("AMAQBATCHES", "BATCHNO, BATCHDESC", "", this.batchNo);
+        html += gui.getAutoColsSearch(this.comCode+".AMAQBATCHES", "BATCHNO, BATCHDESC", "", this.batchNo);
         
         return html;
     }
     
-    public Object getBatchProfile(){
+    public JSONObject getBatchProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.batchNo == null || this.batchNo.equals("")){
@@ -405,14 +407,14 @@ final class Acquisition{
         return html;
     }
     
-    public Object getSupplierProfile(){
+    public JSONObject getSupplierProfile() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.supplierNo == null || this.supplierNo.equals("")){
             obj.put("success", new Integer(0));
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
-            APSupplierProfile aPSupplierProfile = new APSupplierProfile(this.supplierNo);
+            APSupplierProfile aPSupplierProfile = new APSupplierProfile(this.supplierNo, this.comCode);
             
             obj.put("fullName", aPSupplierProfile.fullName);
             
@@ -442,10 +444,10 @@ final class Acquisition{
         
         html += "<tr>";
 	html += "<td width = \"17%\" nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("category", " Category")+ "</td>";
-        html += "<td width = \"33%\">"+ gui.formSelect("category", "AMCATS", "CATCODE", "CATNAME", "", "", "", "onchange = \"\"", false)+ "</td>";
+        html += "<td width = \"33%\">"+ gui.formSelect("category", this.comCode+".AMCATS", "CATCODE", "CATNAME", "", "", "", "onchange = \"\"", false)+ "</td>";
 	
 	html += "<td width = \"17%\" nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("aqCode", " Acquisition Code")+ "</td>";
-	html += "<td>"+ gui.formSelect("aqCode", "AMAQCODES", "AQCODE", "AQNAME", "", "", "", "onchange = \"\" style = \"width: 160px;\"", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("aqCode", this.comCode+".AMAQCODES", "AQCODE", "AQNAME", "", "", "", "onchange = \"\" style = \"width: 160px;\"", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -478,7 +480,7 @@ final class Acquisition{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -493,7 +495,7 @@ final class Acquisition{
         
         html += "<tr>";
 	html += "<td width = \"17%\" nowrap>"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("depMethod", " Depreciation Method")+ "</td>";
-        html += "<td width = \"33%\">"+ gui.formSelect("depMethod", "AMDEPMETHODS", "DEPCODE", "DEPNAME", "", "", "", "onchange = \"\" style = \"width: 160px;\"", false)+ "</td>";
+        html += "<td width = \"33%\">"+ gui.formSelect("depMethod", this.comCode+".AMDEPMETHODS", "DEPCODE", "DEPNAME", "", "", "", "onchange = \"\" style = \"width: 160px;\"", false)+ "</td>";
 	
 	html += "<td width = \"17%\" nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("depRate", " Depreciation Rate")+ "</td>";
 	html += "<td>"+ gui.formInput("text", "depRate", 15, "", "", "")+ "<span class = \"fade\"> %</span></td>";
@@ -522,7 +524,7 @@ final class Acquisition{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -549,9 +551,9 @@ final class Acquisition{
                 
                 if(this.sid == null){
 
-                    Integer sid = system.generateId("AMAQDTLS", "ID");
+                    Integer sid = sys.generateId("AMAQDTLS", "ID");
                     
-                    this.aqNo = system.getNextNo("AMAQDTLS", "ID", "", "AQ", 7);
+                    this.aqNo = sys.getNextNo("AMAQDTLS", "ID", "", "AQ", 7);
                     
                     query = "INSERT INTO AMAQDTLS "
                             + "("
@@ -579,10 +581,10 @@ final class Acquisition{
                             + "'"+ this.estExpDate+ "', "
                             + this.depRate+ ", "
                             + this.opc+ ", "
-                            + "'"+ system.getLogUser(session)+"', "
-                            + "'"+ system.getLogDate()+ "', "
-                            + "'"+ system.getLogTime()+ "', "
-                            + "'"+ system.getClientIpAdr(request)+ "'"
+                            + "'"+ sys.getLogUser(session)+"', "
+                            + "'"+ sys.getLogDate()+ "', "
+                            + "'"+ sys.getLogTime()+ "', "
+                            + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
                     query = "UPDATE AMAQDTLS SET "
@@ -598,10 +600,10 @@ final class Acquisition{
                             + "ESTEXPDATE       = '"+ this.estExpDate+ "', "
                             + "DEPRATE          = "+ this.depRate+ ", "
                             + "OPC              = "+ this.opc+ ", "
-                            + "AUDITUSER        = '"+ system.getLogUser(session)+"', "
-                            + "AUDITDATE        = '"+ system.getLogDate()+ "', "
-                            + "AUDITTIME        = '"+ system.getLogTime()+ "', "
-                            + "AUDITIPADR       = '"+ system.getClientIpAdr(request)+ "'"
+                            + "AUDITUSER        = '"+ sys.getLogUser(session)+"', "
+                            + "AUDITDATE        = '"+ sys.getLogDate()+ "', "
+                            + "AUDITTIME        = '"+ sys.getLogTime()+ "', "
+                            + "AUDITIPADR       = '"+ sys.getClientIpAdr(request)+ "'"
                             + "WHERE ID         = "+this.sid;
                 }
                 
@@ -643,8 +645,8 @@ final class Acquisition{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                Integer id = system.generateId(this.table, "ID");
-                this.entryNo = system.getNextNo(this.table, "ID", "", "", 1);
+                Integer id = sys.generateId(this.table, "ID");
+                this.entryNo = sys.getNextNo(this.table, "ID", "", "", 1);
                 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -667,10 +669,10 @@ final class Acquisition{
                         + "'"+ this.entryDate+ "', "
                         + this.pYear+", "
                         + this.pMonth+ ", "
-                        + "'"+ system.getLogUser(session)+"', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + "'"+ system.getLogTime()+ "', "
-                        + "'"+ system.getClientIpAdr(request)+ "'"
+                        + "'"+ sys.getLogUser(session)+"', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + "'"+ sys.getLogTime()+ "', "
+                        + "'"+ sys.getClientIpAdr(request)+ "'"
                         + ")";
 
                 Integer aqHdrCreated = stmt.executeUpdate(query);
@@ -695,7 +697,7 @@ final class Acquisition{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWAMAQDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
+        if(sys.recordExists("VIEWAMAQDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -740,7 +742,7 @@ final class Acquisition{
                     html += "<td>"+ count +"</td>";
                     html += "<td>"+ aqNo+ " - "+ aqDesc+ "</td>";
                     html += "<td>"+ supplierNo+ " - "+ fullName+ "</td>";
-                    html += "<td style = \"text-align: right;\">"+ system.numberFormat(opc.toString()) +"</td>";
+                    html += "<td style = \"text-align: right;\">"+ sys.numberFormat(opc.toString()) +"</td>";
                     html += "<td style = \"text-align: right;\">"+ opts +"</td>";
                     html += "</tr>";
                     
@@ -756,7 +758,7 @@ final class Acquisition{
             
             html += "<tr>";
             html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"3\">Total</td>";
-            html += "<td style = \"text-align: right; font-weight: bold;\">"+ system.numberFormat(sumOpc.toString()) +"</td>";
+            html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumOpc.toString()) +"</td>";
             html += "<td>&nbsp;</td>";
             html += "</tr>";
             
@@ -769,11 +771,11 @@ final class Acquisition{
         return html;
     }
     
-    public Object editAqDtls(){
+    public JSONObject editAqDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists("AMAQDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists("AMAQDTLS", "ID = "+ this.sid +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -842,7 +844,7 @@ final class Acquisition{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
