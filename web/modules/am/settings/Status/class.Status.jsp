@@ -249,7 +249,7 @@ final class Status{
         return html;
     }
     
-    public Object JSONObject() throws Exception{
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
