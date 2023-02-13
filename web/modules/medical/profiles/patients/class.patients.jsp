@@ -283,7 +283,7 @@
 
             html += "<script type = \"text/javascript\">";
             if (this.id != null) {
-                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\', \'Visitations\'), 0, 625, 365, Array(false, false, false, false));";
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\', \'Visitations/Encounters\'), 0, 625, 365, Array(false, false, false, false));";
             } else {
                 html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\'), 0, 625, 365, Array(false, false, false));";
             }
