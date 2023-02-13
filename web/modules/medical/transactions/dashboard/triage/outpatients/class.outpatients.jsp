@@ -167,6 +167,7 @@ final class OutPatients{
                 html += "<th>Reg Type</th>";
                 html += "<th>Patient No</th>";
                 html += "<th>Patient Name</th>";
+                html += "<th>Type</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
 
@@ -179,6 +180,7 @@ final class OutPatients{
                     String regType      = rs.getString("REGTYPE");
                     String ptNo         = rs.getString("PTNO");
                     String fullName     = rs.getString("FULLNAME");
+                    String pttype     = rs.getString("pttype");
 
                     String regTypeLbl = "Unknown";
 
@@ -198,6 +200,7 @@ final class OutPatients{
                     html += "<td>"+regTypeLbl+"</td>";
                     html += "<td>"+ptNo+"</td>";
                     html += "<td>"+fullName+"</td>";
+                    html += "<td>"+pttype+"</td>";
                     html += "<td>"+edit+"</td>";
                     html += "</tr>";
 

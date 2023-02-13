@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="bean.ic.ICItem"%>
 <%@page import="org.json.JSONObject"%>
@@ -862,6 +863,7 @@
                 html += "<th>#</th>";
                 html += "<th>Reg. #</th>";
                 html += "<th>Type</th>";
+                html += "<th>Dept</th>";
                 html += "<th>Date</th>";
                 html += "<th>Seen By</th>";
                 html += "<th>Options</th>";
@@ -881,6 +883,7 @@
                         String regType = rs.getString("regType");
                         String regDate = rs.getString("regdate");
                         String sp_name = rs.getString("sp_name");
+                        String pttype = rs.getString("pttype");
 
                         String editLink = gui.formHref("onclick = \"patients.editRegistration(" + id + ", " + this.id + ",'" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
                         String manageLink = gui.formHref("onclick = \"patients.manageRegistration(" + id + ", " + this.id + ",'" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "manage", "manage", "", "");
@@ -889,6 +892,7 @@
                         html += "<td>" + count + "</td>";
                         html += "<td>" + regNo + "</td>";
                         html += "<td>" + regType + "</td>";
+                        html += "<td>" + pttype + "</td>";
                         html += "<td>" + regDate + "</td>";
                         html += "<td>" + sp_name + "</td>";
                         html += "<td>" + editLink + " || " + manageLink + "</td>";
@@ -927,6 +931,8 @@
             String spCode = "";
             String regType = "";
             String regTypeLbl = "";
+            String pttype = "";
+            String admdate = "";
             if (rid != null) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
@@ -938,6 +944,8 @@
                         regNo = rs.getString("REGNO");
                         spCode = rs.getString("sp_code");
                         regType = rs.getString("regtype");
+                        pttype = rs.getString("pttype");
+                        admdate = rs.getString("admdate");
                     }
                 } catch (Exception e) {
                     html += e.getMessage();
@@ -951,6 +959,10 @@
                 Boolean regTypeExists = sys.recordExists(this.comCode + ".HMREGISTRATION", "ptno='" + this.ptNo + "'");
                 regTypeLbl = regTypeExists ? "Return" : "New";
             }
+            
+            HashMap<String, String> ptTypes = new HashMap();
+            ptTypes.put("OPD", "Outpatient");
+            ptTypes.put("IPD", "Inpatient");
 
             html += "";
             html += gui.formStart("frmRegistration", "void%200", "post", "onSubmit=\"javascript:return false;\"");
@@ -970,6 +982,16 @@
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "doctor-male.png", "", "") + gui.formLabel("spCode", " Be Seen by") + "</td>";
             html += "<td >" + gui.formSelect("spCode", this.comCode + ".hmspecialists", "sp_code", "sp_name", "", "", spCode, "", false) + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("ptType", " Type") + "</td>";
+            html += "<td >" + gui.formArraySelect("ptType", 136, ptTypes, rid != null? pttype: "OPD", true, "", false) + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("admdate", " Admission Date") + "</td>";
+            html += "<td >" + gui.formDateTime(request.getContextPath(), "admdate", 25, rid != null?admdate: sys.getFormatedDateTime(sys.getLogDate()), true, "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -998,6 +1020,8 @@
             HttpSession session = request.getSession();
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            String ptType = request.getParameter("ptType");
+            String admdate = request.getParameter("admdate");
 
             try {
                 Connection conn = ConnectionProvider.getConnection();
@@ -1018,14 +1042,15 @@
                     query = "INSERT INTO " + this.comCode + ".HMREGISTRATION" + " "
                             + ""
                             + "(ID, REGNO, REGTYPE, PTNO, PTTYPE, PYEAR, PMONTH, REGDATE, DRNO, "
-                            + "NRNO, sp_code, AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
+                            + "NRNO, sp_code, admdate, AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                             + "VALUES"
                             + "("
                             + id + ", "
                             + "'" + regNo + "', "
                             + "'" + regType + "', "
                             + "'" + this.ptNo + "', "
-                            + "'OUT', "
+                            + "'" + ptType + "', "
+//                            + "'OPD', "
                             + sys.getPeriodYear(this.comCode) + ", "
                             + sys.getPeriodMonth(this.comCode) + ", "
                             + "now(), "
@@ -1034,6 +1059,7 @@
                             //                        + "'"+this.nrNo+"', "
                             + "'" + nrNo + "', "
                             + "'" + this.spCode + "', "
+                            + "'" + sys.getUnFormatedDateTimeV2(admdate) + "', "
                             + "'" + sys.getLogUser(session) + "', "
                             + "'" + sys.getLogDate() + "', "
                             + "'" + sys.getLogTime() + "', "
@@ -1042,7 +1068,9 @@
 
                 } else {
                     query = "UPDATE " + this.comCode + ".HMREGISTRATION SET "
-                            + "sp_code     = '" + this.spCode + "' "
+                            + "sp_code     = '" + this.spCode + "', "
+                            + "pttype     = '" + ptType + "', "
+                            + "admdate     = '" + sys.getUnFormatedDateTimeV2(admdate) + "' "
                             + "WHERE ID     = " + rid + "";
                 }
 

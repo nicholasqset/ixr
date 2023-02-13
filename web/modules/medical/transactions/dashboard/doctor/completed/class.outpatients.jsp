@@ -186,6 +186,7 @@
                     html += "<th>Reg Type</th>";
                     html += "<th>Patient No</th>";
                     html += "<th>Patient Name</th>";
+                    html += "<th>Type</th>";
                     html += "<th>Phone No</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
@@ -199,6 +200,7 @@
                         String regType = rs.getString("REGTYPE");
                         String ptNo = rs.getString("PTNO");
                         String fullName = rs.getString("FULLNAME");
+                        String pttype = rs.getString("pttype");
                         String cellphone = rs.getString("CELLPHONE");
 
                         String regTypeLbl = "Unknown";
@@ -219,6 +221,7 @@
                         html += "<td>" + regTypeLbl + "</td>";
                         html += "<td>" + ptNo + "</td>";
                         html += "<td>" + fullName + "</td>";
+                        html += "<td>" + pttype + "</td>";
                         html += "<td>" + cellphone + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
@@ -1271,10 +1274,16 @@
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pill.png", "", "") + gui.formLabel("drug", " Drug") + "</td>";
+//        html += "<td >"+gui.formSelect("drug", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "", drugCode, "", false)+"</td>";
+            html += "<td nowrap>" + gui.formAutoComplete("drug", 17, drugCode, "dashboard.searchDrug", "drugHd", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("drugName", " Drug Description") + "</td>";
 //        html += "<td >"+gui.formSelect("drug", "HMITEMS", "ITEMCODE", "ITEMNAME", "", "ISDRUG = 1", drugCode, "", false)+"</td>";
 //        html += "<td >"+gui.formSelect("drug", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "", drugCode, "", false)+"</td>";
 //            html += "<td nowrap>" + gui.formAutoComplete("drug", 17, drugCode, "dashboard.searchItem", "drugHd", "") + "</td>";
-            html += "<td >" + gui.formInput("text", "drug", 30, drugCode, "", "") + "</td>";
+            html += "<td >" + gui.formInput("text", "drugName", 30, drugName, "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1319,40 +1328,40 @@
             return html;
         }
 
-//        public String searchItem() {
-//            String html = "";
-//
-//            Gui gui = new Gui();
-//
-//            String itemCode = request.getParameter("drugHd");
-//
-//            html += gui.getAutoColsSearch("" + this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "", itemCode);
-//
-//            return html;
-//        }
-//
-//        public Object getItemProfile() throws Exception {
-//            JSONObject obj = new JSONObject();
-//
-//            String itemCode = request.getParameter("itemNo");
-//
-//            if (itemCode == null || itemCode.trim().equals("")) {
-//                obj.put("success", new Integer(0));
-//                obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
-//            } else {
-//                ICItem iCItem = new ICItem(itemCode, this.comCode);
-//
-//                obj.put("itemName", iCItem.itemName);
-//                obj.put("quantity", 1.0);
-//                obj.put("price", iCItem.unitPrice);
-//                obj.put("amount", (1.0 * iCItem.unitPrice));
-//
-//                obj.put("success", new Integer(1));
-//                obj.put("message", "Item No '" + iCItem.itemCode + "' successfully retrieved.");
-//            }
-//
-//            return obj;
-//        }
+        public String searchDrug() {
+            String html = "";
+
+            Gui gui = new Gui();
+
+            String itemCode = request.getParameter("drugHd");
+
+            html += gui.getAutoColsSearch("" + this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from "+this.comCode+".hmcats )", itemCode);
+
+            return html;
+        }
+
+        public Object getDrugItemProfile() throws Exception {
+            JSONObject obj = new JSONObject();
+
+            String itemCode = request.getParameter("itemNo");
+
+            if (itemCode == null || itemCode.trim().equals("")) {
+                obj.put("success", new Integer(0));
+                obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
+            } else {
+                ICItem iCItem = new ICItem(itemCode, this.comCode);
+
+                obj.put("itemName", iCItem.itemName);
+                obj.put("quantity", 1.0);
+                obj.put("price", iCItem.unitPrice);
+                obj.put("amount", (1.0 * iCItem.unitPrice));
+
+                obj.put("success", new Integer(1));
+                obj.put("message", "Item No '" + iCItem.itemCode + "' successfully retrieved.");
+            }
+
+            return obj;
+        }
 
         public Object saveMedication() throws Exception {
             JSONObject obj = new JSONObject();

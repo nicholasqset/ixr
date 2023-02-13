@@ -169,6 +169,54 @@ public class Sys {
         return html;
     }
 
+    public String getFormatedDateTime(String sysDateTime) {
+        String html = "";
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS");
+
+        try {
+            java.util.Date sysDateNew = originalFormat.parse(sysDateTime);
+            html += targetFormat.format(sysDateNew);
+        } catch (ParseException e) {
+            this.logV2(e.getMessage());
+        }
+
+        return html;
+    }
+
+    public String getUnFormatedDateTime(String sysDateTime) {
+        String html = "";
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+        try {
+            java.util.Date sysDateNew = originalFormat.parse(sysDateTime);
+            html += targetFormat.format(sysDateNew);
+        } catch (ParseException e) {
+            this.logV2(e.getMessage());
+        }
+
+        return html;
+    }
+
+    public String getUnFormatedDateTimeV2(String sysDateTime) {
+        String html = "";
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        try {
+            java.util.Date sysDateNew = originalFormat.parse(sysDateTime);
+            html += targetFormat.format(sysDateNew);
+        } catch (ParseException e) {
+            this.logV2(e.getMessage());
+        }
+
+        return html;
+    }
+
     public String getLogTime() {
         String html = "";
 

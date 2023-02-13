@@ -293,36 +293,37 @@
                 addMedication: function(regNo){
                     module.execute('addMedication', "regNo="+regNo, 'divMedication');
                 },
-                searchItem: function(){
+                searchDrug: function(){
                     var count = Ajax.activeRequestCount;
                     if(count <= 0){
                         var getResultTo = 'drugDiv';
                         new Ajax.Autocompleter(
                                 'drug', getResultTo, module.ajaxUrl,{
                                 paramName  : 'drugHd',
-                                parameters : 'function=searchItem',
+                                parameters : 'function=searchDrug',
                                 minChars   : 2,
                                 frequency  : 1.0,
-                                afterUpdateElement : dashboard.setItem
+                                afterUpdateElement : dashboard.setDrugItem
                             });
                     }
                 },
-                setItem: function(text, item){
+                setDrugItem: function(text, item){
                     if(item.id !== ''){
                         if($('drugHd')) $('drugHd').value= item.id;
-                        dashboard.getItemProfile(item.id);
+                        dashboard.getDrugItemProfile(item.id);
                     }
                 },
-                getItemProfile: function(itemNo){
+                getDrugItemProfile: function(itemNo){
                     new Ajax.Request(module.ajaxUrl ,{
                         method:'post',
-                        parameters: 'function=getItemProfile&itemNo='+ itemNo,
+                        parameters: 'function=getDrugItemProfile&itemNo='+ itemNo,
                         requestHeaders: { Accept: 'application/json'},
                         onSuccess: function(request) {
                             response = request.responseText.evalJSON();
                             if(typeof response.success === 'number' && response.success === 1){
                                 
-                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+//                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+                                if(typeof response.itemName !== 'undefined' && $('drugName')) $('drugName').value = (response.itemName);
 //                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
 //                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
 //                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;

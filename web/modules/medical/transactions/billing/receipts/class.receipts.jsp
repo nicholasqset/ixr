@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -11,14 +12,15 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.medical.PatientProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.conn.ConnectionProvider"%>
 <%@page import="bean.sys.Sys"%>
 <%
 
 final class Receipts{
-    String table        = "HMRCPTS";
-    String view         = "VIEWHMREGISTRATION";
+    HttpSession session = request.getSession();
+    String comCode      = session.getAttribute("comCode").toString();
+    String table        = comCode+".HMRCPTS";
+    String view         = comCode+".VIEWHMREGISTRATION";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String regNo        = request.getParameter("regNo");
@@ -42,7 +44,7 @@ final class Receipts{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -275,7 +277,7 @@ final class Receipts{
         
         html += gui.formInput("hidden", "id", 15, ""+this.id, "", "");
           
-        PatientProfile patientProfile = new PatientProfile(this.ptNo);
+        PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
         
         String regTypeLbl = "Unknown";
                     
@@ -348,7 +350,7 @@ final class Receipts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists("VIEWHMINVSDETAILS", "REGNO = '"+this.regNo+"'")){
+        if(sys.recordExists("VIEWHMINVSDETAILS", "REGNO = '"+this.regNo+"'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -375,7 +377,7 @@ final class Receipts{
                     String invNo        = rs.getString("INVNO");
                     Double amount       = rs.getDouble("AMOUNT");
                     
-                    String rcptNo       = system.getOne("HMRCPTS", "RCPTNO", "INVNO = '"+ invNo +"'");
+                    String rcptNo       = sys.getOne("HMRCPTS", "RCPTNO", "INVNO = '"+ invNo +"'");
                     
                     String rcptNoLbl    = rcptNo != null? rcptNo: "unpaid";
                     
@@ -426,7 +428,7 @@ final class Receipts{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("VIEWHMINVSDETAILS", "INVNO = '"+ this.invNo +"'")){
+        if(sys.recordExists("VIEWHMINVSDETAILS", "INVNO = '"+ this.invNo +"'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
             
@@ -498,7 +500,7 @@ final class Receipts{
         Sys sys = new Sys();
         Gui gui = new Gui();
         
-        if(system.recordExists(this.table, "INVNO = '"+this.invNo+"'")){
+        if(sys.recordExists(this.table, "INVNO = '"+this.invNo+"'")){
             try{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -563,7 +565,7 @@ final class Receipts{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         
         HttpSession session = request.getSession();
         
@@ -572,13 +574,13 @@ final class Receipts{
         Sys sys = new Sys();
         
         try{
-            if(! system.recordExists(this.table, "INVNO = '"+ this.invNo +"'")){
+            if(! sys.recordExists(this.table, "INVNO = '"+ this.invNo +"'")){
                 if(this.getStockAvailability(this.invNo).trim().equals("")){
                     Connection conn = ConnectionProvider.getConnection();
                     Statement  stmt = conn.createStatement();
 
-                    Integer id          = system.generateId(this.table, "ID");
-                    String receiptNo    = system.getNextNo(this.table, "ID", "", "RCP", 7);
+                    Integer id          = sys.generateId(this.table, "ID");
+                    String receiptNo    = sys.getNextNo(this.table, "ID", "", "RCP", 7);
 
                     String query;
 
@@ -590,14 +592,14 @@ final class Receipts{
                         + id+", "
                         + "'"+ this.invNo +"', "
                         + "'"+ receiptNo +"', "
-                        + "'"+ system.getLogDate() +"', "
+                        + "'"+ sys.getLogDate() +"', "
                         + "'"+ this.pmCode +"', "
                         + "'"+ this.docNo +"', "
                         + this.amount +", "
-                        + "'"+ system.getLogUser(session) +"', "
-                        + "'"+ system.getLogDate() +"', "
-                        + "'"+ system.getLogTime() +"', "
-                        + "'"+ system.getClientIpAdr(request) +"'"
+                        + "'"+ sys.getLogUser(session) +"', "
+                        + "'"+ sys.getLogDate() +"', "
+                        + "'"+ sys.getLogTime() +"', "
+                        + "'"+ sys.getClientIpAdr(request) +"'"
                         + ")";
 
                     Integer saved = stmt.executeUpdate(query);
@@ -655,7 +657,7 @@ final class Receipts{
                     String itemCode     = rs.getString("DRUGCODE");
                     String itemName     = rs.getString("DRUGNAME");
                     
-                    String balStr = system.getOne("HMINVENTBAL", "BAL", "PYEAR = "+ system.getPeriodYear()+" AND PMONTH = "+ system.getPeriodMonth()+" AND ITEMCODE = '"+ itemCode +"'");
+                    String balStr = sys.getOne("HMINVENTBAL", "BAL", "PYEAR = "+ sys.getPeriodYear(this.comCode)+" AND PMONTH = "+ sys.getPeriodMonth(this.comCode)+" AND ITEMCODE = '"+ itemCode +"'");
                     balStr = (balStr != null && ! balStr.trim().equals(""))? balStr: "0";
                     
                     Double qtyBal = Double.parseDouble(balStr);
@@ -682,7 +684,7 @@ final class Receipts{
         
         HttpSession session = request.getSession();
         
-        Medical medical = new Medical();
+        Medical medical = new Medical(this.comCode);
         
         MedicalReceipt medicalReceipt = new MedicalReceipt(rcptNo);
         MedInvHeader medInvHeader = new MedInvHeader(medicalReceipt.invNo);
@@ -719,15 +721,15 @@ final class Receipts{
         HttpSession session = request.getSession();
         Sys sys = new Sys();
         
-        Integer pYear   = system.getPeriodYear();
-        Integer pMonth  = system.getPeriodMonth();
+        Integer pYear   = sys.getPeriodYear(this.comCode);
+        Integer pMonth  = sys.getPeriodMonth(this.comCode);
         
-        if(! system.recordExists("HMINVENTDED", "DOCNO = '"+ docNo +"' AND ITEMCODE = '"+ itemCode +"'")){
+        if(! sys.recordExists("HMINVENTDED", "DOCNO = '"+ docNo +"' AND ITEMCODE = '"+ itemCode +"'")){
             try{
                 Connection conn  = ConnectionProvider.getConnection();
                 Statement stmt  = conn.createStatement();
                 
-                Integer id      = system.generateId("HMINVENTDED", "ID");
+                Integer id      = sys.generateId("HMINVENTDED", "ID");
 
                 String query = "INSERT INTO HMINVENTDED "
                         + "(ID, DOCNO, PYEAR, PMONTH, ITEMCODE, QTY, "
@@ -740,10 +742,10 @@ final class Receipts{
                         + pMonth+ ", "
                         + "'"+ itemCode +"', "
                         + qty +", "
-                        + "'"+ system.getLogUser(session) +"', "
-                        + "'"+ system.getLogDate() +"', "
-                        + "'"+ system.getLogTime() +"', "
-                        + "'"+ system.getClientIpAdr(request) +"'"
+                        + "'"+ sys.getLogUser(session) +"', "
+                        + "'"+ sys.getLogDate() +"', "
+                        + "'"+ sys.getLogTime() +"', "
+                        + "'"+ sys.getClientIpAdr(request) +"'"
                         + ")";
 
                 createItem = stmt.executeUpdate(query);

@@ -24,7 +24,7 @@ final class Receipt{
     HttpSession session = request.getSession();
     String comCode      = session.getAttribute("comCode").toString();
     String table        = comCode+".HMREGISTRATION";
-    String view         = comCode+".VIEWHMREGOPDS";
+    String view         = comCode+".viewHMREGISTRATION";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String ptNo         = request.getParameter("ptNoHd");

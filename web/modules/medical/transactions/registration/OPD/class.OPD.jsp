@@ -23,7 +23,7 @@ final class OPD{
     HttpSession session = request.getSession();
     String comCode      = session.getAttribute("comCode").toString();
     String table        = comCode+".HMREGISTRATION";
-    String view         = comCode+".VIEWHMREGOPDS";
+    String view         = comCode+".viewHMREGISTRATION";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String ptNo         = request.getParameter("ptNoHd");
@@ -185,6 +185,7 @@ final class OPD{
                 html += "<th>Reg Type</th>";
                 html += "<th>Patient No</th>";
                 html += "<th>Patient Name</th>";
+                html += "<th>Type</th>";
                 html += "<th>Reg Date</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
@@ -199,6 +200,7 @@ final class OPD{
                     String ptNo         = rs.getString("PTNO");
                     String fullName     = rs.getString("FULLNAME");
                     String regDate      = rs.getString("REGDATE");
+                    String pttype      = rs.getString("pttype");
 
                     String regTypeLbl = "Unknown";
 
@@ -218,6 +220,7 @@ final class OPD{
                     html += "<td>"+regTypeLbl+"</td>";
                     html += "<td>"+ptNo+"</td>";
                     html += "<td>"+fullName+"</td>";
+                    html += "<td>"+pttype+"</td>";
                     html += "<td>"+regDate+"</td>";
                     html += "<td>"+edit+"</td>";
                     html += "</tr>";
@@ -528,7 +531,7 @@ final class OPD{
                         + "'"+regNo+"', "
                         + "'"+this.regType+"', "
                         + "'"+this.ptNo+"', "
-                        + "'OUT', "
+                        + "'OPD', "
                         + sys.getPeriodYear(this.comCode)+ ", "
                         + sys.getPeriodMonth(this.comCode)+ ", "
 //                        + "'"+sys.getLogDate()+"', "
