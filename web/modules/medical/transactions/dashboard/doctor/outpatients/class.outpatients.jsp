@@ -1,3 +1,4 @@
+<%@page import="bean.medical.HmDiagnosis"%>
 <%@page import="bean.finance.VAT"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -506,7 +507,7 @@
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + complName + "</td>";
+                        html += "<td>" + sys.shorten(complName, 300) + "</td>";
                         html += "<td>" + editLink + "</td>";
                         html += "</tr>";
 
@@ -977,7 +978,7 @@
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + diagName + "</td>";
+                        html += "<td>" + sys.shorten(diagName, 300) + "</td>";
                         html += "<td>" + editLink + "</td>";
                         html += "</tr>";
 
@@ -1039,8 +1040,13 @@
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("diagnosis", " Diagnosis") + "</td>";
-//        html += "<td >"+gui.formSelect("diagnosis", ""+this.comCode+".HMDIAGNOSIS", "DIAGCODE", "DIAGNAME", "", "", diagCode, "", false)+"</td>";
-            html += "<td >" + gui.formInput("textarea", "diagnosis", 40, diagName, "", "") + "</td>";
+//            html += "<td >"+gui.formSelect("diagnosis", ""+this.comCode+".HMDIAGNOSIS", "DIAGCODE", "DIAGNAME", "", "", diagCode, "", false)+"</td>";
+            html += "<td >"+gui.formAutoComplete("diagnosis", 25, diagCode, "dashboard.searchDiagnosis", "diagnosisHd", diagCode)+"</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("diagName", " Description") + "</td>";
+            html += "<td >" + gui.formInput("textarea", "diagName", 40, diagName, "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1051,7 +1057,7 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveDiagnosis", "Save", "save.png", "onclick = \"dashboard.saveDiagnosis('diagnosis');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveDiagnosis", "Save", "save.png", "onclick = \"dashboard.saveDiagnosis('diagnosis diagName');\"", "");
             if (rid != null) {
                 html += gui.formButton(request.getContextPath(), "button", "btnDelDiagnosis", "Delete", "delete.png", "onclick = \"dashboard.delDiagnosis(" + rid + ", '" + diagName + "', '" + this.regNo + "');\"", "");
             }
@@ -1064,6 +1070,41 @@
             html += gui.formEnd();
             return html;
         }
+        
+        public String searchDiagnosis() {
+            String html = "";
+
+            Gui gui = new Gui();
+
+            String diagnosis = request.getParameter("diagnosisHd");
+
+//        html += gui.getAutoColsSearch("VIEWHMITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+//            html += gui.getAutoColsSearch(this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "", this.itemCode);
+            html += gui.getAutoColsSearch(this.comCode + ".HMDIAGNOSIS", "DIAGCODE, DIAGNAME", "", diagnosis);
+
+            return html;
+        }
+
+        public Object getDiagnosisProfile() throws Exception {
+            JSONObject obj = new JSONObject();
+            
+            String diagnosis = request.getParameter("diagnosis");
+
+            if (diagnosis == null || diagnosis.trim().equals("")) {
+                obj.put("success", new Integer(0));
+                obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
+            } else {
+                HmDiagnosis hmDiagnosis = new HmDiagnosis(diagnosis, this.comCode);
+
+                obj.put("diagnosis", hmDiagnosis.diagCode);
+                obj.put("diagName", hmDiagnosis.diagName);
+
+                obj.put("success", new Integer(1));
+                obj.put("message", "Diagnosis '" + hmDiagnosis.diagCode + "' successfully retrieved.");
+            }
+
+            return obj;
+        }
 
         public Object saveDiagnosis() throws Exception {
             JSONObject obj = new JSONObject();
@@ -1072,6 +1113,7 @@
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
             String diagCode = request.getParameter("diagnosis");
+            String diagName = request.getParameter("diagName");
             String remarks = request.getParameter("remarks");
 
             try {
@@ -1089,9 +1131,8 @@
                             + "("
                             + id + ", "
                             + "'" + this.regNo + "', "
-                            //                    + "'"+ diagCode +"', "
-                            + "'" + id + "', "
                             + "'" + diagCode + "', "
+                            + "'" + diagName + "', "
                             + "'" + remarks + "', "
                             + "'" + sys.getLogUser(session) + "', "
                             + "'" + sys.getLogDate() + "', "
@@ -1101,8 +1142,8 @@
 
                 } else {
                     query = "UPDATE " + this.comCode + ".HMPTDIAGNOSIS SET "
-                            //                    + "DIAGCODE     = '"+ diagCode +"', "
-                            + "DIAGNAME     = '" + diagCode + "', "
+                            + "DIAGCODE     = '"+ diagCode +"', "
+                            + "DIAGNAME     = '" + diagName + "', "
                             + "REMARKS      = '" + remarks + "' "
                             + "WHERE ID     = " + rid + "";
                 }

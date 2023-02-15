@@ -236,6 +236,53 @@
                 addDiagnosis: function(regNo){
                     module.execute('addDiagnosis', "regNo="+regNo, 'divDiagnosis');
                 },
+                searchDiagnosis: function(){
+                    var count = Ajax.activeRequestCount;
+                    if(count <= 0){
+                        var getResultTo = 'diagnosisDiv';
+                        new Ajax.Autocompleter(
+                                'diagnosis', getResultTo, module.ajaxUrl,{
+                                paramName  : 'diagnosisHd',
+                                parameters : 'function=searchDiagnosis',
+                                minChars   : 2,
+                                frequency  : 1.0,
+                                afterUpdateElement : dashboard.setDiagnosis
+                            });
+                    }
+                },
+                setDiagnosis: function(text, item){
+                    if(item.id !== ''){
+                        if($('diagnosisHd')) $('diagnosisHd').value= item.id;
+                        dashboard.getDiagnosisProfile(item.id);
+                    }
+                },
+                getDiagnosisProfile: function(diagnosis){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getDiagnosisProfile&diagnosis='+ diagnosis,
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            if(typeof response.success === 'number' && response.success === 1){
+                                
+                                if(typeof response.diagnosis !== 'undefined' && $('diagnosis')) $('diagnosis').value = (response.diagnosis);
+                                if(typeof response.diagName !== 'undefined' && $('diagName')) $('diagName').value = (response.diagName);
+//                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+//                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+//                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+//                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                
+                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                            }else{
+                                if(typeof response.message !== 'undefined'){
+                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                }else{
+                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                }
+                            }
+                        }
+                    });
+                },
                 saveDiagnosis: function(required){
                     if(module.validate(required)){
                         if($('frmDiagnosis'))  $('frmDiagnosis').disabled = true;  
