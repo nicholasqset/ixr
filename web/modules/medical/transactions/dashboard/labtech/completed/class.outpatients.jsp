@@ -103,8 +103,8 @@
                         }
                     }
                 }
-                
-                filterSql = filterSql.equals("")?" WHERE  DISCHARGED = 1 ": " AND  DISCHARGED = 1 ";
+
+                filterSql = filterSql.equals("") ? " WHERE  DISCHARGED = 1 " : " AND  DISCHARGED = 1 ";
 
                 Integer useGrid = request.getParameter("maxRecord") != null ? Integer.parseInt(request.getParameter("maxRecord")) : null;
                 String gridAction = request.getParameter("gridAction");
@@ -237,7 +237,7 @@
             String html = "";
 
             Gui gui = new Gui();
-            
+
             html += gui.formInput("hidden", "id", 15, "" + this.id, "", "");
 
             html += "<div id = \"dhtmlgoodies_tabView1\">";
@@ -276,6 +276,7 @@
 
             String drName = "";
             String nrName = "";
+            String ptType = "";
 
             try {
                 stmt = conn.createStatement();
@@ -289,6 +290,7 @@
                     drName = rs.getString("DRNAME");
                     this.nrNo = rs.getString("NRNO");
                     nrName = rs.getString("NRNAME");
+                    ptType = rs.getString("PTTYPE");
                 }
             } catch (Exception e) {
                 html += e.getMessage();
@@ -314,6 +316,11 @@
             html += "<tr>";
             html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Registration Type</td>";
             html += "<td>" + regTypeLbl + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\"  nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Patient Type</td>";
+            html += "<td>" + ptType + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -734,7 +741,7 @@
 
         public String addLab() {
             String html = "";
-            
+
             Sys sys = new Sys();
 
             Gui gui = new Gui();
@@ -767,7 +774,6 @@
 
             html += gui.formStart("frmLab", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
-
             if (rid != null) {
                 html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
             }
@@ -775,10 +781,10 @@
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
-            
+
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItemCode", " Lab Item") + "</td>";
-            html += "<td >"+gui.formSelect("labItemCode", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from "+this.comCode+".hmcats where islab = 1)", labItemCode, "", false)+"</td>";
+            html += "<td >" + gui.formSelect("labItemCode", "" + this.comCode + ".ICITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from " + this.comCode + ".hmcats where islab = 1)", labItemCode, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -795,9 +801,9 @@
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pencil.png", "", "") + gui.formLabel("results", " Lab Results") + "</td>";
 //            html += "<td >" + gui.formInput("textarea", "results", 40, results, "", " rows=\"4\" ") + "</td>";
-            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"12\" >"+results+"</textarea>"+ "</td>";
+            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"12\" >" + results + "</textarea>" + "</td>";
             html += "</tr>";
-            
+
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
@@ -811,35 +817,35 @@
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getLab('" + this.regNo + "');\"", "");
             html += "</td>";
             html += "</tr>";
-            
+
             html += "</table>";
-                    
+
             html += gui.formEnd();
-            
-            String filePath = sys.getOne(this.comCode + ".HMPTLABDOCS", "filepath", "rid="+rid);
-            String refNo = sys.getOne(this.comCode + ".HMPTLABDOCS", "refno", "rid="+rid);
-            
+
+            String filePath = sys.getOne(this.comCode + ".HMPTLABDOCS", "filepath", "rid=" + rid);
+            String refNo = sys.getOne(this.comCode + ".HMPTLABDOCS", "refno", "rid=" + rid);
+
             String docLink = "";
-            if(filePath != null){
-                docLink = "<a href=\""+request.getContextPath()+ filePath+"\" target=\"blank\">download - "+refNo+"</a>";
+            if (filePath != null) {
+                docLink = "<a href=\"" + request.getContextPath() + filePath + "\" target=\"blank\">download - " + refNo + "</a>";
             }
-            
+
             html += "<form name = \"frmLabDoc\" id = \"frmLabDoc\" method = \"post\" action = \"./upload/\" enctype = \"multipart/form-data\" target = \"upload_iframe\">";
 //            html += "<form name = \"frmLabDoc\" id = \"frmLabDoc\" method = \"post\" action = \"./upload/\" enctype = \"multipart/form-data\" target = \"_blank\">";
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" style=\"margin-top: 12px;\">";
-            
+
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "attach.png", "", "") + gui.formLabel("attachment", " Attachment") + "</td>";
-            html += "<td >" + "<input type=\"file\" id=\"attachment\" name=\"attachment\" onchange=\"registration.uploadLabItem('');\">"+ " e.g scans, docs "+docLink+"</td>";
+            html += "<td >" + "<input type=\"file\" id=\"attachment\" name=\"attachment\" onchange=\"registration.uploadLabItem('');\">" + " e.g scans, docs " + docLink + "</td>";
             html += "</tr>";
 
             html += "</table>";
 
             html += gui.formEnd();
-            
+
             html += "<iframe name = \"upload_iframe\" id = \"upload_iframe\"></iframe>";
-            
+
             return html;
         }
 
@@ -1824,7 +1830,7 @@
                     VAT vAT = new VAT(this.amount, taxInclusive, this.comCode);
 
                     if (this.sid == null) {
-                        Integer sid = sys.generateId(this.comCode+".HMPYDTLS", "ID");
+                        Integer sid = sys.generateId(this.comCode + ".HMPYDTLS", "ID");
 
                         query = "INSERT INTO " + this.comCode + ".HMPYDTLS "
                                 + "(ID, PYNO, ITEMCODE, "

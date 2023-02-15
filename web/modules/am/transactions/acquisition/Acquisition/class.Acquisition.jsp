@@ -194,7 +194,7 @@ final class Acquisition{
                     String entryNo          = rs.getString("ENTRYNO");
                     String entryDesc        = rs.getString("ENTRYDESC");
                     
-                    String opc_ = sys.getOneAgt("VIEWAMAQDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
+                    String opc_ = sys.getOneAgt(""+this.comCode+".VIEWAMAQDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
                     opc_ = (opc_ != null && ! opc_.trim().equals(""))? opc_: "0";
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
@@ -402,7 +402,7 @@ final class Acquisition{
         
         this.supplierNo = request.getParameter("supplierNoHd");
         
-        html += gui.getAutoColsSearch("APSUPPLIERS", "SUPPLIERNO, FULLNAME", "", this.supplierNo);
+        html += gui.getAutoColsSearch(this.comCode+".APSUPPLIERS", "SUPPLIERNO, FULLNAME", "", this.supplierNo);
         
         return html;
     }
@@ -551,11 +551,11 @@ final class Acquisition{
                 
                 if(this.sid == null){
 
-                    Integer sid = sys.generateId("AMAQDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".AMAQDTLS", "ID");
                     
                     this.aqNo = sys.getNextNo("AMAQDTLS", "ID", "", "AQ", 7);
                     
-                    query = "INSERT INTO AMAQDTLS "
+                    query = "INSERT INTO "+this.comCode+".AMAQDTLS "
                             + "("
                             + "ID, BATCHNO, ENTRYNO, AQNO, AQDESC, "
                             + "CATCODE, AQCODE, SUPPLIERNO, PONO, SERIALNO, "
@@ -587,7 +587,7 @@ final class Acquisition{
                             + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
-                    query = "UPDATE AMAQDTLS SET "
+                    query = "UPDATE "+this.comCode+".AMAQDTLS SET "
                             + "AQDESC           = '"+ this.aqDesc+ "', "
                             + "CATCODE          = '"+ this.catCode+ "', "
                             + "AQCODE           = '"+ this.aqCode+ "', "
@@ -697,7 +697,7 @@ final class Acquisition{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWAMAQDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWAMAQDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -717,7 +717,7 @@ final class Acquisition{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWAMAQDTLS WHERE BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWAMAQDTLS WHERE BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -775,7 +775,7 @@ final class Acquisition{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("AMAQDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".AMAQDTLS", "ID = "+ this.sid +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -783,7 +783,7 @@ final class Acquisition{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWAMAQDTLS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWAMAQDTLS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -852,7 +852,7 @@ final class Acquisition{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM AMAQDTLS WHERE ID = "+ this.id;
+                String query = "DELETE FROM "+this.comCode+".AMAQDTLS WHERE ID = "+ this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

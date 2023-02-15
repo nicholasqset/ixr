@@ -185,7 +185,7 @@ final class Disposal{
                     String entryNo          = rs.getString("ENTRYNO");
                     String entryDesc        = rs.getString("ENTRYDESC");
                     
-                    String opc_ = sys.getOneAgt("VIEWAMDIDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
+                    String opc_ = sys.getOneAgt(""+this.comCode+".VIEWAMDIDTLS", "SUM", "OPC", "SM", "BATCHNO = '"+ batchNo+ "' AND ENTRYNO = '"+ entryNo+ "'");
                     opc_ = (opc_ != null && ! opc_.trim().equals(""))? opc_: "0";
                     
                     String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
@@ -423,7 +423,7 @@ final class Disposal{
         
         this.assetNo = request.getParameter("assetNoHd");
         
-        html += gui.getAutoColsSearch("AMASSETS", "ASSETNO, ASSETDESC", "", this.assetNo);
+        html += gui.getAutoColsSearch(""+this.comCode+".AMASSETS", "ASSETNO, ASSETDESC", "", this.assetNo);
         
         return html;
     }
@@ -436,7 +436,7 @@ final class Disposal{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            AssetProfile assetProfile = new AssetProfile(this.assetNo);
+            AssetProfile assetProfile = new AssetProfile(this.assetNo, this.comCode);
             
             obj.put("assetDesc", assetProfile.assetDesc);
             obj.put("opc", assetProfile.opc);
@@ -470,9 +470,9 @@ final class Disposal{
                 
                 if(this.sid == null){
 
-                    Integer sid = sys.generateId("AMDIDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".AMDIDTLS", "ID");
                     
-                    query = "INSERT INTO AMDIDTLS "
+                    query = "INSERT INTO "+this.comCode+".AMDIDTLS "
                             + "("
                             + "ID, BATCHNO, ENTRYNO, ASSETNO, "
                             + "OPC, ACMDEPV, NBV, SALV, DICLRACC, "
@@ -498,7 +498,7 @@ final class Disposal{
                             + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
-                    query = "UPDATE AMDIDTLS SET "
+                    query = "UPDATE "+this.comCode+".AMDIDTLS SET "
                             + "ASSETNO          = '"+ this.assetNo+ "', "
                             + "OPC              = "+ this.opc+ ", "
                             + "ACMDEPV          = "+ this.acmDepV+ ", "
@@ -604,7 +604,7 @@ final class Disposal{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWAMDIDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWAMDIDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -624,7 +624,7 @@ final class Disposal{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWAMDIDTLS WHERE BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWAMDIDTLS WHERE BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -679,7 +679,7 @@ final class Disposal{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("AMDIDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".AMDIDTLS", "ID = "+ this.sid +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -687,7 +687,7 @@ final class Disposal{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWAMDIDTLS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWAMDIDTLS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -741,7 +741,7 @@ final class Disposal{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM AMDIDTLS WHERE ID = "+ this.id;
+                String query = "DELETE FROM "+this.comCode+".AMDIDTLS WHERE ID = "+ this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

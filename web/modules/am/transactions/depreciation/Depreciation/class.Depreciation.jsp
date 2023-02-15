@@ -449,8 +449,8 @@ final class Depreciation{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            AssetProfile assetProfile = new AssetProfile(this.assetNo);
-            AssetDep assetDep = new AssetDep(this.assetNo);
+            AssetProfile assetProfile = new AssetProfile(this.assetNo, this.comCode);
+            AssetDep assetDep = new AssetDep(this.assetNo, this.comCode);
             
             obj.put("assetDesc", assetProfile.assetDesc);
             obj.put("opc", assetProfile.opc);
@@ -488,9 +488,9 @@ final class Depreciation{
                 Integer saved = 0;
                 
                 if(this.sid == null){
-                    Integer sid = sys.generateId("AMDPDTLS", "ID");
+                    Integer sid = sys.generateId(""+this.comCode+".AMDPDTLS", "ID");
                     
-                    query = "INSERT INTO AMDPDTLS "
+                    query = "INSERT INTO "+this.comCode+".AMDPDTLS "
                             + "("
                             + "ID, BATCHNO, ENTRYNO, ASSETNO, "
                             + "OPC, NBVS, DEPCODE, DEPRATE, ESTLIFE, "
@@ -518,7 +518,7 @@ final class Depreciation{
                             + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
-                    query = "UPDATE AMDPDTLS SET "
+                    query = "UPDATE "+this.comCode+".AMDPDTLS SET "
                             + "ASSETNO          = '"+ this.assetNo+ "', "
                             + "OPC              = "+ this.opc+ ", "
                             + "NBVS             = "+ this.nbvS+ ", "
@@ -625,7 +625,7 @@ final class Depreciation{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(sys.recordExists("VIEWAMDPDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
+        if(sys.recordExists(""+this.comCode+".VIEWAMDPDTLS", "BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -645,7 +645,7 @@ final class Depreciation{
                 
                 Integer count  = 1;
                 
-                String query = "SELECT * FROM VIEWAMDPDTLS WHERE BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'";
+                String query = "SELECT * FROM "+this.comCode+".VIEWAMDPDTLS WHERE BATCHNO = '"+ this.batchNo+ "' AND ENTRYNO = '"+ this.entryNo+ "'";
                 
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -700,7 +700,7 @@ final class Depreciation{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(sys.recordExists("AMDPDTLS", "ID = "+ this.sid +"")){
+        if(sys.recordExists(""+this.comCode+".AMDPDTLS", "ID = "+ this.sid +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -708,7 +708,7 @@ final class Depreciation{
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 
-                String query = "SELECT * FROM VIEWAMDPDTLS WHERE ID = "+ this.sid +"";
+                String query = "SELECT * FROM "+this.comCode+".VIEWAMDPDTLS WHERE ID = "+ this.sid +"";
                 ResultSet rs = stmt.executeQuery(query);
 
                 while(rs.next()){
@@ -765,7 +765,7 @@ final class Depreciation{
             Statement stmt = conn.createStatement();
             
             if(this.id != null){
-                String query = "DELETE FROM AMDPDTLS WHERE ID = "+ this.id;
+                String query = "DELETE FROM "+this.comCode+".AMDPDTLS WHERE ID = "+ this.id;
             
                 Integer purged = stmt.executeUpdate(query);
                 if(purged == 1){

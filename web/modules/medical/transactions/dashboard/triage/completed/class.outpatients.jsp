@@ -259,6 +259,7 @@ final class OutPatients{
         String drName = "";
         String nrNo = "";
         String nrName = "";
+        String ptType = "";
         
         try{
             stmt = conn.createStatement();
@@ -272,6 +273,7 @@ final class OutPatients{
                 drName          = rs.getString("DRNAME");		
                 nrNo            = rs.getString("NRNO");		
                 nrName          = rs.getString("NRNAME");
+                ptType          = rs.getString("PTTYPE");
             }
         }catch (Exception e){
             html += e.getMessage();
@@ -299,6 +301,11 @@ final class OutPatients{
         html += "<tr>";
 	html += "<td class = \"bold\"  nowrap>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+" Registration Type</td>";
 	html += "<td>"+regTypeLbl +"</td>";
+	html += "</tr>";
+        
+        html += "<tr>";
+	html += "<td class = \"bold\"  nowrap>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+" Patient Type</td>";
+	html += "<td>"+ptType +"</td>";
 	html += "</tr>";
         
         html += "<tr>";

@@ -9,8 +9,8 @@ public class AssetDep {
     public Double acmDepV   = 0.0;
     public Double nbvE      = 0.0;
     
-    public AssetDep(String assetNo){
-        AssetProfile assetProfile = new AssetProfile(assetNo);
+    public AssetDep(String assetNo, String comCode){
+        AssetProfile assetProfile = new AssetProfile(assetNo, comCode);
         
         switch(assetProfile.depType){
             case "SL":

@@ -293,6 +293,7 @@ final class OPD{
         
         String drName = "";
         String nrName = "";
+        String ptType = "";
         
 //        this.regType = sys.getRecordCount("VIEWHMREGISTRATION", "PTNO = '"+ this.ptNo+ "'") > 0? "R": "N";
         
@@ -318,6 +319,7 @@ final class OPD{
                     nrName          = rs.getString("NRNAME");
                     
                     this.regNo      = rs.getString("REGNO");
+                    ptType          = rs.getString("PTTYPE");
                 }
             }catch (Exception e){
                 html += e.getMessage();

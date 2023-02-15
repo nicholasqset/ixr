@@ -282,6 +282,7 @@
 
             String drName = "";
             String nrName = "";
+            String ptType = "";
 
             try {
                 stmt = conn.createStatement();
@@ -295,6 +296,7 @@
                     drName = rs.getString("DRNAME");
                     this.nrNo = rs.getString("NRNO");
                     nrName = rs.getString("NRNAME");
+                    ptType = rs.getString("PTTYPE");
                 }
             } catch (SQLException e) {
                 html += e.getMessage();
@@ -320,6 +322,11 @@
             html += "<tr>";
             html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Registration Type</td>";
             html += "<td>" + regTypeLbl + "</td>";
+            html += "</tr>";
+            
+            html += "<tr>";
+            html += "<td class = \"bold\"  nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Patient Type</td>";
+            html += "<td>" + ptType + "</td>";
             html += "</tr>";
 
             html += "<tr>";

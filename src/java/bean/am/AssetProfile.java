@@ -3,6 +3,7 @@ package bean.am;
 import bean.conn.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -33,11 +34,11 @@ public class AssetProfile {
     public Double insV;
     public String comments;
     
-    public AssetProfile(String assetNo){
+    public AssetProfile(String assetNo, String comCode){
         try{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM VIEWAMASSETS WHERE ASSETNO = '"+ assetNo+ "' ";
+            String query = "SELECT * FROM "+comCode+".VIEWAMASSETS WHERE ASSETNO = '"+ assetNo+ "' ";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 this.assetNo        = rs.getString("ASSETNO");
@@ -63,8 +64,8 @@ public class AssetProfile {
                 this.insV           = rs.getDouble("INSV");
                 this.comments       = rs.getString("COMMENTS");
             }
-        }catch(Exception e){
-            e.getMessage();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
         }
         
     }
