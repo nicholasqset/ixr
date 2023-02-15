@@ -19,9 +19,10 @@
 
 //        String catCode = request.getParameter("category");
 //        String stockGroup = request.getParameter("stockGroup");
-        String entryDate = request.getParameter("entryDate");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
 
-        String rptName = "Expiring Stock by "+ entryDate;
+        String rptName = "Expiring Stock between "+ startDate+ " and "+ endDate;
 
         public String getReportHeader() {
             String html = "";
@@ -222,14 +223,14 @@
 //
 //            HmPyHdr hmPyHdr = new HmPyHdr(pyNo, this.comCode);
 //
-//            String entryDateLbl = "";
+//            String startDateLbl = "";
 //
 //            try {
 //                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
 //                SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
 //
-//                java.util.Date entryDate = originalFormat.parse(hmPyHdr.entryDate);
-//                entryDateLbl = targetFormat.format(entryDate);
+//                java.util.Date startDate = originalFormat.parse(hmPyHdr.startDate);
+//                startDateLbl = targetFormat.format(startDate);
 //            } catch (Exception e) {
 //                html += e.getMessage();
 //            }
@@ -248,7 +249,7 @@
 //
 //            html += "<tr>";
 //            html += "<td class = \"bold\">Bill Date</td>";
-//            html += "<td>" + entryDateLbl + "</td>";
+//            html += "<td>" + startDateLbl + "</td>";
 //            html += "</tr>";
 //
 //            html += "<tr>";
@@ -314,8 +315,10 @@
 
                     SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
                     SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    java.util.Date entryDate = originalFormat.parse(this.entryDate);
-                    String entryDateLbl = targetFormat.format(entryDate);
+                    java.util.Date startDate = originalFormat.parse(this.startDate);
+                    java.util.Date endDate = originalFormat.parse(this.endDate);
+                    String startDateLbl = targetFormat.format(startDate);
+                    String endDateLbl = targetFormat.format(endDate);
 //                    if (stockGroup.equals("low")) {
 //                        if (catCode.trim().equals("") || catCode == null) {
 //                            query = "SELECT * FROM " + this.comCode + ".VIEWICITEMS WHERE qty <= minlevel AND STOCKED = 1 ORDER BY ITEMCODE";
@@ -336,7 +339,7 @@
 //                        }
 //                    }
                     
-                    query = "SELECT * FROM " + this.comCode + ".VIEWICITEMS WHERE expdt < '" + entryDateLbl + "' ORDER BY ITEMCODE";
+                    query = "SELECT * FROM " + this.comCode + ".VIEWICITEMS WHERE expdt BETWEEN '" + startDateLbl + "' AND '" + endDateLbl + "' ORDER BY ITEMCODE";
 
 //                    html += query;
                     ResultSet rs = stmt.executeQuery(query);
@@ -420,7 +423,7 @@
     }
 
     PrintRpt printRpt = new PrintRpt();
-//    out.print(printRptBill.entryDate);
+//    out.print(printRptBill.startDate);
 
     Gui gui = new Gui();
 
