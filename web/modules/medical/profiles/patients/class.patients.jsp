@@ -3027,12 +3027,14 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
+            
+            this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
-            if (sys.recordExists(this.table, "REGNO = '" + this.regNo + "'")) {
+            if (sys.recordExists(this.comCode + ".HMREGISTRATION", "REGNO = '" + this.regNo + "'")) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.table + " WHERE REGNO = '" + this.regNo + "'";
+                    String query = "SELECT * FROM " + this.comCode + ".HMREGISTRATION" + " WHERE REGNO = '" + this.regNo + "'";
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         this.drNotes = rs.getString("dr_notes");
@@ -3049,13 +3051,12 @@
 
             html += gui.formInput("hidden", "id", 15, "" + this.id, "", "");
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
-            html += gui.formInput("hidden", "regType", 15, this.regType, "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\">" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("dr_notes", " Doctor Notes") + "</td>";
-            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"64\"  rows = \"14\"  >" + this.drNotes + "</textarea></td>";
+            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"72\"  rows = \"14\"  >" + this.drNotes + "</textarea></td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -3064,6 +3065,8 @@
                     + gui.formButton(request.getContextPath(), "button", "btnSaveDrNotes", "Save", "save.png", "onclick=\"dashboard.saveDrNotes('dr_notes');\"", "")
                     + " "
                     + gui.formButton(request.getContextPath(), "button", "btnPrintDrNotes", "Print", "printer.png", "onclick=\"dashboard.printDrNotes('dr_notes');\"", "")
+                    + " "
+                    + gui.formButton(request.getContextPath(), "button", "btnCanceld", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")
                     + "</td>";
             html += "</tr>";
 
@@ -3074,7 +3077,7 @@
             return html;
         }
 
-        public Object saveDrNotes() throws Exception {
+        public JSONObject saveDrNotes() throws Exception {
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             HttpSession session = request.getSession();
@@ -3085,13 +3088,13 @@
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
 
-                query = "UPDATE " + this.table + " SET "
+                query = "UPDATE " + this.comCode + ".HMREGISTRATION" + " SET "
                         + "DR_NOTES     = '" + this.drNotes + "', "
                         + "AUDITUSER    = '" + sys.getLogUser(session) + "', "
                         + "AUDITDATE    = '" + sys.getLogDate() + "', "
                         + "AUDITTIME    = '" + sys.getLogTime() + "', "
                         + "AUDITIPADR   = '" + sys.getClientIpAdr(request) + "' "
-                        + "WHERE ID     = " + id + "";
+                        + "WHERE REGNO     = '" + this.regNo + "'";
 
                 Integer saved = stmt.executeUpdate(query);
 
