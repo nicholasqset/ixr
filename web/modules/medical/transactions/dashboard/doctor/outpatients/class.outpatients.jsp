@@ -746,7 +746,7 @@
                 html += gui.formWarningMsg("No lab record found.");
             }
             html += "<br>";
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addLab('" + this.regNo + "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Lab Request", "add.png", "onclick = \"dashboard.addLab('" + this.regNo + "');\"", "");
 
             return html;
         }

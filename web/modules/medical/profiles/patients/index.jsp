@@ -592,9 +592,98 @@
                         g.error(errorMsg, { header : ' ' , life: 5, speedout: 2 });
                     }else{
                         g.info("Attachment successfully uploaded", { header : ' ' , life: 5, speedout: 2 });
-                        dashboard.getLab($F('regNo'));
+//                        dashboard.getLab($F('regNo'));
+                    }
+                },
+                saveVitals: function(required, rid, id, regNo, ptNo){
+                    var data = Form.serialize('frmVitals');
+                    data = data + '&rid='+ rid+ '&id='+ id+ '&regNo='+ regNo+ '&ptNo='+ ptNo;
+                    if(module.validate(required)){
+                        if($('frmVitals'))  $('frmVitals').disabled = true;  
+                        if($('btnSaveVitals')) $('btnSaveVitals').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveVitals&'+data,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An unexpected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmVitals')) { $('frmVitals').disabled = false; }
+                        if($('btnSaveVitals')) { $('btnSaveVitals').disabled = false;}
                     }
                 }
+            };
+            
+            var dashboard = {
+                addComplaint: function(rid, id, regNo, ptNo){
+                    module.execute('addComplaint', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divComplaints');
+                },
+                saveComplaint: function(required){
+                    if(module.validate(required)){
+                        if($('frmComplaint'))  $('frmComplaint').disabled = true;  
+                        if($('btnSaveComplaint')) $('btnSaveComplaint').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveComplaint&'+ Form.serialize("frmComplaint"),
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmComplaint')) { $('frmComplaint').disabled = false; }
+                        if($('btnSaveComplaint')) { $('btnSaveComplaint').disabled = false;}
+                    }
+                },
+                getComplaints: function(rid, id, regNo, ptNo){
+                    module.execute('getComplaints', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divComplaints');
+                },
+                editComplaint: function(cid, rid, id, regNo, ptNo){
+                    module.execute('addComplaint', "cid="+cid+ "&rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divComplaints');
+                },
+                delComplaint: function(cid, name, regNo, rid, id, ptNo){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=delComplaint&cid='+ cid,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    dashboard.getComplaints(rid, id, regNo, ptNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
             };
 
         </script>

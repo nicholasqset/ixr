@@ -53,12 +53,12 @@
         String nhifNo = request.getParameter("nhifNo");
 
         String spCode = request.getParameter("spCode");
-        
+
         String regNo = request.getParameter("regNo");
-        
+
         String pyNo = request.getParameter("billNoHd") != null && !request.getParameter("billNoHd").trim().equals("") ? request.getParameter("billNoHd") : null;
         Integer bid = request.getParameter("bid") != null ? Integer.parseInt(request.getParameter("bid")) : null;
-        
+
         String entryDate = request.getParameter("entryDate");
         String pyDesc = request.getParameter("pyDesc");
         Integer pYear = request.getParameter("pYear") != null && !request.getParameter("pYear").trim().equals("") ? Integer.parseInt(request.getParameter("pYear")) : null;
@@ -71,6 +71,13 @@
         Double amount = (request.getParameter("amount") != null && !request.getParameter("amount").trim().equals("")) ? Double.parseDouble(request.getParameter("amount")) : 0.0;
 
         Integer taxIncl = 1;
+
+        String pulseRate = request.getParameter("pulseRate");
+        String bloodPressure = request.getParameter("bloodPressure");
+        Double temperature = request.getParameter("temperature") != null ? Double.parseDouble(request.getParameter("temperature")) : 0.00;
+        String respiration = request.getParameter("respiration");
+        Double height = request.getParameter("height") != null ? Double.parseDouble(request.getParameter("height")) : 0.00;
+        Double weight = request.getParameter("weight") != null ? Double.parseDouble(request.getParameter("weight")) : 0.00;
 
         public String getGrid() {
             String html = "";
@@ -170,7 +177,7 @@
                     session.setAttribute("startRecord", 0);
                 }
 
-                String orderBy = "PTNO ";
+                String orderBy = "PTNO DESC ";
                 String limitSql = "";
 
                 switch (dbType) {
@@ -959,7 +966,7 @@
                 Boolean regTypeExists = sys.recordExists(this.comCode + ".HMREGISTRATION", "ptno='" + this.ptNo + "'");
                 regTypeLbl = regTypeExists ? "Return" : "New";
             }
-            
+
             HashMap<String, String> ptTypes = new HashMap();
             ptTypes.put("OPD", "Outpatient");
             ptTypes.put("IPD", "Inpatient");
@@ -986,12 +993,12 @@
 
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("ptType", " Type") + "</td>";
-            html += "<td >" + gui.formArraySelect("ptType", 136, ptTypes, rid != null? pttype: "OPD", true, "", false) + "</td>";
+            html += "<td >" + gui.formArraySelect("ptType", 136, ptTypes, rid != null ? pttype : "OPD", true, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("admdate", " Admission Date") + "</td>";
-            html += "<td >" + gui.formDateTime(request.getContextPath(), "admdate", 25, rid != null?admdate: sys.getFormatedDateTime(sys.getLogDate()), true, "") + "</td>";
+            html += "<td >" + gui.formDateTime(request.getContextPath(), "admdate", 25, rid != null ? admdate : sys.getFormatedDateTime(sys.getLogDate()), true, "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1050,7 +1057,7 @@
                             + "'" + regType + "', "
                             + "'" + this.ptNo + "', "
                             + "'" + ptType + "', "
-//                            + "'OPD', "
+                            //                            + "'OPD', "
                             + sys.getPeriodYear(this.comCode) + ", "
                             + sys.getPeriodMonth(this.comCode) + ", "
                             + "now(), "
@@ -1128,9 +1135,11 @@
             html += "<div id = \"dhtmlgoodies_tabView2\">";
 
             html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"dvBills\">" + this.getBillingTab() + "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"dvBills\">" + this.getVitalParamTab() + "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id = \"divComplaints\">" + this.getComplaintsTab() + "</div></div>";
 
             html += "<script type = \"text/javascript\">";
-            html += "initTabs(\'dhtmlgoodies_tabView2\', Array(\'Billing\'), 0, 590, 310, Array(false));";
+            html += "initTabs(\'dhtmlgoodies_tabView2\', Array(\'Billing\', \'Vital Parameters\', \'Complaints\',), 0, 590, 310, Array(false));";
             html += "</script>";
 
             html += "</div>";
@@ -1236,15 +1245,15 @@
                 html += "No records found.";
             }
 
-            html += "<div style = \"padding: 7px 0;\">" 
-                    + gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "math-add.png", "onclick = \"registration.manageBill("+this.rid+","+this.id+",'" + regNo + "', '" + this.ptNo + "'); return false;\"", "") 
+            html += "<div style = \"padding: 7px 0;\">"
+                    + gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Bill", "math-add.png", "onclick = \"registration.manageBill(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "'); return false;\"", "")
                     + "&nbsp;"
-                    + gui.formButton(request.getContextPath(), "button", "btnCancel1", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "") 
+                    + gui.formButton(request.getContextPath(), "button", "btnCancel1", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")
                     + "</div>";
 
             return html;
         }
-        
+
         public String manageBill() {
             String html = "";
 
@@ -1301,7 +1310,6 @@
             html += "</div>";
 
 //            PatientProfile patientProfile = new PatientProfile(this.ptNo, this.comCode);
-
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
 //            html += "<tr>";
@@ -1311,17 +1319,15 @@
 //            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("entryDate", " Date") + "</td>";
 //            html += "<td>" + gui.formDateTime(request.getContextPath(), "entryDate", 13, this.bid != null ? this.entryDate : defaultDate, false, "") + "</td>";
 //            html += "</tr>";
-            
-            html += gui.formInput("hidden", "billNo", 30, this.bid != null? this.pyNo: "", "", "");
-            html += gui.formInput("hidden", "billNoHd", 30, this.bid != null? this.pyNo: "", "", "");
-            html += gui.formInput("hidden", "entryDate", 30, this.bid != null? this.entryDate: defaultDate, "", "");
+            html += gui.formInput("hidden", "billNo", 30, this.bid != null ? this.pyNo : "", "", "");
+            html += gui.formInput("hidden", "billNoHd", 30, this.bid != null ? this.pyNo : "", "", "");
+            html += gui.formInput("hidden", "entryDate", 30, this.bid != null ? this.entryDate : defaultDate, "", "");
 
 //            html += "<tr>";
 //            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "package.png", "", "") + gui.formLabel("pyDesc", " Description") + "</td>";
 //            html += "<td colspan = \"3\">" + gui.formInput("text", "pyDesc", 30, this.bid != null ? this.pyDesc : this.ptNo + "-" + patientProfile.fullName, "", "") + "</td>";
 //            html += "</tr>";
-
-            html += gui.formInput("hidden", "pyDesc", 30, this.bid != null? this.pyDesc: "** NEW SALE **", "", "");
+            html += gui.formInput("hidden", "pyDesc", 30, this.bid != null ? this.pyDesc : "** NEW SALE **", "", "");
 
 //            html += "<tr>";
 //            html += "<td width = \"15%\">" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("pYear", " Fiscal Year") + "</td>";
@@ -1330,14 +1336,12 @@
 //            html += "<td width = \"15%\">" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("pMonth", " Period") + "</td>";
 //            html += "<td>" + gui.formMonthSelect("pMonth", this.bid != null ? this.pMonth : sys.getPeriodMonth(this.comCode), "", true) + "</td>";
 //            html += "</tr>";
-
-             html += gui.formInput("hidden", "pYear", 30, this.bid != null? ""+ this.pYear: ""+ sys.getPeriodYear(this.comCode), "", "");
-            html += gui.formInput("hidden", "pMonth", 30, this.bid != null? ""+ this.pMonth: ""+ sys.getPeriodMonth(this.comCode), "", "");
+            html += gui.formInput("hidden", "pYear", 30, this.bid != null ? "" + this.pYear : "" + sys.getPeriodYear(this.comCode), "", "");
+            html += gui.formInput("hidden", "pMonth", 30, this.bid != null ? "" + this.pMonth : "" + sys.getPeriodMonth(this.comCode), "", "");
 
 //            html += "<tr>";
 //            html += "<td colspan = \"4\"><div class = \"hr\"></div></td>";
 //            html += "</tr>";
-
             html += "<tr>";
             html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("itemNo", " Item No") + "</td>";
             html += "<td width = \"35%\" nowrap>" + gui.formAutoComplete("itemNo", 13, "", "registration.searchItem", "itemNoHd", "") + "</td>";
@@ -1389,7 +1393,7 @@
 
             this.itemCode = request.getParameter("itemNoHd");
 
-            html += gui.getAutoColsSearch(this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from "+this.comCode+".hmcats)", this.itemCode);
+            html += gui.getAutoColsSearch(this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from " + this.comCode + ".hmcats)", this.itemCode);
 
             return html;
         }
@@ -1525,7 +1529,7 @@
 
             return obj;
         }
-        
+
         public Object saveBill() throws Exception {
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
@@ -1707,6 +1711,378 @@
 
             return obj;
         }
+
+        public String getVitalParamTab() {
+            String html = "";
+
+            Gui gui = new Gui();
+            Sys sys = new Sys();
+
+            this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
+
+            if (sys.recordExists(comCode + ".HMTRIAGE", "REGNO = '" + this.regNo + "'")) {
+
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt;
+
+                try {
+                    stmt = conn.createStatement();
+                    String query = "SELECT * FROM " + comCode + ".HMTRIAGE" + " WHERE REGNO = '" + this.regNo + "'";
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        this.pulseRate = rs.getString("PULSERATE");
+                        this.bloodPressure = rs.getString("BLOODPRESSURE");
+                        this.temperature = rs.getDouble("TEMPERATURE");
+                        this.respiration = rs.getString("RESPIRATION");
+                        this.height = rs.getDouble("HEIGHT");
+                        this.weight = rs.getDouble("WEIGHT");
+                    }
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+            } else {
+                this.pulseRate = "";
+                this.bloodPressure = "";
+                this.respiration = "";
+            }
+
+            html += gui.formStart("frmVitals", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
+
+            html += "<tr>";
+            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("pulseRate", " Pulse Rate") + "</td>";
+            html += "<td >" + gui.formInput("text", "pulseRate", 15, this.pulseRate, "", "") + "<span class = \"fade\"> /min</span></td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("bloodPressure", " Blood Pressure") + "</td>";
+            html += "<td >" + gui.formInput("text", "bloodPressure", 15, this.bloodPressure, "", "") + "<span class = \"fade\"> mm of Hg</span></td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("temperature", " Temperature") + "</td>";
+            html += "<td >" + gui.formInput("text", "temperature", 15, "" + this.temperature, "", "") + "<span class = \"fade\"> C</span></td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("respiration", " Respiration") + "</td>";
+            html += "<td >" + gui.formInput("text", "respiration", 15, this.respiration, "", "") + "<span class = \"fade\"> /min</span></td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("height", " Height") + "</td>";
+            html += "<td >" + gui.formInput("text", "height", 15, "" + this.height, "", "") + "<span class = \"fade\"> cm</span></td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("weight", " Weight") + "</td>";
+            html += "<td >" + gui.formInput("text", "weight", 15, "" + this.weight, "", "") + "<span class = \"fade\"> Kg</span></td>";
+            html += "</tr>";
+
+            html += "</table>";
+
+            html += "<div style = \"padding: 7px 0;\">"
+//                    + gui.formButton(request.getContextPath(), "button", "btnSaveVitals", "Save Vitals", "save.png", "onclick = \"registration.saveVitals('pulseRate bloodPressure temperature respiration height weight', " + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "'); return false;\"", "")
+//                    + "&nbsp;"
+                    + gui.formButton(request.getContextPath(), "button", "btnCancel1", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")
+                    + "</div>";
+
+            html += gui.formEnd();
+
+            return html;
+        }
+
+        public JSONObject saveVitals() throws Exception {
+            JSONObject obj = new JSONObject();
+            HttpSession session = request.getSession();
+
+            Sys sys = new Sys();
+
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt;
+
+            try {
+                if (!sys.recordExists(comCode+".HMTRIAGE", "REGNO = '" + this.regNo + "'")) {
+
+                    stmt = conn.createStatement();
+
+                    Integer id = sys.generateId(comCode+".HMTRIAGE", "ID");
+
+                    String query;
+
+                    query = "INSERT INTO " + comCode+".HMTRIAGE" + " "
+                            + "(ID, REGNO, PULSERATE, BLOODPRESSURE, TEMPERATURE, RESPIRATION, HEIGHT, WEIGHT, "
+                            + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
+                            + "VALUES"
+                            + "("
+                            + id + ", "
+                            + "'" + this.regNo + "', "
+                            + "'" + this.pulseRate + "', "
+                            + "'" + this.bloodPressure + "', "
+                            + this.temperature + ", "
+                            + "'" + this.respiration + "', "
+                            + "'" + this.height + "', "
+                            + "'" + this.weight + "', "
+                            + "'" + sys.getLogUser(session) + "', "
+                            + "'" + sys.getLogDate() + "', "
+                            + "'" + sys.getLogTime() + "', "
+                            + "'" + sys.getClientIpAdr(request) + "'"
+                            + ")";
+
+                    Integer saved = stmt.executeUpdate(query);
+
+                    if (saved == 1) {
+                        obj.put("success", new Integer(1));
+                        obj.put("message", "Entry successfully made.");
+
+                        stmt.executeUpdate("UPDATE " + this.comCode + ".HMREGISTRATION SET TRIAGED = 1 WHERE REGNO = '" + this.regNo + "'");
+                    } else {
+                        obj.put("success", new Integer(0));
+                        obj.put("message", "Oops! An Un-expected error occured while saving record.");
+                    }
+
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "Entry already made");
+                }
+
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            }
+
+            return obj;
+        }
+        
+//        complaints start
+        public String getComplaintsTab() {
+            String html = "";
+
+            Gui gui = new Gui();
+            Sys sys = new Sys();
+            
+            this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
+
+            if (sys.recordExists("" + this.comCode + ".HMPTCOMPLAINTS", "REGNO = '" + this.regNo + "'")) {
+                html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
+
+                html += "<tr>";
+                html += "<th>#</th>";
+                html += "<th>Complaint</th>";
+                html += "<th>Options</th>";
+                html += "</tr>";
+
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+//                String query = "SELECT * FROM "+this.comCode+".VIEWPTCOMPLAINTS WHERE REGNO = '"+this.regNo+"' ";
+                    String query = "SELECT * FROM " + this.comCode + ".HMPTCOMPLAINTS WHERE REGNO = '" + this.regNo + "' ";
+                    ResultSet rs = stmt.executeQuery(query);
+                    Integer count = 1;
+                    while (rs.next()) {
+
+                        String id = rs.getString("ID");
+                        String complName = rs.getString("COMPLNAME");
+
+                        String editLink = gui.formHref("onclick = \"dashboard.editComplaint(" + id + "," + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+
+                        html += "<tr>";
+                        html += "<td>" + count + "</td>";
+                        html += "<td>" + sys.shorten(complName, 300) + "</td>";
+                        html += "<td>" + editLink + "</td>";
+                        html += "</tr>";
+
+                        count++;
+                    }
+
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+                html += "</table>";
+
+            } else {
+                html += gui.formWarningMsg("No complaints record found.");
+            }
+            html += "<br>";
+//            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Complaint", "add.png", "onclick = \"dashboard.addComplaint('" + this.regNo + "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Complaint", "add.png", "onclick = \"dashboard.addComplaint(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
+            html += " ";
+            html += gui.formButton(request.getContextPath(), "button", "btnCancel1", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
+
+            return html;
+        }
+
+        public String addComplaint() {
+            String html = "";
+
+            Gui gui = new Gui();
+
+            Integer rid = request.getParameter("cid") != null ? Integer.parseInt(request.getParameter("cid")) : null;
+            String complCode = "";
+            String complName = "";
+            String remarks = "";
+//            String results = "";
+            if (rid != null) {
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt;
+                    stmt = conn.createStatement();
+//                String query = "SELECT * FROM "+this.comCode+".VIEWPTCOMPLAINTS WHERE ID = "+rid;
+                    String query = "SELECT * FROM " + this.comCode + ".HMPTCOMPLAINTS WHERE ID = " + rid;
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        this.regNo = rs.getString("REGNO");
+                        complCode = rs.getString("COMPLCODE");
+                        complName = rs.getString("COMPLNAME");
+                        remarks = rs.getString("REMARKS");
+//                        results = rs.getString("results");
+                    }
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+            }
+
+            html += gui.formStart("frmComplaint", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            if (rid != null) {
+                html += gui.formInput("hidden", "cid", 15, "" + rid, "", "");
+            }
+
+            html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
+
+            html += "<tr>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("complaint", " Complaint") + "</td>";
+//        html += "<td >"+gui.formSelect("complaint", ""+this.comCode+".HMCOMPLAINTS", "COMPLCODE", "COMPLNAME", "", "", complCode, "", false)+"</td>";
+            html += "<td >" + gui.formInput("textarea", "complaint", 40, complName, "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("remarks", " Remarks") + "</td>";
+            html += "<td >" + gui.formInput("textarea", "remarks", 40, remarks, "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td>&nbsp;</td>";
+            html += "<td>";
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveComplaint", "Save", "save.png", "onclick = \"dashboard.saveComplaint('complaint');\"", "");
+            if (rid != null) {
+                html += " ";
+                html += gui.formButton(request.getContextPath(), "button", "btnDelComplaint", "Delete", "delete.png", "onclick = \"dashboard.delComplaint(" + rid + ", '" + complName + "', '" + this.regNo + "', " + this.rid + ", " + this.id + ",'" + this.ptNo + "');\"", "");
+            }
+//            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getComplaints('" + this.regNo + "');\"", "");
+            html += " ";
+            html += gui.formButton(request.getContextPath(), "button", "btnBack", "Back", "arrow-left-2.png", "onclick = \"patients.manageRegistration(" + this.rid + ", " + this.id + ",'" + this.ptNo + "'); return false;\"", "");
+            html += "</td>";
+            html += "</tr>";
+
+            html += "</table>";
+
+            html += gui.formEnd();
+            return html;
+        }
+
+        public Object saveComplaint() throws Exception {
+            JSONObject obj = new JSONObject();
+            Sys sys = new Sys();
+            HttpSession session = request.getSession();
+
+            Integer rid = request.getParameter("cid") != null ? Integer.parseInt(request.getParameter("cid")) : null;
+            String complCode = request.getParameter("complaint");
+            String remarks = request.getParameter("remarks");
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+                String query;
+
+                if (rid == null) {
+                    Integer id = sys.generateId("" + this.comCode + ".HMPTCOMPLAINTS", "ID");
+                    query = "INSERT INTO " + this.comCode + ".HMPTCOMPLAINTS "
+                            + "(ID, REGNO, COMPLCODE, COMPLNAME, REMARKS, "
+                            + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
+                            + "VALUES"
+                            + "("
+                            + id + ", "
+                            + "'" + this.regNo + "', "
+                            //                    + "'"+ complCode +"', "
+                            + "'" + id + "', "
+                            + "'" + complCode + "', "
+                            + "'" + remarks + "', "
+                            + "'" + sys.getLogUser(session) + "', "
+                            + "'" + sys.getLogDate() + "', "
+                            + "'" + sys.getLogTime() + "', "
+                            + "'" + sys.getClientIpAdr(request) + "'"
+                            + ")";
+
+                } else {
+                    query = "UPDATE " + this.comCode + ".HMPTCOMPLAINTS SET "
+                            //                    + "COMPLCODE    = '"+ complCode +"', "
+                            + "COMPLNAME    = '" + complCode + "', "
+                            + "REMARKS      = '" + remarks + "' "
+                            + "WHERE ID     = " + rid + "";
+                }
+
+                Integer saved = stmt.executeUpdate(query);
+
+                if (saved == 1) {
+                    obj.put("success", new Integer(1));
+                    obj.put("message", "Complaint entry successfully made.");
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "Oops! An Un-expected error occured while saving record." + query);
+                }
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            }
+
+            return obj;
+        }
+
+        public String getComplaints() {
+            String html = "";
+            html += this.getComplaintsTab();
+            return html;
+        }
+
+        public Object delComplaint() throws Exception {
+
+            JSONObject obj = new JSONObject();
+            Integer rid = request.getParameter("cid") != null ? Integer.parseInt(request.getParameter("cid")) : null;
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                if (rid != null) {
+                    String query = "DELETE FROM " + this.comCode + ".HMPTCOMPLAINTS WHERE ID = " + rid;
+
+                    Integer purged = stmt.executeUpdate(query);
+                    if (purged == 1) {
+                        obj.put("success", new Integer(1));
+                        obj.put("message", "Complaint entry successfully deleted.");
+                    } else {
+                        obj.put("success", new Integer(0));
+                        obj.put("message", "An error occured while deleting record.");
+                    }
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "An error occured while deleting record.");
+                }
+
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            }
+
+            return obj;
+        }
+//        complaints end
 
     }
 
