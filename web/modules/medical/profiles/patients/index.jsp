@@ -684,6 +684,336 @@
                         });
                     }
                 },
+                addLab: function(regNo){
+                    module.execute('addLab', "regNo="+regNo, 'divLab');
+                },
+                saveLab: function(required){
+                    if(module.validate(required)){
+                        if($('frmLab'))  $('frmLab').disabled = true;  
+                        if($('btnSaveLab')) $('btnSaveLab').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveLab&'+ Form.serialize("frmLab"),
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmLab')) { $('frmLab').disabled = false; }
+                        if($('btnSaveLab')) { $('btnSaveLab').disabled = false;}
+                    }
+                },
+                getLab: function(regNo){
+                    module.execute('getLab', "regNo="+regNo, 'divLab');
+                },
+                editLab: function(id){
+                    module.execute('addLab', "rid="+id, 'divLab');
+                },
+                delLab: function(id, name, regNo){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=delLab&rid='+ id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    dashboard.getLab(regNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                addDiagnosis: function(regNo){
+                    module.execute('addDiagnosis', "regNo="+regNo, 'divDiagnosis');
+                },
+                searchDiagnosis: function(){
+                    var count = Ajax.activeRequestCount;
+                    if(count <= 0){
+                        var getResultTo = 'diagnosisDiv';
+                        new Ajax.Autocompleter(
+                                'diagnosis', getResultTo, module.ajaxUrl,{
+                                paramName  : 'diagnosisHd',
+                                parameters : 'function=searchDiagnosis',
+                                minChars   : 2,
+                                frequency  : 1.0,
+                                afterUpdateElement : dashboard.setDiagnosis
+                            });
+                    }
+                },
+                setDiagnosis: function(text, item){
+                    if(item.id !== ''){
+                        if($('diagnosisHd')) $('diagnosisHd').value= item.id;
+                        dashboard.getDiagnosisProfile(item.id);
+                    }
+                },
+                getDiagnosisProfile: function(diagnosis){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getDiagnosisProfile&diagnosis='+ diagnosis,
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            if(typeof response.success === 'number' && response.success === 1){
+                                
+                                if(typeof response.diagnosis !== 'undefined' && $('diagnosis')) $('diagnosis').value = (response.diagnosis);
+                                if(typeof response.diagName !== 'undefined' && $('diagName')) $('diagName').value = (response.diagName);
+//                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+//                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+//                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+//                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                
+                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                            }else{
+                                if(typeof response.message !== 'undefined'){
+                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                }else{
+                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                }
+                            }
+                        }
+                    });
+                },
+                saveDiagnosis: function(required){
+                    if(module.validate(required)){
+                        if($('frmDiagnosis'))  $('frmDiagnosis').disabled = true;  
+                        if($('btnSaveDiagnosis')) $('btnSaveDiagnosis').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveDiagnosis&'+ Form.serialize("frmDiagnosis"),
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmDiagnosis')) { $('frmDiagnosis').disabled = false; }
+                        if($('btnSaveDiagnosis')) { $('btnSaveDiagnosis').disabled = false;}
+                    }
+                },
+                getDiagnosis: function(regNo){
+                    module.execute('getDiagnosis', "regNo="+regNo, 'divDiagnosis');
+                },
+                editDiagnosis: function(id){
+                    module.execute('addDiagnosis', "rid="+id, 'divDiagnosis');
+                },
+                delDiagnosis: function(id, name, regNo){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=delDiagnosis&rid='+ id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    dashboard.getDiagnosis(regNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                addMedication: function(regNo){
+                    module.execute('addMedication', "regNo="+regNo, 'divMedication');
+                },
+                searchDrug: function(){
+                    var count = Ajax.activeRequestCount;
+                    if(count <= 0){
+                        var getResultTo = 'drugDiv';
+                        new Ajax.Autocompleter(
+                                'drug', getResultTo, module.ajaxUrl,{
+                                paramName  : 'drugHd',
+                                parameters : 'function=searchDrug',
+                                minChars   : 2,
+                                frequency  : 1.0,
+                                afterUpdateElement : dashboard.setDrugItem
+                            });
+                    }
+                },
+                setDrugItem: function(text, item){
+                    if(item.id !== ''){
+                        if($('drugHd')) $('drugHd').value= item.id;
+                        dashboard.getDrugItemProfile(item.id);
+                    }
+                },
+                getDrugItemProfile: function(itemNo){
+                    new Ajax.Request(module.ajaxUrl ,{
+                        method:'post',
+                        parameters: 'function=getDrugItemProfile&itemNo='+ itemNo,
+                        requestHeaders: { Accept: 'application/json'},
+                        onSuccess: function(request) {
+                            response = request.responseText.evalJSON();
+                            if(typeof response.success === 'number' && response.success === 1){
+                                
+//                                if(typeof response.itemName !== 'undefined' && $('tdItemName')) $('tdItemName').update(response.itemName);
+                                if(typeof response.itemName !== 'undefined' && $('drugName')) $('drugName').value = (response.itemName);
+//                                if(typeof response.quantity !== 'undefined' && $('quantity')) $('quantity').value = response.quantity;
+//                                if(typeof response.price !== 'undefined' && $('price')) $('price').value = response.price;
+//                                if(typeof response.amount !== 'undefined' && $('amount')) $('amount').value = response.amount;
+                                
+//                                dashboard.getItemPhoto(itemNo);
+                                
+                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                            }else{
+                                if(typeof response.message !== 'undefined'){
+                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                }else{
+                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                }
+                            }
+                        }
+                    });
+                },
+                saveMedication: function(required){
+                    if(module.validate(required)){
+                        if($('frmMedication'))  $('frmMedication').disabled = true;  
+                        if($('btnSaveMedication')) $('btnSaveMedication').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveMedication&'+ Form.serialize("frmMedication"),
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmMedication')) { $('frmMedication').disabled = false; }
+                        if($('btnSaveMedication')) { $('btnSaveMedication').disabled = false;}
+                    }
+                },
+                getMedication: function(regNo){
+                    module.execute('getMedication', "regNo="+regNo, 'divMedication');
+                },
+                editMedication: function(id){
+                    module.execute('addMedication', "rid="+id, 'divMedication');
+                },
+                delMedication: function(id, name, regNo){
+                    if(confirm("Delete '"+name+"'?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=delMedication&rid='+ id,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    dashboard.getMedication(regNo);
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                saveDrNotes: function(required){
+                    var data = Form.serialize('frmDrNotes');
+                    if(module.validate(required)){
+                        if($('frmDrNotes'))  $('frmDrNotes').disabled = true;  
+                        if($('btnSave')) $('btnSave').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=saveDrNotes&'+data,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+                                    if(typeof response.receiptNo !== 'undefined' && $('receiptNo')) $('receiptNo').value = response.receiptNo;
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmDrNotes')) { $('frmDrNotes').disabled = false; }
+                        if($('btnSave')) { $('btnSave').disabled = false;}
+                    }
+                },
+                printDrNotes: function(required){
+                    var data = Form.serialize('frmDrNotes');
+                    if(module.validate(required)){
+                        var printWindow = window.open(
+                            './print_dr_notes?'+ data, '', 'height=500, width=750, toolbar=no, menubar=no, directories=no, location=no, scrollbars=yes, status=no, resizable=no, fullscreen=no, top=200, left=200');
+                        printWindow.focus();
+                    }
+                },
+                discharge: function(required){
+                    var data = Form.serialize('frmDischarge');
+                    if(module.validate(required)){
+                        if($('frmDischarge'))  $('frmDischarge').disabled = true;  
+                        if($('btnDischarge')) $('btnDischarge').disabled = true; 
+			
+			new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=discharge&'+data,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success === 'number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
+//                                    if(typeof response.receiptNo !== 'undefined' && $('receiptNo')) $('receiptNo').value = response.receiptNo;
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Un-expected error occured while saving record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+			});
+                        if($('frmDischarge')) { $('frmDischarge').disabled = false; }
+                        if($('btnDischarge')) { $('btnDischarge').disabled = false;}
+                    }
+                }
             };
 
         </script>

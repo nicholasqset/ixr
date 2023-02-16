@@ -1560,7 +1560,7 @@
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\">" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("dr_notes", " Doctor Notes") + "</td>";
-            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"48\"  rows = \"20\"  >" + this.drNotes + "</textarea></td>";
+            html += "<td ><textarea id = \"dr_notes\" name = \"dr_notes\" cols = \"64\"  rows = \"20\"  >" + this.drNotes + "</textarea></td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1715,7 +1715,7 @@
                     String itemCode = rs.getString("DRUGCODE");
                     Double qty = rs.getDouble("QTY");
 
-                    medical.createInvDtls(regNo, "A", itemCode, qty, session, request);
+//                    medical.createInvDtls(regNo, "A", itemCode, qty, session, request);
                 }
             } catch (Exception e) {
 
