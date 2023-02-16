@@ -2246,6 +2246,7 @@
 //            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Lab Request", "add.png", "onclick = \"dashboard.addLab(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
 //            html += " ";
             html += gui.formButton(request.getContextPath(), "button", "btnCancell", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
+            
 
             return html;
         }
@@ -2446,6 +2447,8 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
+            
+            this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMPTDIAGNOSIS", "REGNO = '" + this.regNo + "'")) {
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
@@ -2468,7 +2471,7 @@
                         String id = rs.getString("ID");
                         String diagName = rs.getString("DIAGNAME");
 
-                        String editLink = gui.formHref("onclick = \"dashboard.editDiagnosis(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        String editLink = gui.formHref("onclick = \"dashboard.editDiagnosis(" + id + "," + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
@@ -2489,7 +2492,9 @@
                 html += gui.formWarningMsg("No diagnosis record found.");
             }
             html += "<br>";
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addDiagnosis('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addDiagnosis(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
+//            html += " ";
+            html += gui.formButton(request.getContextPath(), "button", "btnCancell", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
 
             return html;
         }
@@ -2499,7 +2504,7 @@
 
             Gui gui = new Gui();
 
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("did") != null ? Integer.parseInt(request.getParameter("did")) : null;
             String diagCode = "";
             String diagName = "";
             String remarks = "";
@@ -2525,7 +2530,7 @@
             html += gui.formStart("frmDiagnosis", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             if (rid != null) {
-                html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
+                html += gui.formInput("hidden", "did", 15, "" + rid, "", "");
             }
 
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
@@ -2551,11 +2556,11 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveDiagnosis", "Save", "save.png", "onclick = \"dashboard.saveDiagnosis('diagnosis diagName');\"", "");
-            if (rid != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelDiagnosis", "Delete", "delete.png", "onclick = \"dashboard.delDiagnosis(" + rid + ", '" + diagName + "', '" + this.regNo + "');\"", "");
-            }
-            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getDiagnosis('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnSaveDiagnosis", "Save", "save.png", "onclick = \"dashboard.saveDiagnosis('diagnosis diagName');\"", "");
+//            if (rid != null) {
+//                html += gui.formButton(request.getContextPath(), "button", "btnDelDiagnosis", "Delete", "delete.png", "onclick = \"dashboard.delDiagnosis(" + rid + ", '" + diagName + "', '" + this.regNo + "', " + this.rid + ", " + this.id + ",'" + this.ptNo + "');\"", "");
+//            }
+            html += gui.formButton(request.getContextPath(), "button", "btnCanceld", "Back", "arrow-left-2.png", "onclick = \"patients.manageRegistration(" + this.rid + ", " + this.id + ",'" + this.ptNo + "'); return false;\"", "");
             html += "</td>";
             html += "</tr>";
 
@@ -2605,7 +2610,7 @@
             Sys sys = new Sys();
             HttpSession session = request.getSession();
 
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("did") != null ? Integer.parseInt(request.getParameter("did")) : null;
             String diagCode = request.getParameter("diagnosis");
             String diagName = request.getParameter("diagName");
             String remarks = request.getParameter("remarks");
@@ -2702,6 +2707,8 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
+            
+            this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMMEDICATION", "REGNO = '" + this.regNo + "'")) {
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
@@ -2729,7 +2736,7 @@
                         String days = rs.getString("DAYS");
                         String qty = rs.getString("QTY");
 
-                        String editLink = gui.formHref("onclick = \"dashboard.editMedication(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        String editLink = gui.formHref("onclick = \"dashboard.editMedication(" + id + "," + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
@@ -2752,7 +2759,9 @@
                 html += gui.formWarningMsg("No prescription record found.");
             }
             html += "<br>";
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addMedication('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"dashboard.addMedication(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
+//            html += " ";
+            html += gui.formButton(request.getContextPath(), "button", "btnCancelp", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
 
             return html;
         }
@@ -2762,7 +2771,7 @@
 
             Gui gui = new Gui();
 
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("pid") != null ? Integer.parseInt(request.getParameter("pid")) : null;
             String drugCode = "";
             String drugName = "";
             String days = "";
@@ -2805,7 +2814,7 @@
             html += gui.formStart("frmMedication", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             if (rid != null) {
-                html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
+                html += gui.formInput("hidden", "pid", 15, "" + rid, "", "");
             }
 
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
@@ -2854,11 +2863,11 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveMedication", "Save", "save.png", "onclick = \"dashboard.saveMedication('drug days quantity');\"", "");
-            if (rid != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelMedication", "Delete", "delete.png", "onclick = \"dashboard.delMedication(" + rid + ", '" + drugName + "', '" + this.regNo + "');\"", "");
-            }
-            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getMedication('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnSaveMedication", "Save", "save.png", "onclick = \"dashboard.saveMedication('drug days quantity');\"", "");
+//            if (rid != null) {
+//                html += gui.formButton(request.getContextPath(), "button", "btnDelMedication", "Delete", "delete.png", "onclick = \"dashboard.delMedication(" + rid + ", '" + drugName + "', '" + this.regNo + "', " + this.rid + ", " + this.id + ",'" + this.ptNo + "');\"", "");
+//            }
+            html += gui.formButton(request.getContextPath(), "button", "btnCancelp2", "Back", "arrow-left-2.png", "onclick = \"patients.manageRegistration(" + this.rid + ", " + this.id + ",'" + this.ptNo + "'); return false;\"", "");
             html += "</td>";
             html += "</tr>";
 
@@ -2904,12 +2913,12 @@
             return obj;
         }
 
-        public Object saveMedication() throws Exception {
+        public JSONObject saveMedication() throws Exception {
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             HttpSession session = request.getSession();
 
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("pid") != null ? Integer.parseInt(request.getParameter("pid")) : null;
             String drugCode = request.getParameter("drug");
             String days = request.getParameter("days"); //!= null ? Integer.parseInt(request.getParameter("days")) : 0;
             String qty = request.getParameter("quantity"); //!= null ? Double.parseDouble(request.getParameter("quantity")) : 0.00;
@@ -2989,10 +2998,9 @@
             return html;
         }
 
-        public Object delMedication() throws Exception {
-
+        public JSONObject delMedication() throws Exception {
             JSONObject obj = new JSONObject();
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("pid") != null ? Integer.parseInt(request.getParameter("pid")) : null;
             try {
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
@@ -3061,8 +3069,8 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>"
-                    + gui.formButton(request.getContextPath(), "button", "btnSaveDrNotes", "Save", "save.png", "onclick=\"dashboard.saveDrNotes('dr_notes');\"", "")
-                    + " "
+//                    + gui.formButton(request.getContextPath(), "button", "btnSaveDrNotes", "Save", "save.png", "onclick=\"dashboard.saveDrNotes('dr_notes');\"", "")
+//                    + " "
                     + gui.formButton(request.getContextPath(), "button", "btnPrintDrNotes", "Print", "printer.png", "onclick=\"dashboard.printDrNotes('dr_notes');\"", "")
                     + " "
                     + gui.formButton(request.getContextPath(), "button", "btnCanceld", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")

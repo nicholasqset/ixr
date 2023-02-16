@@ -741,8 +741,8 @@
                         });
                     }
                 },
-                addDiagnosis: function(regNo){
-                    module.execute('addDiagnosis', "regNo="+regNo, 'divDiagnosis');
+                addDiagnosis: function(rid, id, regNo, ptNo){
+                    module.execute('addDiagnosis', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divDiagnosis');
                 },
                 searchDiagnosis: function(){
                     var count = Ajax.activeRequestCount;
@@ -817,23 +817,23 @@
                         if($('btnSaveDiagnosis')) { $('btnSaveDiagnosis').disabled = false;}
                     }
                 },
-                getDiagnosis: function(regNo){
-                    module.execute('getDiagnosis', "regNo="+regNo, 'divDiagnosis');
+                getDiagnosis: function(rid, id, regNo, ptNo){
+                    module.execute('getDiagnosis', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divDiagnosis');
                 },
-                editDiagnosis: function(id){
-                    module.execute('addDiagnosis', "rid="+id, 'divDiagnosis');
+                editDiagnosis: function(did, rid, id, regNo, ptNo){
+                    module.execute('addDiagnosis', "did="+did+ "&rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divDiagnosis');
                 },
-                delDiagnosis: function(id, name, regNo){
+                delDiagnosis: function(did, name, regNo, rid, id, ptNo){
                     if(confirm("Delete '"+name+"'?")){
                         new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
-                            parameters: 'function=delDiagnosis&rid='+ id,
+                            parameters: 'function=delDiagnosis&did='+ did,
                             requestHeaders: { Accept: 'application/json'},
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    dashboard.getDiagnosis(regNo);
+                                    dashboard.getDiagnosis(rid, id, regNo, ptNo);
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
@@ -845,8 +845,8 @@
                         });
                     }
                 },
-                addMedication: function(regNo){
-                    module.execute('addMedication', "regNo="+regNo, 'divMedication');
+                addMedication: function(rid, id, regNo, ptNo){
+                    module.execute('addMedication', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divMedication');
                 },
                 searchDrug: function(){
                     var count = Ajax.activeRequestCount;
@@ -922,23 +922,23 @@
                         if($('btnSaveMedication')) { $('btnSaveMedication').disabled = false;}
                     }
                 },
-                getMedication: function(regNo){
-                    module.execute('getMedication', "regNo="+regNo, 'divMedication');
+                getMedication: function(rid, id, regNo, ptNo){
+                    module.execute('getMedication', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divMedication');
                 },
-                editMedication: function(id){
-                    module.execute('addMedication', "rid="+id, 'divMedication');
+                editMedication: function(pid, rid, id, regNo, ptNo){
+                    module.execute('addMedication', "pid="+pid+ "&rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divMedication');
                 },
-                delMedication: function(id, name, regNo){
+                delMedication: function(pid, name, regNo, rid, id, ptNo){
                     if(confirm("Delete '"+name+"'?")){
                         new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
-                            parameters: 'function=delMedication&rid='+ id,
+                            parameters: 'function=delMedication&pid='+ pid,
                             requestHeaders: { Accept: 'application/json'},
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    dashboard.getMedication(regNo);
+                                    dashboard.getMedication(rid, id, regNo, ptNo);
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
