@@ -684,8 +684,8 @@
                         });
                     }
                 },
-                addLab: function(regNo){
-                    module.execute('addLab', "regNo="+regNo, 'divLab');
+                addLab: function(rid, id, regNo, ptNo){
+                    module.execute('addLab', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divLab');
                 },
                 saveLab: function(required){
                     if(module.validate(required)){
@@ -713,23 +713,23 @@
                         if($('btnSaveLab')) { $('btnSaveLab').disabled = false;}
                     }
                 },
-                getLab: function(regNo){
-                    module.execute('getLab', "regNo="+regNo, 'divLab');
+                getLab: function(rid, id, regNo, ptNo){
+                    module.execute('getLab', "rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divLab');
                 },
-                editLab: function(id){
-                    module.execute('addLab', "rid="+id, 'divLab');
+                editLab: function(lid, rid, id, regNo, ptNo){
+                    module.execute('addLab', "lid="+lid+ "&rid="+rid+"&id="+id+"&regNo="+regNo+"&ptNo="+ptNo, 'divLab');
                 },
-                delLab: function(id, name, regNo){
+                delLab: function(lid, name, regNo, rid, id, ptNo){
                     if(confirm("Delete '"+name+"'?")){
                         new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
-                            parameters: 'function=delLab&rid='+ id,
+                            parameters: 'function=delLab&lid='+ lid,
                             requestHeaders: { Accept: 'application/json'},
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    dashboard.getLab(regNo);
+                                    dashboard.getLab(rid, id, regNo, ptNo);
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });

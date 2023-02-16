@@ -2195,6 +2195,8 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
+            
+            this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMPTLAB", "REGNO = '" + this.regNo + "'")) {
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
@@ -2219,7 +2221,7 @@
                         String labItemName = rs.getString("LABITEMNAME");
                         String results = rs.getString("RESULTS");
 
-                        String editLink = gui.formHref("onclick = \"dashboard.editLab(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        String editLink = gui.formHref("onclick = \"dashboard.editLab(" + id + "," + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
@@ -2241,7 +2243,9 @@
                 html += gui.formWarningMsg("No lab record found.");
             }
             html += "<br>";
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Lab Request", "add.png", "onclick = \"dashboard.addLab('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Lab Request", "add.png", "onclick = \"dashboard.addLab(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
+//            html += " ";
+            html += gui.formButton(request.getContextPath(), "button", "btnCancell", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
 
             return html;
         }
@@ -2252,7 +2256,7 @@
             Sys sys = new Sys();
             Gui gui = new Gui();
 
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("lid") != null ? Integer.parseInt(request.getParameter("lid")) : null;
             String labItemCode = "";
             String labItemName = "";
             String remarks = "";
@@ -2281,7 +2285,7 @@
             html += gui.formStart("frmLab", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             if (rid != null) {
-                html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
+                html += gui.formInput("hidden", "lid", 15, "" + rid, "", "");
             }
 
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
@@ -2295,7 +2299,6 @@
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItem", " Lab Item Description") + "</td>";
-//        html += "<td >"+gui.formSelect("labItem", ""+this.comCode+".HMCOMPLAINTS", "LABITEMCODE", "LABITEMNAME", "", "", labItemCode, "", false)+"</td>";
             html += "<td >" + gui.formInput("textarea", "labItem", 40, labItemName, "", "") + "</td>";
             html += "</tr>";
 
@@ -2306,7 +2309,7 @@
 
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pencil.png", "", "") + gui.formLabel("results", " Lab Results") + "</td>";
-            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"12\" readonly>" + results + "</textarea>" + "</td>";
+            html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"6\" readonly>" + results + "</textarea>" + "</td>";
             html += "</tr>";
             
             String filePath = sys.getOne(this.comCode + ".HMPTLABDOCS", "filepath", "rid=" + rid);
@@ -2315,10 +2318,6 @@
             
             if (filePath != null) {
                 String docLink = "<a href=\"" + request.getContextPath() + filePath + "\" target=\"blank\">download - " + refNo + "</a>";
-
-               // html += "<tr>";
-                //html += "<td colspan=\"2\" >&nbsp;</td>";
-//                html += "</tr>";
 
                 html += "<tr>";
                 html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "attach.png", "", "") + gui.formLabel("attachment", " Attachment") + "</td>";
@@ -2330,11 +2329,11 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('labItemCode labItem');\"", "");
-            if (rid != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelLab", "Delete", "delete.png", "onclick = \"dashboard.delLab(" + rid + ", '" + labItemName + "', '" + this.regNo + "');\"", "");
-            }
-            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getLab('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnSaveLab", "Save", "save.png", "onclick = \"dashboard.saveLab('labItemCode labItem');\"", "");
+//            if (rid != null) {
+//                html += gui.formButton(request.getContextPath(), "button", "btnDelLab", "Delete", "delete.png", "onclick = \"dashboard.delLab(" + rid + ", '" + labItemName + "', '" + this.regNo + "', " + this.rid + ", " + this.id + ",'" + this.ptNo + "');\"", "");
+//            }
+            html += gui.formButton(request.getContextPath(), "button", "btnCancell2", "Back", "arrow-left-2.png", "onclick = \"patients.manageRegistration(" + this.rid + ", " + this.id + ",'" + this.ptNo + "'); return false;\"", "");
             html += "</td>";
             html += "</tr>";
 
@@ -2350,7 +2349,7 @@
             Sys sys = new Sys();
             HttpSession session = request.getSession();
 
-            Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
+            Integer rid = request.getParameter("lid") != null ? Integer.parseInt(request.getParameter("lid")) : null;
             String labItemCode = request.getParameter("labItemCode");
             String labItemName = request.getParameter("labItem");
             String remarks = request.getParameter("remarks");
