@@ -1907,8 +1907,7 @@
                 html += gui.formWarningMsg("No complaints record found.");
             }
             html += "<br>";
-//            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Complaint", "add.png", "onclick = \"dashboard.addComplaint('" + this.regNo + "');\"", "");
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Complaint", "add.png", "onclick = \"dashboard.addComplaint(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Complaint", "add.png", "onclick = \"dashboard.addComplaint(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
             html += " ";
             html += gui.formButton(request.getContextPath(), "button", "btnCancel1", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
 
@@ -1970,12 +1969,11 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveComplaint", "Save", "save.png", "onclick = \"dashboard.saveComplaint('complaint');\"", "");
-            if (rid != null) {
-                html += " ";
-                html += gui.formButton(request.getContextPath(), "button", "btnDelComplaint", "Delete", "delete.png", "onclick = \"dashboard.delComplaint(" + rid + ", '" + complName + "', '" + this.regNo + "', " + this.rid + ", " + this.id + ",'" + this.ptNo + "');\"", "");
-            }
-//            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"dashboard.getComplaints('" + this.regNo + "');\"", "");
+//            html += gui.formButton(request.getContextPath(), "button", "btnSaveComplaint", "Save", "save.png", "onclick = \"dashboard.saveComplaint('complaint');\"", "");
+//            if (rid != null) {
+//                html += " ";
+//                html += gui.formButton(request.getContextPath(), "button", "btnDelComplaint", "Delete", "delete.png", "onclick = \"dashboard.delComplaint(" + rid + ", '" + complName + "', '" + this.regNo + "', " + this.rid + ", " + this.id + ",'" + this.ptNo + "');\"", "");
+//            }
             html += " ";
             html += gui.formButton(request.getContextPath(), "button", "btnBack", "Back", "arrow-left-2.png", "onclick = \"patients.manageRegistration(" + this.rid + ", " + this.id + ",'" + this.ptNo + "'); return false;\"", "");
             html += "</td>";
