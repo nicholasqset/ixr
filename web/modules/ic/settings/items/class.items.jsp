@@ -41,6 +41,7 @@ final class Items{
     String expdt        = request.getParameter("expdt");
     String wsprice      = request.getParameter("wsprice");
     String minlevel     = request.getParameter("minlevel");
+    String maxlevel     = request.getParameter("maxlevel");
     
     public String getGrid(){
         String html = "";
@@ -249,6 +250,7 @@ final class Items{
                     this.expdt           = rs.getString("expdt");
                     this.wsprice           = rs.getString("wsprice");
                     this.minlevel           = rs.getString("minlevel");
+                    this.maxlevel           = rs.getString("maxlevel");
                     
                     APSupplierProfile aPSupplierProfile = new APSupplierProfile(this.supplierNo, comCode);
                     fullName = aPSupplierProfile.fullName;
@@ -338,7 +340,10 @@ final class Items{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "pencil.png", "", "")+ gui.formLabel("minlevel", " Minimum Threshold")+"</td>";
-	html += "<td colspan=\"3\">"+ gui.formInput("text", "minlevel", 20, this.id != null? ""+ this.minlevel: "0", "", "")+"</td>";
+	html += "<td >"+ gui.formInput("text", "minlevel", 20, this.id != null? ""+ this.minlevel: "0", "", "")+"</td>";
+        
+        html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "pencil.png", "", "")+ gui.formLabel("maxlevel", " Maximum Threshold")+"</td>";
+	html += "<td >"+ gui.formInput("text", "maxlevel", 20, this.id != null? ""+ this.maxlevel: "0", "", "")+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -439,7 +444,7 @@ final class Items{
                         + "("
                         + "ID, ITEMCODE, ITEMNAME, CATCODE, ACCSETCODE, UOMCODE, SUPPLIERNO, CMDTNO, SERIALNO, "
                         + "UNITCOST, UNITPRICE, STOCKED, QTY, "
-                        + "OPT1, OPT2, OPT3, OPT4, mfgdt, expdt, wsprice, minlevel,"
+                        + "OPT1, OPT2, OPT3, OPT4, mfgdt, expdt, wsprice, minlevel, maxlevel, "
                         + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                         + ")"
                         + "VALUES"
@@ -465,6 +470,7 @@ final class Items{
                         + "'"+ this.expdt+ "', "
                         + "'"+ this.wsprice+ "', "
                         + "'"+ this.minlevel+ "', "
+                        + "'"+ this.maxlevel+ "', "
                         + "'"+ system.getLogUser(session)+"', "
                         + "'"+ system.getLogDate()+ "', "
                         + "'"+ system.getLogTime()+ "', "
@@ -494,6 +500,7 @@ final class Items{
                         + "expdt        = '"+ this.expdt+ "', "
                         + "wsprice      = '"+ this.wsprice+ "', "
                         + "minlevel     = '"+ this.minlevel+ "', "
+                        + "maxlevel     = '"+ this.maxlevel+ "', "
                         
                         + "AUDITUSER    = '"+ system.getLogUser(session)+ "', "
                         + "AUDITDATE    = '"+ system.getLogDate()+ "', "

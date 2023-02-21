@@ -22,6 +22,7 @@ public class ICItem {
     public Boolean stocked;
     public Double qty;
     public Double minlevel;
+    public Double maxlevel;
     public String mfgdt;
     public String expdt;
     
@@ -43,6 +44,7 @@ public class ICItem {
                 this.qty                = rs.getDouble("QTY");			
                 this.wsprice            = rs.getDouble("wsprice");			
                 this.minlevel           = rs.getDouble("minlevel");
+                this.maxlevel           = rs.getDouble("maxlevel");
                 this.mfgdt              = rs.getString("mfgdt");
                 this.expdt              = rs.getString("expdt");
             }
