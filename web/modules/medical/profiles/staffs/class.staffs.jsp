@@ -12,8 +12,6 @@
 <%
 
     final class Staffs {
-//    String table            = "HMSTAFFPROFILE";
-
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
         String table = comCode + ".HMSTAFFPROFILE";
@@ -395,6 +393,8 @@
             html += "</tr>";
 
             html += "</table>";
+            
+            html += gui.formEnd();
 
             if (this.id != null) {
                 html += " <script type=\"text/javascript\">"
@@ -438,6 +438,8 @@
 
         public Boolean hasPhoto(String staffNo) {
             Boolean hasPhoto = false;
+            
+            Sys sys = new Sys();
 
             if (this.id != null) {
                 Connection conn = ConnectionProvider.getConnection();
@@ -447,7 +449,7 @@
 
                 try {
                     stmt = conn.createStatement();
-                    String query = "SELECT COUNT(*) FROM HMSTAFFPHOTOS WHERE STAFFNO = '" + staffNo + "'";
+                    String query = "SELECT COUNT(*) FROM "+this.comCode+".HMSTAFFPHOTOS WHERE STAFFNO = '" + staffNo + "'";
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         count = rs.getInt("COUNT(*)");
@@ -458,7 +460,7 @@
                     }
 
                 } catch (Exception e) {
-                    e.getMessage();
+                    sys.logV2(e.getMessage());
                 }
             }
 
@@ -468,6 +470,8 @@
         public String getContactTab() {
             String html = "";
             Gui gui = new Gui();
+            
+            html += gui.formStart("frmContact", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
@@ -498,6 +502,8 @@
             html += "</tr>";
 
             html += "</table>";
+            
+            html += gui.formEnd();
 
             return html;
         }
@@ -505,6 +511,8 @@
         public String getEmploymentTab() {
             String html = "";
             Gui gui = new Gui();
+            
+            html += gui.formStart("frmEmployment", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
@@ -678,13 +686,15 @@
                 }
 
                 saved = stmt.executeUpdate(query);
+                
+                system.logV2(query);
 
                 if (saved == 1) {
 
                     obj.put("success", new Integer(1));
                     obj.put("message", "Entry successfully made.");
 
-                    system.createUser(this.staffNo, this.firstName + " " + this.middleName + " " + this.lastName, this.email);
+                    system.createUser(this.staffNo, this.firstName + " " + this.middleName + " " + this.lastName, this.email, this.cellphone, this.comCode);
 
                 } else {
                     obj.put("success", new Integer(0));

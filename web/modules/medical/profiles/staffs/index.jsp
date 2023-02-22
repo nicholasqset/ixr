@@ -250,7 +250,8 @@
                     }
                 },
                 save: function(required){
-                    var data = Form.serialize('frmModule');
+//                    var data = Form.serialize('frmModule');
+                    var data = Form.serialize('frmModule') + '&'+ Form.serialize('frmContact') + '&'+ Form.serialize('frmEmployment') ;
                     if(module.validate(required)){
                         if($('frmModule'))  $('frmModule').disabled = true;  
                         if($('btnSave')) $('btnSave').disabled = true; 

@@ -60,7 +60,7 @@ public class Sys {
         return id;
     }
 
-    public Boolean userExists(String userId) {
+    public Boolean userExists(String userId, String comCode) {
         Boolean userExists = false;
 
         Integer count = 0;
@@ -68,7 +68,7 @@ public class Sys {
         try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT COUNT(*) FROM SYSUSRS WHERE USERID = '" + userId + "' ";
+            String query = "SELECT COUNT(*) FROM "+comCode+".SYSUSRS WHERE USERID = '" + userId + "' ";
 
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
@@ -271,42 +271,42 @@ public class Sys {
         return html;
     }
 
-    public String getSysDefaultRole() {
+    public String getSysDefaultRole(String comCode) {
         String roleCode = "";
 
         try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
 
-            String query = "SELECT * FROM SYSROLES WHERE ISDEFAULT = 1 ";
+            String query = "SELECT * FROM "+comCode+".SYSROLES WHERE ISDEFAULT = 1 ";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 roleCode = rs.getString("ROLECODE");
             }
         } catch (SQLException e) {
-
+            this.logV2(e.getMessage());
         }
 
         return roleCode;
     }
 
-    public void createUser(String userId, String userName, String email) {
+    public void createUser(String userId, String userName, String email, String cellPhone, String comCode) {
         try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
 
-            if (!this.userExists(userId)) {
-                Integer id = this.generateId("SYSUSERS", "ID");
-                String query = "INSERT INTO SYSUSERS "
-                        + "(ID, ROLECODE, USERID, PASSWORD, USERNAME, EMAIL)"
+            if (!this.userExists(userId, comCode)) {
+                Integer id = this.generateId(comCode+".sysusrs", "ID");
+                String query = "INSERT INTO "+comCode+".sysusrs "
+                        + "(ID, USERID, PASSWORD, USERNAME, EMAIL, CELLPHONE)"
                         + "VALUES"
                         + "("
                         + id + ","
-                        + "'" + this.getSysDefaultRole() + "',"
                         + "'" + userId + "',"
                         + "'******',"
                         + "'" + userName + "',"
-                        + "'" + email + "'"
+                        + "'" + email + "', "
+                        + "'" + cellPhone + "'"
                         + ")";
 
                 stmt.executeUpdate(query);
@@ -314,7 +314,7 @@ public class Sys {
             }
 
         } catch (SQLException e) {
-
+            this.logV2(e.getMessage());
         }
 
     }
