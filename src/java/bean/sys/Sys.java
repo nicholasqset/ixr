@@ -309,14 +309,51 @@ public class Sys {
                         + "'" + cellPhone + "'"
                         + ")";
 
-                stmt.executeUpdate(query);
+                Integer saved = stmt.executeUpdate(query);
+                if(saved > 0){
+//                    this.updateCoUsers(comCode, userId);
+                }
 
             }
 
         } catch (SQLException e) {
             this.logV2(e.getMessage());
         }
+        
+        this.updateCoUsers(comCode, userId);
 
+    }
+    
+    public void updateCoUsers(String comCode, String userId){
+        Sys sys = new Sys();
+        Boolean userExists = sys.recordExists("sys.com_users", "cu_usr_id = '"+userId+"'");
+        if(! userExists){
+            try{
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+                
+                String query = ""
+                        + "INSERT INTO sys.com_users "
+                        + "("
+                        + "cu_com_code, cu_usr_id"
+                        + ")"
+                        + "VALUES"
+                        + "("
+                        + "'"+comCode+"',"
+                        + "'"+userId+"'"
+                        + ")";       
+                Integer saved = stmt.executeUpdate(query);
+                if(saved > 0){
+                    System.out.println("...user saved for co access..!");
+                }else{
+                    System.out.println("...user couldnt be saved for co access..");
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }else{
+            System.out.println("...user already exits..");
+        }
     }
 
     public Boolean recordExists(String dataSource, String sqlWhere) {
