@@ -66,7 +66,7 @@ public class Authenticate {
         try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT COUNT(*) CT FROM sys.coms WHERE comcode = '" + comCode + "' ";
+            String query = "SELECT COUNT(*) CT FROM sys.coms WHERE comcode = '" + comCode + "' AND active = 1 ";
 
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
