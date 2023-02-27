@@ -58,9 +58,9 @@
             %>
         </script>
         
-        <link href="../../css/bootstrap.css" type="text/css" rel="stylesheet">
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     </head>
-    <body>
+    <body class="container-fluid">
        
         <div class="module-wrapper">
             <div class="module-header">

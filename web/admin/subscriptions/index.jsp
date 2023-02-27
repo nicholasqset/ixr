@@ -57,8 +57,9 @@
             %>
         </script>
             <% 
-            out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
+//            out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
         %>
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     </head>
     <body class="container-fluid">
         <div class="module-wrapper">

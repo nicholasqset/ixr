@@ -68,11 +68,11 @@ public class Sys {
         try {
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
-            String query = "SELECT COUNT(*) FROM "+comCode+".SYSUSRS WHERE USERID = '" + userId + "' ";
+            String query = "SELECT COUNT(*) CT FROM "+comCode+".SYSUSRS WHERE USERID = '" + userId + "' ";
 
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                count = rs.getInt("COUNT(*)");
+                count = rs.getInt("CT");
             }
         } catch (SQLException e) {
 
