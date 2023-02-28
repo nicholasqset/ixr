@@ -120,6 +120,7 @@
 
                             list.add("PTNO");
                             list.add("FULLNAME");
+                            list.add("CELLPHONE");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     if (dbType.equals("postgres")) {
