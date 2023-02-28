@@ -149,6 +149,11 @@
             html += "<td class = \"bold\">Customer</td>";
             html += "<td>"+ hmPyHdr.fullName+ "</td>";
             html += "</tr>";
+            
+            html += "<tr>";
+            html += "<td class = \"bold\">Registration #</td>";
+            html += "<td>"+ hmPyHdr.regNo+ "</td>";
+            html += "</tr>";
 
             html += "</table>";
             

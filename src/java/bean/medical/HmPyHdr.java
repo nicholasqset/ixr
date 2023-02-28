@@ -23,6 +23,7 @@ public class HmPyHdr {
     public Integer pMonth;
     public String ptNo;
     public String fullName;
+    public String regNo;
     public String tillNo;
     public String pmCode;
     public String docNo;
@@ -46,6 +47,7 @@ public class HmPyHdr {
                 this.pMonth             = rs.getInt("PMONTH");	
                 this.ptNo               = rs.getString("PTNO");
                 this.fullName           = rs.getString("FULLNAME");
+                this.regNo              = rs.getString("REGNO");
                 this.tillNo             = rs.getString("TILLNO");
                 this.pmCode             = rs.getString("PMCODE");
                 this.docNo              = rs.getString("DOCNO");

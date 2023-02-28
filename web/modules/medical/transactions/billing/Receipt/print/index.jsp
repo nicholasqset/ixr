@@ -1,3 +1,4 @@
+<%@page import="bean.user.User"%>
 <%@page import="bean.medical.HmPyHdr"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
@@ -271,9 +272,14 @@
 
             html += "<tr>";
             html += "<td class = \"bold\">Patient</td>";
-            html += "<td>" + hmPyHdr.fullName + "</td>";
+            html += "<td>" + hmPyHdr.ptNo + " - "+hmPyHdr.fullName+"</td>";
             html += "</tr>";
 
+            html += "<tr>";
+            html += "<td class = \"bold\">Registration #</td>";
+            html += "<td>" + hmPyHdr.regNo+ "</td>";
+            html += "</tr>";
+            
             html += "<tr>";
             html += "<td class = \"bold\">Tendered</td>";
             html += "<td>" + sys.numberFormat(hmPyHdr.tender.toString()) + "</td>";
@@ -295,8 +301,13 @@
 
         public String getPyDtls() {
             String html = "";
+            
+            HttpSession session = request.getSession();
+            
             Sys sys = new Sys();
-
+            
+            User user = new User(sys.getLogUser(session), this.comCode);
+            
             if (sys.recordExists(this.comCode+".VIEWHMPYDTLS", "PYNO = '" + this.pyNo + "'")) {
 
                 html += "<table style = \"width: 100%;\" class = \"details\" cellpadding = \"2\" cellspacing = \"0\">";
@@ -370,9 +381,15 @@
                     
                     html += "<table>";
                     
+//                    html += "<tr>";
+//                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
+//                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
+//                    html += "</tr>";
+                    
                     html += "<tr>";
-                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
-                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
+                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Served By:</td>";
+                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">"+user.userName+"</td>";
+                    html += "</tr>";
                     
                     html += "</table>";
 

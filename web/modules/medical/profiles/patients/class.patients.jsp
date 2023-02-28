@@ -219,6 +219,7 @@
                     html += "<th>Age</th>";
 //                html += "<th>DOB</th>";
                     html += "<th>Blood Group</th>";
+                    html += "<th>Phone No.</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
 
@@ -233,6 +234,7 @@
                         String age = rs.getString("AGE");
                         String dob = rs.getString("DOB");
                         String bloodGrpName = rs.getString("BLOODGRPNAME");
+                        String cellphone = rs.getString("CELLPHONE");
 
                         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -256,6 +258,7 @@
                         html += "<td>" + age + "</td>";
 //                    html += "<td>"+ dob+ "</td>";
                         html += "<td>" + bloodGrpName + "</td>";
+                        html += "<td>" + cellphone + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
 
@@ -281,6 +284,7 @@
 
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getBioDataTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getContactTab() + "</div>";
+            html += "<div class = \"dhtmlgoodies_aTab\">" + this.getNokTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getMedHistoryTab() + "</div>";
 
             if (this.id != null) {
@@ -297,9 +301,9 @@
 
             html += "<script type = \"text/javascript\">";
             if (this.id != null) {
-                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\', \'Visitations/Encounters\'), 0, 692, 365, Array(false, false, false, false));";
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Next of Kin\', \'Medical History\', \'Visitations/Encounters\'), 0, 692, 365, Array(false, false, false, false));";
             } else {
-                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Medical History\'), 0, 692, 365, Array(false, false, false));";
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Next of Kin\', \'Medical History\'), 0, 692, 365, Array(false, false, false));";
             }
 
             html += "</script>";
@@ -467,6 +471,7 @@
             html += "</tr>";
 
             html += "</table>";
+            html += "</form>";
 
             if (this.id != null) {
                 html += " <script type=\"text/javascript\">"
@@ -540,6 +545,8 @@
         public String getContactTab() {
             String html = "";
             Gui gui = new Gui();
+            
+            html += gui.formStart("frmContact", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
@@ -570,13 +577,22 @@
             html += "</tr>";
 
             html += "</table>";
+            html += "</form>";
 
+            return html;
+        }
+        
+        public String getNokTab(){
+            String html = "";
+            
             return html;
         }
 
         public String getMedHistoryTab() {
             String html = "";
             Gui gui = new Gui();
+            
+            html += gui.formStart("frmMedHistory", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
