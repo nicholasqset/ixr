@@ -18,12 +18,15 @@ var module = {
                     },
                     onFailure: function(request){
                         alert('An Unhandled Error Occurred');
+                        window.top.location  = top.location.href;
                     },
                     on403: function(request){
                         alert("Your session expired. Login again to continue.");
+                        window.top.location  = top.location.href;
                     },
                     onException: function(request, Exception){
                         alert('An Unhandled Exception Occurred');
+                        window.top.location  = top.location.href;
                     }
                 });
             }else{
