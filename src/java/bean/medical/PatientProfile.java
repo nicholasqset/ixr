@@ -46,6 +46,11 @@ public class PatientProfile{
     public String socialHist;
     
     public String nhifNo;
+    
+    public String nok_fullname;
+    public String nok_relation;
+    public String nok_phone_no;
+    public String nok_email;
 
 
     public PatientProfile(String ptNo, String schema){
@@ -90,7 +95,12 @@ public class PatientProfile{
                 this.pastMedHist        = rs.getString("PASTMEDHIST");			
                 this.socialHist         = rs.getString("SOCIALHIST");	
                 
-                this.nhifNo             = rs.getString("NHIFNO");			
+                this.nhifNo             = rs.getString("NHIFNO");	
+                
+                this.nok_fullname       = rs.getString("nok_fullname");			
+                this.nok_relation       = rs.getString("nok_relation");			
+                this.nok_phone_no       = rs.getString("nok_phone_no");			
+                this.nok_email          = rs.getString("nok_email");			
             }
         
         }catch (SQLException  e){

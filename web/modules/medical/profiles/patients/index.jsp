@@ -303,7 +303,7 @@
                     }
                 },
                 save: function (required) {
-                    var data = Form.serialize('frmModule') + '&'+ Form.serialize('frmContact') + '&'+ Form.serialize('frmMedHistory');
+                    var data = Form.serialize('frmModule') + '&'+ Form.serialize('frmContact') + '&'+ Form.serialize('frmMedHistory') + '&'+ Form.serialize('frmNok');
                     if (module.validate(required)) {
 //                        if($('frmModule'))  $('frmModule').disabled = true;  
 //                        if($('btnSave')) $('btnSave').disabled = true; 
@@ -328,7 +328,7 @@
                                     if (typeof response.message !== 'undefined') {
                                         g.error(response.message, {header: ' ', life: 5, speedout: 2});
                                     } else {
-                                        g.error("Un-expected error occured while saving record.", {header: ' ', life: 5, speedout: 2});
+                                        g.error("An un-expected error occured while saving record", {header: ' ', life: 5, speedout: 2});
                                     }
                                 }
                             }

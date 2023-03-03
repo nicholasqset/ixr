@@ -79,11 +79,16 @@
         String respiration = request.getParameter("respiration");
         Double height = request.getParameter("height") != null ? Double.parseDouble(request.getParameter("height")) : 0.00;
         Double weight = request.getParameter("weight") != null ? Double.parseDouble(request.getParameter("weight")) : 0.00;
-        
+
         String drNotes = request.getParameter("dr_notes") != null ? request.getParameter("dr_notes") : "";
         String remarks = request.getParameter("remarks") != null ? request.getParameter("remarks") : "";
-        
+
         String regType = request.getParameter("regType");
+        
+        String nok_fullname = request.getParameter("nok_fullname");
+        String nok_relation = request.getParameter("nok_relation");
+        String nok_phone_no = request.getParameter("nok_phone_no");
+        String nok_email = request.getParameter("nok_email");
 
         public String getGrid() {
             String html = "";
@@ -367,6 +372,11 @@
                 this.pastMedHist = patientProfile.pastMedHist;
                 this.socialHist = patientProfile.socialHist;
                 this.nhifNo = patientProfile.nhifNo;
+                
+                this.nok_fullname = patientProfile.nok_fullname;
+                this.nok_relation = patientProfile.nok_relation;
+                this.nok_phone_no = patientProfile.nok_phone_no;
+                this.nok_email = patientProfile.nok_email;
 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -546,7 +556,7 @@
         public String getContactTab() {
             String html = "";
             Gui gui = new Gui();
-            
+
             html += gui.formStart("frmContact", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
@@ -582,17 +592,59 @@
 
             return html;
         }
-        
-        public String getNokTab(){
+
+        public String getNokTab() {
             String html = "";
             
+            Gui gui = new Gui();
+            
+            HashMap<String, String> relations = new HashMap();
+            relations.put("Guardian", "Guardian");
+            relations.put("Sister", "Sister");
+            relations.put("Brother", "Brother");
+            relations.put("Aunt", "Aunt");
+            relations.put("Uncle", "Uncle");
+            relations.put("Friend", "Friend");
+
+
+            html += gui.formStart("frmNok", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
+
+            html += "<tr>";
+            html += "<td width = \"20%\" style = \"vertical-align: top;\">" + gui.formIcon(request.getContextPath(), "user.png", "", "") + " " + gui.formLabel("nok_fullname", " Full Name") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formInput("test", "nok_fullname", 30, this.id != null ? this.nok_fullname : "", "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td style = \"vertical-align: top;\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("nok_relation", " Relationship") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formArraySelect("nok_relation", 136, relations, id != null ? this.nok_relation : "", false, "", true) + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td style = \"vertical-align: top;\" nowrap>" + gui.formIcon(request.getContextPath(), "phone.png", "", "") + " " + gui.formLabel("nok_phone_no", " Phone No.") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formInput("text", "nok_phone_no", 30, this.id != null ? this.nok_phone_no : "", "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td style = \"vertical-align: top;\" nowrap>" + gui.formIcon(request.getContextPath(), "email.png", "", "") + " " + gui.formLabel("nok_email", " Email") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formInput("text", "nok_email", 30, this.id != null ? this.nok_email : "", "", "") + "</td>";
+            html += "</tr>";
+
+            
+            html += "</tr>";
+
+            html += "</table>";
+
+            html += gui.formEnd();
+
             return html;
         }
 
         public String getMedHistoryTab() {
             String html = "";
             Gui gui = new Gui();
-            
+
             html += gui.formStart("frmMedHistory", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
@@ -719,7 +771,7 @@
                             + "GENDERCODE, DOB, AGE, COUNTRYCODE, NATIONALID, PASSPORTNO, BLOODGRPCODE, PHYSCHALD, DISABCODE, "
                             + "POSTALADDR, POSTALCODE, PHYSICALADDR, TELEPHONE, CELLPHONE, EMAIL, "
                             + "ALLERGIES, WARNS, FAMILYHIST, SELFHIST, PASTMEDHIST, SOCIALHIST,"
-                            + "NHIFNO"
+                            + "NHIFNO, nok_fullname, nok_relation, nok_phone_no, nok_email"
                             + ") "
                             + "VALUES"
                             + "("
@@ -751,7 +803,11 @@
                             + "'" + this.selfHist + "',"
                             + "'" + this.pastMedHist + "',"
                             + "'" + this.socialHist + "',"
-                            + "'" + this.nhifNo + "'"
+                            + "'" + this.nhifNo + "',"
+                            + "'" + this.nok_fullname + "',"
+                            + "'" + this.nok_relation + "',"
+                            + "'" + this.nok_phone_no + "',"
+                            + "'" + this.nok_email + "'"
                             + ")";
 
                     obj.put("ptNo", this.ptNo);
@@ -796,8 +852,15 @@
                                 + "AUDITUSER        = '" + system.getLogUser(session) + "', "
                                 + "AUDITDATE        = '" + system.getLogDate() + "', "
                                 + "AUDITTIME        = '" + system.getLogTime() + "', "
-                                + "AUDITIP          = '" + system.getClientIpAdr(request) + "' "
+                                + "AUDITIP          = '" + system.getClientIpAdr(request) + "', "
+                                + "nok_fullname     = '" + this.nok_fullname + "', "
+                                + "nok_relation     = '" + this.nok_relation + "', "
+                                + "nok_phone_no     = '" + this.nok_phone_no + "', "
+                                + "nok_email        = '" + this.nok_email + "' "
+                                
                                 + "WHERE PTNO       = '" + this.ptNo + "'";
+                                
+                                system.logV2(query);
 
                         obj.put("id", this.id);
                     }
@@ -810,7 +873,7 @@
                     obj.put("message", "Entry successfully made.");
                 } else {
                     obj.put("success", new Integer(0));
-                    obj.put("message", "Oops! An Un-expected error occured while saving record.");
+                    obj.put("message", "Oops! An Un-expected error occured while saving record"+ query);
                 }
 
             } catch (Exception e) {
@@ -918,9 +981,9 @@
                         String pttype = rs.getString("pttype");
                         Integer triaged = rs.getInt("triaged");
                         Integer discharged = rs.getInt("discharged");
-                        
-                        String triagedLbl = triaged == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
-                        String dischargedLbl = discharged == 1? gui.formIcon(request.getContextPath(), "tick.png", "", ""): gui.formIcon(request.getContextPath(), "cross.png", "", "");
+
+                        String triagedLbl = triaged == 1 ? gui.formIcon(request.getContextPath(), "tick.png", "", "") : gui.formIcon(request.getContextPath(), "cross.png", "", "");
+                        String dischargedLbl = discharged == 1 ? gui.formIcon(request.getContextPath(), "tick.png", "", "") : gui.formIcon(request.getContextPath(), "cross.png", "", "");
 
                         String editLink = gui.formHref("onclick = \"patients.editRegistration(" + id + ", " + this.id + ",'" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
                         String manageLink = gui.formHref("onclick = \"patients.manageRegistration(" + id + ", " + this.id + ",'" + this.ptNo + "');\"", request.getContextPath(), "pencil.png", "manage", "manage", "", "");
@@ -972,6 +1035,7 @@
             String regTypeLbl = "";
             String pttype = "";
             String admdate = "";
+            String sponsor = "";
             if (rid != null) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
@@ -985,6 +1049,7 @@
                         regType = rs.getString("regtype");
                         pttype = rs.getString("pttype");
                         admdate = rs.getString("admdate");
+                        sponsor = rs.getString("sponsor");
                     }
                 } catch (Exception e) {
                     html += e.getMessage();
@@ -1003,6 +1068,12 @@
             ptTypes.put("OPD", "Outpatient");
             ptTypes.put("IPD", "Inpatient");
 
+            HashMap<String, String> sponsors = new HashMap();
+            sponsors.put("SELF", "SELF");
+            sponsors.put("NHIF", "NHIF");
+            sponsors.put("AON", "AON");
+            sponsors.put("INSURANCE", "INSURANCE");
+
             html += "";
             html += gui.formStart("frmRegistration", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
@@ -1019,18 +1090,23 @@
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "doctor-male.png", "", "") + gui.formLabel("spCode", " Be Seen by") + "</td>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "doctor-male.png", "", "") + gui.formLabel("spCode", " Seen by") + "</td>";
             html += "<td >" + gui.formSelect("spCode", this.comCode + ".hmspecialists", "sp_code", "sp_name", "", "", spCode, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("ptType", " Type") + "</td>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("ptType", " Admission Type") + "</td>";
             html += "<td >" + gui.formArraySelect("ptType", 136, ptTypes, rid != null ? pttype : "OPD", true, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("admdate", " Admission Date") + "</td>";
             html += "<td >" + gui.formDateTime(request.getContextPath(), "admdate", 25, rid != null ? admdate : sys.getFormatedDateTime(sys.getLogDate()), true, "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "notes.png", "", "") + gui.formLabel("sponsor", " Sponsor") + "</td>";
+            html += "<td >" + gui.formArraySelect("sponsor", 136, sponsors, rid != null ? sponsor : "SELF", false, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -1061,6 +1137,7 @@
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
             String ptType = request.getParameter("ptType");
             String admdate = request.getParameter("admdate");
+            String sponsor = request.getParameter("sponsor");
 
             try {
                 Connection conn = ConnectionProvider.getConnection();
@@ -1081,7 +1158,7 @@
                     query = "INSERT INTO " + this.comCode + ".HMREGISTRATION" + " "
                             + ""
                             + "(ID, REGNO, REGTYPE, PTNO, PTTYPE, PYEAR, PMONTH, REGDATE, DRNO, "
-                            + "NRNO, sp_code, admdate, AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
+                            + "NRNO, sp_code, admdate, sponsor, AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                             + "VALUES"
                             + "("
                             + id + ", "
@@ -1099,6 +1176,7 @@
                             + "'" + nrNo + "', "
                             + "'" + this.spCode + "', "
                             + "'" + sys.getUnFormatedDateTimeV2(admdate) + "', "
+                            + "'" + sponsor + "', "
                             + "'" + sys.getLogUser(session) + "', "
                             + "'" + sys.getLogDate() + "', "
                             + "'" + sys.getLogTime() + "', "
@@ -1109,6 +1187,7 @@
                     query = "UPDATE " + this.comCode + ".HMREGISTRATION SET "
                             + "sp_code     = '" + this.spCode + "', "
                             + "pttype     = '" + ptType + "', "
+                            + "sponsor     = '" + sponsor + "', "
                             + "admdate     = '" + sys.getUnFormatedDateTimeV2(admdate) + "' "
                             + "WHERE ID     = " + rid + "";
                 }
@@ -1183,12 +1262,11 @@
             html += "</div>";
 
             return html;
-        }      
-        
+        }
 
         public String getRegInfoTab() {
             String html = "";
-            
+
             Gui gui = new Gui();
 
             Connection conn = ConnectionProvider.getConnection();
@@ -1231,7 +1309,7 @@
             html += "<td class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Registration Type</td>";
             html += "<td>" + regTypeLbl + "</td>";
             html += "</tr>";
-            
+
             html += "<tr>";
             html += "<td class = \"bold\"  nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Patient Type</td>";
             html += "<td>" + ptType + "</td>";
@@ -1909,8 +1987,8 @@
             html += "</table>";
 
             html += "<div style = \"padding: 7px 0;\">"
-//                    + gui.formButton(request.getContextPath(), "button", "btnSaveVitals", "Save Vitals", "save.png", "onclick = \"registration.saveVitals('pulseRate bloodPressure temperature respiration height weight', " + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "'); return false;\"", "")
-//                    + "&nbsp;"
+                    //                    + gui.formButton(request.getContextPath(), "button", "btnSaveVitals", "Save Vitals", "save.png", "onclick = \"registration.saveVitals('pulseRate bloodPressure temperature respiration height weight', " + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "'); return false;\"", "")
+                    //                    + "&nbsp;"
                     + gui.formButton(request.getContextPath(), "button", "btnCancel1", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")
                     + "</div>";
 
@@ -1929,15 +2007,15 @@
             Statement stmt;
 
             try {
-                if (!sys.recordExists(comCode+".HMTRIAGE", "REGNO = '" + this.regNo + "'")) {
+                if (!sys.recordExists(comCode + ".HMTRIAGE", "REGNO = '" + this.regNo + "'")) {
 
                     stmt = conn.createStatement();
 
-                    Integer id = sys.generateId(comCode+".HMTRIAGE", "ID");
+                    Integer id = sys.generateId(comCode + ".HMTRIAGE", "ID");
 
                     String query;
 
-                    query = "INSERT INTO " + comCode+".HMTRIAGE" + " "
+                    query = "INSERT INTO " + comCode + ".HMTRIAGE" + " "
                             + "(ID, REGNO, PULSERATE, BLOODPRESSURE, TEMPERATURE, RESPIRATION, HEIGHT, WEIGHT, "
                             + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR)"
                             + "VALUES"
@@ -1980,14 +2058,14 @@
 
             return obj;
         }
-        
+
 //        complaints start
         public String getComplaintsTab() {
             String html = "";
 
             Gui gui = new Gui();
             Sys sys = new Sys();
-            
+
             this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMPTCOMPLAINTS", "REGNO = '" + this.regNo + "'")) {
@@ -2207,12 +2285,13 @@
         }
 //        complaints end
         //lab start
+
         public String getLabTab() {
             String html = "";
 
             Gui gui = new Gui();
             Sys sys = new Sys();
-            
+
             this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMPTLAB", "REGNO = '" + this.regNo + "'")) {
@@ -2263,7 +2342,6 @@
 //            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add Lab Request", "add.png", "onclick = \"dashboard.addLab(" + this.rid + "," + this.id + ",'" + regNo + "', '" + this.ptNo + "');\"", "");
 //            html += " ";
             html += gui.formButton(request.getContextPath(), "button", "btnCancell", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "");
-            
 
             return html;
         }
@@ -2309,10 +2387,10 @@
             html += gui.formInput("hidden", "regNo", 15, this.regNo, "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
-            
+
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("labItemCode", " Lab Item") + "</td>";
-            html += "<td >"+gui.formSelect("labItemCode", ""+this.comCode+".ICITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from "+this.comCode+".hmcats where islab = 1)", labItemCode, "", false)+"</td>";
+            html += "<td >" + gui.formSelect("labItemCode", "" + this.comCode + ".ICITEMS", "ITEMCODE", "ITEMNAME", "", "catcode in (select catcode from " + this.comCode + ".hmcats where islab = 1)", labItemCode, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -2329,11 +2407,10 @@
             html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "pencil.png", "", "") + gui.formLabel("results", " Lab Results") + "</td>";
             html += "<td >" + "<textarea id = \"results\" name = \"results\" cols = \"40\"  rows = \"6\" readonly>" + results + "</textarea>" + "</td>";
             html += "</tr>";
-            
+
             String filePath = sys.getOne(this.comCode + ".HMPTLABDOCS", "filepath", "rid=" + rid);
             String refNo = sys.getOne(this.comCode + ".HMPTLABDOCS", "refno", "rid=" + rid);
 
-            
             if (filePath != null) {
                 String docLink = "<a href=\"" + request.getContextPath() + filePath + "\" target=\"blank\">download - " + refNo + "</a>";
 
@@ -2342,7 +2419,6 @@
                 html += "<td >" + docLink + "</td>";
                 html += "</tr>";
             }
-
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
@@ -2355,7 +2431,6 @@
             html += "</td>";
             html += "</tr>";
 
-            
             html += "</table>";
 
             html += gui.formEnd();
@@ -2464,7 +2539,7 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
-            
+
             this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMPTDIAGNOSIS", "REGNO = '" + this.regNo + "'")) {
@@ -2557,7 +2632,7 @@
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("diagnosis", " Diagnosis") + "</td>";
 //            html += "<td >"+gui.formSelect("diagnosis", ""+this.comCode+".HMDIAGNOSIS", "DIAGCODE", "DIAGNAME", "", "", diagCode, "", false)+"</td>";
-            html += "<td >"+gui.formAutoComplete("diagnosis", 25, diagCode, "dashboard.searchDiagnosis", "diagnosisHd", diagCode)+"</td>";
+            html += "<td >" + gui.formAutoComplete("diagnosis", 25, diagCode, "dashboard.searchDiagnosis", "diagnosisHd", diagCode) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -2586,7 +2661,7 @@
             html += gui.formEnd();
             return html;
         }
-        
+
         public String searchDiagnosis() {
             String html = "";
 
@@ -2603,7 +2678,7 @@
 
         public Object getDiagnosisProfile() throws Exception {
             JSONObject obj = new JSONObject();
-            
+
             String diagnosis = request.getParameter("diagnosis");
 
             if (diagnosis == null || diagnosis.trim().equals("")) {
@@ -2658,7 +2733,7 @@
 
                 } else {
                     query = "UPDATE " + this.comCode + ".HMPTDIAGNOSIS SET "
-                            + "DIAGCODE     = '"+ diagCode +"', "
+                            + "DIAGCODE     = '" + diagCode + "', "
                             + "DIAGNAME     = '" + diagName + "', "
                             + "REMARKS      = '" + remarks + "' "
                             + "WHERE ID     = " + rid + "";
@@ -2724,7 +2799,7 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
-            
+
             this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists("" + this.comCode + ".HMMEDICATION", "REGNO = '" + this.regNo + "'")) {
@@ -2810,17 +2885,15 @@
                         qty = rs.getString("QTY");
                         instruction = rs.getString("INSTRUCTION");
                         advice = rs.getString("ADVICE");
-                        
+
                         pxdate = rs.getString("pxdate");
-                        
+
                         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                        SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
                         java.util.Date pxdate2 = originalFormat.parse(pxdate);
                         pxdate = targetFormat.format(pxdate2);
-                            
-                        
-                        
+
                     }
                 } catch (Exception e) {
                     html += e.getMessage();
@@ -2893,7 +2966,6 @@
             html += gui.formEnd();
             return html;
         }
-        
 
         public String searchDrug() {
             String html = "";
@@ -2902,7 +2974,7 @@
 
             String itemCode = request.getParameter("drugHd");
 
-            html += gui.getAutoColsSearch("" + this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from "+this.comCode+".hmcats )", itemCode);
+            html += gui.getAutoColsSearch("" + this.comCode + ".ICITEMS", "ITEMCODE, ITEMNAME", "catcode in (select catcode from " + this.comCode + ".hmcats )", itemCode);
 
             return html;
         }
@@ -2947,13 +3019,12 @@
                 Connection conn = ConnectionProvider.getConnection();
                 Statement stmt = conn.createStatement();
                 String query;
-                
+
                 SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
                 java.util.Date pxdate2 = originalFormat.parse(pxdate);
                 pxdate = targetFormat.format(pxdate2);
-                    
 
                 if (rid == null) {
                     Integer id = sys.generateId("" + this.comCode + ".HMMEDICATION", "ID");
@@ -3051,7 +3122,7 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
-            
+
             this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists(this.comCode + ".HMREGISTRATION", "REGNO = '" + this.regNo + "'")) {
@@ -3086,8 +3157,8 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>"
-//                    + gui.formButton(request.getContextPath(), "button", "btnSaveDrNotes", "Save", "save.png", "onclick=\"dashboard.saveDrNotes('dr_notes');\"", "")
-//                    + " "
+                    //                    + gui.formButton(request.getContextPath(), "button", "btnSaveDrNotes", "Save", "save.png", "onclick=\"dashboard.saveDrNotes('dr_notes');\"", "")
+                    //                    + " "
                     + gui.formButton(request.getContextPath(), "button", "btnPrintDrNotes", "Print", "printer.png", "onclick=\"dashboard.printDrNotes('dr_notes');\"", "")
                     + " "
                     + gui.formButton(request.getContextPath(), "button", "btnCanceld", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")
@@ -3145,7 +3216,7 @@
 
             Gui gui = new Gui();
             Sys sys = new Sys();
-            
+
             this.regNo = sys.getOne(this.comCode + ".HMREGISTRATION", "REGNO", "ID = " + this.rid);
 
             if (sys.recordExists(comCode + ".HMREGISTRATION", "REGNO = '" + this.regNo + "'")) {
@@ -3175,12 +3246,12 @@
             html += "<td width = \"22%\" class = \"bold\">" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + gui.formLabel("remarks", " Remarks") + "</td>";
             html += "<td >" + gui.formInput("textarea", "remarks", 40, this.remarks, "", "") + "</td>";
             html += "</tr>";
-            
+
             html += "<tr>";
             html += "<td>&nbsp;</td>";
-            html += "<td>" 
-//                    + gui.formButton(request.getContextPath(), "button", "btnDischarge", "Discharge", "save.png", "onclick=dashboard.discharge('remarks');", "") 
-//                    + " "
+            html += "<td>"
+                    //                    + gui.formButton(request.getContextPath(), "button", "btnDischarge", "Discharge", "save.png", "onclick=dashboard.discharge('remarks');", "") 
+                    //                    + " "
                     + gui.formButton(request.getContextPath(), "button", "btnCanceld", "Back", "arrow-left.png", "onclick = \"patients.getRegistrations(" + this.id + "); return false;\"", "")
                     + "</td>";
             html += "</tr>";
@@ -3216,10 +3287,9 @@
 
                 if (saved > 0) {
                     obj.put("success", new Integer(1));
-                    obj.put("message", "Discharge for '"+this.regNo+"' successfully made.");
+                    obj.put("message", "Discharge for '" + this.regNo + "' successfully made.");
 
 //                    this.invoicePatient(this.regNo);
-
                 } else {
                     obj.put("success", new Integer(0));
                     obj.put("message", "Oops! An Un-expected error occured while saving record.");
