@@ -373,11 +373,17 @@
                     html += "<td style = \"text-align: right; font-weight: bold;\">" + sys.numberFormat(sumAmount.toString()) + "</td>";
                     html += "</tr>";
                     
-                    
-
                     html += "</tr>";
                     
-                    html += "<br>";
+                    
+
+                } catch (Exception e) {
+                    html += e.getMessage();
+                }
+
+                html += "</table>";
+                
+                html += "<br>";
                     
                     html += "<table>";
                     
@@ -392,12 +398,6 @@
                     html += "</tr>";
                     
                     html += "</table>";
-
-                } catch (Exception e) {
-                    html += e.getMessage();
-                }
-
-                html += "</table>";
 
             } else {
                 html += "No record found.";

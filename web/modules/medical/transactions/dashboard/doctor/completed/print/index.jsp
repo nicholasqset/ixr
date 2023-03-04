@@ -15,6 +15,7 @@
     final class PrintRptBill{
         HttpSession session = request.getSession();
         String comCode      = session.getAttribute("comCode").toString();
+        
         String pyNo     = request.getParameter("billNo") != null && ! request.getParameter("billNo").trim().equals("")? request.getParameter("billNo"): null;
     
         String rptName  = "Patient Bill";
@@ -151,7 +152,7 @@
 
                     String imgLogoSrc;
 
-                    if(sys.getOne(""+this.comCode+".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
+                    if(sys.getOne(this.comCode+".CSCOLOGO", "LOGO", "COMPANYCODE = '"+ companyCode +"'") != null){
                         imgLogoSrc = "logo.jsp?code="+companyCode;
                     }else{
                         imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
@@ -262,15 +263,20 @@
             html += "<td class = \"bold\">Period</td>";
             html += "<td>"+ hmPyHdr.pYear+ " - "+ hmPyHdr.pMonth+ "</td>";
             html += "</tr>";
+            
+            html += "<tr>";
+            html += "<td class = \"bold\">Patient</td>";
+            html += "<td>" + hmPyHdr.ptNo + " - "+hmPyHdr.fullName+"</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\">Registration #</td>";
+            html += "<td>" + hmPyHdr.regNo+ "</td>";
+            html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\">Customer</td>";
             html += "<td>"+ hmPyHdr.fullName+ "</td>";
-            html += "</tr>";
-            
-            html += "<tr>";
-            html += "<td class = \"bold\">Registration #</td>";
-            html += "<td>"+ hmPyHdr.regNo+ "</td>";
             html += "</tr>";
 
             html += "</table>";
@@ -284,9 +290,10 @@
         
         public String getPyDtls(){
             String html = "";
-            Sys sys = new Sys();
             
             HttpSession session = request.getSession();
+            
+            Sys sys = new Sys();
             
             User user = new User(sys.getLogUser(session), this.comCode);
 
@@ -354,26 +361,25 @@
                     html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumTax.toString()) +"</td>";
                     html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumAmount.toString()) +"</td>";
                     html += "</tr>";
-                
-                }catch (Exception e){
-                    html += e.getMessage();
-                }
-
-                html += "</table>";
-                
-                html += "<table>";
+                    
+                    html += "<table>";
                     
 //                    html += "<tr>";
 //                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
 //                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
-//                    html += "</tr>";
-                    
+
                     html += "<tr>";
                     html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Served By:</td>";
                     html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">"+user.userName+"</td>";
                     html += "</tr>";
                     
                     html += "</table>";
+                
+                }catch (Exception e){
+                    html += e.getMessage();
+                }
+
+                html += "</table>";
 
             }else{
                 html += "No record found.";

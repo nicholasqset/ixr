@@ -305,6 +305,7 @@
                 html += "<tr>";
                 html += "<th>#</th>";
                 html += "<th>Doc #</th>";
+                html += "<th>Payment Mode</th>";
                 html += "<th>Item</th>";
                 html += "<th style = \"text-align: right;\">Quantity</th>";
                 html += "<th style = \"text-align: right;\">Price</th>";
@@ -342,6 +343,7 @@
                     while (rs.next()) {
                         Integer id = rs.getInt("ID");
                         String pyNo = rs.getString("PYNO");
+                        String pmcode = rs.getString("pmcode");
                         String itemName = rs.getString("ITEMNAME");
                         Double qty = rs.getDouble("QTY");
                         Double unitPrice = rs.getDouble("UNITPRICE");
@@ -355,6 +357,7 @@
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
                         html += "<td>" + pyNo + "</td>";
+                        html += "<td>" + pmcode + "</td>";
                         html += "<td>" + itemName + "</td>";
                         html += "<td style = \"text-align: right;\">" + sys.numberFormat(qty.toString()) + "</td>";
                         html += "<td style = \"text-align: right;\">" + sys.numberFormat(unitPrice.toString()) + "</td>";
@@ -371,7 +374,7 @@
                     }
 
                     html += "<tr>";
-                    html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"5\">Total</td>";
+                    html += "<td style = \"text-align: center; font-weight: bold;\" colspan = \"6\">Total</td>";
 
                     html += "<td style = \"text-align: right; font-weight: bold;\">" + sys.numberFormat(sumTax.toString()) + "</td>";
                     html += "<td style = \"text-align: right; font-weight: bold;\">" + sys.numberFormat(sumAmount.toString()) + "</td>";

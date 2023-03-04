@@ -1,3 +1,4 @@
+<%@page import="bean.user.User"%>
 <%@page import="bean.medical.HmPyHdr"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
@@ -262,6 +263,16 @@
             html += "<td class = \"bold\">Period</td>";
             html += "<td>"+ hmPyHdr.pYear+ " - "+ hmPyHdr.pMonth+ "</td>";
             html += "</tr>";
+            
+            html += "<tr>";
+            html += "<td class = \"bold\">Patient</td>";
+            html += "<td>" + hmPyHdr.ptNo + " - "+hmPyHdr.fullName+"</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td class = \"bold\">Registration #</td>";
+            html += "<td>" + hmPyHdr.regNo+ "</td>";
+            html += "</tr>";
 
             html += "<tr>";
             html += "<td class = \"bold\">Customer</td>";
@@ -279,7 +290,12 @@
         
         public String getPyDtls(){
             String html = "";
+            
+            HttpSession session = request.getSession();
+            
             Sys sys = new Sys();
+            
+            User user = new User(sys.getLogUser(session), this.comCode);
 
             if(sys.recordExists(""+this.comCode+".VIEWHMPYDTLS", "PYNO = '"+ this.pyNo+ "'")){
 
@@ -346,19 +362,26 @@
                     html += "<td style = \"text-align: right; font-weight: bold;\">"+ sys.numberFormat(sumAmount.toString()) +"</td>";
                     html += "</tr>";
                     
-                    html += "<table>";
                     
-                    html += "<tr>";
-                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
-                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
-                    
-                    html += "</table>";
                 
                 }catch (Exception e){
                     html += e.getMessage();
                 }
 
                 html += "</table>";
+                
+                html += "<table>";
+                    
+//                    html += "<tr>";
+//                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Till No:</td>";
+//                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">510 6387</td>";
+
+                    html += "<tr>";
+                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"\">Served By:</td>";
+                    html += "<td style = \"text-align: left; font-weight: bold;\" colspan = \"5\">"+user.userName+"</td>";
+                    html += "</tr>";
+                    
+                    html += "</table>";
 
             }else{
                 html += "No record found.";
