@@ -66,6 +66,7 @@
 
                                 html += "<div style=\"padding-left: 10px; padding-top: 20px; padding-bottom: 20px; border: 0;\" >";
                                 html += gui.formButton(request.getContextPath(), "button", "btnSave", "Send Request", "sms.png", "onclick = \"reg.save('cellphone'); return false;\"", "btn-info");
+                                html += "<a href = \"../\" style = \"padding-left: 20px; color: #808080; font-weight: bold;\">Login</a>";
                                 html += "<span id = \"sp_save\" style = \"padding-left: 5px; color: blue; font-size: 11px;\"></span>";
                                 html += "</div>";
 

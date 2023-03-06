@@ -102,28 +102,28 @@
                                 html += "<input type=\"text\" id=\"compName\" name=\"compName\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html += "</div>";
 
-                                html += "<div >";
+                                html += "<div class=\"mt-2\">";
                                 html += ""+gui.formIcon(request.getContextPath(),"email.png", "", "")+" "+gui.formLabel("email", "Email")+"";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"text\" id=\"email\" name=\"email\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html +="</div>";
 
-                                html += "<div >";
+                                html += "<div class=\"mt-2\">";
                                 html += ""+gui.formIcon(request.getContextPath(),"mobile-phone.png", "", "")+" "+gui.formLabel("cellphone", "Cell Phone")+"";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"text\" id=\"cellphone\" name=\"cellphone\" placeholder = \"254712345678\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html +="</div>";
 
-                                html += "<div >";
+                                html += "<div class=\"mt-2\">";
                                 html += ""+gui.formIcon(request.getContextPath(),"lock.png", "", "")+" "+gui.formLabel("password", "Password")+"</td>";
                                 html +="</div>";
                                 html += "<div >";
                                 html += "<input type=\"password\" id=\"password\" name=\"password\" class = \"form-control\" style=\"height: 37px; font-size:14pt;  border: 1px solid #CED4DA; border-radius: 3px; \">";
                                 html +="</div>";
 
-                                html += "<div >";
+                                html += "<div class=\"mt-2\">";
                                 html += ""+gui.formIcon(request.getContextPath(),"lock.png", "", "")+" "+gui.formLabel("confPassword", "Confirm Password")+"</td>";
                                 html +="</div>";
                                 html += "<div >";
