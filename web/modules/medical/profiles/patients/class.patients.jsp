@@ -416,7 +416,7 @@
                 if (hasPhoto(this.ptNo)) {
                     imgPhotoSrc = "photo.jsp?ptNo=" + this.ptNo;
                 } else {
-                    imgPhotoSrc = request.getContextPath() + "/images/emblems/places-user-identity.png";
+                    imgPhotoSrc = request.getContextPath() + "/assets/img/emblems/places-user-identity.png";
                 }
 
                 html += "<td rowspan = \"5\">";
@@ -1085,7 +1085,7 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
 
             html += "<tr>";
-            html += "<td width = \"25%\" class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + "Registration Type</td>";
+            html += "<td width = \"25%\" class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " Registration Type</td>";
             html += "<td >" + regTypeLbl + "</td>";
             html += "</tr>";
 
@@ -1105,7 +1105,7 @@
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "notes.png", "", "") + gui.formLabel("sponsor", " Sponsor") + "</td>";
+            html += "<td class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("sponsor", " Sponsor") + "</td>";
             html += "<td >" + gui.formArraySelect("sponsor", 136, sponsors, rid != null ? sponsor : "SELF", false, "", false) + "</td>";
             html += "</tr>";
 

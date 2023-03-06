@@ -266,7 +266,7 @@
 //            html += "<div class = \"dhtmlgoodies_aTab\">"+ this.getSalesTab()+ "</div>";
 //            html += "</div>";
 
-            String imgPhotoSrc = request.getContextPath()+"/images/emblems/no-image.gif";
+            String imgPhotoSrc = request.getContextPath()+"/assets/img/emblems/no-image.gif";
 
             html += "<div class = \"table\">";
                 html += "<div class = \"row\">";

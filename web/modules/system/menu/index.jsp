@@ -86,8 +86,8 @@
                 },
                 toggleMenu: function(menuCode){
                     var img         = $("img"+menuCode);
-                    var imgCollapse = '<%= request.getContextPath() %>/images/menu/minus.gif';
-                    var imgExpand   = '<%= request.getContextPath() %>/images/menu/plus.gif';
+                    var imgCollapse = '<%= request.getContextPath() %>/assets/img/menu/minus.gif';
+                    var imgExpand   = '<%= request.getContextPath() %>/assets/img/menu/plus.gif';
                     var row         = $('row'+menuCode);
                     var menu        = $("menu"+menuCode);
                     

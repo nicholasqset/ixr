@@ -1,0 +1,218 @@
+/* 
+    Created on : May 29, 2015, 9:22:39 AM
+    Author     : nicholas
+*/
+html{
+    height: 100%
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%
+}
+
+div.module-header{ 
+    display: table; 
+    border-collapse: collapse;
+    width: 100%;
+} 
+
+div.module-header-row{ 
+    display: table-row;
+    background-color:#F0EDDF;
+}
+
+div.module-header-row-left{
+    display: table-cell;
+    padding: 1px 2px;
+    height: 24px;
+    vertical-align: middle;
+    font-size: 13px;
+    width: 75%;
+    border-bottom:1px solid #CDCABB;
+}
+
+div.module-header-row-left a{
+    font: bold 12px "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-decoration: none;
+    background-color: #F7F7F7;
+    color: #333333;
+    padding: 3px;
+    border: 1px solid #CDCABB;
+    border-radius: 2px;
+}
+
+div.module-header-row-left span{
+    text-align: left;
+    padding: 2px 1px;
+    vertical-align: middle;
+
+}
+
+div.module-header-row-left img{
+    vertical-align: middle;
+}
+
+div.module-header-row-right{
+    display: table-cell;
+    padding: 1px 2px;
+    height: 24px;
+    vertical-align: middle;
+    font-size: 13px;
+    width: 25%;
+    text-align: right;
+    border-bottom:1px solid #CDCABB;
+}
+
+div.module-content{
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+div.content-row{
+    display: table-row;
+}
+
+div.content-cell{ 
+    display: table-cell;
+    width: 100%;
+} 
+
+
+/* grid css*/
+table.grid{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size:12px;
+}
+
+table.grid th{
+    background-color: #F1EDDF;
+    border-bottom: 1px solid #CDCABB;
+    text-align: left;
+    font-size: 12px;
+}
+
+table.grid a{
+    text-decoration: none;
+}
+
+/*start module css*/
+table.module{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 12px;
+}
+
+table.module th{
+    text-align: left;
+}
+
+table.module td.bold{
+    font-weight: bold;
+}
+
+table.module td.fade{
+    color: #808080;
+}
+
+/*end module css*/
+
+/*start ugrid css*/
+table.ugrid{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size:12px;
+}
+
+table.ugrid th{
+    text-align: left;
+}
+
+table.ugrid td{
+    /*padding: 0;*/
+}
+
+table.ugrid a{
+    text-decoration: none;
+}
+/*end ugrid css*/
+
+input, select{
+    border: 1px solid #78acff; 
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+input.autocomplete{
+    background-image: url('../img/icons/magnifier.png');
+    background-repeat: no-repeat;
+    background-position: 0 3px;
+    padding-left: 20px;
+}
+
+input[type="text"] {
+    height: 24px;
+}
+
+input[type="password"] {
+    height: 24px;
+}
+
+select {
+    vertical-align: top;
+    height: 24px;
+}
+
+div.autocomplete {
+    border: 1px solid #CDCABB;
+}
+
+div.autocomplete ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+div.autocomplete ul li {
+    display: block;
+    padding: 1px;
+    background-color: #FFFFFF;
+    border-bottom: 1px dotted #CDCABB;
+    list-style-type: none;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+div.autocomplete ul li.selected {
+    background-color: #86AAD7; 
+}
+
+div.autocomplete span.informal{
+    display: block;
+    color: #555555;
+    font-size: 11px;
+}
+
+span.fade{
+    color: #808080;
+}
+
+div.hr{
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 8px auto;
+    width: 100%;
+    height: 0;
+    clear: both;
+    border: none;
+    border-top: 1px solid #919B9C;
+    font-size: 1px;
+    line-height: 0;
+    overflow: visible;
+}

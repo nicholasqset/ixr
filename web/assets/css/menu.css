@@ -1,0 +1,53 @@
+/* 
+    Created on : Jun 7, 2015, 9:03:10 PM
+    Author     : nicholas
+*/
+
+div.menu-parent a{
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: left;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    margin-top: 3px;
+    background-color: #F0EDDF;
+}
+
+div.menu-child a{
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: left;
+    padding: 3px;
+    margin: 3px;
+}
+
+td.menu-tree-line{
+    background-image:url("../assets/img/menu/line.gif");
+    background-repeat:repeat-y;
+}
+
+div.menu-child-link a{
+    color: #555555;
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: none;
+    padding: 5px;
+    margin: 5px;
+}
+div.menu-child-link a:hover{
+    text-decoration: underline;
+    color: #000000;
+}
+
+div.menu-action-link a{
+    color: #4185F3;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}

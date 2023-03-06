@@ -217,7 +217,7 @@
                         $('imgPhoto').setAttribute('src', 'photo.jsp?pfNo='+pfNo);
                         profile.hidePhotoOptions();
                     }else{
-                        $('imgPhoto').setAttribute('src', rootPath+'/images/emblems/places-user-identity.png');
+                        $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
                     }
                 },
                 purgePhoto: function(pfNo, lastName){
@@ -230,7 +230,7 @@
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    $('imgPhoto').setAttribute('src', rootPath+'/images/emblems/places-user-identity.png');
+                                    $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });

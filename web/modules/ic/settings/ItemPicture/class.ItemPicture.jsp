@@ -226,7 +226,7 @@ final class ItemPicture{
         if(this.hasPhoto(this.itemCode)){
             imgPhotoSrc = "photo.jsp?itemCode="+ this.itemCode;
         }else{
-            imgPhotoSrc = request.getContextPath()+"/images/emblems/no-image.gif";
+            imgPhotoSrc = request.getContextPath()+"/assets/img/emblems/no-image.gif";
         }
         
 //        html += gui.formStart("frmModule", "void%200", "post", "onSubmit = \"javascript: return false;\"");

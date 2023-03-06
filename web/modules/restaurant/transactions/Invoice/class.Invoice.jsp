@@ -250,7 +250,7 @@
 
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
             
-            String imgPhotoSrc = request.getContextPath()+"/images/emblems/no-image.gif";
+            String imgPhotoSrc = request.getContextPath()+"/assets/img/emblems/no-image.gif";
 
             html += "<div class = \"table\">";
                 html += "<div class = \"row\">";

@@ -347,7 +347,7 @@
                 if (hasPhoto(this.studentNo)) {
                     imgPhotoSrc = "photo.jsp?studentNo=" + this.studentNo;
                 } else {
-                    imgPhotoSrc = request.getContextPath() + "/images/emblems/places-user-identity.png";
+                    imgPhotoSrc = request.getContextPath() + "/assets/img/emblems/places-user-identity.png";
                 }
 
                 html += "<td rowspan = \"5\">";

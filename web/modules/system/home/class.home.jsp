@@ -17,7 +17,7 @@ final class Home{
         String img_alt = "";
 	
 	html += "<div class = \"home\" >";
-	html += "<img src = \"../../../images/tm/tm.png\" title=\"XR ERP\" width = \"170\" height = \"170\" alt = \""+img_alt+"\" longdesc = \""+img_alt+"\" />";
+	html += "<img src = \"../../../assets/img/tm/tm.png\" title=\"XR ERP\" width = \"170\" height = \"170\" alt = \""+img_alt+"\" longdesc = \""+img_alt+"\" />";
 
 	html += "</div>";
         

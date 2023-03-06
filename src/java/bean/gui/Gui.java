@@ -21,7 +21,7 @@ import java.util.TreeMap;
 public class Gui {
     
     public String loadCss(String cssPath, String cssName){
-        return "<style type=text/css>@import url( \""+cssPath+"/css/"+cssName+".css\");</style>";
+        return "<style type=text/css>@import url( \""+cssPath+"/assets/css/"+cssName+".css\");</style>";
     }
     
     public String loadCssFeLibs(String cssPath, String cssName){
@@ -29,7 +29,7 @@ public class Gui {
     }
     
     public String loadJs(String jsPath, String jsName){
-        return "<script type=\"text/javascript\" src=\""+jsPath+"/js/"+jsName+".js\"></script>";
+        return "<script type=\"text/javascript\" src=\""+jsPath+"/assets/js/"+jsName+".js\"></script>";
     }
     
     public String formStart(String id, String action, String method, String javascript){
@@ -41,7 +41,7 @@ public class Gui {
     }
     
     public String formIcon(String iconPath, String iconName, String iconId, String title){
-        String iconfile	= iconPath+"/images/icons/"+iconName;
+        String iconfile	= iconPath+"/assets/img/icons/"+iconName;
   	return  "<img src=\""+iconfile+"\" id=\""+iconId+"\"  title=\""+title+"\" border=\"0\" >";
     }
     
@@ -82,7 +82,7 @@ public class Gui {
     }
     
     public String formButton(String iconPath, String type, String id, String label, String icon, String javascript, String style){
-         String iconSrc = "<img src=\""+iconPath+"/images/icons/"+icon+"\">";
+         String iconSrc = "<img src=\""+iconPath+"/assets/img/icons/"+icon+"\">";
          icon = (icon != null && !icon.isEmpty())? iconSrc: "";
         
          String button = "";
@@ -104,7 +104,7 @@ public class Gui {
     }
     
     public String formAjaxIcon(String iconPath, String iconName){
-        String iconFile = iconPath+"/images/ajax/"+iconName;
+        String iconFile = iconPath+"/assets/img/ajax/"+iconName;
 	
 	String ajaxIcon = "<img src=\""+iconFile+"\" border=\"0\" id=\""+iconName+"\">";
 	
@@ -115,7 +115,7 @@ public class Gui {
         String html = "";
         String hrefId = ! id.isEmpty()? id: id.replace(" ", "")+"href_"+title;
         
-        icon = ! icon.isEmpty()? "<img src=\""+iconPath+"/images/icons/"+icon+"\" border=\"0\" >": "";
+        icon = ! icon.isEmpty()? "<img src=\""+iconPath+"/assets/img/icons/"+icon+"\" border=\"0\" >": "";
         
 	html += "<a href = \"javascript:;\" ";
 	html += " id = \""+hrefId+"\" ";
@@ -336,10 +336,10 @@ public class Gui {
         html += "<script type=\"text/javascript\">";
 		
         if (showTime) {
-//            html +=  " var picker = new Control.DatePicker('"+id+"',{icon: '"+rootPath+"/images/icons/calendar.png',timePicker: true,timePickerAdjacent: true, use24hrs: true,locale: 'en_GB'})";			
+//            html +=  " var picker = new Control.DatePicker('"+id+"',{icon: '"+rootPath+"/assets/img/icons/calendar.png',timePicker: true,timePickerAdjacent: true, use24hrs: true,locale: 'en_GB'})";			
             html +=  " var picker = new Control.DatePicker('"+id+"',{timePicker: true,timePickerAdjacent: true, use24hrs: true,locale: 'en_GB'})";			
         }else{
-//            html +=   "var picker = new Control.DatePicker('"+id+"',{icon: '"+rootPath+"/images/icons/calendar.png',timePicker: false,timePickerAdjacent: true, use24hrs: true,locale: 'en_GB'})";
+//            html +=   "var picker = new Control.DatePicker('"+id+"',{icon: '"+rootPath+"/assets/img/icons/calendar.png',timePicker: false,timePickerAdjacent: true, use24hrs: true,locale: 'en_GB'})";
             html +=   "var picker = new Control.DatePicker('"+id+"',{timePicker: false,timePickerAdjacent: true, use24hrs: true,locale: 'en_GB'})";
         }
         html += "</script>";

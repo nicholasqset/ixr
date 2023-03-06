@@ -70,14 +70,12 @@
         <% 
             out.print(gui.loadCss(request.getContextPath(), "Growler"));
             out.print(gui.loadCss(request.getContextPath(), "module"));
-            out.print(gui.loadCssFeLibs(request.getContextPath(), "felibs/fontawesome/css/all.min"));
 //            out.print(gui.loadCss(request.getContextPath(), "buttons"));
 //            out.print(gui.loadCss(request.getContextPath(), "tinybox"));
 //            out.print(gui.loadCss(request.getContextPath(), "tab-view"));
 //            out.print(gui.loadCss(request.getContextPath(), "datepicker"));
-             out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
         %>
-        
+        <link href="../assets/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
         <style>
             iframe#upload_iframe{
                 width: 0;

@@ -359,7 +359,7 @@ final class Staff{
             if(hasPhoto(this.pfNo)){
                 imgPhotoSrc = "photo.jsp?pfNo="+ this.pfNo;
             }else{
-                imgPhotoSrc = request.getContextPath()+"/images/emblems/places-user-identity.png";
+                imgPhotoSrc = request.getContextPath()+"/assets/img/emblems/places-user-identity.png";
             }
             
             html += "<td rowspan = \"5\">";

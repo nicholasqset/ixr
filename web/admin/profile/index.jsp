@@ -31,9 +31,7 @@
             }
             %>
         </script>
-        <% 
-            out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
-        %>
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     </head>
     <body>
         <div class="module-wrapper">

@@ -25,7 +25,7 @@
                 margin: 12% 13%;
                 color: #3166A6;
                 font-weight: bold;
-                background-image: url("../../../images/tm/tm.png");
+                background-image: url("../../../assets/img/tm/tm.png");
                 background-size: 96px 96px;
             }*/
             div.home .ui-lk{

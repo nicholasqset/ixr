@@ -49,8 +49,8 @@
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
             out.print(gui.loadCss(request.getContextPath(), "tab-view"));
             out.print(gui.loadCss(request.getContextPath(), "datepicker"));
-            out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
         %>
+        <link href="../assets/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
         <script type="text/javascript"> 
             <%
             if(sessionExpired){
@@ -91,7 +91,7 @@
 
                                 html += "<div class=\"offset-md-3 col-md-5 card card-footer\" style=\"background-color:#eceff1; border-radius: 5px;\">";
 
-                                html += "<h1><img src=\"../images/tm/tm_1.png\" width=\"150\" height=\"50\"></h1>";
+                                html += "<h1><img src=\"../assets/img/tm/tm_1.png\" width=\"150\" height=\"50\"></h1>";
                                 
                                 html += " <div id = \"dv_err\" style=\"padding: 3px; text-align: center; color: red;\"></div>";
 

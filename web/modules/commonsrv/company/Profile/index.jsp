@@ -148,7 +148,7 @@
                         $('imgLogo').setAttribute('src', 'logo.jsp?code='+code);
                         profile.hideLogoOptions();
                     }else{
-                        $('imgLogo').setAttribute('src', rootPath+'/images/logo/default-logo.png');
+                        $('imgLogo').setAttribute('src', rootPath+'/assets/img/logo/default-logo.png');
                     }
                 },
                 purgeLogo: function(code, lastName){
@@ -161,7 +161,7 @@
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    $('imgLogo').setAttribute('src', rootPath+'/images/logo/default-logo.png');
+                                    $('imgLogo').setAttribute('src', rootPath+'/assets/img/logo/default-logo.png');
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });

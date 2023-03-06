@@ -135,8 +135,8 @@
                 iconReload: '<%= gui.formAjaxIcon(request.getContextPath(),"ajax-loader.gif") %>',
                 toggleMenu: function(menuCode){
                         var img         = $("img"+menuCode);
-                        var imgCollapse = '<%= request.getContextPath() %>/images/menu/minus.gif';
-                        var imgExpand   = '<%= request.getContextPath() %>/images/menu/plus.gif';
+                        var imgCollapse = '<%= request.getContextPath() %>/assets/img/menu/minus.gif';
+                        var imgExpand   = '<%= request.getContextPath() %>/assets/img/menu/plus.gif';
                         var row         = $('row'+menuCode);
                         var menu        = $("menu"+menuCode);
 
@@ -159,11 +159,11 @@
                     var img             = $('img_content_span');
                     var mnuContainer    = $('primary-nav');
                     if(mnuContainer.style.display === 'none'){
-                        img.src     = "./images/icons/close-menu.png";
+                        img.src     = "./assets/img/icons/close-menu.png";
                         img.title   = "Click to close main menu";
                         mnuContainer.style.display = '';
                     }else{
-                        img.src     = "./images/icons/open-menu.png";
+                        img.src     = "./assets/img/icons/open-menu.png";
                         img.title   = "Click to open main menu";
                         mnuContainer.style.display='none';
                         new Effect.Highlight('secondary-nav');	
@@ -205,7 +205,7 @@
                 hidePrimNav: function(){
                     var img                     = $('img_content_span');
                     var mnuContainer            = $('primary-nav');
-                    img.src                     = "./images/icons/open-menu.png";
+                    img.src                     = "./assets/img/icons/open-menu.png";
                     img.title                   = "Click to open main menu";
                     mnuContainer.style.display  = 'none';
                     new Effect.Highlight('secondary-nav');	

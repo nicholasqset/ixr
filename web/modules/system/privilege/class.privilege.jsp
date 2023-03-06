@@ -85,7 +85,7 @@ final class Privilege{
 
                     html += "<tr bgcolor = \""+ bgcolor+ "\">";
                     html += "<td width = \"2px\" style = \"text-align: center;\">";
-                    html += "<img id = \"img"+menuCode+"\" src = \""+request.getContextPath()+"/images/menu/plus.gif\" "+toggleMenu+" />";
+                    html += "<img id = \"img"+menuCode+"\" src = \""+request.getContextPath()+"/assets/img/menu/plus.gif\" "+toggleMenu+" />";
                     html += "</td>";
                     html += "<td nowrap> ";
                     html += "<div class = \"menu-parent\" >";
@@ -196,8 +196,8 @@ final class Privilege{
 
                 String toggleMenu           = "onclick=\"rights.toggleMenu('"+menuCodeChild+"');\"";
                 String iconChildBranch      = count < countRecord? "branch.gif": "branch-bottom.gif";
-                iconChildBranch             = "<img src=\""+request.getContextPath()+"/images/menu/"+iconChildBranch+"\" />";	
-                String iconChild            = "<img src=\""+request.getContextPath()+"/images/icons/"+rs.getString("ICON")+"\" border=\"0\" />";	
+                iconChildBranch             = "<img src=\""+request.getContextPath()+"/assets/img/menu/"+iconChildBranch+"\" />";	
+                String iconChild            = "<img src=\""+request.getContextPath()+"/assets/img/icons/"+rs.getString("ICON")+"\" border=\"0\" />";	
                 String treeLine             = "";
 
                 if(this.menuHasChildren(menuCodeChild)){
@@ -213,7 +213,7 @@ final class Privilege{
 
                     html += "<tr bgcolor = \""+ bgcolor+ "\">";
                     html += "<td width = \"2px\" style = \"text-align: center;\">";
-                    html += "<img id = \"img"+menuCodeChild+"\" src = \""+request.getContextPath()+"/images/menu/plus.gif\" "+toggleMenu+"/>";;
+                    html += "<img id = \"img"+menuCodeChild+"\" src = \""+request.getContextPath()+"/assets/img/menu/plus.gif\" "+toggleMenu+"/>";;
                     html += "</td>";
                     html += "<td colspan = \"2px\" nowrap>";
                     html += "<div class = \"menu-child\" >";

@@ -30,7 +30,7 @@
                 if(sys.getOne("CSCOLOGO", "LOGO", "COMPANYCODE = '"+ this.comCode +"'") != null){
                     imgLogoSrc = "logo.jsp?code="+this.comCode;
                 }else{
-                    imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
+                    imgLogoSrc = request.getContextPath()+"/assets/img/logo/default-logo.png";
                 }
             
                 html += "<table width =\"100%\" cellpadding = \"2\" cellspacing = \"0\"  class = \"header\" >";

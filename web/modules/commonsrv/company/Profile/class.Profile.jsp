@@ -101,7 +101,7 @@ final class Profile{
             if(this.hasLogo(this.comCode)){
                 imgLogoSrc = "logo.jsp?code="+ this.comCode;
             }else{
-                imgLogoSrc = request.getContextPath()+"/images/logo/default-logo.png";
+                imgLogoSrc = request.getContextPath()+"/assets/img/logo/default-logo.png";
             }
             
             html += "<td rowspan = \"5\">";

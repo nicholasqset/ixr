@@ -334,7 +334,7 @@ final class Asset{
             if(hasPhoto(this.assetNo)){
                 imgPhotoSrc = "photo.jsp?assetNo="+ this.assetNo;
             }else{
-                imgPhotoSrc = request.getContextPath()+"/images/emblems/folders-OS-pictures-metro.png";
+                imgPhotoSrc = request.getContextPath()+"/assets/img/emblems/folders-OS-pictures-metro.png";
             }
             
             html += "<td rowspan = \"5\">";

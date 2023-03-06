@@ -90,8 +90,8 @@
             JRHtmlExporter exporter = new JRHtmlExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jrPrint);
             exporter.setParameter(JRHtmlExporterParameter.IS_OUTPUT_IMAGES_TO_DIR, Boolean.TRUE);
-            exporter.setParameter(JRHtmlExporterParameter.IMAGES_DIR_NAME, "./images/");
-            exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, "/images/");
+            exporter.setParameter(JRHtmlExporterParameter.IMAGES_DIR_NAME, "./assets/img/");
+            exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, "/assets/img/");
             exporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE);
             exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outStream);
             exporter.exportReport();

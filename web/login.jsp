@@ -21,10 +21,7 @@
         <link rel="shortcut icon" href="<%= rootPath %>favicon.ico" />
         <title>Welcome to iXR&trade; - Login or Sign Up</title>
 
-        <% 
-//            out.print(gui.loadCss(request.getContextPath(), "login"));
-            out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
-        %>
+        <link href="assets/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
       
     </head>
     <body class="bg-default">
@@ -37,7 +34,7 @@
                 
                 <div class="offset-md-3 col-md-5 card card-footer" style="background-color:#eceff1; border-radius: 5px ">
                     <div class="cont-headers">
-                        <h1>Login to <img src="images/tm/tm_1.png" width="118" height="56"></h1>
+                        <h1>Login to <img src="assets/img/tm/tm_1.png" width="118" height="56"></h1>
                         <!--<h1>Login to iXR &trade; ERP</h1>-->
                         <div id="feedback" class="feedback" style="color: red;font-weight: bolder"><%= feedback %></div>
 

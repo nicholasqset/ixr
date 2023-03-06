@@ -274,7 +274,7 @@
                                     g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
                                 }
                                 
-                                $('imgPhoto').setAttribute('src', rootPath+'/images/emblems/no-image.gif');
+                                $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/no-image.gif');
                             }
                         }
                     });

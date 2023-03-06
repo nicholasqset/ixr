@@ -57,8 +57,8 @@
             out.print(gui.loadCss(request.getContextPath(), "tinybox"));
             out.print(gui.loadCss(request.getContextPath(), "tab-view"));
             out.print(gui.loadCss(request.getContextPath(), "datepicker"));
-             out.print(gui.loadCss(request.getContextPath(), "bootstrap"));
         %>
+        <link href="../assets/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
         <script type="text/javascript"> 
             <%
             if(sessionExpired){
