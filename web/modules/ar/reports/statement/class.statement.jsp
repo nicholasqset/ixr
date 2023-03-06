@@ -4,8 +4,8 @@
     Author     : nicholas
 --%>
 
+<%@page import="org.json.JSONObject"%>
 <%@page import="bean.ar.ARCustomerProfile"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="bean.gui.Gui"%>
 <% 
     final class Statement{
@@ -56,7 +56,7 @@
             return html;
         }
 
-        public Object getCustomerProfile(){
+        public Object getCustomerProfile() throws Exception{
             JSONObject obj = new JSONObject();
 
             if(this.customerNo == null || this.customerNo.equals("")){

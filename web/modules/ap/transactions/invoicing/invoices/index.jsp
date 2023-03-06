@@ -1,8 +1,8 @@
+<%@page import="bean.gui.Gui"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="bean.user.User"%>
 <%@page import="bean.security.EncryptionUtil"%>
 <%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
 <%
     String rootPath = "../../../../../";
     Boolean sessionExpired = false;

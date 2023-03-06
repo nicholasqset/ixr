@@ -270,7 +270,7 @@ final class Asset{
                 html += e.getMessage();
             }
             
-            AssetProfile assetProfile = new AssetProfile(this.assetNo);
+            AssetProfile assetProfile = new AssetProfile(this.assetNo, this.comCode);
             
             this.assetDesc      = assetProfile.assetDesc;
             this.aqNo           = assetProfile.aqNo;
@@ -420,7 +420,7 @@ final class Asset{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            AssetProfile assetProfile = new AssetProfile(this.assetNo);
+            AssetProfile assetProfile = new AssetProfile(this.assetNo, this.comCode);
             
             obj.put("assetDesc", assetProfile.assetDesc);
             obj.put("aqNo", assetProfile.aqNo);
