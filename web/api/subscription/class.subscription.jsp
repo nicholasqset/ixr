@@ -99,7 +99,7 @@
                           MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
                           RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
                                   + "email=nicholasgakumo@gmail.com&"
-                                  + "cc=info@qsetinc.com&"
+                                  + "cc=info@goqset.com&"
                                   + "bcc=nicholasqset@gmail.com&"
                                   + "subject="+paybillNo+" - "+this.phoneNo+ "&"
                                   + "message= Hi, "+ this.refNo + " - "+ this.amount+ " paid."
@@ -402,7 +402,7 @@
                       MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
                       RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
                               + "email=nicholasgakumo@gmail.com&"
-                              + "cc=info@qsetinc.com&"
+                              + "cc=info@goqset.com&"
                               + "bcc=nicholasqset@gmail.com&"
                               + "subject="+paybillNo+" - "+this.phoneNo+ "&"
                               + "message= Hi, "+ this.refNo + " - "+ this.amount+ " paid."

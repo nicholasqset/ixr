@@ -219,7 +219,7 @@
 
                     html += "<tr>";
                     html += "<th>#</th>";
-                    html += "<th>Student No</th>";
+                    html += "<th>Patient No</th>";
                     html += "<th>Name</th>";
                     html += "<th>Gender</th>";
                     html += "<th>Age</th>";
