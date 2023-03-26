@@ -7,6 +7,7 @@
 final class BankRemittance{
     HttpSession session = request.getSession();
     String schema       = session.getAttribute("comCode").toString();
+    String comCode = session.getAttribute("comCode").toString();
         
     Integer pYear       = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
     Integer pMonth      = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
@@ -22,7 +23,7 @@ final class BankRemittance{
         
         html += "<tr>";
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", "Payroll Year")+ "</td>";
-	html += "<td>"+ gui.formSelect("pYear", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

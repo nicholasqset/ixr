@@ -49,13 +49,13 @@ final class PayslipVar{
         html += "<tr>";
 	html += "<td>&nbsp;</td>";
 	html += "<td>";
-        html += gui.formSelect("pYear1", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "onchange = \"payslip.getPayslipVar();\"", false);
+        html += gui.formSelect("pYear1", this.schema+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "onchange = \"payslip.getPayslipVar();\"", false);
         html += "&nbsp;";
         html += gui.formMonthSelect("pMonth1", sys.getPeriodMonth(schema), "onchange = \"payslip.getPayslipVar();\"", true);
 	html += "</td>";
         html += "<td nowrap>&nbsp;</td>";
 	html += "<td>";
-        html += gui.formSelect("pYear2", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "onchange = \"payslip.getPayslipVar();\"", false);
+        html += gui.formSelect("pYear2", this.schema+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "onchange = \"payslip.getPayslipVar();\"", false);
         html += "&nbsp;";
         html += gui.formMonthSelect("pMonth2", sys.getPeriodMonth(schema), "onchange = \"payslip.getPayslipVar();\"", true);
 	html += "</td>";

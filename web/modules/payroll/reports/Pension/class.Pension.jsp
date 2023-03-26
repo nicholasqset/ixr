@@ -23,7 +23,7 @@ final class Pension{
         
         html += "<tr>";
 	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", "Payroll Year")+ "</td>";
-	html += "<td>"+ gui.formSelect("pYear", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("pYear", this.schema+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", ""+ sys.getPeriodYear(schema), "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

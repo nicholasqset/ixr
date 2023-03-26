@@ -5,6 +5,7 @@
 
 final class ProcessSal{
     HttpSession session = request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
     
     public String getModule(){
         String html = "";
@@ -44,7 +45,7 @@ final class ProcessSal{
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(),"calendar.png", "", "")+ gui.formLabel("pYear", " Year")+ "</td>";
 //        html += "<td>"+ gui.formYearSelect("pYear", 2015, 2016, 2016, "", false)+ "</td>";
-        html += "<td>"+ gui.formSelect("pYear", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "PYEAR = "+ sys.getPeriodYear(session.getAttribute("comCode").toString()), ""+ sys.getPeriodYear(session.getAttribute("comCode").toString()), "", false)+ "</td>";
+        html += "<td>"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "PYEAR = "+ sys.getPeriodYear(session.getAttribute("comCode").toString()), ""+ sys.getPeriodYear(session.getAttribute("comCode").toString()), "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
