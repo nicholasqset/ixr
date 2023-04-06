@@ -9,7 +9,7 @@ var login = {
         }else if(password === ''){
             if($('feedback')) $('feedback').update('Enter Password');
         }else{
-            frmLogin.action = "./authenticate/";
+            frmLogin.action = "./auth/";
             frmLogin.submit();
         }
     }

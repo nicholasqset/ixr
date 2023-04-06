@@ -2,11 +2,11 @@
 <%@page import="java.util.Base64"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Enumeration"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.net.URLDecoder"%>
-<%@page import="bean.user.User"%>
-<%@page import="bean.security.EncryptionUtil"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.user.User"%>
+<%@page import="com.qset.security.EncryptionUtil"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 //    Enumeration params = request.getParameterNames(); 
 //    while(params.hasMoreElements()){

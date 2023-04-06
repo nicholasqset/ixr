@@ -1,11 +1,11 @@
 <%@page import="org.json.JSONObject"%>
-<%@page import="bean.primary.PRStudentProfile"%>
-<%@page import="bean.primary.PrimaryCalendar"%>
-<%@page import="bean.academic.Academic"%>
+<%@page import="com.qset.primary.PRStudentProfile"%>
+<%@page import="com.qset.primary.PrimaryCalendar"%>
+<%@page import="com.qset.academic.Academic"%>
 <%@page import="java.util.*"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
+<%@page import="com.qset.gui.*"%>
 <%@page import="java.sql.*"%>
 <%
 

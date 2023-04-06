@@ -1,10 +1,10 @@
-<%@page import="bean.sys.Sys"%>
-<%@page import="bean.commonsrv.Company"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
+<%@page import="com.qset.commonsrv.Company"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.sys.Sys"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="bean.user.User"%>
+<%@page import="com.qset.user.User"%>
 <%@include file="menu.jsp" %>
 <%
     Gui gui     = new Gui();

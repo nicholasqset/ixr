@@ -1,15 +1,15 @@
-<%@page import="bean.hr.LeaveType"%>
-<%@page import="bean.hr.StaffProfile"%>
+<%@page import="com.qset.hr.LeaveType"%>
+<%@page import="com.qset.hr.StaffProfile"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="org.json.simple.JSONObject"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Schedule{

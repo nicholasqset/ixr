@@ -10,7 +10,7 @@
 <%@page import="java.sql.Blob"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
 <%
     Integer id = Integer.parseInt(request.getParameter("docId"));

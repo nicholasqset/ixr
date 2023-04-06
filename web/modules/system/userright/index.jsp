@@ -1,5 +1,5 @@
 <%--<%@page import="java.net.URLDecoder"%>--%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%--<%@page import="com.qset.system.User"%>
 <%@page import="com.qset.system.Sys"%>
 <%@page import="com.qset.security.EncryptionUtil"%>--%>

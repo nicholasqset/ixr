@@ -1,8 +1,8 @@
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.net.URLDecoder"%>
-<%@page import="bean.user.User"%>
-<%@page import="bean.security.EncryptionUtil"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.user.User"%>
+<%@page import="com.qset.security.EncryptionUtil"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
     String rootPath = "../../../";
     Boolean sessionExpired = false;
@@ -49,11 +49,11 @@
         %>
         <script type="text/javascript"> 
             <%
-//            if(sessionExpired){
-//                %>
-//                    window.top.location  = '<%= rootPath %>';
-//                <%
-//            }
+            if(sessionExpired){
+                %>
+                    window.top.location  = '<%= rootPath %>';
+                <%
+            }
             %>
         </script>
 

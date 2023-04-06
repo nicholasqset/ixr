@@ -4,18 +4,18 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.ar.ARInHdr"%>
-<%@page import="bean.ar.AccountsReceivable"%>
-<%@page import="bean.ar.ARPyBatch"%>
-<%@page import="bean.ar.ARDistribution"%>
-<%@page import="bean.finance.VAT"%>
-<%@page import="bean.finance.FinConfig"%>
-<%@page import="bean.ar.ARCustomerProfile"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.ar.ARInHdr"%>
+<%@page import="com.qset.ar.AccountsReceivable"%>
+<%@page import="com.qset.ar.ARPyBatch"%>
+<%@page import="com.qset.ar.ARDistribution"%>
+<%@page import="com.qset.finance.VAT"%>
+<%@page import="com.qset.finance.FinConfig"%>
+<%@page import="com.qset.ar.ARCustomerProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Receipt{

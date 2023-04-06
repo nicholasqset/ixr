@@ -4,7 +4,7 @@
     Author     : nicholas
 --%>
 
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

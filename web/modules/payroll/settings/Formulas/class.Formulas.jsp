@@ -1,13 +1,13 @@
 <%@page import="org.json.JSONObject"%>
-<%@page import="bean.gl.GLAccount"%>
+<%@page import="com.qset.gl.GLAccount"%>
 <%@page import="java.sql.SQLException"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Formulas{

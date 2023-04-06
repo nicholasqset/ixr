@@ -1,11 +1,11 @@
-<%@page import="bean.medical.HmPharmHdr"%>
+<%@page import="com.qset.medical.HmPharmHdr"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="bean.ic.IC"%>
-<%@page import="bean.pos.POS"%>
-<%@page import="bean.ar.ARCustomerProfile"%>
-<%@page import="bean.finance.VAT"%>
-<%@page import="bean.ic.ICItem"%>
+<%@page import="com.qset.ic.IC"%>
+<%@page import="com.qset.pos.POS"%>
+<%@page import="com.qset.ar.ARCustomerProfile"%>
+<%@page import="com.qset.finance.VAT"%>
+<%@page import="com.qset.ic.ICItem"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.sql.SQLException"%>
@@ -13,9 +13,9 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
+<%@page import="com.qset.gui.Gui"%>
 <%
     final class Sales{
         HttpSession session     = request.getSession();

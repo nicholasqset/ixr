@@ -4,8 +4,8 @@
     Author     : nicholas
 --%>
 
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
     final class PeriodEnd{
         public String getModule(){

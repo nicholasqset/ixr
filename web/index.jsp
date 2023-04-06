@@ -1,4 +1,4 @@
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
     String act = request.getParameter("act");
     

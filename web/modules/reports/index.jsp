@@ -1,9 +1,9 @@
-<%@page import="bean.user.User"%>
-<%@page import="bean.security.EncryptionUtil"%>
+<%@page import="com.qset.user.User"%>
+<%@page import="com.qset.security.EncryptionUtil"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="java.util.Enumeration"%>
-<%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
+<%@page import="com.qset.sys.Sys"%>
+<%@page import="com.qset.gui.*"%>
 <%
     String rootPath = "../../";
     

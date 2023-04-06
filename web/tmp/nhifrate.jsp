@@ -1,4 +1,4 @@
-<%@page import="bean.payroll.Payroll"%>
+<%@page import="com.qset.payroll.Payroll"%>
 <%
     
     Payroll payroll = new Payroll();

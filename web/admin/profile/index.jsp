@@ -1,4 +1,4 @@
-<%@page import="bean.gui.*"%>
+<%@page import="com.qset.gui.*"%>
 <%
     String rootPath = "../../../";
     Boolean sessionExpired = false;

@@ -1,8 +1,8 @@
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.pos.PsPyHdr"%>
-<%@page import="bean.commonsrv.Company"%>
-<%@page import="bean.sys.Sys"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.pos.PsPyHdr"%>
+<%@page import="com.qset.commonsrv.Company"%>
+<%@page import="com.qset.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.sql.SQLException"%>

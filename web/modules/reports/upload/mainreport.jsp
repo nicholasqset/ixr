@@ -1,9 +1,9 @@
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.io.*"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
     Integer errorCount  = 0;
     String errorMsg     = "";

@@ -1,11 +1,11 @@
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.io.File"%>
 <%@page import="java.io.UnsupportedEncodingException"%>
-<%@page import="bean.security.EncryptionUtil"%>
+<%@page import="com.qset.security.EncryptionUtil"%>
 <%@page import="java.net.URLDecoder"%>
-<%@page import="bean.user.User"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.user.User"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class StaffsImport{

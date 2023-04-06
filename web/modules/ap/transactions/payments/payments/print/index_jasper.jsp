@@ -3,7 +3,7 @@
     Created on : Jun 25, 2016, 7:09:51 PM
     Author     : nicholas
 --%>
-<%@page import="bean.ap.APPyHDR"%>
+<%@page import="com.qset.ap.APPyHDR"%>
 <%@page import="java.util.Map"%>
 <%@page import="net.sf.jasperreports.engine.util.JRLoader"%>
 <%@page import="java.util.HashMap"%>
@@ -24,9 +24,9 @@
 <%@page import="net.sf.jasperreports.engine.JRResultSetDataSource"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.File"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.*"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 
 <%
     

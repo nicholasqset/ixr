@@ -1,16 +1,16 @@
 <%@page import="org.json.JSONObject"%>
-<%@page import="bean.am.AMDiBatch"%>
-<%@page import="bean.am.AssetProfile"%>
+<%@page import="com.qset.am.AMDiBatch"%>
+<%@page import="com.qset.am.AssetProfile"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Disposal{

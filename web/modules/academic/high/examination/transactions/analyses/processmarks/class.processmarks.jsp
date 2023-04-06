@@ -1,8 +1,8 @@
-<%@page import="bean.high.HighCalendar"%>
+<%@page import="com.qset.high.HighCalendar"%>
 <%@page import="java.util.*"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
-<%@page import="bean.gui.*"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
+<%@page import="com.qset.gui.*"%>
 <%@page import="java.sql.*"%>
 <%
 

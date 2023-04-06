@@ -1,5 +1,5 @@
 <%@page import="java.util.HashMap"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
     Sys sys = new Sys();
    

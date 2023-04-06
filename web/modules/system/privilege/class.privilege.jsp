@@ -3,9 +3,9 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.user.User"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.user.User"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%
 
 final class Privilege{

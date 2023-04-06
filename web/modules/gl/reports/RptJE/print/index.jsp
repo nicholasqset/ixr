@@ -5,7 +5,7 @@
 --%>
 <%@page import="java.io.OutputStream"%>
 <%@page import="net.sf.jasperreports.engine.JasperRunManager"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.util.Map"%>
 <%@page import="net.sf.jasperreports.engine.util.JRLoader"%>
 <%@page import="java.util.HashMap"%>
@@ -26,9 +26,9 @@
 <%@page import="net.sf.jasperreports.engine.JRResultSetDataSource"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.File"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.*"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 
 <%
     String comCode = session.getAttribute("comCode").toString();

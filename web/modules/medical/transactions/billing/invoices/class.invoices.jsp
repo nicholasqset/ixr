@@ -3,16 +3,16 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.medical.Medical"%>
-<%@page import="bean.medical.MedInvHeader"%>
-<%@page import="bean.finance.FinConfig"%>
-<%@page import="bean.medical.HMStaffProfile"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.medical.Medical"%>
+<%@page import="com.qset.medical.MedInvHeader"%>
+<%@page import="com.qset.finance.FinConfig"%>
+<%@page import="com.qset.medical.HMStaffProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="bean.medical.PatientProfile"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.medical.PatientProfile"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Invoices{

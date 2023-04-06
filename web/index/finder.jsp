@@ -1,4 +1,4 @@
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%
     
    Gui gui = new Gui(); 

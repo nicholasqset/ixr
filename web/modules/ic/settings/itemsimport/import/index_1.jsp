@@ -7,7 +7,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
@@ -16,7 +16,7 @@
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="java.io.File"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 <%@page import="org.apache.poi.hssf.usermodel.HSSFRow"%>
 <%@page import="org.apache.poi.hssf.usermodel.HSSFSheet"%> 
 <%@page import="org.apache.poi.hssf.usermodel.HSSFWorkbook"%>

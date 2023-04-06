@@ -1,11 +1,11 @@
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.io.UnsupportedEncodingException"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="bean.security.EncryptionUtil"%>
+<%@page import="com.qset.security.EncryptionUtil"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
 <%
     final class Menu{

@@ -27,8 +27,8 @@
 <%@page import="net.sf.jasperreports.engine.JRResultSetDataSource"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.File"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 
 <%
     

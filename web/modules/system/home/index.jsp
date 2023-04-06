@@ -1,4 +1,4 @@
-<%@page import="bean.gui.*"%>
+<%@page import="com.qset.gui.*"%>
 <%
     Gui gui = new Gui();
 %>
@@ -76,7 +76,7 @@
         %> 
         <script type="text/javascript">
             
-            Event.observe(window,'load',function(){home.getModule()});
+            Event.observe(window,'load',function(){home.getModule();});
             
             var home = {
                 getModule:function(){

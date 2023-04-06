@@ -5,8 +5,8 @@
 --%>
 
 <%@page import="org.json.JSONObject"%>
-<%@page import="bean.ap.APSupplierProfile"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.ap.APSupplierProfile"%>
+<%@page import="com.qset.gui.Gui"%>
 <% 
     final class Statement{
         HttpSession session     = request.getSession();

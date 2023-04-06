@@ -1,8 +1,8 @@
 
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="bean.user.User"%>
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.user.User"%>
+<%@page import="com.qset.gui.Gui"%>
 <%
     Gui gui     = new Gui();
     //System system     = new System();

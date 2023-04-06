@@ -4,10 +4,10 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.hr.StaffProfile"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.hr.StaffProfile"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Payslip{

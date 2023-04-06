@@ -4,13 +4,13 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.finance.FiscalYear"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.finance.FiscalYear"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class FiscalPeriod{

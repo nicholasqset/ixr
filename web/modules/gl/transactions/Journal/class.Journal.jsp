@@ -5,16 +5,16 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.gl.GeneralLedger"%>
-<%@page import="bean.gl.GLAccount"%>
-<%@page import="bean.gl.GLBatch"%>
-<%@page import="bean.finance.VAT"%>
-<%@page import="bean.finance.FinConfig"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.gl.GeneralLedger"%>
+<%@page import="com.qset.gl.GLAccount"%>
+<%@page import="com.qset.gl.GLBatch"%>
+<%@page import="com.qset.finance.VAT"%>
+<%@page import="com.qset.finance.FinConfig"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Journal{

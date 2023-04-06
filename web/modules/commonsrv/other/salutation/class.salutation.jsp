@@ -4,9 +4,9 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
-<%@page import="bean.gui.Gui"%>
-<%@page import="bean.conn.ConnectionProvider"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
+<%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Salutation{

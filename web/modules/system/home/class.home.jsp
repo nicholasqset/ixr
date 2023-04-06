@@ -1,4 +1,4 @@
-<%@page import="bean.gui.Gui"%>
+<%@page import="com.qset.gui.Gui"%>
 <%
 
 final class Home{
@@ -12,12 +12,13 @@ final class Home{
     public String manage(){
         String html = "";
         
-        Gui gui = new Gui();
+//        Gui gui = new Gui();
         
         String img_alt = "";
 	
 	html += "<div class = \"home\" >";
-	html += "<img src = \"../../../assets/img/tm/tm.png\" title=\"XR ERP\" width = \"170\" height = \"170\" alt = \""+img_alt+"\" longdesc = \""+img_alt+"\" />";
+//	html += "<img src = \"../../../assets/img/tm/tm.png\" title=\"XR ERP\" width = \"170\" height = \"170\" alt = \""+img_alt+"\" longdesc = \""+img_alt+"\" loading=\"lazy\"/>";
+	html += "<img src = \"../../../assets/img/tm/tm.png\" title=\"iXR\" width = \"170\" height = \"170\" alt = \""+img_alt+"\" longdesc = \""+img_alt+"\" loading=\"lazy\"/>";
 
 	html += "</div>";
         

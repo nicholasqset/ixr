@@ -13,9 +13,9 @@
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Base64"%>
 <%@page import="java.util.Random"%>
-<%@page import="bean.security.Security"%>
+<%@page import="com.qset.security.Security"%>
 <%@page import="java.util.Enumeration"%>
-<%@page import="bean.sys.Sys"%>
+<%@page import="com.qset.sys.Sys"%>
 <%@page import="com.africastalking.sms.Recipient"%>
 <%@page import="java.util.List"%>
 <%@page import="com.africastalking.SmsService"%>
@@ -23,7 +23,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="bean.conn.ConnectionProvider"%>
+<%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
 <%
     
