@@ -12,6 +12,7 @@
 <%
 
     final class Staffs {
+
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
         String table = comCode + ".HMSTAFFPROFILE";
@@ -222,7 +223,6 @@
 
             Gui gui = new Gui();
 
-
             html += "<div id = \"dhtmlgoodies_tabView1\">";
 
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getBioDataTab() + "</div>";
@@ -237,10 +237,13 @@
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule(); return false;\"", "");
             html += "</div>";
 
-            
-
             html += "<script type = \"text/javascript\">";
-            html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Employment\', \'Specialisations\'), 0, 625, 350, Array(false, false, false, false));";
+            if (this.id != null) {
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Employment\', \'Specialisations\'), 0, 625, 350, Array(false, false, false, false));";
+            } else {
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Employment\'), 0, 625, 350, Array(false, false, false));";
+            }
+
             html += "</script>";
 
             html += "<iframe name = \"upload_iframe\" id = \"upload_iframe\"></iframe>";
@@ -256,8 +259,7 @@
             Statement stmt = null;
 
             String html = "";
-            
-            
+
 //        html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
             html += "<form name = \"frmModule\" id = \"frmModule\" method = \"post\"  action = \"./upload/\" enctype = \"multipart/form-data\" target = \"upload_iframe\">";
 //        html += "<form name = \"frmModule\" id = \"frmModule\" method = \"post\" enctype = \"multipart/form-data\" target = \"_blank\">";
@@ -393,7 +395,7 @@
             html += "</tr>";
 
             html += "</table>";
-            
+
             html += gui.formEnd();
 
             if (this.id != null) {
@@ -438,7 +440,7 @@
 
         public Boolean hasPhoto(String staffNo) {
             Boolean hasPhoto = false;
-            
+
             Sys sys = new Sys();
 
             if (this.id != null) {
@@ -449,7 +451,7 @@
 
                 try {
                     stmt = conn.createStatement();
-                    String query = "SELECT COUNT(*) FROM "+this.comCode+".HMSTAFFPHOTOS WHERE STAFFNO = '" + staffNo + "'";
+                    String query = "SELECT COUNT(*) FROM " + this.comCode + ".HMSTAFFPHOTOS WHERE STAFFNO = '" + staffNo + "'";
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         count = rs.getInt("COUNT(*)");
@@ -470,7 +472,7 @@
         public String getContactTab() {
             String html = "";
             Gui gui = new Gui();
-            
+
             html += gui.formStart("frmContact", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
@@ -502,7 +504,7 @@
             html += "</tr>";
 
             html += "</table>";
-            
+
             html += gui.formEnd();
 
             return html;
@@ -511,7 +513,7 @@
         public String getEmploymentTab() {
             String html = "";
             Gui gui = new Gui();
-            
+
             html += gui.formStart("frmEmployment", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
@@ -530,7 +532,7 @@
             html += "</tr>";
 
             html += "</table>";
-            
+
             html += gui.formEnd();
 
             return html;
@@ -686,7 +688,7 @@
                 }
 
                 saved = stmt.executeUpdate(query);
-                
+
                 system.logV2(query);
 
                 if (saved == 1) {
@@ -817,7 +819,7 @@
 
             return html;
         }
-        
+
         public String addSpecialisation() {
             String html = "";
 
@@ -855,7 +857,7 @@
 
             html += "<tr>";
             html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("spCode", " Specialisation") + "</td>";
-            html += "<td >"+gui.formSelect("spCode", ""+this.comCode+".hmspecialists", "sp_code", "sp_name", "", "", spCode, "", false)+"</td>";
+            html += "<td >" + gui.formSelect("spCode", "" + this.comCode + ".hmspecialists", "sp_code", "sp_name", "", "", spCode, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
