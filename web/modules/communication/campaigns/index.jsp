@@ -40,7 +40,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="<%= rootPath %>favicon.ico" />
-        <title>Branches</title>
+        <title>Campaigns</title>
         <% 
             out.print(gui.loadCss(request.getContextPath(), "Growler"));
             out.print(gui.loadCss(request.getContextPath(), "module"));
