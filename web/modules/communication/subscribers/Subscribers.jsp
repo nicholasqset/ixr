@@ -245,7 +245,6 @@
 
 //            Connection conn = ConnectionProvider.getConnection();
 //            Statement stmt = null;
-
             String html = "";
 
 //        html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
@@ -265,7 +264,7 @@
                 this.countryCode = subscriber.countryCode;
                 this.nationalId = subscriber.nationalId;
                 this.passportNo = subscriber.passportNo;
-                
+
                 this.postalAdr = subscriber.postalAdr;
                 this.postalCode = subscriber.postalCode;
                 this.physicalAdr = subscriber.physicalAdr;
@@ -378,7 +377,6 @@
 //
 //            return hasPhoto;
 //        }
-
         public String getContactTab() {
             String html = "";
             Gui gui = new Gui();
@@ -462,8 +460,7 @@
 //
 //            return obj;
 //        }
-
-        public JSONObject save() throws Exception{
+        public JSONObject save() throws Exception {
 
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
@@ -472,6 +469,8 @@
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt;
             String query = "";
+            String query2 = "";
+            String grpCode = sys.getOneByQuery("select grp_code as col from " + this.comCode + ".cm_groups where is_default = 1");
 
             Integer saved = 0;
 
@@ -492,7 +491,7 @@
                     query += "INSERT INTO " + this.table + " "
                             + "(SALUTATION_CODE, FIRST_NAME, MIDDLE_NAME, LAST_NAME, "
                             + "GENDER_CODE, DOB, COUNTRY_CODE, NATIONAL_ID, PASSPORT_NO, "
-                            + "POSTAL_ADR, POSTAL_CODE, PHYSICAL_ADR, phone_no, EMAIL) "
+                            + "POSTAL_ADR, POSTAL_CODE, PHYSICAL_ADR, phone_no, EMAIL, audit_date) "
                             + "VALUES"
                             + "("
                             + "'" + this.salutationCode + "',"
@@ -509,13 +508,25 @@
                             + "'" + this.physicalAdr + "',"
                             //                            + "'" + this.telephone + "',"
                             + "'" + this.phoneNo + "',"
-                            + "'" + this.email + "'"
+                            + "'" + this.email + "',"
+                            + "now()"
                             + ")";
-                            
-                    String id_ = sys.getOneByQuery("SELECT currval(pg_get_serial_sequence('"+this.table+"','id')) as col");
 
-                    obj.put("id", id_);
-
+//                    String id_ = sys.getOneByQuery("SELECT currval(pg_get_serial_sequence('" + this.table + "','id')) as col");
+//                    this.id = Integer.parseInt(id_);
+//                    this.id = this.id + 1;
+//
+////                    obj.put("id", id_);
+//                    obj.put("id", this.id);
+//                    
+//                    query2 = "INSERT INTO " + this.comCode + ".cm_subscriber_grps "
+//                                + "(subscriber_id, grp_code)"
+//                                + "VALUES"
+//                                + "("
+//                                + "'" + this.id + "', "
+//                                + "'" + grpCode + "' "
+//                                + ")";
+                                
                 } else {
                     query = "UPDATE " + this.table + " SET "
                             + "SALUTATION_CODE   = '" + this.salutationCode + "', "
@@ -541,13 +552,27 @@
                             //                                + "AUDITTIME        = '" + system.getLogTime() + "', "
                             //                                + "AUDITIP          = '" + system.getClientIpAdr(request) + "' "
                             + "WHERE ID    = '" + this.id + "'";
+                            
+                            
+//                            query2 = "INSERT INTO " + this.comCode + ".cm_subscriber_grps "
+//                                + "(subscriber_id, grp_code)"
+//                                + "VALUES"
+//                                + "("
+//                                + "'" + this.id + "', "
+//                                + "'" + grpCode + "' "
+//                                + ")";
                 }
 
                 saved = stmt.executeUpdate(query);
 
-                sys.logV2(query);
+//                sys.logV2(query);
 
                 if (saved > 0) {
+                    Boolean defaultGrpSaved = sys.recordExists(this.comCode + ".cm_subscriber_grps", "subscriber_id = '"+this.id+"' and grp_code in (select grp_code from " + this.comCode + ".cm_groups where is_default = 1)");
+
+                    if (!defaultGrpSaved) {                        
+//                        sys.executeSql(query2);
+                    }
 
                     obj.put("success", new Integer(1));
                     obj.put("message", "Entry successfully made.");
@@ -561,7 +586,7 @@
             } catch (Exception e) {
                 obj.put("success", 0);
                 obj.put("message", e.getMessage());
-                
+
             }
 
             return obj;
@@ -590,7 +615,6 @@
 //
 //            return nextNo;
 //        }
-
 //        public Object purgePhoto() {
 //
 //            Connection conn = ConnectionProvider.getConnection();
@@ -624,7 +648,6 @@
 //            return obj;
 //
 //        }
-
         public String getSubGroupsTab() {
             String html = "";
 
@@ -644,8 +667,8 @@
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
                     String query = "SELECT s.*, g.grp_desc FROM " + this.comCode + ".cm_subscriber_grps s "
-                    + "LEFT JOIN " + this.comCode + ".cm_groups g on g.grp_code = s.grp_code "
-                    + "WHERE s.subscriber_id = '" + this.id + "' ";
+                            + "LEFT JOIN " + this.comCode + ".cm_groups g on g.grp_code = s.grp_code "
+                            + "WHERE s.subscriber_id = '" + this.id + "' ";
                     ResultSet rs = stmt.executeQuery(query);
                     Integer count = 1;
                     while (rs.next()) {
@@ -692,8 +715,8 @@
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
                     String query = "SELECT s.*, g.grp_desc FROM " + this.comCode + ".cm_subscriber_grps s "
-                    + "LEFT JOIN " + this.comCode + ".cm_groups g ON g.grp_code = s.grp_code "
-                    + "WHERE s.ID = " + rid;
+                            + "LEFT JOIN " + this.comCode + ".cm_groups g ON g.grp_code = s.grp_code "
+                            + "WHERE s.ID = " + rid;
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         this.id = rs.getInt("subscriber_id");
@@ -712,7 +735,7 @@
                 html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
             }
 
-            html += gui.formInput("hidden", "id", 15, this.id+"", "", "");
+            html += gui.formInput("hidden", "id", 15, this.id + "", "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
 

@@ -884,5 +884,21 @@ public class Sys {
 
         return logged;
     }
+    
+    public Integer executeSql(String query){
+        Integer queryExecuted = 0;
+        try{
+            
+            Connection conn = ConnectionProvider.getConnection();
+            Statement stmt = conn.createStatement();
+
+            queryExecuted = stmt.executeUpdate(query);
+            
+        }catch(SQLException e){
+            System.err.println(e.getMessage());
+        }
+        
+        return queryExecuted;
+    }
 
 }

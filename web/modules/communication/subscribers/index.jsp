@@ -116,141 +116,9 @@
             
             var g = new Growler( {location : 'br' , width:'' });
             
-            var subscriber = {
-                
-                toggleStaffNo: function(){
-                    if($('autoStaffNo').checked === true){
-                        if($('staffNo')) $('staffNo').disabled = true;
-                    }else{
-                        if($('staffNo')) $('staffNo').disabled = false;
-                    }
-                },
-                searchStaff: function(){
-                    var count = Ajax.activeRequestCount;
-                    if(count <= 0){
-                        var getResultTo = 'staffNoDiv';
-                        new Ajax.Autocompleter(
-                                'staffNo', getResultTo, module.ajaxUrl,{
-                                paramName  : 'staffNoHd',
-                                parameters : 'function=searchStaff',
-                                minChars   : 2,
-                                frequency  : 1.0,
-                                afterUpdateElement : subscriber.setStaff
-                            });
-                    }
-                },
-                setStaff: function(text, staff){
-                    if(staff.id !== ''){
-                        if($('staffNoHd')) $('staffNoHd').value= staff.id;
-                        subscriber.getStaffProfile(staff.id);
-                    }
-                },
-                getStaffProfile: function(staffNo){
-                    new Ajax.Request(module.ajaxUrl ,{
-                        method:'post',
-                        parameters: 'function=getStaffProfile&staffNo='+staffNo,
-                        requestHeaders: { Accept: 'application/json'},
-                        onSuccess: function(request) {
-                            response = request.responseText.evalJSON();
-                            if(typeof response.success === 'number' && response.success === 1){
-                                
-                                if(typeof response.salutation !== 'undefined' && $('salutation')) $('salutation').value = response.salutation;
-                                if(typeof response.firstName !== 'undefined' && $('firstName')) $('firstName').value = response.firstName;
-                                if(typeof response.middleName !== 'undefined' && $('middleName')) $('middleName').value = response.middleName;
-                                if(typeof response.lastName !== 'undefined' && $('lastName')) $('lastName').value = response.lastName;
-                                if(typeof response.gender !== 'undefined' && $('gender')) $('gender').value = response.gender;
-                                if(typeof response.dob !== 'undefined' && $('dob')) $('dob').value = response.dob;
-                                if(typeof response.country !== 'undefined' && $('country')) $('country').value = response.country;
-                                if(typeof response.disability !== 'undefined' && $('disability')) $('disability').value = response.disability;
-                                
-                                if(typeof response.physChald !== 'undefined' && response.physChald === 1 && $('physChald') ){
-                                    $('physChald').checked = true;
-                                    $('disability').disabled = false;
-                                }else{
-                                    $('physChald').checked = true;
-                                    $('disability').disabled = true;
-                                }
-                                if(typeof response.postalAddr !== 'undefined' && $('postalAddr')) $('postalAddr').value = response.postalAddr;
-                                if(typeof response.postalCode !== 'undefined' && $('postalCode')) $('postalCode').value = response.postalCode;
-                                if(typeof response.physicalAddr !== 'undefined' && $('physicalAddr')) $('physicalAddr').value = response.physicalAddr;
-                                if(typeof response.telephone !== 'undefined' && $('telephone')) $('telephone').value = response.telephone;
-                                if(typeof response.cellphone !== 'undefined' && $('cellphone')) $('cellphone').value = response.cellphone;
-                                if(typeof response.email !== 'undefined' && $('email')) $('email').value = response.email;
-                                
-                                g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                            }else{
-                                if(typeof response.message !== 'undefined'){
-                                    g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
-                                }else{
-                                    g.error("Un-expected error occured while retrieving record.", { header : ' ' ,life: 5, speedout: 2 });
-                                }
-                            }
-                        }
-                    });
-                },
-                hidePhotoOptions: function(){
-                    if($('divPhotoOptions')) $('divPhotoOptions').setStyle({display:'none'});
-                    
-                },
-                uploadPhoto: function(required){
-                    if(module.validate(required)){
-                        var frmModule = $('frmModule')
-                        var data = frmModule.serialize();
-                        frmModule.action = "./upload/?"+data;
-                        frmModule.submit();
-                        /*frmModule.disable();*/
-                    }
-                },
-                getUploadResponse: function(errorCount, errorMsg){
-                    if(typeof errorCount !== 'undefined' && errorCount > 0){
-                        g.error(errorMsg, { header : ' ' , life: 5, speedout: 2 });
-                    }else{
-                        g.info("Photo successfully uploaded", { header : ' ' ,life: 5, speedout: 2  });
-                    }
-                    subscriber.reloadPhoto();
-                    /*module.getGrid();*/
-                },
-                reloadPhoto: function(){
-                    var staffNo = $('staffNo')? $F('staffNo'): '';
-                    if(staffNo != ''){
-                        $('imgPhoto').setAttribute('src', 'photo.jsp?staffNo='+staffNo);
-                        subscriber.hidePhotoOptions();
-                    }else{
-                        $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
-                    }
-                },
-                purgePhoto: function(staffNo, lastName){
-                    if(confirm("Delete '"+lastName+"' photo?")){
-                        new Ajax.Request(module.ajaxUrl ,{
-                            method:'post',
-                            parameters: 'function=purgePhoto&staffNo='+staffNo,
-                            requestHeaders: { Accept: 'application/json'},
-                            onSuccess: function(request) {
-                                response = request.responseText.evalJSON();
-                                if(typeof response.success==='number' && response.success===1){
-                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
-                                }else{
-                                    if(typeof response.message !== 'undefined'){
-                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
-                                    }else{
-                                        g.error("Oops! An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
-                                    }
-                                }
-                            }
-                        });
-                    }
-                },
-                toggleDisab: function(){
-                    if($('physChald').checked === true){
-                        $('disability').disabled = false;
-                    }else{
-                        $('disability').value = '';
-                        $('disability').disabled = true;
-                    }
-                },
+            var subscriber = {                               
+               
                 save: function(required){
-//                    var data = Form.serialize('frmModule');
                     var data = Form.serialize('frmModule') + '&'+ Form.serialize('frmContact') ;
                     if(module.validate(required)){
                         if($('frmModule'))  $('frmModule').disabled = true;  
@@ -263,11 +131,13 @@
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
-                                    if(typeof response.staffNo !== 'undefined' && response.staffNo !== '' && $('autoStaffNo').checked === true){
-                                        if($('staffNo')) $('staffNo').value = response.staffNo;
-                                        if($('btnSave')) $('btnSave').disabled = true;
-                                    }
+//                                    if(typeof response.staffNo !== 'undefined' && response.staffNo !== '' && $('autoStaffNo').checked === true){
+//                                        if($('id')) $('id').value = response.id;
+//                                        if($('btnSave')) $('btnSave').disabled = true;
+//                                    }
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    
+                                    module.getGrid();
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
@@ -339,6 +209,60 @@
                         });
                     }
                 }
+                /*
+                 hidePhotoOptions: function(){
+                    if($('divPhotoOptions')) $('divPhotoOptions').setStyle({display:'none'});
+                    
+                },
+                uploadPhoto: function(required){
+                    if(module.validate(required)){
+                        var frmModule = $('frmModule')
+                        var data = frmModule.serialize();
+                        frmModule.action = "./upload/?"+data;
+                        frmModule.submit();
+                    }
+                },
+                getUploadResponse: function(errorCount, errorMsg){
+                    if(typeof errorCount !== 'undefined' && errorCount > 0){
+                        g.error(errorMsg, { header : ' ' , life: 5, speedout: 2 });
+                    }else{
+                        g.info("Photo successfully uploaded", { header : ' ' ,life: 5, speedout: 2  });
+                    }
+                    subscriber.reloadPhoto();
+                },
+                reloadPhoto: function(){
+                    var staffNo = $('staffNo')? $F('staffNo'): '';
+                    if(staffNo != ''){
+                        $('imgPhoto').setAttribute('src', 'photo.jsp?staffNo='+staffNo);
+                        subscriber.hidePhotoOptions();
+                    }else{
+                        $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
+                    }
+                },
+                purgePhoto: function(staffNo, lastName){
+                    if(confirm("Delete '"+lastName+"' photo?")){
+                        new Ajax.Request(module.ajaxUrl ,{
+                            method:'post',
+                            parameters: 'function=purgePhoto&staffNo='+staffNo,
+                            requestHeaders: { Accept: 'application/json'},
+                            onSuccess: function(request) {
+                                response = request.responseText.evalJSON();
+                                if(typeof response.success==='number' && response.success===1){
+                                    g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
+                                    $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
+                                }else{
+                                    if(typeof response.message !== 'undefined'){
+                                        g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
+                                    }else{
+                                        g.error("Oops! An un-expected error occured while deleting record.", { header : ' ' ,life: 5, speedout: 2 });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                 
+                 */
             };
             
         </script>
