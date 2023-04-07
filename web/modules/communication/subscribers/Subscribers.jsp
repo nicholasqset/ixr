@@ -1,10 +1,10 @@
+<%@page import="com.qset.communication.Subscriber"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.qset.gui.Gui"%>
-<%@page import="com.qset.medical.HMStaffProfile"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
@@ -16,12 +16,9 @@
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
         String table = comCode + ".cm_subscribers";
-
         String view = comCode + ".cm_subscribers";
 
         Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
-        String staffNo = this.id != null ? request.getParameter("staffNoHd") : request.getParameter("staffNo");
-        Integer autoStaffNo = request.getParameter("autoStaffNo") != null ? 1 : null;
         String salutationCode = request.getParameter("salutation");
         String firstName = request.getParameter("firstName");
         String middleName = request.getParameter("middleName");
@@ -31,18 +28,11 @@
         String countryCode = request.getParameter("country");
         String nationalId = request.getParameter("nationalId");
         String passportNo = request.getParameter("passportNo");
-        Integer physChald = request.getParameter("physChald") != null ? 1 : null;
-        String disabCode = request.getParameter("disability");
-        String postalAddr = request.getParameter("postalAddr");
+        String postalAdr = request.getParameter("postalAdr");
         String postalCode = request.getParameter("postalCode");
-        String physicalAddr = request.getParameter("physicalAddr");
-        String telephone = request.getParameter("telephone");
-        String cellphone = request.getParameter("cellphone");
+        String physicalAdr = request.getParameter("physicalAdr");
+        String phoneNo = request.getParameter("phoneNo");
         String email = request.getParameter("email");
-
-        String staffTypeCode = request.getParameter("staffType");
-        String deptCode = request.getParameter("department");
-        String cmnt = request.getParameter("comment");
 
         public String getGrid() {
             String html = "";
@@ -77,8 +67,10 @@
 
                             ArrayList<String> list = new ArrayList();
 
-                            list.add("STAFFNO");
-                            list.add("FULLNAME");
+                            list.add("first_name");
+                            list.add("last_name");
+                            list.add("phone_no");
+                            list.add("email");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     if (dbType.equals("postgres")) {
@@ -142,7 +134,7 @@
                     session.setAttribute("startRecord", 0);
                 }
 
-                String orderBy = "STAFFNO ";
+                String orderBy = "first_name ";
                 String limitSql = "";
 
                 switch (dbType) {
@@ -172,11 +164,10 @@
 
                     html += "<tr>";
                     html += "<th>#</th>";
-                    html += "<th>Personnel No</th>";
-                    html += "<th>Name</th>";
-                    html += "<th>Gender</th>";
-                    html += "<th>Type</th>";
-                    html += "<th>Department</th>";
+                    html += "<th>First Name</th>";
+                    html += "<th>Last Name</th>";
+                    html += "<th>Phone No</th>";
+                    html += "<th>Email</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
 
@@ -185,11 +176,10 @@
                     while (rs.next()) {
 
                         Integer id = rs.getInt("ID");
-                        String staffNo = rs.getString("STAFFNO");
-                        String fullName = rs.getString("FULLNAME");
-                        String genderName = rs.getString("GENDERNAME");
-                        String staffTypeName = rs.getString("STAFFTYPENAME");
-                        String deptName = rs.getString("DEPTNAME");
+                        String firstName = rs.getString("first_name");
+                        String lastName = rs.getString("last_name");
+                        String phoneNo = rs.getString("phone_no");
+                        String email = rs.getString("email");
 
                         String bgcolor = (count % 2 > 0) ? "#FFFFFF" : "#F7F7F7";
 
@@ -197,11 +187,10 @@
 
                         html += "<tr bgcolor = \"" + bgcolor + "\">";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + staffNo + "</td>";
-                        html += "<td>" + fullName + "</td>";
-                        html += "<td>" + genderName + "</td>";
-                        html += "<td>" + staffTypeName + "</td>";
-                        html += "<td>" + deptName + "</td>";
+                        html += "<td>" + firstName + "</td>";
+                        html += "<td>" + lastName + "</td>";
+                        html += "<td>" + phoneNo + "</td>";
+                        html += "<td>" + email + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
 
@@ -227,21 +216,20 @@
 
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getBioDataTab() + "</div>";
             html += "<div class = \"dhtmlgoodies_aTab\">" + this.getContactTab() + "</div>";
-            html += "<div class = \"dhtmlgoodies_aTab\">" + this.getEmploymentTab() + "</div>";
-            html += "<div class = \"dhtmlgoodies_aTab\"><div id=\"divSpecialisation\">" + this.getSpecialisationsTab() + "</div></div>";
+            html += "<div class = \"dhtmlgoodies_aTab\"><div id=\"divSubGroup\">" + this.getSubGroupsTab() + "</div></div>";
 
             html += "</div>";
 
             html += "<div style=\"padding-left: 10px; padding-top: 40px; border: 0;\" >";
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"staffs.save('firstName lastName gender dob country staffType department'); return false;\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"staffs.save('firstName lastName dob phoneNo  email'); return false;\"", "");
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule(); return false;\"", "");
             html += "</div>";
 
             html += "<script type = \"text/javascript\">";
             if (this.id != null) {
-                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Employment\', \'Specialisations\'), 0, 625, 350, Array(false, false, false, false));";
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Groups\'), 0, 625, 350, Array(false, false, false));";
             } else {
-                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\', \'Employment\'), 0, 625, 350, Array(false, false, false));";
+                html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Bio Data\', \'Contacts\'), 0, 625, 350, Array(false, false));";
             }
 
             html += "</script>";
@@ -252,11 +240,11 @@
         }
 
         public String getBioDataTab() {
-
             Gui gui = new Gui();
+            Sys sys = new Sys();
 
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = null;
+//            Connection conn = ConnectionProvider.getConnection();
+//            Statement stmt = null;
 
             String html = "";
 
@@ -266,40 +254,23 @@
 
             if (this.id != null) {
 
-                try {
-                    stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.table + " WHERE ID = " + this.id;
-                    ResultSet rs = stmt.executeQuery(query);
-                    while (rs.next()) {
-                        this.staffNo = rs.getString("STAFFNO");
-                    }
-                } catch (Exception e) {
-                    html += e.getMessage();
-                }
+                Subscriber subscriber = new Subscriber(this.id + "", this.comCode);
 
-                HMStaffProfile hMStaffProfile = new HMStaffProfile(this.staffNo, this.comCode);
-
-                this.salutationCode = hMStaffProfile.salutationCode;
-                this.firstName = hMStaffProfile.firstName;
-                this.middleName = hMStaffProfile.middleName;
-                this.lastName = hMStaffProfile.lastName;
-                this.genderCode = hMStaffProfile.genderCode;
-                this.dob = hMStaffProfile.dob;
-                this.countryCode = hMStaffProfile.countryCode;
-                this.nationalId = hMStaffProfile.nationalId;
-                this.passportNo = hMStaffProfile.passportNo;
-                this.physChald = hMStaffProfile.physChald;
-                this.disabCode = hMStaffProfile.disabCode;
-                this.postalAddr = hMStaffProfile.postalAddr;
-                this.postalCode = hMStaffProfile.postalCode;
-                this.physicalAddr = hMStaffProfile.physicalAddr;
-                this.telephone = hMStaffProfile.telephone;
-                this.cellphone = hMStaffProfile.cellphone;
-                this.email = hMStaffProfile.email;
-
-                this.staffTypeCode = hMStaffProfile.staffTypeCode;
-                this.deptCode = hMStaffProfile.deptCode;
-                this.cmnt = hMStaffProfile.cmnt;
+                this.salutationCode = subscriber.salutationCode;
+                this.firstName = subscriber.firstName;
+                this.middleName = subscriber.middleName;
+                this.lastName = subscriber.lastName;
+                this.genderCode = subscriber.genderCode;
+                this.dob = subscriber.dob;
+                this.countryCode = subscriber.countryCode;
+                this.nationalId = subscriber.nationalId;
+                this.passportNo = subscriber.passportNo;
+                
+                this.postalAdr = subscriber.postalAdr;
+                this.postalCode = subscriber.postalCode;
+                this.physicalAdr = subscriber.physicalAdr;
+                this.phoneNo = subscriber.phoneNo;
+                this.email = subscriber.email;
 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -308,7 +279,7 @@
                     java.util.Date dob = originalFormat.parse(this.dob);
                     this.dob = targetFormat.format(dob);
                 } catch (ParseException e) {
-
+                    html += e.getMessage();
                 }
 
                 html += gui.formInput("hidden", "id", 30, "" + this.id, "", "");
@@ -317,35 +288,8 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
             html += "<tr>";
-            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "doctor-male.png", "", "") + " " + gui.formLabel("staffNo", "Staff No") + "</td>";
-            String staffNoUi;
-            String autoStaffNoUi;
-            if (this.id != null) {
-                staffNoUi = gui.formAutoComplete("staffNo", 15, this.id != null ? this.staffNo : "", "staffs.searchStaff", "staffNoHd", this.id != null ? this.staffNo : "");
-                autoStaffNoUi = "";
-            } else {
-                staffNoUi = gui.formInput("text", "staffNo", 15, "", "", "disabled");
-                autoStaffNoUi = gui.formCheckBox("autoStaffNo", "checked", "", "onchange = \"staffs.toggleStaffNo();\"", "", "") + "<span class = \"fade\"><label for = \"autoStaffNo\"> No Auto</label></span>";
-            }
-
-            html += "<td colspan = \"3\">" + staffNoUi + " " + autoStaffNoUi + "</td>";
-            html += "</tr>";
-
-            html += "<tr>";
             html += "<td>" + gui.formIcon(request.getContextPath(), "personal-information.png", "", "") + " " + gui.formLabel("salutation", "Salutation") + "</td>";
-            html += "<td colspan = \"2\">" + gui.formSelect("salutation", comCode + ".CSSALUTATION", "SALUTATIONCODE", "SALUTATIONNAME", null, null, this.id != null ? this.salutationCode : "", null, false) + "</td>";
-            if (this.id != null) {
-                String imgPhotoSrc;
-                if (hasPhoto(this.staffNo)) {
-                    imgPhotoSrc = "photo.jsp?staffNo=" + this.staffNo;
-                } else {
-                    imgPhotoSrc = request.getContextPath() + "/assets/img/emblems/places-user-identity.png";
-                }
-
-                html += "<td rowspan = \"5\">";
-                html += "<div class = \"divPhoto\"><img id = \"imgPhoto\" src=\"" + imgPhotoSrc + "\"></div>";
-                html += "</td>";
-            }
+            html += "<td colspan = \"3\">" + gui.formSelect("salutation", comCode + ".CSSALUTATION", "SALUTATIONCODE", "SALUTATIONNAME", null, null, this.id != null ? this.salutationCode : "", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -370,12 +314,12 @@
 
             html += "<tr>";
             html += "<td>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + " " + gui.formLabel("dob", "Date of Birth") + "</td>";
-            html += "<td colspan = \"3\">" + gui.formDateTime(request.getContextPath(), "dob", 15, this.id != null ? this.dob : "", false, "") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formDateTime(request.getContextPath(), "dob", 15, this.id != null ? this.dob : sys.getLogDateV2(), false, "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>" + gui.formIcon(request.getContextPath(), "globe-medium-green.png", "", "") + " " + gui.formLabel("country", "Country") + "</td>";
-            html += "<td colspan = \"3\">" + gui.formSelect("country", comCode + ".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null ? this.countryCode : "", null, false) + "</td>";
+            html += "<td colspan = \"3\">" + gui.formSelect("country", comCode + ".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null ? this.countryCode : "KE", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -386,88 +330,54 @@
             html += "<td>" + gui.formInput("text", "passportNo", 15, this.id != null ? this.passportNo : "", "", "") + "</td>";
             html += "</tr>";
 
-            html += "<tr>";
-            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("physChald", "Physically Challenged") + "</td>";
-            html += "<td>" + gui.formCheckBox("physChald", (this.id != null && this.physChald == 1) ? "checked" : "", null, "onchange = \"staffs.toggleDisab();\"", "", "") + "</td>";
-
-            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "apps-accessibility.png", "", "") + " " + gui.formLabel("disability", "Physical Disability") + "</td>";
-            html += "<td>" + gui.formSelect("disability", comCode + ".CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null ? this.disabCode : "", (this.id != null && this.physChald == 1) ? "" : "disabled", false) + "</td>";
-            html += "</tr>";
-
             html += "</table>";
 
             html += gui.formEnd();
 
-            if (this.id != null) {
-                html += " <script type=\"text/javascript\">"
-                        + "Event.observe(\'imgPhoto\', \'mouseover\' , function(){"
-                        + "if($(\'divPhotoOptions\')){"
-                        + "$(\'divPhotoOptions\')"
-                        + ".absolutize()"
-                        + ".setStyle({display:\'table-cell\'})"
-                        + ".clonePosition($(\'imgPhoto\'));"
-                        + "}"
-                        + "});"
-                        + "</script>";
-
-                html += "<div id = \"divPhotoOptions\" onmouseout = \"staffs.hidePhotoOptions();\" style = \"display: none; background-color: #000000; opacity: 0.4; text-align: center;\">";
-                html += "<input name = \"photo\" id = \"photo\" type = \"file\" onchange = \"staffs.uploadPhoto();\" style = \"display: none;\">";
-                html += "<div style = \"padding-top: 50px;\">";
-                html += "<a href = \"javascript:;\" onclick = \"$('photo').click();\">upload</a>";
-                html += "</div>";
-                if (this.hasPhoto(this.staffNo)) {
-                    html += "<div >";
-                    html += gui.formHref("onclick = \"staffs.purgePhoto('" + this.staffNo + "', '" + this.lastName + "')\"", request.getContextPath(), "", "remove", "remove", "", "");
-                    html += "</div>";
-                }
-                html += "</div>";
-            }
-
             return html;
         }
 
-        public String searchStaff() {
-            String html = "";
-
-            Gui gui = new Gui();
-
-            this.staffNo = request.getParameter("staffNoHd");
-
-            html += gui.getAutoColsSearch(comCode + ".HMSTAFFPROFILE", "STAFFNO, FULLNAME", "", this.staffNo);
-
-            return html;
-        }
-
-        public Boolean hasPhoto(String staffNo) {
-            Boolean hasPhoto = false;
-
-            Sys sys = new Sys();
-
-            if (this.id != null) {
-                Connection conn = ConnectionProvider.getConnection();
-                Statement stmt = null;
-
-                Integer count = 0;
-
-                try {
-                    stmt = conn.createStatement();
-                    String query = "SELECT COUNT(*) FROM " + this.comCode + ".HMSTAFFPHOTOS WHERE STAFFNO = '" + staffNo + "'";
-                    ResultSet rs = stmt.executeQuery(query);
-                    while (rs.next()) {
-                        count = rs.getInt("COUNT(*)");
-                    }
-
-                    if (count > 0) {
-                        hasPhoto = true;
-                    }
-
-                } catch (Exception e) {
-                    sys.logV2(e.getMessage());
-                }
-            }
-
-            return hasPhoto;
-        }
+//        public String searchStaff() {
+//            String html = "";
+//
+//            Gui gui = new Gui();
+//
+//            this.staffNo = request.getParameter("staffNoHd");
+//
+//            html += gui.getAutoColsSearch(comCode + ".HMSTAFFPROFILE", "STAFFNO, FULLNAME", "", this.staffNo);
+//
+//            return html;
+//        }
+//        public Boolean hasPhoto(String staffNo) {
+//            Boolean hasPhoto = false;
+//
+//            Sys sys = new Sys();
+//
+//            if (this.id != null) {
+//                Connection conn = ConnectionProvider.getConnection();
+//                Statement stmt = null;
+//
+//                Integer count = 0;
+//
+//                try {
+//                    stmt = conn.createStatement();
+//                    String query = "SELECT COUNT(*) FROM " + this.comCode + ".HMSTAFFPHOTOS WHERE STAFFNO = '" + staffNo + "'";
+//                    ResultSet rs = stmt.executeQuery(query);
+//                    while (rs.next()) {
+//                        count = rs.getInt("COUNT(*)");
+//                    }
+//
+//                    if (count > 0) {
+//                        hasPhoto = true;
+//                    }
+//
+//                } catch (Exception e) {
+//                    sys.logV2(e.getMessage());
+//                }
+//            }
+//
+//            return hasPhoto;
+//        }
 
         public String getContactTab() {
             String html = "";
@@ -478,24 +388,24 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
             html += "<tr>";
-            html += "<td width = \"20%\">" + gui.formIcon(request.getContextPath(), "email-open.png", "", "") + " " + gui.formLabel("postalAddr", "Postal Address") + "</td>";
-            html += "<td width = \"30%\">" + gui.formInput("text", "postalAddr", 20, this.id != null ? this.postalAddr : "", "", "") + "</td>";
+            html += "<td width = \"20%\">" + gui.formIcon(request.getContextPath(), "email-open.png", "", "") + " " + gui.formLabel("postalAdr", "Postal Address") + "</td>";
+            html += "<td width = \"30%\">" + gui.formInput("text", "postalAdr", 20, this.id != null ? this.postalAdr : "", "", "") + "</td>";
 
             html += "<td width = \"20%\">" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("postalCode", "Postal Code") + "</td>";
             html += "<td>" + gui.formInput("text", "postalCode", 15, this.id != null ? this.postalCode : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("physicalAddr", "Physical Address") + "</td>";
-            html += "<td colspan = \"3\">" + gui.formInput("textarea", "physicalAddr", 30, this.id != null ? this.physicalAddr : "", "", "") + "</td>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("physicalAdr", "Physical Address") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formInput("textarea", "physicalAdr", 30, this.id != null ? this.physicalAdr : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>" + gui.formIcon(request.getContextPath(), "telephone.png", "", "") + " " + gui.formLabel("telephone", "Telephone") + "</td>";
-            html += "<td>" + gui.formInput("text", "telephone", 15, this.id != null ? this.telephone : "", "", "") + "</td>";
+//            html += "<td>" + gui.formIcon(request.getContextPath(), "telephone.png", "", "") + " " + gui.formLabel("telephone", "Telephone") + "</td>";
+//            html += "<td>" + gui.formInput("text", "telephone", 15, this.id != null ? this.telephone : "", "", "") + "</td>";
 
-            html += "<td>" + gui.formIcon(request.getContextPath(), "mobile-phone.png", "", "") + " " + gui.formLabel("cellphone", "Cell Phone") + "</td>";
-            html += "<td>" + gui.formInput("text", "cellphone", 15, this.id != null ? this.cellphone : "", "", "") + "</td>";
+            html += "<td>" + gui.formIcon(request.getContextPath(), "mobile-phone.png", "", "") + " " + gui.formLabel("phoneNo", "Cell Phone") + "</td>";
+            html += "<td colspan = \"3\">" + gui.formInput("text", "phoneNo", 15, this.id != null ? this.phoneNo : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -510,83 +420,53 @@
             return html;
         }
 
-        public String getEmploymentTab() {
-            String html = "";
-            Gui gui = new Gui();
+//        public Object getStaffProfile() throws Exception {
+//            JSONObject obj = new JSONObject();
+//
+//            if (this.id == null || this.id.equals("")) {
+//                obj.put("success", new Integer(0));
+//                obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
+//            } else {
+//
+//                Subscriber subscriber = new Subscriber(this.id + "", this.comCode);
+//
+//                obj.put("salutation", subscriber.salutationCode);
+//                obj.put("firstName", subscriber.firstName);
+//                obj.put("middleName", subscriber.middleName);
+//                obj.put("lastName", subscriber.lastName);
+//                obj.put("gender", subscriber.genderCode);
+//
+//                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
+//
+//                try {
+//                    java.util.Date dob = originalFormat.parse(subscriber.dob);
+//                    subscriber.dob = targetFormat.format(dob);
+//                } catch (ParseException e) {
+//
+//                }
+//
+//                obj.put("dob", subscriber.dob);
+//                obj.put("country", subscriber.countryCode);
+//                obj.put("postalAddr", subscriber.postalAdr);
+//                obj.put("postalCode", subscriber.postalCode);
+//                obj.put("physicalAddr", subscriber.physicalAdr);
+////                obj.put("telephone", subscriber.telephone);
+//                obj.put("cellphone", subscriber.phoneNo);
+//                obj.put("email", subscriber.email);
+//
+//                obj.put("success", new Integer(1));
+//                obj.put("message", "Subscriber Id '" + this.id + "' successfully retrieved.");
+//
+//            }
+//
+//            return obj;
+//        }
 
-            html += gui.formStart("frmEmployment", "void%200", "post", "onSubmit=\"javascript:return false;\"");
-
-            html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
-
-            html += "<tr>";
-            html += "<td width = \"20%\">" + gui.formIcon(request.getContextPath(), "user-properties.png", "", "") + " " + gui.formLabel("staffType", "Staff Type") + "</td>";
-            html += "<td width = \"30%\">" + gui.formSelect("staffType", this.comCode + ".HMSTAFFTYPES", "STAFFTYPECODE", "STAFFTYPENAME", "", "", this.id != null ? this.staffTypeCode : "", "", false) + "</td>";
-
-            html += "<td width = \"20%\">" + gui.formIcon(request.getContextPath(), "house.png", "", "") + " " + gui.formLabel("department", "Department") + "</td>";
-            html += "<td>" + gui.formSelect("department", this.comCode + ".HMDEPTS", "DEPTCODE", "DEPTNAME", "", "", this.id != null ? this.deptCode : "", "", false) + "</td>";
-            html += "</tr>";
-
-            html += "<tr>";
-            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "") + " " + gui.formLabel("comment", "General Comment") + "</td>";
-            html += "<td colspan = \"3\">" + gui.formInput("textarea", "comment", 30, this.id != null ? this.cmnt : "", "", "") + "</td>";
-            html += "</tr>";
-
-            html += "</table>";
-
-            html += gui.formEnd();
-
-            return html;
-        }
-
-        public Object getStaffProfile() throws Exception {
-            JSONObject obj = new JSONObject();
-
-            if (this.staffNo == null || this.staffNo.equals("")) {
-                obj.put("success", new Integer(0));
-                obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
-            } else {
-
-                HMStaffProfile hMStaffProfile = new HMStaffProfile(this.staffNo, this.comCode);
-
-                obj.put("salutation", hMStaffProfile.salutationCode);
-                obj.put("firstName", hMStaffProfile.firstName);
-                obj.put("middleName", hMStaffProfile.middleName);
-                obj.put("lastName", hMStaffProfile.lastName);
-                obj.put("gender", hMStaffProfile.genderCode);
-
-                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-                try {
-                    java.util.Date dob = originalFormat.parse(hMStaffProfile.dob);
-                    hMStaffProfile.dob = targetFormat.format(dob);
-                } catch (ParseException e) {
-
-                }
-
-                obj.put("dob", hMStaffProfile.dob);
-                obj.put("country", hMStaffProfile.countryCode);
-                obj.put("physChald", hMStaffProfile.physChald);
-                obj.put("disability", hMStaffProfile.disabCode);
-                obj.put("postalAddr", hMStaffProfile.postalAddr);
-                obj.put("postalCode", hMStaffProfile.postalCode);
-                obj.put("physicalAddr", hMStaffProfile.physicalAddr);
-                obj.put("telephone", hMStaffProfile.telephone);
-                obj.put("cellphone", hMStaffProfile.cellphone);
-                obj.put("email", hMStaffProfile.email);
-
-                obj.put("success", new Integer(1));
-                obj.put("message", "Staff No '" + hMStaffProfile.staffNo + "' successfully retrieved.");
-
-            }
-
-            return obj;
-        }
-
-        public Object save() {
+        public JSONObject save() throws Exception{
 
             JSONObject obj = new JSONObject();
-            Sys system = new Sys();
+            Sys sys = new Sys();
             HttpSession session = request.getSession();
 
             Connection conn = ConnectionProvider.getConnection();
@@ -609,184 +489,161 @@
                 }
 
                 if (this.id == null) {
-                    Integer id = system.generateId(this.table, "ID");
-
-                    if (this.autoStaffNo == 1) {
-//                    this.staffNo = this.getNextStaffNo();
-                        this.staffNo = system.getNextNo(this.table, "ID", "", "", 5);
-                    }
-
                     query += "INSERT INTO " + this.table + " "
-                            + "(ID, STAFFNO, SALUTATIONCODE, FIRSTNAME, MIDDLENAME, LASTNAME, FULLNAME, "
-                            + "GENDERCODE, DOB, COUNTRYCODE, NATIONALID, PASSPORTNO, PHYSCHALD, DISABCODE, "
-                            + "POSTALADDR, POSTALCODE, PHYSICALADDR, TELEPHONE, CELLPHONE, EMAIL, STAFFTYPECODE, DEPTCODE, CMNT) "
+                            + "(SALUTATION_CODE, FIRST_NAME, MIDDLE_NAME, LAST_NAME, "
+                            + "GENDER_CODE, DOB, COUNTRY_CODE, NATIONAL_ID, PASSPORT_NO, "
+                            + "POSTAL_ADR, POSTAL_CODE, PHYSICAL_ADR, phone_no, EMAIL) "
                             + "VALUES"
                             + "("
-                            + id + ","
-                            + "'" + this.staffNo + "',"
                             + "'" + this.salutationCode + "',"
                             + "'" + this.firstName + "',"
                             + "'" + this.middleName + "',"
                             + "'" + this.lastName + "',"
-                            + "'" + this.firstName + " " + this.middleName + " " + this.lastName + "',"
                             + "'" + this.genderCode + "',"
                             + "'" + this.dob + "',"
                             + "'" + this.countryCode + "',"
                             + "'" + this.nationalId + "',"
                             + "'" + this.passportNo + "',"
-                            + this.physChald + ","
-                            + "'" + this.disabCode + "',"
-                            + "'" + this.postalAddr + "',"
+                            + "'" + this.postalAdr + "',"
                             + "'" + this.postalCode + "',"
-                            + "'" + this.physicalAddr + "',"
-                            + "'" + this.telephone + "',"
-                            + "'" + this.cellphone + "',"
-                            + "'" + this.email + "',"
-                            + "'" + this.staffTypeCode + "',"
-                            + "'" + this.deptCode + "',"
-                            + "'" + this.cmnt + "'"
+                            + "'" + this.physicalAdr + "',"
+                            //                            + "'" + this.telephone + "',"
+                            + "'" + this.phoneNo + "',"
+                            + "'" + this.email + "'"
                             + ")";
+                            
+                    String id_ = sys.getOneByQuery("SELECT currval(pg_get_serial_sequence('"+this.table+"','id')) as col");
 
-                    obj.put("staffNo", this.staffNo);
+                    obj.put("id", id_);
 
                 } else {
-
-                    if (this.staffNo == null || this.staffNo.equals("")) {
-
-                        obj.put("success", new Integer(0));
-                        obj.put("message", "Oops! An Un-expected error occured while saving record. Could not retrieve Staff No.");
-
-                    } else {
-                        query = "UPDATE " + this.table + " SET "
-                                + "SALUTATIONCODE   = '" + this.salutationCode + "', "
-                                + "FIRSTNAME        = '" + this.firstName + "', "
-                                + "MIDDLENAME       = '" + this.middleName + "', "
-                                + "LASTNAME         = '" + this.lastName + "',"
-                                + "FULLNAME         = '" + this.firstName + " " + this.middleName + " " + this.lastName + "', "
-                                + "GENDERCODE       = '" + this.genderCode + "', "
-                                + "DOB              = '" + this.dob + "', "
-                                + "COUNTRYCODE      = '" + this.countryCode + "', "
-                                + "NATIONALID       = '" + this.nationalId + "', "
-                                + "PASSPORTNO       = '" + this.passportNo + "', "
-                                + "PHYSCHALD        = " + this.physChald + ", "
-                                + "DISABCODE        = '" + this.disabCode + "', "
-                                + "POSTALADDR       = '" + this.postalAddr + "', "
-                                + "POSTALCODE       = '" + this.postalCode + "', "
-                                + "PHYSICALADDR     = '" + this.physicalAddr + "', "
-                                + "TELEPHONE        = '" + this.telephone + "', "
-                                + "CELLPHONE        = '" + this.cellphone + "', "
-                                + "EMAIL            = '" + this.email + "', "
-                                + "STAFFTYPECODE    = '" + this.staffTypeCode + "', "
-                                + "DEPTCODE         = '" + this.deptCode + "', "
-                                + "CMNT             = '" + this.cmnt + "', "
-                                + "AUDITUSER        = '" + system.getLogUser(session) + "', "
-                                + "AUDITDATE        = '" + system.getLogDate() + "', "
-                                + "AUDITTIME        = '" + system.getLogTime() + "', "
-                                + "AUDITIP          = '" + system.getClientIpAdr(request) + "' "
-                                + "WHERE STAFFNO    = '" + this.staffNo + "'";
-                    }
+                    query = "UPDATE " + this.table + " SET "
+                            + "SALUTATION_CODE   = '" + this.salutationCode + "', "
+                            + "FIRST_NAME        = '" + this.firstName + "', "
+                            + "MIDDLE_NAME       = '" + this.middleName + "', "
+                            + "LAST_NAME         = '" + this.lastName + "',"
+                            + "GENDER_CODE       = '" + this.genderCode + "', "
+                            + "DOB              = '" + this.dob + "', "
+                            + "COUNTRY_CODE      = '" + this.countryCode + "', "
+                            + "NATIONAL_ID       = '" + this.nationalId + "', "
+                            + "PASSPORT_NO       = '" + this.passportNo + "', "
+                            + "POSTAL_ADR       = '" + this.postalAdr + "', "
+                            + "POSTAL_CODE       = '" + this.postalCode + "', "
+                            + "PHYSICAL_ADR     = '" + this.physicalAdr + "', "
+                            //                                + "TELEPHONE        = '" + this.telephone + "', "
+                            + "phone_no        = '" + this.phoneNo + "', "
+                            + "EMAIL            = '" + this.email + "' "
+                            //                                + "STAFFTYPECODE    = '" + this.staffTypeCode + "', "
+                            //                                + "DEPTCODE         = '" + this.deptCode + "', "
+                            //                                + "CMNT             = '" + this.cmnt + "', "
+                            //                                + "AUDITUSER        = '" + system.getLogUser(session) + "', "
+                            //                                + "AUDITDATE        = '" + system.getLogDate() + "', "
+                            //                                + "AUDITTIME        = '" + system.getLogTime() + "', "
+                            //                                + "AUDITIP          = '" + system.getClientIpAdr(request) + "' "
+                            + "WHERE ID    = '" + this.id + "'";
                 }
 
                 saved = stmt.executeUpdate(query);
 
-                system.logV2(query);
+                sys.logV2(query);
 
-                if (saved == 1) {
+                if (saved > 0) {
 
                     obj.put("success", new Integer(1));
                     obj.put("message", "Entry successfully made.");
 
-                    system.createUser(this.staffNo, this.firstName + " " + this.middleName + " " + this.lastName, this.email, this.cellphone, this.comCode);
-
+//                    system.createUser(this.staffNo, this.firstName + " " + this.middleName + " " + this.lastName, this.email, this.cellphone, this.comCode);
                 } else {
                     obj.put("success", new Integer(0));
-                    obj.put("message", "Oops! An Un-expected error occured while saving record.");
+                    obj.put("message", "Oops! An unexpected error occured while saving record.");
                 }
 
             } catch (Exception e) {
-
+                obj.put("success", 0);
+                obj.put("message", e.getMessage());
+                
             }
 
             return obj;
         }
 
-        public String getNextStaffNo() {
-            String nextNo = "";
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt;
-            String query;
-            Integer drNoMax = 0;
-            try {
-                stmt = conn.createStatement();
-                query = "SELECT MAX(ID) FROM " + this.table;
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    drNoMax = rs.getInt("MAX(ID)");
-                }
+//        public String getNextStaffNo() {
+//            String nextNo = "";
+//            Connection conn = ConnectionProvider.getConnection();
+//            Statement stmt;
+//            String query;
+//            Integer drNoMax = 0;
+//            try {
+//                stmt = conn.createStatement();
+//                query = "SELECT MAX(ID) FROM " + this.table;
+//                ResultSet rs = stmt.executeQuery(query);
+//                while (rs.next()) {
+//                    drNoMax = rs.getInt("MAX(ID)");
+//                }
+//
+//            } catch (Exception e) {
+//                nextNo += e.getMessage();
+//            }
+//            drNoMax = drNoMax + 1;
+//
+//            nextNo = String.format("%05d", drNoMax);
+//
+//            return nextNo;
+//        }
 
-            } catch (Exception e) {
-                nextNo += e.getMessage();
-            }
-            drNoMax = drNoMax + 1;
+//        public Object purgePhoto() {
+//
+//            Connection conn = ConnectionProvider.getConnection();
+//            Statement stmt = null;
+//
+//            JSONObject obj = new JSONObject();
+//
+//            try {
+//                stmt = conn.createStatement();
+//
+//                if (this.staffNo != null && !this.staffNo.trim().equals("")) {
+//                    String query = "DELETE FROM HMSTAFFPHOTOS WHERE STAFFNO = '" + this.staffNo + "'";
+//
+//                    Integer purged = stmt.executeUpdate(query);
+//                    if (purged == 1) {
+//                        obj.put("success", new Integer(1));
+//                        obj.put("message", "Entry successfully deleted.");
+//                    } else {
+//                        obj.put("success", new Integer(0));
+//                        obj.put("message", "An error occured while deleting record.");
+//                    }
+//                } else {
+//                    obj.put("success", new Integer(0));
+//                    obj.put("message", "An error occured while deleting record.");
+//                }
+//
+//            } catch (Exception e) {
+//
+//            }
+//
+//            return obj;
+//
+//        }
 
-            nextNo = String.format("%05d", drNoMax);
-
-            return nextNo;
-        }
-
-        public Object purgePhoto() {
-
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = null;
-
-            JSONObject obj = new JSONObject();
-
-            try {
-                stmt = conn.createStatement();
-
-                if (this.staffNo != null && !this.staffNo.trim().equals("")) {
-                    String query = "DELETE FROM HMSTAFFPHOTOS WHERE STAFFNO = '" + this.staffNo + "'";
-
-                    Integer purged = stmt.executeUpdate(query);
-                    if (purged == 1) {
-                        obj.put("success", new Integer(1));
-                        obj.put("message", "Entry successfully deleted.");
-                    } else {
-                        obj.put("success", new Integer(0));
-                        obj.put("message", "An error occured while deleting record.");
-                    }
-                } else {
-                    obj.put("success", new Integer(0));
-                    obj.put("message", "An error occured while deleting record.");
-                }
-
-            } catch (Exception e) {
-
-            }
-
-            return obj;
-
-        }
-
-        public String getSpecialisationsTab() {
+        public String getSubGroupsTab() {
             String html = "";
 
             Gui gui = new Gui();
             Sys sys = new Sys();
 
-            if (sys.recordExists("" + this.comCode + ".hmstaffspexs", "STAFFNO = '" + this.staffNo + "'")) {
+            if (sys.recordExists("" + this.comCode + ".cm_subscriber_grps", "id = '" + this.id + "'")) {
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
 
                 html += "<tr>";
                 html += "<th>#</th>";
-                html += "<th>Specialisation</th>";
+                html += "<th>SubGroup</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
 
                 try {
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.comCode + ".vwhmstaffspexs WHERE STAFFNO = '" + this.staffNo + "' ";
+                    String query = "SELECT * FROM " + this.comCode + ".cm_subscriber_grps WHERE id = '" + this.id + "' ";
                     ResultSet rs = stmt.executeQuery(query);
                     Integer count = 1;
                     while (rs.next()) {
@@ -794,7 +651,7 @@
                         String id = rs.getString("ID");
                         String sp_name = rs.getString("SP_NAME");
 
-                        String editLink = gui.formHref("onclick = \"staffs.editSpecialisation(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        String editLink = gui.formHref("onclick = \"staffs.editSubGroup(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
@@ -815,12 +672,12 @@
                 html += gui.formWarningMsg("No specialisations record found.");
             }
             html += "<br>";
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"staffs.addSpecialisation('" + this.staffNo + "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"staffs.addSubGroup('" + this.id + "');\"", "");
 
             return html;
         }
 
-        public String addSpecialisation() {
+        public String addSubGroup() {
             String html = "";
 
             Gui gui = new Gui();
@@ -835,7 +692,7 @@
                     String query = "SELECT * FROM " + this.comCode + ".vwHMSTAFFSPEXS WHERE ID = " + rid;
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-                        this.staffNo = rs.getString("STAFFNO");
+//                        this.staffNo = rs.getString("STAFFNO");
                         spCode = rs.getString("sp_code");
                         spName = rs.getString("sp_name");
                     }
@@ -845,29 +702,29 @@
 
             }
 
-            html += gui.formStart("frmSpecialisation", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+            html += gui.formStart("frmSubGroup", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             if (rid != null) {
                 html += gui.formInput("hidden", "rid", 15, "" + rid, "", "");
             }
 
-            html += gui.formInput("hidden", "staffNo", 15, this.staffNo, "", "");
+            html += gui.formInput("hidden", "id", 15, this.id+"", "", "");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
 
             html += "<tr>";
-            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("spCode", " Specialisation") + "</td>";
+            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("spCode", " SubGroup") + "</td>";
             html += "<td >" + gui.formSelect("spCode", "" + this.comCode + ".hmspecialists", "sp_code", "sp_name", "", "", spCode, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveSpecialisation", "Save", "save.png", "onclick = \"staffs.saveSpecialisation('spCode');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveSubGroup", "Save", "save.png", "onclick = \"staffs.saveSubGroup('spCode');\"", "");
             if (rid != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelSpecialisation", "Delete", "delete.png", "onclick = \"staffs.delSpecialisation(" + rid + ", '" + spName + "', '" + this.staffNo + "');\"", "");
+                html += gui.formButton(request.getContextPath(), "button", "btnDelSubGroup", "Delete", "delete.png", "onclick = \"staffs.delSubGroup(" + rid + ", '" + spName + "', '" + this.id + "');\"", "");
             }
-            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"staffs.getSpecialisation('" + this.staffNo + "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"staffs.getSubGroup('" + this.id + "');\"", "");
             html += "</td>";
             html += "</tr>";
 
@@ -877,7 +734,7 @@
             return html;
         }
 
-        public Object saveSpecialisation() throws Exception {
+        public Object saveSubGroup() throws Exception {
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
             HttpSession session = request.getSession();
@@ -898,7 +755,7 @@
                             + "AUDIT_USER, AUDIT_DATE, audit_ip)"
                             + "VALUES"
                             + "("
-                            + "'" + this.staffNo + "', "
+//                            + "'" + this.staffNo + "', "
                             + "'" + spCode + "', "
                             + "'" + sys.getLogUser(session) + "', "
                             + "'" + sys.getLogDate() + "', "
@@ -916,7 +773,7 @@
 
                 if (saved > 0) {
                     obj.put("success", new Integer(1));
-                    obj.put("message", "Specialisation entry successfully made.");
+                    obj.put("message", "SubGroup entry successfully made.");
                 } else {
                     obj.put("success", new Integer(0));
                     obj.put("message", "Oops! An Un-expected error occured while saving record." + query + "=" + saved);
@@ -929,13 +786,13 @@
             return obj;
         }
 
-        public String getSpecialisation() {
+        public String getSubGroup() {
             String html = "";
-            html += this.getSpecialisationsTab();
+            html += this.getSubGroupsTab();
             return html;
         }
 
-        public Object delSpecialisation() throws Exception {
+        public Object delSubGroup() throws Exception {
 
             JSONObject obj = new JSONObject();
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
@@ -949,7 +806,7 @@
                     Integer purged = stmt.executeUpdate(query);
                     if (purged > 0) {
                         obj.put("success", new Integer(1));
-                        obj.put("message", "Specialisation entry successfully deleted.");
+                        obj.put("message", "SubGroup entry successfully deleted.");
                     } else {
                         obj.put("success", new Integer(0));
                         obj.put("message", "An error occured while deleting record.");

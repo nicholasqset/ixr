@@ -251,7 +251,7 @@
                 },
                 save: function(required){
 //                    var data = Form.serialize('frmModule');
-                    var data = Form.serialize('frmModule') + '&'+ Form.serialize('frmContact') + '&'+ Form.serialize('frmEmployment') ;
+                    var data = Form.serialize('frmModule') + '&'+ Form.serialize('frmContact') ;
                     if(module.validate(required)){
                         if($('frmModule'))  $('frmModule').disabled = true;  
                         if($('btnSave')) $('btnSave').disabled = true; 
@@ -281,23 +281,23 @@
                         if($('btnSave')) { $('btnSave').disabled = false;}
                     }
                 },
-                addSpecialisation: function(staffNo){
-                    module.execute('addSpecialisation', "staffNo="+staffNo, 'divSpecialisation');
+                addSubGroup: function(staffNo){
+                    module.execute('addSubGroup', "staffNo="+staffNo, 'divSubGroup');
                 },
-                saveSpecialisation: function(required){
+                saveSubGroup: function(required){
                     if(module.validate(required)){
-                        if($('frmSpecialisation'))  $('frmSpecialisation').disabled = true;  
-                        if($('btnSaveSpecialisation')) $('btnSaveSpecialisation').disabled = true; 
+                        if($('frmSubGroup'))  $('frmSubGroup').disabled = true;  
+                        if($('btnSaveSubGroup')) $('btnSaveSubGroup').disabled = true; 
 			
 			new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
-                            parameters: 'function=saveSpecialisation&'+ Form.serialize("frmSpecialisation"),
+                            parameters: 'function=saveSubGroup&'+ Form.serialize("frmSubGroup"),
                             requestHeaders: { Accept: 'application/json'},
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success === 'number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
-                                    staffs.getSpecialisation($F('staffNo'));
+                                    staffs.getSubGroup($F('staffNo'));
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
@@ -307,27 +307,27 @@
                                 }
                             }
 			});
-                        if($('frmSpecialisation')) { $('frmSpecialisation').disabled = false; }
-                        if($('btnSaveSpecialisation')) { $('btnSaveSpecialisation').disabled = false;}
+                        if($('frmSubGroup')) { $('frmSubGroup').disabled = false; }
+                        if($('btnSaveSubGroup')) { $('btnSaveSubGroup').disabled = false;}
                     }
                 },
-                getSpecialisation: function(staffNo){
-                    module.execute('getSpecialisation', "staffNo="+staffNo, 'divSpecialisation');
+                getSubGroup: function(staffNo){
+                    module.execute('getSubGroup', "staffNo="+staffNo, 'divSubGroup');
                 },
-                editSpecialisation: function(id){
-                    module.execute('addSpecialisation', "rid="+id, 'divSpecialisation');
+                editSubGroup: function(id){
+                    module.execute('addSubGroup', "rid="+id, 'divSubGroup');
                 },
-                delSpecialisation: function(id, name, staffNo){
+                delSubGroup: function(id, name, staffNo){
                     if(confirm("Delete '"+name+"'?")){
                         new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
-                            parameters: 'function=delSpecialisation&rid='+ id,
+                            parameters: 'function=delSubGroup&rid='+ id,
                             requestHeaders: { Accept: 'application/json'},
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    staffs.getSpecialisation(staffNo);
+                                    staffs.getSubGroup(staffNo);
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });

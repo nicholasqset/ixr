@@ -527,6 +527,27 @@ public class Sys {
 
         return colValue;
     }
+    
+    public String getOneByQuery(String query){
+        String colValue = null;
+        
+        try{
+            Connection conn  = ConnectionProvider.getConnection();
+            Statement stmt  = conn.createStatement();
+           
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()){
+                colValue = rs.getString("col");	
+            }
+            
+        }catch(SQLException e){
+            System.out.print(e.getMessage());
+        }
+        
+        return colValue;
+    }
 
     public Integer delete(String table, String sqlWhere) {
         Integer deleted = 0;
