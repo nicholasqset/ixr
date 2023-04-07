@@ -116,7 +116,7 @@
             
             var g = new Growler( {location : 'br' , width:'' });
             
-            var staffs = {
+            var subscriber = {
                 
                 toggleStaffNo: function(){
                     if($('autoStaffNo').checked === true){
@@ -135,14 +135,14 @@
                                 parameters : 'function=searchStaff',
                                 minChars   : 2,
                                 frequency  : 1.0,
-                                afterUpdateElement : staffs.setStaff
+                                afterUpdateElement : subscriber.setStaff
                             });
                     }
                 },
                 setStaff: function(text, staff){
                     if(staff.id !== ''){
                         if($('staffNoHd')) $('staffNoHd').value= staff.id;
-                        staffs.getStaffProfile(staff.id);
+                        subscriber.getStaffProfile(staff.id);
                     }
                 },
                 getStaffProfile: function(staffNo){
@@ -207,14 +207,14 @@
                     }else{
                         g.info("Photo successfully uploaded", { header : ' ' ,life: 5, speedout: 2  });
                     }
-                    staffs.reloadPhoto();
+                    subscriber.reloadPhoto();
                     /*module.getGrid();*/
                 },
                 reloadPhoto: function(){
                     var staffNo = $('staffNo')? $F('staffNo'): '';
                     if(staffNo != ''){
                         $('imgPhoto').setAttribute('src', 'photo.jsp?staffNo='+staffNo);
-                        staffs.hidePhotoOptions();
+                        subscriber.hidePhotoOptions();
                     }else{
                         $('imgPhoto').setAttribute('src', rootPath+'/assets/img/emblems/places-user-identity.png');
                     }
@@ -281,8 +281,8 @@
                         if($('btnSave')) { $('btnSave').disabled = false;}
                     }
                 },
-                addSubGroup: function(staffNo){
-                    module.execute('addSubGroup', "staffNo="+staffNo, 'divSubGroup');
+                addSubGroup: function(id){
+                    module.execute('addSubGroup', "id="+id, 'divSubGroup');
                 },
                 saveSubGroup: function(required){
                     if(module.validate(required)){
@@ -297,7 +297,7 @@
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success === 'number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  }); 
-                                    staffs.getSubGroup($F('staffNo'));
+                                    subscriber.getSubGroup($F('id'));
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });
@@ -311,23 +311,23 @@
                         if($('btnSaveSubGroup')) { $('btnSaveSubGroup').disabled = false;}
                     }
                 },
-                getSubGroup: function(staffNo){
-                    module.execute('getSubGroup', "staffNo="+staffNo, 'divSubGroup');
+                getSubGroup: function(id){
+                    module.execute('getSubGroup', "id="+id, 'divSubGroup');
                 },
                 editSubGroup: function(id){
                     module.execute('addSubGroup', "rid="+id, 'divSubGroup');
                 },
-                delSubGroup: function(id, name, staffNo){
+                delSubGroup: function(rid, name, id){
                     if(confirm("Delete '"+name+"'?")){
                         new Ajax.Request(module.ajaxUrl ,{
                             method:'post',
-                            parameters: 'function=delSubGroup&rid='+ id,
+                            parameters: 'function=delSubGroup&rid='+ rid,
                             requestHeaders: { Accept: 'application/json'},
                             onSuccess: function(request) {
                                 response = request.responseText.evalJSON();
                                 if(typeof response.success==='number' && response.success===1){
                                     g.info(response.message, { header : ' ' ,life: 5, speedout: 2  });
-                                    staffs.getSubGroup(staffNo);
+                                    subscriber.getSubGroup(id);
                                 }else{
                                     if(typeof response.message !== 'undefined'){
                                         g.error(response.message, { header : ' ' ,life: 5, speedout: 2 });

@@ -221,7 +221,7 @@
             html += "</div>";
 
             html += "<div style=\"padding-left: 10px; padding-top: 40px; border: 0;\" >";
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"staffs.save('firstName lastName dob phoneNo  email'); return false;\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"subscriber.save('firstName lastName dob phoneNo  email'); return false;\"", "");
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule(); return false;\"", "");
             html += "</div>";
 
@@ -631,31 +631,33 @@
             Gui gui = new Gui();
             Sys sys = new Sys();
 
-            if (sys.recordExists("" + this.comCode + ".cm_subscriber_grps", "id = '" + this.id + "'")) {
+            if (sys.recordExists("" + this.comCode + ".cm_subscriber_grps", "subscriber_id = '" + this.id + "'")) {
                 html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"2\" cellspacing = \"0\">";
 
                 html += "<tr>";
                 html += "<th>#</th>";
-                html += "<th>SubGroup</th>";
+                html += "<th>Subscriber Group</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
 
                 try {
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.comCode + ".cm_subscriber_grps WHERE id = '" + this.id + "' ";
+                    String query = "SELECT s.*, g.grp_desc FROM " + this.comCode + ".cm_subscriber_grps s "
+                    + "LEFT JOIN " + this.comCode + ".cm_groups g on g.grp_code = s.grp_code "
+                    + "WHERE s.subscriber_id = '" + this.id + "' ";
                     ResultSet rs = stmt.executeQuery(query);
                     Integer count = 1;
                     while (rs.next()) {
 
                         String id = rs.getString("ID");
-                        String sp_name = rs.getString("SP_NAME");
+                        String grp_desc = rs.getString("grp_desc");
 
-                        String editLink = gui.formHref("onclick = \"staffs.editSubGroup(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        String editLink = gui.formHref("onclick = \"subscriber.editSubGroup(" + id + ");\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
                         html += "<tr>";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + sp_name + "</td>";
+                        html += "<td>" + grp_desc + "</td>";
                         html += "<td>" + editLink + "</td>";
                         html += "</tr>";
 
@@ -669,10 +671,10 @@
                 html += "</table>";
 
             } else {
-                html += gui.formWarningMsg("No specialisations record found.");
+                html += gui.formWarningMsg("No subscriber group record found.");
             }
             html += "<br>";
-            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"staffs.addSubGroup('" + this.id + "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnAdd", "Add", "add.png", "onclick = \"subscriber.addSubGroup('" + this.id + "');\"", "");
 
             return html;
         }
@@ -683,18 +685,20 @@
             Gui gui = new Gui();
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
-            String spCode = "";
-            String spName = "";
+            String grpCode = "";
+            String grpDesc = "";
             if (rid != null) {
                 try {
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
-                    String query = "SELECT * FROM " + this.comCode + ".vwHMSTAFFSPEXS WHERE ID = " + rid;
+                    String query = "SELECT s.*, g.grp_desc FROM " + this.comCode + ".cm_subscriber_grps s "
+                    + "LEFT JOIN " + this.comCode + ".cm_groups g ON g.grp_code = s.grp_code "
+                    + "WHERE s.ID = " + rid;
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-//                        this.staffNo = rs.getString("STAFFNO");
-                        spCode = rs.getString("sp_code");
-                        spName = rs.getString("sp_name");
+                        this.id = rs.getInt("subscriber_id");
+                        grpCode = rs.getString("grp_code");
+                        grpDesc = rs.getString("grp_desc");
                     }
                 } catch (Exception e) {
                     html += e.getMessage();
@@ -713,18 +717,18 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\">";
 
             html += "<tr>";
-            html += "<td width = \"22%\" class = \"bold\" >" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("spCode", " SubGroup") + "</td>";
-            html += "<td >" + gui.formSelect("spCode", "" + this.comCode + ".hmspecialists", "sp_code", "sp_name", "", "", spCode, "", false) + "</td>";
+            html += "<td width = \"22%\" class = \"bold\" nowrap>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + gui.formLabel("grpCode", " Subscriber Group") + "</td>";
+            html += "<td >" + gui.formSelect("grpCode", "" + this.comCode + ".cm_groups", "grp_code", "grp_desc", "", "", grpCode, "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSaveSubGroup", "Save", "save.png", "onclick = \"staffs.saveSubGroup('spCode');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSaveSubGroup", "Save", "save.png", "onclick = \"subscriber.saveSubGroup('grpCode');\"", "");
             if (rid != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelSubGroup", "Delete", "delete.png", "onclick = \"staffs.delSubGroup(" + rid + ", '" + spName + "', '" + this.id + "');\"", "");
+                html += gui.formButton(request.getContextPath(), "button", "btnDelSubGroup", "Delete", "delete.png", "onclick = \"subscriber.delSubGroup(" + rid + ", '" + grpDesc + "', '" + this.id + "');\"", "");
             }
-            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"staffs.getSubGroup('" + this.id + "');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Back", "arrow-left.png", "onclick = \"subscriber.getSubGroup('" + this.id + "');\"", "");
             html += "</td>";
             html += "</tr>";
 
@@ -740,7 +744,7 @@
             HttpSession session = request.getSession();
 
             Integer rid = request.getParameter("rid") != null ? Integer.parseInt(request.getParameter("rid")) : null;
-            String spCode = request.getParameter("spCode");
+            String grpCode = request.getParameter("grpCode");
 
             try {
                 Connection conn = ConnectionProvider.getConnection();
@@ -748,24 +752,17 @@
                 String query;
 
                 if (rid == null) {
-//                    Integer id = sys.generateId(this.comCode + ".HMSTAFFSPEXS", "ID");
-
-                    query = "INSERT INTO " + this.comCode + ".HMSTAFFSPEXS "
-                            + "(staffno, sp_code, "
-                            + "AUDIT_USER, AUDIT_DATE, audit_ip)"
+                    query = "INSERT INTO " + this.comCode + ".cm_subscriber_grps "
+                            + "(subscriber_id, grp_code)"
                             + "VALUES"
                             + "("
-//                            + "'" + this.staffNo + "', "
-                            + "'" + spCode + "', "
-                            + "'" + sys.getLogUser(session) + "', "
-                            + "'" + sys.getLogDate() + "', "
-                            + "'" + sys.getClientIpAdr(request) + "'"
+                            + "'" + this.id + "', "
+                            + "'" + grpCode + "' "
                             + ")";
 
                 } else {
-                    query = "UPDATE " + this.comCode + ".HMSTAFFSPEXS SET "
-                            //                    + "DIAGCODE     = '"+ spCode +"', "
-                            + "sp_code     = '" + spCode + "' "
+                    query = "UPDATE " + this.comCode + ".cm_subscriber_grps SET "
+                            + "grp_code     = '" + grpCode + "' "
                             + "WHERE ID     = " + rid + "";
                 }
 
@@ -773,10 +770,10 @@
 
                 if (saved > 0) {
                     obj.put("success", new Integer(1));
-                    obj.put("message", "SubGroup entry successfully made.");
+                    obj.put("message", "Subcriber Group entry successfully made.");
                 } else {
                     obj.put("success", new Integer(0));
-                    obj.put("message", "Oops! An Un-expected error occured while saving record." + query + "=" + saved);
+                    obj.put("message", "Oops! An unexpected error occured while saving record." + query + "=" + saved);
                 }
             } catch (Exception e) {
                 obj.put("success", new Integer(0));
@@ -801,7 +798,7 @@
                 Statement stmt = conn.createStatement();
 
                 if (rid != null) {
-                    String query = "DELETE FROM " + this.comCode + ".HMSTAFFSPEXS WHERE ID = " + rid;
+                    String query = "DELETE FROM " + this.comCode + ".cm_subscriber_grps WHERE ID = " + rid;
 
                     Integer purged = stmt.executeUpdate(query);
                     if (purged > 0) {
