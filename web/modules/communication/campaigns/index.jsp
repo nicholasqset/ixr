@@ -1,8 +1,8 @@
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="com.qset.user.User"%>
 <%@page import="com.qset.security.EncryptionUtil"%>
 <%@page import="com.qset.sys.Sys"%>
-<%@page import="com.qset.gui.*"%>
 <%
     String rootPath = "../../../../";
     Boolean sessionExpired = false;
@@ -99,7 +99,7 @@
             
             var g = new Growler( {location : 'br' , width:'' });
             
-            var branches = {
+            var campaigns = {
                 
                 save: function(required){
                     var data = Form.serialize('frmModule');

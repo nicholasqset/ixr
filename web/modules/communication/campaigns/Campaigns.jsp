@@ -233,9 +233,9 @@ final class Campaigns{
         html += "<tr>";
 	html += "<td>&nbsp;</td>";
 	html += "<td>";
-	html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"branches.save('type subject message');\"", "");
+	html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"campaigns.save('type subject message');\"", "");
         if(this.id != null){
-            html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"branches.purge("+this.id+",'"+this.subject+"');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"campaigns.purge("+this.id+",'"+this.subject+"');\"", "");
         }
 	html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
 	html += "</td>";
