@@ -22,10 +22,12 @@
 
     final class Jobs {
 
-        public void send() {
+        public String send() {
             Sys sys = new Sys();
 
             String schema = request.getParameter("schema");
+            
+            Long count = 0L;
 
             try {
                 Connection conn = ConnectionProvider.getConnection();
@@ -34,8 +36,9 @@
                 String query = "SELECT * FROM " + schema + ".cm_queue WHERE (sent is null OR sent = 0)";
 
                 ResultSet rs = stmt.executeQuery(query);
+                
                 while (rs.next()) {
-
+                    count++;
                     String id = rs.getString("id");
                     String to_email = rs.getString("to_email");
                     String subject = rs.getString("subject");
@@ -78,10 +81,12 @@
                     }
                     Integer sent = sys.executeSql("UPDATE " + schema + ".cm_queue SET sent = 1 WHERE id = " + id);
                 }
-
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 sys.logV2(e.getMessage());
             }
+            
+            return count.toString();
         }
     }
 %>
