@@ -43,9 +43,7 @@ final class Verify{
         
         try{
             String smsCode      = request.getParameter("code");
-            
             Connection conn     = ConnectionProvider.getConnection();
-            
             Statement stmt      = conn.createStatement();
             
             String query;

@@ -150,6 +150,7 @@
                     html += "<th>Name</th>";
                     html += "<th>Reply To</th>";
                     html += "<th>Date</th>";
+                    html += "<th>Sent</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
 
@@ -158,18 +159,21 @@
                     while (rs.next()) {
 
                         Integer id = rs.getInt("ID");
-                        String to = rs.getString("to");
+                        String to = rs.getString("to_email");
                         String to_name = rs.getString("to_name");
                         String subject = rs.getString("subject");
                         String message = rs.getString("message");
-                        String from = rs.getString("from");
+                        String from = rs.getString("from_email");
                         String from_name = rs.getString("from_name");
                         String reply_to = rs.getString("reply_to");
                         String queue_date = rs.getString("queue_date");
+                        Integer sent = rs.getInt("sent");
+                        
+                        String sent_ = sent == 1? "<i class=\"fa fa-check\"></i>" : "<i class=\"fa fa-x\"></i>";
 
+                        String edit = gui.formHref("onclick = \"queue.viewMsg(" + id + ")\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        
                         String bgcolor = (count % 2 > 0) ? "#FFFFFF" : "#F7F7F7";
-
-                        String edit = gui.formHref("onclick = \"module.editModule(" + id + ")\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
                         html += "<tr bgcolor = \"" + bgcolor + "\">";
                         html += "<td>" + count + "</td>";
@@ -181,6 +185,7 @@
                         html += "<td>" + from_name + "</td>";
                         html += "<td>" + reply_to + "</td>";
                         html += "<td>" + queue_date + "</td>";
+                        html += "<td>" + sent_ + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
 
@@ -243,9 +248,9 @@
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"emailQueue.queue('campaign group');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"queue.gen('campaign group');\"", "");
 //            if (this.id != null) {
-//                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"emailQueue.purge(" + this.id + ",'" + this.subject + "');\"", "");
+//                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"queue.purge(" + this.id + ",'" + this.subject + "');\"", "");
 //            }
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
             html += "</td>";
@@ -271,9 +276,9 @@
 
                 Boolean defaultGroup = sys.recordExists(this.comCode + ".cm_groups", "is_default = 1");
                 if (defaultGroup) {
-                    query = "select first_name, last_name, email from " + this.comCode + ".subscribers ";
+                    query = "select id, first_name, last_name, email from " + this.comCode + ".cm_subscribers ";
                 } else {
-                    query = "select first_name, last_name, email from " + this.comCode + ".subscribers where id in (select subscriber_id from " + this.comCode + ".subscribers where grp_code = '" + this.grpCode + "')";
+                    query = "select id, first_name, last_name, email from " + this.comCode + ".cm_subscribers where id in (select subscriber_id from " + this.comCode + ".cm_subscribers where grp_code = '" + this.grpCode + "')";
                 }
 
                 Integer hrdInserted = sys.executeSql("INSERT INTO " + this.comCode + ".cm_queue_hdr("
@@ -281,8 +286,45 @@
                         + "VALUES (" + this.campaignId + ", '" + this.grpCode + "', now()"
                         + ")");
 
-                if (hrdInserted > 0) {
+                String id_ = sys.getOneByQuery("SELECT currval(pg_get_serial_sequence('" + this.comCode + ".cm_queue_hdr','id')) as col");
+                
+                Long count = new Long(0);
 
+                if (hrdInserted > 0 && id_ != null) {
+                    String subject = sys.getOne(this.comCode+".cm_campaigns", "subject", "id="+this.campaignId);
+                    String message = sys.getOne(this.comCode+".cm_campaigns", "message", "id="+this.campaignId);
+                    
+                    String fromEmail = "noreply@qset.co.ke";
+                    String fromName = "iXr Info Desk";
+                    String replyTo = "info@qset.co.ke";
+                    
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        count++;
+                        
+                        String id = rs.getString("id");
+                        String firstName = rs.getString("first_name");
+                        String lastName = rs.getString("last_name");
+                        String email = rs.getString("email");
+                        
+                        Integer msgInserted = sys.executeSql("INSERT INTO " + this.comCode + ".cm_queue("
+                        + "grp_code, subscriber_id, campaign_id, to_email, to_name, subject, message, from_email, from_name, reply_to, queue_date, msg_type, hdr_id)"
+                        + "VALUES ("
+                        + "'" + this.grpCode + "', "
+                        + "" + id + ", "
+                        + "" + this.campaignId + ", "
+                        + "'" + email + "', "
+                        + "'" + firstName + " "+ lastName +"', "
+                        + "'" + subject + "', "
+                        + "'" + message + "', "
+                        + "'" + fromEmail + "', "
+                        + "'" + fromName + "', "
+                        + "'" + replyTo + "', "
+                        + "now(),"
+                        + "'email', "
+                        + "" + id_ + " "
+                        + ")");
+                    }
                 }
 
 //
@@ -304,7 +346,7 @@
 //                }
 //
 //                saved = stmt.executeUpdate(query);
-                if (saved == 1) {
+                if (count > 0) {
                     obj.put("success", new Integer(1));
                     obj.put("message", "Entry successfully made.");
                 } else {
