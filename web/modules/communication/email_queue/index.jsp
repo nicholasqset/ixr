@@ -145,6 +145,30 @@
                 viewMsg: function (id) {
                     console.log(id);
                 },
+                sendMsg: function (id) {
+                    if (confirm("Send?")) {
+                        new Ajax.Request(module.ajaxUrl, {
+                            method: 'post',
+                            parameters: 'function=sendMsg&id=' + id,
+                            requestHeaders: {Accept: 'application/json'},
+                            onSuccess: function (request) {
+                                response = request.responseText.evalJSON();
+                                if (typeof response.success === 'number' && response.success === 1) {
+                                    g.info(response.message, {header: ' ', life: 5, speedout: 2});
+                                    module.getGrid();
+                                } else {
+                                    if (typeof response.message !== 'undefined') {
+                                        g.error(response.message, {header: ' ', life: 5, speedout: 2});
+                                    } else {
+                                        g.error("Oops! An un-expected error occured while deleting record.", {header: ' ', life: 5, speedout: 2});
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        module.getGrid();
+                    }
+                },
 //                purge: function(id, name){
 //                    if(confirm("Delete '"+name+"'?")){
 //                        new Ajax.Request(module.ajaxUrl ,{
