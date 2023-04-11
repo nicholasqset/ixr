@@ -31,7 +31,7 @@
             Gui gui = new Gui();
             Sys sys = new Sys();
 
-            Integer recordCount = sys.getRecordCount(this.table, "");
+            Integer recordCount = sys.getRecordCount(this.table, "msg_type = 'SMS'");
 
             if (recordCount > 0) {
                 String gridSql;
@@ -70,7 +70,7 @@
                     }
                 }
 
-                filterSql = filterSql.contentEquals("") ? " WHERE msg_type = 'Email' " : " AND msg_type = 'Email' ";
+                filterSql = filterSql.contentEquals("") ? " WHERE msg_type = 'SMS' " : " AND msg_type = 'SMS' ";
 
                 Integer useGrid = request.getParameter("maxRecord") != null ? Integer.parseInt(request.getParameter("maxRecord")) : null;
                 String gridAction = request.getParameter("gridAction");
@@ -238,9 +238,6 @@
                 }
             }
 
-//            HashMap<String, String> hmType = new HashMap();
-//            hmType.put("Email", "Email");
-//            hmType.put("SMS", "SMS");
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             if (this.id != null) {
@@ -251,7 +248,7 @@
 
             html += "<tr>";
             html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "email.png", "", "") + gui.formLabel("campaign", " Campaign") + "</td>";
-            html += "<td >" + gui.formSelect("campaign", "" + this.comCode + ".cm_campaigns", "id", "subject", "", "type='Email'", "", "", false) + "</td>";
+            html += "<td >" + gui.formSelect("campaign", "" + this.comCode + ".cm_campaigns", "id", "subject", "", "type='SMS'", "", "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -335,7 +332,7 @@
                                 + "'" + fromName + "', "
                                 + "'" + replyTo + "', "
                                 + "now(),"
-                                + "'Email', "
+                                + "'SMS', "
                                 + "" + id_ + " "
                                 + ")");
                     }

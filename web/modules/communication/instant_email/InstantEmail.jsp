@@ -34,7 +34,7 @@
             Gui gui = new Gui();
             Sys sys = new Sys();
 
-            Integer recordCount = sys.getRecordCount(this.table, "");
+            Integer recordCount = sys.getRecordCount(this.table, "msg_type = 'Email'");
 
             if (recordCount > 0) {
                 String gridSql;
