@@ -6,31 +6,32 @@
 <%
     String rootPath = "../../../../";
     Boolean sessionExpired = false;
-
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
-//        sessionExpired = true;
+    
+    if ((session.getAttribute("userId") == null) || (session.getAttribute("userId") == "")) {
+        sessionExpired = true;
     }
-
-    if (request.getParameter("n") == null) {
-        session.setAttribute("userid", null);
-//        sessionExpired = true;
+    
+    if(request.getParameter("n") == null){
+        session.setAttribute("userId", null);
+        sessionExpired = true;
     }
-
+    
     EncryptionUtil encryptionUtil = new EncryptionUtil();
-    Sys system = new Sys();
-
-    try {
-//        User user = new User(session.getAttribute("userid").toString());
-//        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
-//            session.setAttribute("userid", null);
-//            sessionExpired = true;
+    Sys sys = new Sys();
+    
+    try{
+        User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
+//        if(! sys.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
+//            session.setAttribute("userId", null);
+////            sessionExpired = true;
 //        }
-    } catch (NullPointerException e) {
-        e.getMessage();
-    } catch (Exception e) {
+    }catch(NullPointerException e){
         e.getMessage();
     }
-
+    catch(Exception e){
+        e.getMessage();
+    }
+        
     Gui gui = new Gui();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -49,7 +50,7 @@
             <%
                 if (sessionExpired) {
             %>
-//                    window.top.location  = '<%= rootPath%>';
+                    window.top.location  = '<%= rootPath%>';
             <%
                 }
             %>
