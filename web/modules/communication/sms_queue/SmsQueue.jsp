@@ -311,7 +311,7 @@
 
                     String fromEmail = "noreply@qset.co.ke";
                     String fromName = "iXr Info Desk";
-                    String replyTo = "info@qset.co.ke";
+                    String replyTo = "254725999504";
 
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
@@ -394,7 +394,6 @@
                     while (rs.next()) {
                         
                         String phone_no = rs.getString("to_email");
-                        String subject = rs.getString("subject");
                         String message = rs.getString("message");
                     
                         String username = "qXR";

@@ -45,7 +45,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="<%= rootPath%>favicon.ico" />
-        <title>Instant Email</title>
+        <title>Instant SMS</title>
         <%
             out.print(gui.loadCss(request.getContextPath(), "Growler"));
             out.print(gui.loadCss(request.getContextPath(), "module"));
@@ -107,38 +107,38 @@
             var g = new Growler({location: 'br', width: ''});
 
             var queue = {
-                searchEmail: function () {
+                searchPhoneNo: function () {
                     var count = Ajax.activeRequestCount;
                     if (count <= 0) {
-                        var getResultTo = 'emailDiv';
+                        var getResultTo = 'phoneNoDiv';
                         new Ajax.Autocompleter(
-                                'email', getResultTo, module.ajaxUrl, {
-                                    paramName: 'emailHd',
-                                    parameters: 'function=searchEmail',
+                                'phoneNo', getResultTo, module.ajaxUrl, {
+                                    paramName: 'phoneNoHd',
+                                    parameters: 'function=searchPhoneNo',
                                     minChars: 2,
                                     frequency: 1.0,
-                                    afterUpdateElement: queue.setEmail
+                                    afterUpdateElement: queue.setPhoneNo
                                 });
                     }
                 },
-                setEmail: function (text, item) {
+                setPhoneNo: function (text, item) {
                     if (item.id !== '') {
-                        if ($('emailHd'))
-                            $('emailHd').value = item.id;
-                        queue.getEmailProfile(item.id);
+                        if ($('phoneNoHd'))
+                            $('phoneNoHd').value = item.id;
+                        queue.getPhoneNoProfile(item.id);
                     }
                 },
-                getEmailProfile: function (email) {
+                getPhoneNoProfile: function (phoneNo) {
                     new Ajax.Request(module.ajaxUrl, {
                         method: 'post',
-                        parameters: 'function=getEmailProfile&email=' + email,
+                        parameters: 'function=getPhoneNoProfile&phoneNo=' + phoneNo,
                         requestHeaders: {Accept: 'application/json'},
                         onSuccess: function (request) {
                             response = request.responseText.evalJSON();
                             if (typeof response.success === 'number' && response.success === 1) {
 
-                                if (typeof response.subscriberId !== 'undefined' && $('emailHd'))
-                                    $('emailHd').value = response.subscriberId;
+                                if (typeof response.subscriberId !== 'undefined' && $('phoneNoHd'))
+                                    $('phoneNoHd').value = response.subscriberId;
                                 
                                 g.info(response.message, {header: ' ', life: 5, speedout: 2});
                             } else {

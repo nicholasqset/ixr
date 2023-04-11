@@ -1,3 +1,7 @@
+<%@page import="com.africastalking.sms.Recipient"%>
+<%@page import="java.util.List"%>
+<%@page import="com.africastalking.SmsService"%>
+<%@page import="com.africastalking.AfricasTalking"%>
 <%@page import="com.qset.communication.Subscriber"%>
 <%@page import="okhttp3.Response"%>
 <%@page import="okhttp3.Request"%>
@@ -23,9 +27,8 @@
         String table = comCode + ".cm_queue";
 
         Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
-        String email = request.getParameter("email");
-        String subscriberId = request.getParameter("emailHd");
-        String subject = request.getParameter("subject");
+        String phoneNo = request.getParameter("phoneNo");
+        String subscriberId = request.getParameter("phoneNoHd");
         String message = request.getParameter("message");
 
         public String getGrid() {
@@ -73,7 +76,7 @@
                     }
                 }
 
-                filterSql = filterSql.contentEquals("") ? " WHERE msg_type = 'Email' " : " AND msg_type = 'Email' ";
+                filterSql = filterSql.contentEquals("") ? " WHERE msg_type = 'SMS' " : " AND msg_type = 'SMS' ";
 
                 Integer useGrid = request.getParameter("maxRecord") != null ? Integer.parseInt(request.getParameter("maxRecord")) : null;
                 String gridAction = request.getParameter("gridAction");
@@ -241,9 +244,6 @@
                 }
             }
 
-//            HashMap<String, String> hmType = new HashMap();
-//            hmType.put("Email", "Email");
-//            hmType.put("SMS", "SMS");
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             if (this.id != null) {
@@ -253,24 +253,19 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing=  \"0\" >";
 
             html += "<tr>";
-            html += "<td width = \"15%\" nowrap><i class=\"fa fa-envelope\"></i>" + gui.formLabel("email", " To") + "</td>";
-            html += "<td >" + gui.formAutoComplete("email", 37, "", "queue.searchEmail", "emailHd", "") + "</td>";
-            html += "</tr>";
-
-            html += "<tr>";
-            html += "<td width = \"15%\" nowrap><i class=\"fa fa-edit\"></i>" + gui.formLabel("subject", " Subject") + "</td>";
-            html += "<td>" + gui.formInput("text", "subject", 40, "", "", "") + "</td>";
+            html += "<td width = \"15%\" nowrap><i class=\"fa fa-envelope\"></i>" + gui.formLabel("phoneNo", " To") + "</td>";
+            html += "<td >" + gui.formAutoComplete("phoneNo", 37, "", "queue.searchPhoneNo", "phoneNoHd", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td width = \"15%\" nowrap><i class=\"fa fa-comment\"></i>" + gui.formLabel("message", " Message") + "</td>";
-            html += "<td><textarea id=\"message\" name=\"message\" rows=\"16\" cols=\"40\"></textarea></td>";
+            html += "<td><textarea id=\"message\" name=\"message\" rows=\"6\" cols=\"36\"></textarea></td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Send", "email.png", "onclick = \"queue.gen('email subject message');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Send", "email.png", "onclick = \"queue.gen('phoneNo message');\"", "");
 //            if (this.id != null) {
 //                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"queue.purge(" + this.id + ",'" + this.subject + "');\"", "");
 //            }
@@ -285,35 +280,35 @@
             return html;
         }
 
-        public String searchEmail() {
+        public String searchPhoneNo() {
             String html = "";
 
             Gui gui = new Gui();
 
-            this.email = request.getParameter("emailHd");
+            this.phoneNo = request.getParameter("phoneNoHd");
 
-            html += gui.getAutoColsSearch("" + this.comCode + ".cm_subscribers", "email, first_name", "", this.email);
+            html += gui.getAutoColsSearch("" + this.comCode + ".cm_subscribers", "phone_no, first_name", "", this.phoneNo);
 
             return html;
         }
 
-        public Object getEmailProfile() throws Exception {
+        public Object getPhoneNoProfile() throws Exception {
             JSONObject obj = new JSONObject();
             Sys sys = new Sys();
 
-            if (this.email == null || this.email.trim().equals("")) {
+            if (this.phoneNo == null || this.phoneNo.trim().equals("")) {
                 obj.put("success", new Integer(0));
                 obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
             } else {
-                String subscriberId = sys.getOne(this.comCode + ".cm_subscribers", "id", "email='" + this.email + "'");
+                String subscriberId = sys.getOne(this.comCode + ".cm_subscribers", "id", "phone_no='" + this.phoneNo + "'");
                 Subscriber subscriber = new Subscriber(subscriberId, this.comCode);
 
                 obj.put("fullName", subscriber.fullName);
-                obj.put("email", subscriber.email);
+                obj.put("phoneNo", subscriber.phoneNo);
                 obj.put("subscriberId", subscriberId);
 
                 obj.put("success", new Integer(1));
-                obj.put("message", "Email '" + this.email + "' successfully retrieved.");
+                obj.put("message", "Phone No '" + this.phoneNo + "' successfully retrieved.");
             }
 
             return obj;
@@ -331,39 +326,40 @@
                 Integer sent = 0;
                 String fromEmail = "noreply@qset.co.ke";
                 String fromName = "iXr Info Desk";
-                String replyTo = "info@qset.co.ke";
+                String replyTo = "254725999504";
                 Integer msgInserted = sys.executeSql("INSERT INTO " + this.comCode + ".cm_queue("
                         + "subscriber_id, to_email, to_name, subject, message, from_email, from_name, reply_to, queue_date, msg_type)"
                         + "VALUES ("
                         + "" + this.subscriberId + ", "
-                        + "'" + this.email + "', "
+                        + "'" + this.phoneNo + "', "
                         + "'" + subscriber.firstName + " " + subscriber.lastName + "', "
-                        + "'" + this.subject + "', "
+                        + "'0', "
                         + "'" + this.message + "', "
                         + "'" + fromEmail + "', "
                         + "'" + fromName + "', "
                         + "'" + replyTo + "', "
                         + "now(),"
-                        + "'Email' "
+                        + "'SMS' "
                         + ")");
 
                 String id_ = sys.getOneByQuery("SELECT currval(pg_get_serial_sequence('" + this.comCode + ".cm_queue','id')) as col");
 
                 if (msgInserted > 0 && id_ != null) {
-                    OkHttpClient client = new OkHttpClient().newBuilder()
-                            .build();
-                    MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-                    RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
-                            + "email=" + this.email + "&"
-                            + "subject=" + this.subject + "&"
-                            + "message=" + this.message
-                    );
-                    Request request = new Request.Builder()
-                            .url("https://api.goqset.com/")
-                            .method("POST", body)
-                            .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                            .build();
-                    Response response = client.newCall(request).execute();
+
+                    String username = "qXR";
+                    String apiKey = "98e6dc9d6eb6659a384ed6734531f3123d65d4ef55e9fde4a15ab23ec5f1587d";
+                    AfricasTalking.initialize(username, apiKey);
+
+                    //Initialize a service eg SMS
+                    SmsService smsService = AfricasTalking.getService(AfricasTalking.SERVICE_SMS);
+
+                    //Use the service
+                    List<Recipient> response2 = smsService.send(this.message, new String[]{"+" + this.phoneNo}, true);
+
+                    System.out.print(response2.get(0).status + ".........hello............");
+                    System.out.println("inn");
+
+                    sys.logV2("response=" + response2);
 
                     sent = sys.executeSql("UPDATE " + this.comCode + ".cm_queue SET sent = 1 WHERE id = " + id_);
                 }
@@ -440,31 +436,29 @@
 
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-
-                        String to_email = rs.getString("to_email");
-                        String subject = rs.getString("subject");
+                        
+                        String phone_no = rs.getString("to_email");
                         String message = rs.getString("message");
+                    
+                        String username = "qXR";
+                        String apiKey = "98e6dc9d6eb6659a384ed6734531f3123d65d4ef55e9fde4a15ab23ec5f1587d";
+                        AfricasTalking.initialize(username, apiKey);
 
-                        OkHttpClient client = new OkHttpClient().newBuilder()
-                                .build();
-                        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-                        RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
-                                + "email=" + to_email + "&"
-                                + "subject=" + subject + "&"
-                                + "message=" + message
-                        );
-                        Request request = new Request.Builder()
-                                .url("https://api.goqset.com/")
-                                .method("POST", body)
-                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                                .build();
-                        Response response = client.newCall(request).execute();
 
-                        sys.logV2("response=" + response);
+                        //Initialize a service eg SMS
+                        SmsService smsService = AfricasTalking.getService(AfricasTalking.SERVICE_SMS);
+
+                        //Use the service
+                        List<Recipient> response2 = smsService.send(message, new String[]{"+" + phone_no}, true);
+
+                        System.out.print(response2.get(0).status + ".........hello............");
+                        System.out.println("inn");
+
+                        sys.logV2("response=" + response2);
                     }
 
-                    Integer sent = sys.executeSql("UPDATE " + this.table + " SET sent = 1 WHERE id = " + this.id);
-
+                    Integer sent = sys.executeSql("UPDATE "+this.table+" SET sent = 1 WHERE id = "+ this.id);
+                    
                     if (sent == 1) {
                         obj.put("success", new Integer(1));
                         obj.put("message", "Entry successfully deleted.");
