@@ -51,7 +51,6 @@
                         String apiKey = "98e6dc9d6eb6659a384ed6734531f3123d65d4ef55e9fde4a15ab23ec5f1587d";
                         AfricasTalking.initialize(username, apiKey);
 
-
                         //Initialize a service eg SMS
                         SmsService smsService = AfricasTalking.getService(AfricasTalking.SERVICE_SMS);
 

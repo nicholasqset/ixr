@@ -1,3 +1,7 @@
+<%@page import="com.africastalking.sms.Recipient"%>
+<%@page import="java.util.List"%>
+<%@page import="com.africastalking.SmsService"%>
+<%@page import="com.africastalking.AfricasTalking"%>
 <%@page import="okhttp3.Response"%>
 <%@page import="okhttp3.Request"%>
 <%@page import="okhttp3.RequestBody"%>
@@ -287,9 +291,9 @@
 
                 Boolean defaultGroup = sys.recordExists(this.comCode + ".cm_groups", "grp_code = '" + this.grpCode + "' and is_default = 1");
                 if (defaultGroup) {
-                    query = "select id, first_name, last_name, email from " + this.comCode + ".cm_subscribers ";
+                    query = "select id, first_name, last_name, phone_no from " + this.comCode + ".cm_subscribers ";
                 } else {
-                    query = "select id, first_name, last_name, email from " + this.comCode + ".cm_subscribers where id in (select subscriber_id from " + this.comCode + ".cm_subscriber_grps where grp_code = '" + this.grpCode + "')";
+                    query = "select id, first_name, last_name, phone_no from " + this.comCode + ".cm_subscribers where id in (select subscriber_id from " + this.comCode + ".cm_subscriber_grps where grp_code = '" + this.grpCode + "')";
                 }
 
                 Integer hrdInserted = sys.executeSql("INSERT INTO " + this.comCode + ".cm_queue_hdr("
@@ -316,7 +320,7 @@
                         String id = rs.getString("id");
                         String firstName = rs.getString("first_name");
                         String lastName = rs.getString("last_name");
-                        String email = rs.getString("email");
+                        String phone_no = rs.getString("phone_no");
 
                         Integer msgInserted = sys.executeSql("INSERT INTO " + this.comCode + ".cm_queue("
                                 + "grp_code, subscriber_id, campaign_id, to_email, to_name, subject, message, from_email, from_name, reply_to, queue_date, msg_type, hdr_id)"
@@ -324,7 +328,7 @@
                                 + "'" + this.grpCode + "', "
                                 + "" + id + ", "
                                 + "" + this.campaignId + ", "
-                                + "'" + email + "', "
+                                + "'" + phone_no + "', "
                                 + "'" + firstName + " " + lastName + "', "
                                 + "'" + subject + "', "
                                 + "'" + message + "', "
@@ -389,26 +393,25 @@
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         
-                        String to_email = rs.getString("to_email");
+                        String phone_no = rs.getString("to_email");
                         String subject = rs.getString("subject");
                         String message = rs.getString("message");
                     
-                        OkHttpClient client = new OkHttpClient().newBuilder()
-                                .build();
-                        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-                        RequestBody body = RequestBody.create(mediaType, "function=sendEmail&"
-                                + "email="+to_email+"&"
-                                + "subject=" + subject + "&"
-                                + "message="+ message
-                        );
-                        Request request = new Request.Builder()
-                                .url("https://api.goqset.com/")
-                                .method("POST", body)
-                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                                .build();
-                        Response response = client.newCall(request).execute();
+                        String username = "qXR";
+                        String apiKey = "98e6dc9d6eb6659a384ed6734531f3123d65d4ef55e9fde4a15ab23ec5f1587d";
+                        AfricasTalking.initialize(username, apiKey);
 
-                        sys.logV2("response=" + response);
+
+                        //Initialize a service eg SMS
+                        SmsService smsService = AfricasTalking.getService(AfricasTalking.SERVICE_SMS);
+
+                        //Use the service
+                        List<Recipient> response2 = smsService.send(message, new String[]{"+" + phone_no}, true);
+
+                        System.out.print(response2.get(0).status + ".........hello............");
+                        System.out.println("inn");
+
+                        sys.logV2("response=" + response2);
                     }
 
                     Integer sent = sys.executeSql("UPDATE "+this.table+" SET sent = 1 WHERE id = "+ this.id);
