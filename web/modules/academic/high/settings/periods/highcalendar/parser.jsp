@@ -4,8 +4,7 @@
 <%
 String function = request.getParameter("function");
 
-HighCalendar highCalendar = new HighCalendar(this.comCode);
-Object obj = highCalendar;
+Object obj = new HighCalendar();
 
 try{
     Method method = obj.getClass().getMethod(function);
