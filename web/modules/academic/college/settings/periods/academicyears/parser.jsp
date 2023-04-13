@@ -1,31 +1,27 @@
-<%-- 
-    Document   : index
-    Created on : Apr 10, 2023, 1:03:35 PM
-    Author     : nicholas
---%>
-
-<%@include file="Jobs.jsp" %>
 <%@page import="java.lang.reflect.InvocationTargetException"%>
 <%@page import="java.lang.reflect.Method"%>
+<%@include file="class.academicyears.jsp" %>
 <%
 String function = request.getParameter("function");
 
-Object obj = new Jobs();
+AcademicYears academicYears = new AcademicYears();
+Object obj = academicYears;
 
 try{
-            
     Method method = obj.getClass().getMethod(function);
     try {
         out.print(method.invoke(obj));
-    } catch (IllegalArgumentException e) {
+    } catch(IllegalArgumentException e) {
         out.print(e.getMessage());
-    } catch (IllegalAccessException e) {
+    } catch(IllegalAccessException e) {
         out.print(e.getMessage());
-    } catch (InvocationTargetException e) {
+    } catch(InvocationTargetException e) {
         out.print(e.getMessage());
     }
         
-} catch (NoSuchMethodException e) {
+} catch(NoSuchMethodException e) {
+    out.print(e.getMessage());
+} catch (Exception e) {
     out.print(e.getMessage());
 }
 

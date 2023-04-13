@@ -24,7 +24,7 @@
     Integer errorCount  = 0;
     String errorMsg     = "";
     
-    String companyCode  = request.getParameter("code");
+    String studentNo         = request.getParameter("studentNo");
     
     Sys sys = new Sys();
     
@@ -91,21 +91,21 @@
         String query;
          
         stmt = conn.createStatement();
-        query = "DELETE FROM CSCOLOGO WHERE COMPANYCODE = '"+companyCode+"'";
+        query = "DELETE FROM HGSTUDPHOTOS WHERE STUDENTNO = '"+studentNo+"'";
         Integer purged = stmt.executeUpdate(query);
         
         PreparedStatement ps;
         
-        Integer id = sys.generateId("CSCOLOGO", "ID");
+        Integer id = system.generateId("HGSTUDPHOTOS", "ID");
         
-        query = "INSERT INTO CSCOLOGO "
-                    + "(ID, COMPANYCODE, LOGO, FILENAME, FILETYPE, FILESIZE) "
+        query = "INSERT INTO HGSTUDPHOTOS "
+                    + "(ID, STUDENTNO, PHOTO, FILENAME, FILETYPE, FILESIZE) "
                     + " VALUES (?, ?, ?, ?, ?, ?)";
         
                     
         ps = conn.prepareStatement(query);
         ps.setInt(1, id);
-        ps.setString(2, companyCode);
+        ps.setString(2, studentNo);
         ps.setBinaryStream(3, (InputStream) fis, (int) (f.length()));
         ps.setString(4, fileName);
         ps.setString(5, new MimetypesFileTypeMap().getContentType(f));
@@ -129,7 +129,7 @@
       }
    }else{
       errorCount++;
-      errorMsg = "Unable to upload logo.";
+      errorMsg = "Unable to upload photo.";
    }
    
 %>
@@ -141,10 +141,10 @@
         <script type="text/javascript">
             <%
                 if(errorCount > 0){%>
-                    parent.profile.getUploadResponse(<%= errorCount%>, '<%= errorMsg%>');
+                    parent.students.getUploadResponse(<%= errorCount%>, '<%= errorMsg%>');
                 <%
                 }else{%>
-                    parent.profile.getUploadResponse();
+                    parent.students.getUploadResponse();
                 <%}
                 %>
         </script>
