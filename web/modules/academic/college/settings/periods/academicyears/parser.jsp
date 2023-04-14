@@ -1,11 +1,10 @@
 <%@page import="java.lang.reflect.InvocationTargetException"%>
 <%@page import="java.lang.reflect.Method"%>
-<%@include file="class.academicyears.jsp" %>
+<%@include file="AcademicYears.jsp" %>
 <%
 String function = request.getParameter("function");
 
-AcademicYears academicYears = new AcademicYears();
-Object obj = academicYears;
+Object obj = new AcademicYears();
 
 try{
     Method method = obj.getClass().getMethod(function);
