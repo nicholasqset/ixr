@@ -9,15 +9,15 @@
 <%@page import="com.qset.sys.Sys"%>
 <%
 
-    final class Category {
+    final class StudentStatus {
 
         HttpSession session = request.getSession();
 
-        String table = "" + session.getAttribute("comCode") + ".cl_student_cats";
+        String table = "" + session.getAttribute("comCode") + ".cl_student_status";
 
         Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
-        String catCode = request.getParameter("code");
-        String catName = request.getParameter("name");
+        String ssCode = request.getParameter("code");
+        String ssName = request.getParameter("name");
 
         public String getGrid() {
             String html = "";
@@ -50,8 +50,8 @@
 
                             ArrayList<String> list = new ArrayList();
 
-                            list.add("cat_code");
-                            list.add("cat_name");
+                            list.add("ss_code");
+                            list.add("ss_name");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     filterSql += " WHERE ( UPPER(" + list.get(i) + ") LIKE '%" + find.toUpperCase() + "%' ";
@@ -107,7 +107,7 @@
                     session.setAttribute("startRecord", 0);
                 }
 
-                String orderBy = "cat_code ";
+                String orderBy = "ss_code ";
                 String limitSql = "";
 
                 String dbType = ConnectionProvider.getDBType();
@@ -149,8 +149,8 @@
                     while (rs.next()) {
 
                         Integer id = rs.getInt("ID");
-                        String catCode = rs.getString("cat_code");
-                        String catName = rs.getString("cat_name");
+                        String ssCode = rs.getString("ss_code");
+                        String ssName = rs.getString("ss_name");
 
                         String bgcolor = (count % 2 > 0) ? "#FFFFFF" : "#F7F7F7";
 
@@ -158,8 +158,8 @@
 
                         html += "<tr bgcolor = \"" + bgcolor + "\">";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + catCode + "</td>";
-                        html += "<td>" + catName + "</td>";
+                        html += "<td>" + ssCode + "</td>";
+                        html += "<td>" + ssName + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
 
@@ -179,6 +179,7 @@
         public String getModule() {
 
             Gui gui = new Gui();
+            Sys sys = new Sys();
 
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = null;
@@ -190,11 +191,11 @@
                     String query = "SELECT * FROM " + this.table + " WHERE ID = " + this.id;
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-                        this.catCode = rs.getString("cat_code");
-                        this.catName = rs.getString("cat_name");
+                        this.ssCode = rs.getString("ss_code");
+                        this.ssName = rs.getString("ss_name");
                     }
                 } catch (SQLException e) {
-
+                    sys.logV2(e.getMessage());
                 }
             }
 
@@ -209,13 +210,13 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
 
             html += "<tr>";
-            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "page.png", "", "") + " " + gui.formLabel("code", "Student Category Code") + "</td>";
-            html += "<td>" + gui.formInput("text", "code", 10, this.id != null ? this.catCode : "", "", "") + "</td>";
+            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "page.png", "", "") + " " + gui.formLabel("code", "Student Status Code") + "</td>";
+            html += "<td>" + gui.formInput("text", "code", 10, this.id != null ? this.ssCode : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("name", "Student Category Name") + "</td>";
-            html += "<td>" + gui.formInput("text", "name", 30, this.id != null ? this.catName : "", "", "") + "</td>";
+            html += "<td>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("name", "Student Status Name") + "</td>";
+            html += "<td>" + gui.formInput("text", "name", 30, this.id != null ? this.ssName : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -223,7 +224,7 @@
             html += "<td>";
             html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"uiTask.save('code name');\"", "");
             if (this.id != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"uiTask.purge(" + this.id + ",'" + this.catName + "');\"", "");
+                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"uiTask.purge(" + this.id + ",'" + this.ssName + "');\"", "");
             }
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
             html += "</td>";
@@ -251,17 +252,17 @@
 
                 if (this.id == null) {
                     query = "INSERT INTO " + this.table + " "
-                            + "(cat_code, cat_name)"
+                            + "(ss_code, ss_name)"
                             + "VALUES"
                             + "("
-                            + "'" + this.catCode + "',"
-                            + "'" + this.catName + "'"
+                            + "'" + this.ssCode + "',"
+                            + "'" + this.ssName + "'"
                             + ")";
                 } else {
 
                     query = "UPDATE " + this.table + " SET "
-                            + "cat_code   = '" + this.catCode + "',"
-                            + "cat_name   = '" + this.catName + "'"
+                            + "ss_code   = '" + this.ssCode + "',"
+                            + "ss_name   = '" + this.ssName + "'"
                             + "WHERE ID     = " + this.id;
                 }
 
