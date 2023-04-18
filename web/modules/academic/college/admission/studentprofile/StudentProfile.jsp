@@ -19,8 +19,8 @@
 
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
-        String table = comCode + ".HGSTUDENTS";
-        String view = comCode + ".VIEWHGSTUDENTPROFILE";
+        String table = comCode + ".cl_students";
+        String view = comCode + ".cl_students";
 
         Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
 
@@ -83,8 +83,8 @@
 
                             ArrayList<String> list = new ArrayList();
 
-                            list.add("STUDENTNO");
-                            list.add("FULLNAME");
+                            list.add("STUDENT_NO");
+                            list.add("STUDENT_NAME");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     filterSql += " WHERE ( UPPER(" + list.get(i) + ") LIKE '%" + find + "%' ";
@@ -140,11 +140,7 @@
                     session.setAttribute("startRecord", 0);
                 }
 
-//            gridSql = "SELECT * FROM "+this.view+" "+filterSql+" ORDER BY ADMGRP DESC, FORMCODE DESC, STREAMCODE DESC, STUDENTNO LIMIT "
-//                    + session.getAttribute("startRecord")
-//                    + " , "
-//                    + session.getAttribute("maxRecord");
-                String orderBy = "ADMGRP DESC, FORMCODE DESC, STREAMCODE DESC, STUDENTNO ";
+                String orderBy = "ADMGRP DESC, FORMCODE DESC, STREAMCODE DESC, STUDENT_NO ";
                 String limitSql = "";
 
                 switch (dbType) {
@@ -190,8 +186,8 @@
                     while (rs.next()) {
 
                         Integer id = rs.getInt("ID");
-                        String studentNo = rs.getString("STUDENTNO");
-                        String fullName = rs.getString("FULLNAME");
+                        String studentNo = rs.getString("STUDENT_NO");
+                        String fullName = rs.getString("STUDENT_NAME");
                         String genderName = rs.getString("GENDERNAME");
                         String admGrp = rs.getString("ADMGRP");
                         String formName = rs.getString("FORMNAME");
@@ -277,7 +273,7 @@
                     String query = "SELECT * FROM " + this.table + " WHERE ID = " + this.id;
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-                        this.studentNo = rs.getString("STUDENTNO");
+                        this.studentNo = rs.getString("STUDENT_NO");
                     }
                 } catch (SQLException e) {
                     html += e.getMessage();
@@ -324,7 +320,7 @@
                 html += gui.formInput("hidden", "id", 30, "" + this.id, "", "");
             }
 
-            String defaultCountryCode = sys.getOne("" + this.comCode + ".CSCOUNTRIES", "COUNTRYCODE", "ISDEFAULT = 1");
+            String defaultCountryCode = sys.getOne("" + this.comCode + ".CSCOUNTRIES", "COUNTRY_CODE", "ISDEFAULT = 1");
 
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
@@ -372,7 +368,7 @@
 
             html += "<tr>";
             html += "<td>" + gui.formIcon(request.getContextPath(), "gender.png", "", "") + " " + gui.formLabel("gender", "Gender") + "</td>";
-            html += "<td colspan = \"3\">" + gui.formSelect("gender", "" + this.comCode + ".CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null ? this.genderCode : "", null, false) + "</td>";
+            html += "<td colspan = \"3\">" + gui.formSelect("gender", "" + this.comCode + ".CSGENDER", "GENDER_CODE", "GENDERNAME", null, null, this.id != null ? this.genderCode : "", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -382,7 +378,7 @@
 
             html += "<tr>";
             html += "<td>" + gui.formIcon(request.getContextPath(), "globe-medium-green.png", "", "") + gui.formLabel("country", " Country") + "</td>";
-            html += "<td colspan = \"3\">" + gui.formSelect("country", "" + this.comCode + ".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null ? this.countryCode : defaultCountryCode, null, false) + "</td>";
+            html += "<td colspan = \"3\">" + gui.formSelect("country", "" + this.comCode + ".CSCOUNTRIES", "COUNTRY_CODE", "COUNTRYNAME", null, null, this.id != null ? this.countryCode : defaultCountryCode, null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
@@ -398,7 +394,7 @@
             html += "<td>" + gui.formCheckBox("physChald", (this.id != null && this.physChald == 1) ? "checked" : "", null, "onchange = \"students.toggleDisab();\"", "", "") + "</td>";
 
             html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "apps-accessibility.png", "", "") + " " + gui.formLabel("disability", "Physical Disability") + "</td>";
-            html += "<td>" + gui.formSelect("disability", "" + this.comCode + ".CSDISAB", "DISABCODE", "DISABNAME", null, null, this.id != null ? this.disabCode : "", (this.id != null && this.physChald == 1) ? "" : "disabled", false) + "</td>";
+            html += "<td>" + gui.formSelect("disability", "" + this.comCode + ".CSDISAB", "DISAB_CODE", "DISABNAME", null, null, this.id != null ? this.disabCode : "", (this.id != null && this.physChald == 1) ? "" : "disabled", false) + "</td>";
             html += "</tr>";
 
             html += "</table>";
@@ -438,7 +434,7 @@
 
             this.studentNo = request.getParameter("studentNoHd");
 
-            html += gui.getAutoColsSearch("" + this.comCode + ".HGSTUDENTS", "STUDENTNO, FULLNAME", "", this.studentNo);
+            html += gui.getAutoColsSearch("" + this.comCode + ".HGSTUDENTS", "STUDENT_NO, STUDENT_NAME", "", this.studentNo);
 
             return html;
         }
@@ -454,7 +450,7 @@
 
                 try {
                     stmt = conn.createStatement();
-                    String query = "SELECT COUNT(*)CT FROM " + this.comCode + ".HGSTUDPHOTOS WHERE STUDENTNO = '" + studentNo + "'";
+                    String query = "SELECT COUNT(*)CT FROM " + this.comCode + ".HGSTUDPHOTOS WHERE STUDENT_NO = '" + studentNo + "'";
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         count = rs.getInt("CT");
@@ -684,15 +680,14 @@
                     }
 
                     query += "INSERT INTO " + this.table + " "
-                            + "(ID, STUDENTNO, FIRSTNAME, MIDDLENAME, LASTNAME, FULLNAME, "
-                            + "GENDERCODE, DOB, COUNTRYCODE, NATIONALID, PASSPORTNO, PHYSCHALD, DISABCODE, "
-                            + "POSTALADR, POSTALCODE, PHYSICALADR, TELEPHONE, CELLPHONE, EMAIL, ADMGRP, STREAMCODE, "
+                            + "(STUDENT_NO, FIRST_NAME, MIDDLE_NAME, LAST_NAME, STUDENT_NAME, "
+                            + "GENDER_CODE, DOB, COUNTRY_CODE, NATIONAL_ID, PASSPORT_NO, PHYS_CHALGD, DISAB_CODE, "
+                            + "POSTAL_ADR, POSTAL_CODE, PHYSICAL_ADR, TELEPHONE, CELLPHONE, EMAIL, ADMGRP, STREAMCODE, "
                             + "STUDPRDCODE, STUDTYPECODE, STATUSCODE, "
                             + "AUDITUSER, AUDITDATE, AUDITTIME, AUDITIPADR"
                             + ") "
                             + "VALUES"
                             + "("
-                            + id + ","
                             + "'" + this.studentNo + "', "
                             + "'" + this.firstName + "', "
                             + "'" + this.middleName + "', "
@@ -733,20 +728,20 @@
 
                     } else {
                         query = "UPDATE " + this.table + " SET "
-                                + "FIRSTNAME        = '" + this.firstName + "', "
-                                + "MIDDLENAME       = '" + this.middleName + "', "
-                                + "LASTNAME         = '" + this.lastName + "',"
-                                + "FULLNAME         = '" + this.firstName + " " + this.middleName + " " + this.lastName + "', "
-                                + "GENDERCODE       = '" + this.genderCode + "', "
+                                + "FIRST_NAME        = '" + this.firstName + "', "
+                                + "MIDDLE_NAME       = '" + this.middleName + "', "
+                                + "LAST_NAME         = '" + this.lastName + "',"
+                                + "STUDENT_NAME         = '" + this.firstName + " " + this.middleName + " " + this.lastName + "', "
+                                + "GENDER_CODE       = '" + this.genderCode + "', "
                                 + "DOB              = '" + this.dob + "', "
-                                + "COUNTRYCODE      = '" + this.countryCode + "', "
-                                + "NATIONALID       = '" + this.nationalId + "', "
-                                + "PASSPORTNO       = '" + this.passportNo + "', "
-                                + "PHYSCHALD        = " + this.physChald + ", "
-                                + "DISABCODE        = '" + this.disabCode + "', "
-                                + "POSTALADR        = '" + this.postalAdr + "', "
-                                + "POSTALCODE       = '" + this.postalCode + "', "
-                                + "PHYSICALADR      = '" + this.physicalAdr + "', "
+                                + "COUNTRY_CODE      = '" + this.countryCode + "', "
+                                + "NATIONAL_ID       = '" + this.nationalId + "', "
+                                + "PASSPORT_NO       = '" + this.passportNo + "', "
+                                + "PHYS_CHALGD        = " + this.physChald + ", "
+                                + "DISAB_CODE        = '" + this.disabCode + "', "
+                                + "POSTAL_ADR        = '" + this.postalAdr + "', "
+                                + "POSTAL_CODE       = '" + this.postalCode + "', "
+                                + "PHYSICAL_ADR      = '" + this.physicalAdr + "', "
                                 + "TELEPHONE        = '" + this.telephone + "', "
                                 + "CELLPHONE        = '" + this.cellphone + "', "
                                 + "EMAIL            = '" + this.email + "', "
@@ -759,7 +754,7 @@
                                 + "AUDITDATE        = '" + sys.getLogDate() + "', "
                                 + "AUDITTIME        = '" + sys.getLogTime() + "', "
                                 + "AUDITIPADR       = '" + sys.getClientIpAdr(request) + "' "
-                                + "WHERE STUDENTNO    = '" + this.studentNo + "'";
+                                + "WHERE STUDENT_NO    = '" + this.studentNo + "'";
                     }
                 }
 
@@ -876,7 +871,7 @@
                 Statement stmt = conn.createStatement();
 
                 if (this.studentNo != null && !this.studentNo.trim().equals("")) {
-                    String query = "DELETE FROM " + this.comCode + ".HGSTUDPHOTOS WHERE STUDENTNO = '" + this.studentNo + "'";
+                    String query = "DELETE FROM " + this.comCode + ".HGSTUDPHOTOS WHERE STUDENT_NO = '" + this.studentNo + "'";
 
                     Integer purged = stmt.executeUpdate(query);
                     if (purged == 1) {
