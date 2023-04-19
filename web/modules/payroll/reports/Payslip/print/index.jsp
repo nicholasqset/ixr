@@ -136,6 +136,16 @@
             html += "<td class = \"bold\">Pin No</td>";
             html += "<td>"+ staffProfile.pinNo+ "</td>";
             html += "</tr>";
+            
+            html += "<tr>";
+            html += "<td class = \"bold\">NHIF No</td>";
+            html += "<td>"+ staffProfile.nhifNo+ "</td>";
+            html += "</tr>";
+            
+            html += "<tr>";
+            html += "<td class = \"bold\">NSSF No</td>";
+            html += "<td>"+ staffProfile.nssfNo+ "</td>";
+            html += "</tr>";
 
             html += "</table>";
             
