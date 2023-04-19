@@ -3,6 +3,9 @@
     Created on : Jun 25, 2016, 7:09:51 PM
     Author     : nicholas
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="java.util.Map"%>
 <%@page import="net.sf.jasperreports.engine.util.JRLoader"%>
 <%@page import="java.util.HashMap"%>
@@ -24,7 +27,6 @@
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.File"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
-<%@page import="java.sql.*"%>
 <%@page import="com.qset.sys.Sys"%>
 
 <%
@@ -45,6 +47,10 @@
         
         String webRootPath      = application.getRealPath("/").replace('\\', '/');
         String tempPath         = webRootPath+ "/tmp/reports/jasper/log/";
+        File theDir = new File(tempPath);
+        if (!theDir.exists()) {
+            theDir.mkdirs();
+        }
         String mainReportPath   = "";
 
         mainReportPath  = webRootPath+ "/reports/jasper/payroll/"+ rptName+ ".jrxml";

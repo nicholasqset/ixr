@@ -46,6 +46,10 @@
         
         String webRootPath      = application.getRealPath("/").replace('\\', '/');
         String tempPath         = webRootPath+ "/tmp/reports/jasper/log/";
+        File theDir = new File(tempPath);
+        if (!theDir.exists()) {
+            theDir.mkdirs();
+        }
         String mainReportPath   = "";
 
         mainReportPath  = webRootPath+ "/reports/jasper/payroll/"+ rptName+ ".jrxml";
