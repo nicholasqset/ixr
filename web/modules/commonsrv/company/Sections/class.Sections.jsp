@@ -10,7 +10,7 @@
 
 final class Sections{
     HttpSession session=request.getSession();
-   
+   String comCode = session.getAttribute("comCode").toString();
     String table        = ""+session.getAttribute("comCode")+".CSSECTIONS";
     String view         = ""+session.getAttribute("comCode")+".VIEWCSSECTIONS";
         
@@ -215,7 +215,7 @@ final class Sections{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+" "+gui.formLabel("department", "Section")+"</td>";
-	html += "<td>"+ gui.formSelect("department", "qset.CSDEPTS", "DEPTCODE", "DEPTNAME", null, null, this.id != null? this.deptCode: "", null, true)+"</td>";
+	html += "<td>"+ gui.formSelect("department", this.comCode+".CSDEPTS", "DEPTCODE", "DEPTNAME", null, null, this.id != null? this.deptCode: "", null, true)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";

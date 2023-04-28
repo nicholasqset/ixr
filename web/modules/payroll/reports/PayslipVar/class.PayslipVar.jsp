@@ -87,7 +87,7 @@ final class PayslipVar{
         
         this.pfNo = (request.getParameter("pfNo") != null && ! request.getParameter("pfNo").trim().equals(""))? request.getParameter("pfNo"): null;
         
-        html += gui.getAutoColsSearch("qset.HRSTAFFPROFILE", "PFNO, FULLNAME", "", this.pfNo);
+        html += gui.getAutoColsSearch(this.schema+".HRSTAFFPROFILE", "PFNO, FULLNAME", "", this.pfNo);
         
         return html;
     }

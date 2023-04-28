@@ -1,17 +1,19 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.qset.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
 
 final class LeaveDays{
-    String table        = "qset.HRLVDAYS";
-    String view         = "qset.VIEWHRLVDAYS";
+    HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".HRLVDAYS";
+    String view         = this.comCode+".VIEWHRLVDAYS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String lvTypeCode   = request.getParameter("leaveType");
@@ -26,7 +28,7 @@ final class LeaveDays{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -218,12 +220,12 @@ final class LeaveDays{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+ gui.formLabel("leaveType", " Leave Type")+"</td>";
-	html += "<td>"+ gui.formSelect("leaveType", "qset.HRLVTYPES", "LVTYPECODE", "LVTYPENAME", null, null, this.id != null? this.lvTypeCode: "",  "onchange = \"\" style = \"\"", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("leaveType", this.comCode+".HRLVTYPES", "LVTYPECODE", "LVTYPENAME", null, null, this.id != null? this.lvTypeCode: "",  "onchange = \"\" style = \"\"", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("grade", " Staff Grade")+"</td>";
-	html += "<td>"+ gui.formSelect("grade", "qset.HRGRADES", "GRADECODE", "GRADENAME", null, null, this.id != null? this.gradeCode: "",  "onchange = \"\" style = \"\"", true)+ "</td>";
+	html += "<td>"+ gui.formSelect("grade", this.comCode+".HRGRADES", "GRADECODE", "GRADENAME", null, null, this.id != null? this.gradeCode: "",  "onchange = \"\" style = \"\"", true)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -249,7 +251,7 @@ final class LeaveDays{
     }
     
     
-    public Object save(){
+    public Object JSONObject() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -261,7 +263,7 @@ final class LeaveDays{
             Integer saved = 0;
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, LVTYPECODE, GRADECODE, DAYS)"
@@ -302,7 +304,7 @@ final class LeaveDays{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
         JSONObject obj = new JSONObject();
          
         try{

@@ -70,7 +70,7 @@
             sqlFilter = accountCode != null && ! accountCode.trim().equals("")? "accountcode = COALESCE('"+accountCode+"', accountcode) AND ": "";
         }
         if(cuml == 1){
-            String fiscalYear = sys.getOne("qset.fnfiscalprd", "FISCALYEAR", "PYEAR = "+ pYear+ " AND PMONTH = "+ pMonth+ "");
+            String fiscalYear = sys.getOne(comCode+".fnfiscalprd", "FISCALYEAR", "PYEAR = "+ pYear+ " AND PMONTH = "+ pMonth+ "");
             query = " SELECT * FROM "+comCode+".VIEWGLDTLS WHERE "+sqlFilter+" FISCALYEAR    = '"+ fiscalYear+ "' ";
         }else{
             query = " SELECT * FROM "+comCode+".VIEWGLDTLS WHERE "+sqlFilter+" PYEAR = "+ pYear+ " AND PMONTH = '"+ pMonth+ "' ";

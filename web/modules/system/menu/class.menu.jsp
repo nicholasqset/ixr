@@ -16,7 +16,7 @@
 <%
     final class Menu{
         JSONObject obj = new JSONObject();
-        String table    = "qset.SYSMENUS";
+        String table    = this.comCode+".SYSMENUS";
         
         Integer menuCode    = request.getParameter("menuCode") != null? Integer.parseInt(request.getParameter("menuCode")): null;
         String menuName     = request.getParameter("menuName");

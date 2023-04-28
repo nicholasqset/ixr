@@ -1,15 +1,20 @@
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
-<%@page import="com.qset.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class Accounts{
-    String table            = "qset.GLACCOUNTS";
+    HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
+    String table            = this.comCode+".GLACCOUNTS";
     String view             = "";
     
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
@@ -28,7 +33,7 @@ final class Accounts{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -256,12 +261,12 @@ final class Accounts{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("accountType", " Account Type")+"</td>";
-        html += "<td>"+ gui.formSelect("accountType", "qset.GLACCTYPES", "ACCTYPECODE", "ACCTYPENAME", "", "", this.id != null? this.accTypeCode: "", "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("accountType", this.comCode+".GLACCTYPES", "ACCTYPECODE", "ACCTYPENAME", "", "", this.id != null? this.accTypeCode: "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("accountGroup", " Account Group")+"</td>";
-        html += "<td>"+ gui.formSelect("accountGroup", "qset.GLACCGRPS", "ACCGRPCODE", "ACCGRPNAME", "", "", this.id != null? this.accGrpCode: "", "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("accountGroup", this.comCode+".GLACCGRPS", "ACCGRPCODE", "ACCGRPNAME", "", "", this.id != null? this.accGrpCode: "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -274,10 +279,10 @@ final class Accounts{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         
         JSONObject obj      = new JSONObject();
-        System system       = new System();
+        Sys sys       = new Sys();
         
         try{
             Connection conn = ConnectionProvider.getConnection();
@@ -285,10 +290,10 @@ final class Accounts{
 	    String query = "";  
             
             if(this.id == null){
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 if(this.autoCode != null && this.autoCode == 1){
-                    this.accountCode = system.getNextNo(this.table, "ID", "", "", 4);
+                    this.accountCode = sys.getNextNo(this.table, "ID", "", "", 4);
                 }
                 
                 query = "INSERT INTO "+ this.table +" "

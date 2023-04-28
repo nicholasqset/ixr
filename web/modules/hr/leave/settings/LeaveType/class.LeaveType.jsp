@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -5,13 +6,14 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.qset.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
 
 final class LeaveType{
-    String table        = "qset.HRLVTYPES";
+    HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".HRLVTYPES";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String lvTypeCode   = request.getParameter("code");
@@ -28,7 +30,7 @@ final class LeaveType{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -276,7 +278,7 @@ final class LeaveType{
     }
     
     
-    public Object save(){        
+    public JSONObject save() throws Exception{        
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -289,7 +291,7 @@ final class LeaveType{
             
             if(this.id == null){
                 
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, LVTYPECODE, LVTYPENAME, LVTYPE, HASGENDER, GENDERCODE)"
@@ -333,7 +335,7 @@ final class LeaveType{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
         JSONObject obj = new JSONObject();
          
         try{

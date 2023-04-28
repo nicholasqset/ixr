@@ -3,7 +3,6 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.security.NoSuchAlgorithmException"%>
 <%@page import="com.qset.user.User"%>
 <%@page import="com.qset.gui.Gui"%>
@@ -11,9 +10,9 @@
 
 final class Profile{
     HttpSession session=request.getSession();
-   
-    String table        = "qset.SYSUSERS";
-    String view         = "qset.VIEWSYSUSERS";
+   String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".SYSUSERS";
+    String view         = this.comCode+".VIEWSYSUSERS";
     
     String userId       = request.getParameter("userId");
     String password     = request.getParameter("password");
@@ -27,7 +26,7 @@ final class Profile{
         
       //  User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
         
-        User user = new User(session.getAttribute("userName").toString());
+        User user = new User(session.getAttribute("userName").toString(), this.comCode);
         
         html += gui.formStart("frmModule", "void%200", "post", "onSubmit =\"javascript:return false;\"");
         
@@ -35,13 +34,13 @@ final class Profile{
         
         html += "<table width =\"100%\" class =\"module\" cellpadding = \"2\" cellspacing = \"0\" >";
         
-        html += "<tr>";
-	html += "<td class =\"bold\" width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "group.png", "", "")+" User Role</td>";
-	html += "<td>"+user.roleName+"</td>";
-	html += "</tr>";
+//        html += "<tr>";
+//	html += "<td class =\"bold\" width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "group.png", "", "")+" User Role</td>";
+//	html += "<td>"+user.roleName+"</td>";
+//	html += "</tr>";
         
         html += "<tr>";
-	html += "<td class =\"bold\">"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+" User ID</td>";
+	html += "<td class =\"bold\" width = \"15%\">"+gui.formIcon(request.getContextPath(), "page-white-edit.png", "", "")+" User ID</td>";
 	html += "<td>"+user.userId+"</td>";
 	html += "</tr>";
         

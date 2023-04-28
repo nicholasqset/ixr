@@ -1,13 +1,18 @@
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
-<%@page import="com.qset.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class AccountTypes{
-    String table        = "qset.GLACCTYPES";
+    HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".GLACCTYPES";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String accTypeCode  = request.getParameter("code");
@@ -19,7 +24,7 @@ final class AccountTypes{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -238,7 +243,7 @@ final class AccountTypes{
     }
     
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -252,7 +257,7 @@ final class AccountTypes{
             
             if(this.id == null){
                 
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, ACCTYPECODE, ACCTYPENAME)"
@@ -294,10 +299,7 @@ final class AccountTypes{
         return obj;
     }
     
-    public Object purge(){
-        
-         
-         
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

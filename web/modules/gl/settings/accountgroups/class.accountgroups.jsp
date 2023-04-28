@@ -1,14 +1,19 @@
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
-<%@page import="com.qset.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class AccountGroups{
-    String table            = "qset.GLACCGRPS";
-    String view             = "qset.VIEWGLACCGRPS";
+    HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
+    String table            = this.comCode+".GLACCGRPS";
+    String view             = this.comCode+".VIEWGLACCGRPS";
         
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String accGrpCatCode    = request.getParameter("accGroupCat");
@@ -21,7 +26,7 @@ final class AccountGroups{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -215,7 +220,7 @@ final class AccountGroups{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "category-group.png", "", "")+" "+gui.formLabel("accGroupCat", "Acc Group Category")+"</td>";
-	html += "<td>"+gui.formSelect("accGroupCat", "qset.GLACCGRPCAT", "ACCGRPCATCODE", "ACCGRPCATNAME", "", null, this.id != null? this.accGrpCatCode: "", null, true)+"</td>";
+	html += "<td>"+gui.formSelect("accGroupCat", this.comCode+".GLACCGRPCAT", "ACCGRPCATCODE", "ACCGRPCATNAME", "", null, this.id != null? this.accGrpCatCode: "", null, true)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -246,7 +251,7 @@ final class AccountGroups{
     }
     
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -255,7 +260,7 @@ final class AccountGroups{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             
-            Integer id = system.generateId(this.table, "ID");
+            Integer id = sys.generateId(this.table, "ID");
             
             String query;
             Integer saved = 0;
@@ -300,7 +305,7 @@ final class AccountGroups{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
         
          JSONObject obj = new JSONObject();
          

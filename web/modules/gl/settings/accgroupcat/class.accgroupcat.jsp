@@ -1,13 +1,18 @@
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.qset.gui.Gui"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
-<%@page import="com.qset.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class AccGrpCategory{
-    String table        = "qset.GLACCGRPCAT";
+    HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".GLACCGRPCAT";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String accGrpCatCode  = request.getParameter("code");
@@ -20,7 +25,7 @@ final class AccGrpCategory{
         
         Sys sys = new Sys();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -223,7 +228,7 @@ final class AccGrpCategory{
     }
     
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
@@ -237,7 +242,7 @@ final class AccGrpCategory{
             
             if(this.id == null){
                 
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+this.table+" "
                     + "(ID, ACCGRPCATCODE, ACCGRPCATNAME)"
@@ -279,10 +284,7 @@ final class AccGrpCategory{
         return obj;
     }
     
-    public Object purge(){
-        
-         
-         
+    public JSONObject purge ()throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

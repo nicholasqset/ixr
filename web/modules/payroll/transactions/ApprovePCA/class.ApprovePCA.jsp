@@ -191,7 +191,7 @@
                         Integer pYear = rs.getInt("PYEAR");
                         Integer pMonth = rs.getInt("PMONTH");
 
-                        String amountStr = sys.getOneAgt("qset.VIEWPYPCADTLS", "SUM", "NEWAMOUNT", "AMT", "REFNO = '" + refNo + "'");
+                        String amountStr = sys.getOneAgt(this.comCode+".VIEWPYPCADTLS", "SUM", "NEWAMOUNT", "AMT", "REFNO = '" + refNo + "'");
 
                         amountStr = (amountStr != null && !amountStr.trim().equals("")) ? amountStr : "0";
 

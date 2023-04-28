@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.LocalDate"%>
@@ -12,14 +13,15 @@
 <%@page import="com.qset.gui.Gui"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
 
 final class LeaveApp{
-    String table            = "qset.HRLVAPPS";
-    String view             = "qset.VIEWHRLVAPPS";
+    HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+    String table            = this.comCode+".HRLVAPPS";
+    String view             = this.comCode+".VIEWHRLVAPPS";
     
     Integer id              = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
         
@@ -40,7 +42,7 @@ final class LeaveApp{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.view, "");
+        Integer recordCount = sys.getRecordCount(this.view, "");
         
         if(recordCount > 0){
         
@@ -285,7 +287,7 @@ final class LeaveApp{
             }
         }
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -318,12 +320,12 @@ final class LeaveApp{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Leave Year")+ "</td>";
-        html += "<td colspan = \"3\">"+ gui.formSelect("pYear", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? "": ""+system.getPeriodYear(), "", false)+"</td>";
+        html += "<td colspan = \"3\">"+ gui.formSelect("pYear", this.comCode+".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "", this.id != null? "": ""+sys.getPeriodYear(this.comCode), "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+gui.formIcon(request.getContextPath(),"view-pim-calendar.png", "", "")+ gui.formLabel("leaveType", " Leave Type")+"</td>";
-	html += "<td colspan = \"3\">"+ gui.formSelect("leaveType", "qset.HRLVTYPES", "LVTYPECODE", "LVTYPENAME", null, "", "", "onchange = \"leaveApp.getLvTypeDtls();\"", false)+"</td>";
+	html += "<td colspan = \"3\">"+ gui.formSelect("leaveType", this.comCode+".HRLVTYPES", "LVTYPECODE", "LVTYPENAME", null, "", "", "onchange = \"leaveApp.getLvTypeDtls();\"", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -353,7 +355,7 @@ final class LeaveApp{
         return html;
     }
     
-    public Object getStaffDtls(){
+    public JSONObject getStaffDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.pfNo == null || this.pfNo.trim().equals("")){
@@ -361,7 +363,7 @@ final class LeaveApp{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            StaffProfile staffProfile = new StaffProfile(this.pfNo);
+            StaffProfile staffProfile = new StaffProfile(this.pfNo, this.comCode);
             
             obj.put("staffName", staffProfile.fullName);
             
@@ -406,7 +408,7 @@ final class LeaveApp{
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
         
-        String defaultDate = system.getLogDate();
+        String defaultDate = sys.getLogDate();
         
         try{
             java.util.Date today = originalFormat.parse(defaultDate);
@@ -446,7 +448,7 @@ final class LeaveApp{
         return html;
     }
     
-    public Object getDates(){
+    public JSONObject getDates() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -467,8 +469,8 @@ final class LeaveApp{
 //                LocalDate endDate       = system.getLEndDateWoW(date, (this.aplDays - 1));
 //                LocalDate returnDate    = system.getLEndDateWoW(date, this.aplDays);
                 
-                LocalDate endDate       = system.getLEndDateWoWH(date, (this.aplDays - 1));
-                LocalDate returnDate    = system.getLEndDateWoWH(date, this.aplDays);
+                LocalDate endDate       = sys.getLEndDateWoWH(date, (this.aplDays - 1));
+                LocalDate returnDate    = sys.getLEndDateWoWH(date, this.aplDays);
 
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -509,7 +511,7 @@ final class LeaveApp{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         HttpSession session = request.getSession();
@@ -548,8 +550,8 @@ final class LeaveApp{
             
             if(rts == 1){
                 if(this.id == null){
-                    Integer id = system.generateId(this.table, "ID");
-                    String docNo = system.getNextNo(this.table, "ID", "", "LV", 7);
+                    Integer id = sys.generateId(this.table, "ID");
+                    String docNo = sys.getNextNo(this.table, "ID", "", "LV", 7);
 
                     query = "INSERT INTO "+ this.table+ " "
                             + "("
@@ -576,10 +578,10 @@ final class LeaveApp{
                             + leaveSchedule.taken+ ", "
                             + leaveSchedule.balTotal+ ", "
                             + this.aplDays+ ", "
-                            + "'"+ system.getLogUser(session)+"', "
-                            + "'"+ system.getLogDate()+ "', "
-                            + system.getLogTime()+ ", "
-                            + "'"+ system.getClientIpAdr(request)+ "'"
+                            + "'"+ sys.getLogUser(session)+"', "
+                            + "'"+ sys.getLogDate()+ "', "
+                            + sys.getLogTime()+ ", "
+                            + "'"+ sys.getClientIpAdr(request)+ "'"
                             + ")";
                 }else{
                     query = "UPDATE "+ this.table+ " SET "
@@ -588,10 +590,10 @@ final class LeaveApp{
                             + "ENDDATE          = '"+ this.endDate+ "', "
                             + "RETURNDATE       = '"+ this.returnDate+ "', "
                             + "APRDAYS          = "+ this.aplDays+ ", "
-                            + "AUDITUSER        = '"+ system.getLogUser(session)+"', "
-                            + "AUDITDATE        = '"+ system.getLogDate()+ "', "
-                            + "AUDITTIME        = '"+ system.getLogTime()+ "', "
-                            + "AUDITIPADR       = '"+ system.getClientIpAdr(request)+ "'"
+                            + "AUDITUSER        = '"+ sys.getLogUser(session)+"', "
+                            + "AUDITDATE        = '"+ sys.getLogDate()+ "', "
+                            + "AUDITTIME        = '"+ sys.getLogTime()+ "', "
+                            + "AUDITIPADR       = '"+ sys.getClientIpAdr(request)+ "'"
                             + "WHERE ID         = "+ this.id;
                 }
 
@@ -621,7 +623,7 @@ final class LeaveApp{
         Gui gui = new Gui();
         Sys sys = new Sys();
         
-        if(system.recordExists("qset.VIEWHRLVAPPS", "PFNO = '"+ this.pfNo+ "'")){
+        if(sys.recordExists(this.comCode+".VIEWHRLVAPPS", "PFNO = '"+ this.pfNo+ "'")){
             
             html += "<table style = \"width: 100%;\" class = \"ugrid\" cellpadding = \"1\" cellspacing = \"0\">";
             
@@ -694,11 +696,11 @@ final class LeaveApp{
         return html;
     }
     
-    public Object editLvApDtls(){
+    public JSONObject editLvApDtls() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         Gui gui = new Gui();
-        if(system.recordExists(this.table, "ID = "+ this.id +"")){
+        if(sys.recordExists(this.table, "ID = "+ this.id +"")){
             try{
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
@@ -757,7 +759,7 @@ final class LeaveApp{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{

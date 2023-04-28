@@ -11,6 +11,7 @@
 
 final class Constituencies{
     HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
     String table            = ""+session.getAttribute("comCode")+".CSCONSTITUENCIES";
     String view             = ""+session.getAttribute("comCode")+".VIEWCONSTITUENCIES";
         
@@ -216,7 +217,7 @@ final class Constituencies{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "globe-medium.png", "", "")+" "+gui.formLabel("county", "County")+"</td>";
-	html += "<td>"+gui.formSelect("county", "qset.CSCOUNTIES", "COUNTYCODE", "COUNTYNAME", null, null, this.id != null? this.countyCode: "", null, false)+"</td>";
+	html += "<td>"+gui.formSelect("county", this.comCode+".CSCOUNTIES", "COUNTYCODE", "COUNTYNAME", null, null, this.id != null? this.countyCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";

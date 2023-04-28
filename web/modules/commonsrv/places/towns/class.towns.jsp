@@ -11,6 +11,7 @@
 
 final class Towns{
     HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
     String table        = ""+session.getAttribute("comCode")+".CSTOWNS";
    String view         = ""+session.getAttribute("comCode")+".VIEWTOWNS";
         
@@ -216,7 +217,7 @@ final class Towns{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "globe-medium.png", "", "")+" "+gui.formLabel("country", "Country")+"</td>";
-	html += "<td>"+gui.formSelect("country", "qset.CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: "", null, false)+"</td>";
+	html += "<td>"+gui.formSelect("country", this.comCode+".CSCOUNTRIES", "COUNTRYCODE", "COUNTRYNAME", null, null, this.id != null? this.countryCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";

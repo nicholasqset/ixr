@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -5,15 +6,16 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.qset.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
 <%@page import="com.qset.hr.Hr"%>
 <%
 
 final class LeaveApr{
-    String table        = "qset.HRLVAPPS";
-    String view         = "qset.VIEWHRLVAPPS";
+    HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".HRLVAPPS";
+    String view         = this.comCode+".VIEWHRLVAPPS";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String docNo        = request.getParameter("docNo");
@@ -26,7 +28,7 @@ final class LeaveApr{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -300,7 +302,7 @@ final class LeaveApr{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -313,7 +315,7 @@ final class LeaveApr{
             
             query = "UPDATE "+ this.table+ " SET "
 //                        + "FULLNAME    = '"+ this.fullName+ "', "
-                        + "AUDITDATE   = '"+ system.getLogDate()+ "'"
+                        + "AUDITDATE   = '"+ sys.getLogDate()+ "'"
                         + "WHERE ID     = "+ this.id;
             
             saved = stmt.executeUpdate(query);
@@ -337,7 +339,7 @@ final class LeaveApr{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
          JSONObject obj = new JSONObject();
          
          try{
@@ -372,7 +374,7 @@ final class LeaveApr{
         
     }
     
-    public Object approve(){
+    public JSONObject approve() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
          
@@ -413,7 +415,7 @@ final class LeaveApr{
         return obj;
     }
     
-    public Object post(){
+    public JSONObject post() throws Exception{
          JSONObject obj = new JSONObject();
          HttpSession session = request.getSession();
          

@@ -1,14 +1,16 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.qset.hr.LeaveConfig"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="com.qset.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
 
 final class LeaveConf{
-    String table        = "qset.HRLVCONF";
+    HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".HRLVCONF";
 
     Integer id          = 1;
     Boolean useRoster   = request.getParameter("useRoster") != null? true: false;
@@ -43,7 +45,7 @@ final class LeaveConf{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         Sys sys = new Sys();
         
@@ -52,7 +54,7 @@ final class LeaveConf{
             Connection conn = ConnectionProvider.getConnection();
             Statement stmt = conn.createStatement();
             String query;
-            if(!system.recordExists(this.table, "")){
+            if(!sys.recordExists(this.table, "")){
                 query = "INSERT INTO "+this.table+" "
                         + "(ID, USEROSTER)"
                         + "VALUES"

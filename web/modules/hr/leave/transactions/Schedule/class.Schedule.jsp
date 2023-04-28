@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.qset.hr.LeaveType"%>
 <%@page import="com.qset.hr.StaffProfile"%>
 <%@page import="java.util.HashMap"%>
@@ -7,14 +8,15 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.qset.gui.Gui"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
 
 final class Schedule{
-    String table        = "qset.HRLVSCHEDULE";
-    String view         = "qset.VIEWHRLVSCHEDULE";
+    HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+    String table        = this.comCode+".HRLVSCHEDULE";
+    String view         = this.comCode+".VIEWHRLVSCHEDULE";
         
     Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
     String pfNo         = request.getParameter("staff");
@@ -34,7 +36,7 @@ final class Schedule{
         
         String dbType = ConnectionProvider.getDBType();
         
-        Integer recordCount = system.getRecordCount(this.table, "");
+        Integer recordCount = sys.getRecordCount(this.table, "");
         
         if(recordCount > 0){
             String gridSql;
@@ -255,7 +257,7 @@ final class Schedule{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Leave Year")+ "</td>";
-	html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", this.id != null? "PYEAR = "+ this.pYear: "PYEAR = "+system.getPeriodYear(), this.id != null? ""+ this.pYear: ""+system.getPeriodYear(), "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("pYear", "FNFISCALPRD", "PYEAR", "", "PYEAR DESC", this.id != null? "PYEAR = "+ this.pYear: "PYEAR = "+sys.getPeriodYear(this.comCode), this.id != null? ""+ this.pYear: ""+sys.getPeriodYear(this.comCode), "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -317,7 +319,7 @@ final class Schedule{
         return html;
     }
     
-    public Object getStaffDtls(){
+    public JSONObject getStaffDtls() throws Exception{
         JSONObject obj = new JSONObject();
         
         if(this.pfNo == null || this.pfNo.trim().equals("")){
@@ -325,7 +327,7 @@ final class Schedule{
             obj.put("message", "Oops! An Un-expected error occured while retrieving record.");
         }else{
             
-            StaffProfile staffProfile = new StaffProfile(this.pfNo);
+            StaffProfile staffProfile = new StaffProfile(this.pfNo, this.comCode);
             
             obj.put("staffName", staffProfile.fullName);
             
@@ -336,17 +338,17 @@ final class Schedule{
         return obj;
     }
     
-    public Object getEntitlement(){
+    public JSONObject getEntitlement() throws Exception{
         JSONObject obj = new JSONObject();
         
         Sys sys = new Sys();
         
-        StaffProfile staffProfile = new StaffProfile(this.pfNo);
+        StaffProfile staffProfile = new StaffProfile(this.pfNo, this.comCode);
         
         LeaveType leaveType = new LeaveType(this.lvTypeCode);
         
         if(leaveType.lvType.equals("AN")){
-            String days_ = system.getOne("HRLVDAYS", "DAYS", "LVTYPECODE = '"+ this.lvTypeCode+ "' AND GRADECODE = '"+ staffProfile.gradeCode+ "'");
+            String days_ = sys.getOne("HRLVDAYS", "DAYS", "LVTYPECODE = '"+ this.lvTypeCode+ "' AND GRADECODE = '"+ staffProfile.gradeCode+ "'");
 
             if(days_ != null && !days_.trim().equals("")){
                 obj.put("entitlement", days_);
@@ -367,7 +369,7 @@ final class Schedule{
         return obj;
     }
     
-    public Object save(){        
+    public JSONObject save() throws Exception{        
         JSONObject obj = new JSONObject();
         HttpSession session = request.getSession();
         Sys sys = new Sys();
@@ -381,7 +383,7 @@ final class Schedule{
             
             if(this.id == null){
                 
-                Integer id = system.generateId(this.table, "ID");
+                Integer id = sys.generateId(this.table, "ID");
                 
                 query = "INSERT INTO "+ this.table+ " "
                         + "("
@@ -400,10 +402,10 @@ final class Schedule{
                         + this.entitlement+ ", "
                         + this.taken+ ", "
                         + this.balTotal+ ", "
-                        + "'"+ system.getLogUser(session)+ "', "
-                        + "'"+ system.getLogDate()+ "', "
-                        + system.getLogTime()+ ", "
-                        + "'"+ system.getClientIpAdr(request)+ "' "
+                        + "'"+ sys.getLogUser(session)+ "', "
+                        + "'"+ sys.getLogDate()+ "', "
+                        + sys.getLogTime()+ ", "
+                        + "'"+ sys.getClientIpAdr(request)+ "' "
                         + ")";
                 
             }else{
@@ -416,10 +418,10 @@ final class Schedule{
                         + "ENTITLEMENT  = "+ this.entitlement+ ", "
                         + "TAKEN        = "+ this.taken+ ", "
                         + "BALTOTAL     = "+ this.balTotal+ ", "
-                        + "AUDITUSER    = '"+ system.getLogUser(session)+ "', "
-                        + "AUDITDATE    = '"+ system.getLogDate()+ "', "
-                        + "AUDITTIME    = '"+ system.getLogTime()+ "', "
-                        + "AUDITIPADR   = '"+ system.getClientIpAdr(request)+ "' "
+                        + "AUDITUSER    = '"+ sys.getLogUser(session)+ "', "
+                        + "AUDITDATE    = '"+ sys.getLogDate()+ "', "
+                        + "AUDITTIME    = '"+ sys.getLogTime()+ "', "
+                        + "AUDITIPADR   = '"+ sys.getClientIpAdr(request)+ "' "
                         + "WHERE ID     = "+ this.id;
             }
             
@@ -443,7 +445,7 @@ final class Schedule{
         return obj;
     }
     
-    public Object purge(){
+    public JSONObject purge() throws Exception{
         JSONObject obj = new JSONObject();
          
         try{

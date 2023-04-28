@@ -7,17 +7,21 @@
 <%@page import="com.qset.gui.Gui"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
-    final class PeriodEnd{
-        public String getModule(){
+    final class PeriodEnd {
+
+        HttpSession session = request.getSession();
+        String comCode = session.getAttribute("comCode").toString();
+
+        public String getModule() {
             String html = "";
-            
+
             Gui gui = new Gui();
-        
+
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
             html += "<div id = \"dhtmlgoodies_tabView1\">";
 
-            html += "<div class = \"dhtmlgoodies_aTab\">"+ this.getProcessTab()+ "</div>";
+            html += "<div class = \"dhtmlgoodies_aTab\">" + this.getProcessTab() + "</div>";
 
             html += "</div>";
 
@@ -31,11 +35,11 @@
             html += "<script type = \"text/javascript\">";
             html += "initTabs(\'dhtmlgoodies_tabView1\', Array(\'Period End\'), 0, 625, 142, Array(false));";
             html += "</script>";
-            
+
             return html;
         }
-        
-        public String getProcessTab(){
+
+        public String getProcessTab() {
             String html = "";
 
             Gui gui = new Gui();
@@ -44,13 +48,13 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding = \"2\" cellspacing = \"0\" >";
 
             html += "<tr>";
-            html += "<td nowrap width = \"17%\">"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pYear", " Current Year")+ "</td>";
-            html += "<td>"+ gui.formSelect("pYear", "qset.FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "PYEAR = "+ system.getPeriodYear(), ""+ system.getPeriodYear(), "", false)+ "</td>";
+            html += "<td nowrap width = \"17%\">" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("pYear", " Current Year") + "</td>";
+            html += "<td>" + gui.formSelect("pYear", this.comCode + ".FNFISCALPRD", "PYEAR", "", "PYEAR DESC", "PYEAR = " + sys.getPeriodYear(this.comCode), "" + sys.getPeriodYear(this.comCode), "", false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td nowrap>"+ gui.formIcon(request.getContextPath(), "calendar.png", "", "")+ gui.formLabel("pMonth", " Current Month")+ "</td>";
-            html += "<td>"+ gui.formOneMonthSelect("pMonth", system.getPeriodMonth(), "", true)+ "</td>";
+            html += "<td nowrap>" + gui.formIcon(request.getContextPath(), "calendar.png", "", "") + gui.formLabel("pMonth", " Current Month") + "</td>";
+            html += "<td>" + gui.formOneMonthSelect("pMonth", sys.getPeriodMonth(this.comCode), "", true) + "</td>";
             html += "</tr>";
 
             html += "<tr>";

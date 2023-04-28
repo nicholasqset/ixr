@@ -9,17 +9,17 @@
 <%@page import="com.qset.sys.Sys"%>
 <%
 
-    final class Department {
+    final class Building {
 
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
-        String table = "" + session.getAttribute("comCode") + ".cl_depts";
-        String view = "" + session.getAttribute("comCode") + ".cl_depts";
+        String table = "" + session.getAttribute("comCode") + ".re_buildings";
+        String view = "" + session.getAttribute("comCode") + ".re_buildings";
 
         Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
-        String schoolCode = request.getParameter("school");
-        String deptCode = request.getParameter("code");
-        String deptName = request.getParameter("name");
+        String locCode = request.getParameter("loc");
+        String buildingCode = request.getParameter("code");
+        String buildingName = request.getParameter("name");
 
         public String getGrid() {
             String html = "";
@@ -52,9 +52,9 @@
 
                             ArrayList<String> list = new ArrayList<String>();
 
-                            list.add("school_code");
-                            list.add("dept_code");
-                            list.add("dept_name");
+                            list.add("loc_code");
+                            list.add("building_code");
+                            list.add("building_name");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     filterSql += " WHERE ( UPPER(" + list.get(i) + ") LIKE '%" + find.toUpperCase() + "%' ";
@@ -110,7 +110,7 @@
                     session.setAttribute("startRecord", 0);
                 }
 
-                String orderBy = "school_code, dept_code ";
+                String orderBy = "loc_code, building_code ";
                 String limitSql = "";
 
                 String dbType = ConnectionProvider.getDBType();
@@ -144,7 +144,7 @@
                     html += "<th>#</th>";
                     html += "<th>Code</th>";
                     html += "<th>Name</th>";
-                    html += "<th>Faculty/School</th>";
+                    html += "<th>Building</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
 
@@ -153,9 +153,9 @@
                     while (rs.next()) {
 
                         Integer id = rs.getInt("ID");
-                        String regionName = rs.getString("school_code");
-                        String deptCode = rs.getString("dept_code");
-                        String deptName = rs.getString("dept_name");
+                        String regionName = rs.getString("loc_code");
+                        String buildingCode = rs.getString("building_code");
+                        String buildingName = rs.getString("building_name");
 
                         String bgcolor = (count % 2 > 0) ? "#FFFFFF" : "#F7F7F7";
 
@@ -163,8 +163,8 @@
 
                         html += "<tr bgcolor = \"" + bgcolor + "\">";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + deptCode + "</td>";
-                        html += "<td>" + deptName + "</td>";
+                        html += "<td>" + buildingCode + "</td>";
+                        html += "<td>" + buildingName + "</td>";
                         html += "<td>" + regionName + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
@@ -196,9 +196,9 @@
                     String query = "SELECT * FROM " + this.table + " WHERE ID = " + this.id;
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
-                        this.schoolCode = rs.getString("school_code");
-                        this.deptCode = rs.getString("dept_code");
-                        this.deptName = rs.getString("dept_name");
+                        this.locCode = rs.getString("loc_code");
+                        this.buildingCode = rs.getString("building_code");
+                        this.buildingName = rs.getString("building_name");
                     }
                 } catch (SQLException e) {
 
@@ -216,26 +216,26 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
 
             html += "<tr>";
-            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "house.png", "", "") + " " + gui.formLabel("school", "Faculty/School") + "</td>";
-            html += "<td>" + gui.formSelect("school", this.comCode+".cl_schools", "school_code", "school_name", null, null, this.id != null ? this.schoolCode : "", null, false) + "</td>";
+            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "house.png", "", "") + " " + gui.formLabel("loc", "Region") + "</td>";
+            html += "<td>" + gui.formSelect("loc", this.comCode + ".re_locs", "loc_code", "loc_name", null, null, this.id != null ? this.locCode : "", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>" + gui.formIcon(request.getContextPath(), "page.png", "", "") + " " + gui.formLabel("code", "Department Code") + "</td>";
-            html += "<td>" + gui.formInput("text", "code", 10, this.id != null ? this.deptCode : "", "", "") + "</td>";
+            html += "<td>" + gui.formIcon(request.getContextPath(), "page.png", "", "") + " " + gui.formLabel("code", "Building Code") + "</td>";
+            html += "<td>" + gui.formInput("text", "code", 10, this.id != null ? this.buildingCode : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("name", "Department Name") + "</td>";
-            html += "<td>" + gui.formInput("text", "name", 30, this.id != null ? this.deptName : "", "", "") + "</td>";
+            html += "<td>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("name", "Building Name") + "</td>";
+            html += "<td>" + gui.formInput("text", "name", 30, this.id != null ? this.buildingName : "", "", "") + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"towns.save('school code name');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"towns.save('loc code name');\"", "");
             if (this.id != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"towns.purge(" + this.id + ",'" + this.deptName + "');\"", "");
+                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"towns.purge(" + this.id + ",'" + this.buildingName + "');\"", "");
             }
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
             html += "</td>";
@@ -247,7 +247,7 @@
             return html;
         }
 
-        public Object save() throws Exception {
+        public JSONObject save() throws Exception {
 
             Integer saved = 0;
 
@@ -261,24 +261,23 @@
             try {
                 stmt = conn.createStatement();
 
-
                 String query;
 
                 if (this.id == null) {
                     query = "INSERT INTO " + this.table + " "
-                            + "(school_code, dept_code, dept_name)"
+                            + "(loc_code, building_code, building_name)"
                             + "VALUES"
                             + "("
-                            + "'" + this.schoolCode + "',"
-                            + "'" + this.deptCode + "',"
-                            + "'" + this.deptName + "'"
+                            + "'" + this.locCode + "',"
+                            + "'" + this.buildingCode + "',"
+                            + "'" + this.buildingName + "'"
                             + ")";
                 } else {
 
                     query = "UPDATE " + this.table + " SET "
-                            + "school_code   = '" + this.schoolCode + "',"
-                            + "dept_code  = '" + this.deptCode + "',"
-                            + "dept_name  = '" + this.deptName + "'"
+                            + "loc_code   = '" + this.locCode + "',"
+                            + "building_code  = '" + this.buildingCode + "',"
+                            + "building_name  = '" + this.buildingName + "'"
                             + "WHERE ID     = " + this.id;
                 }
 
@@ -293,7 +292,8 @@
                 }
 
             } catch (SQLException e) {
-
+                obj.put("success", new Integer(1));
+                obj.put("message", e.getMessage());
             }
 
             return obj;

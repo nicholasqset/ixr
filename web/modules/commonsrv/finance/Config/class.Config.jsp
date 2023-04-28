@@ -1,14 +1,15 @@
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="com.qset.gui.Gui"%>
 <%@page import="com.qset.finance.FinConfig"%>
-<%@page import="java.util.*"%>
-<%@page import="org.json.simple.JSONObject"%>
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="com.qset.sys.Sys"%>
-<%@page import="com.qset.gui.*"%>
-<%@page import="java.sql.*"%>
 <%
 
 final class Config{
     HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
     String table = ""+session.getAttribute("comCode")+".FNCONFIG";
 
     Integer id;
@@ -20,7 +21,7 @@ final class Config{
 
         Gui gui = new Gui();
         
-        FinConfig finConfig = new FinConfig();
+        FinConfig finConfig = new FinConfig(this.comCode);
         
         String html = "";
 
@@ -35,7 +36,7 @@ final class Config{
 
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-white-edit.png", "", "")+ gui.formLabel("taxLbAcc", " Tax Liability Account")+"</td>";
-	html += "<td>"+ gui.formSelect("taxLbAcc", "qset.GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", finConfig.taxLbAcc, "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("taxLbAcc", this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "", "", finConfig.taxLbAcc, "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
@@ -57,7 +58,7 @@ final class Config{
         return html;
     }
     
-    public Object save(){
+    public JSONObject save() throws Exception{
         JSONObject obj = new JSONObject();
         
         Sys sys = new Sys();

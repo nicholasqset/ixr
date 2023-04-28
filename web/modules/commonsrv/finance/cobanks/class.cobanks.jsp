@@ -11,6 +11,7 @@
 
 final class CoBanks{
     HttpSession session=request.getSession();
+    String comCode = session.getAttribute("comCode").toString();
     String table        = ""+session.getAttribute("comCode")+".FNCOBANKS";
     String view         = ""+session.getAttribute("comCode")+".VIEWFNCOBANKS";
         
@@ -231,7 +232,7 @@ final class CoBanks{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+ gui.formIcon(request.getContextPath(), "house.png", "", "")+ gui.formLabel("bankBranch", " Bank Branch")+"</td>";
-	html += "<td>"+ gui.formSelect("bankBranch", "qset.FNBANKBRANCH", "BKBRANCHCODE", "BKBRANCHNAME", null, null, this.id != null? this.bkBranchCode: "", null, false)+"</td>";
+	html += "<td>"+ gui.formSelect("bankBranch", this.comCode+".FNBANKBRANCH", "BKBRANCHCODE", "BKBRANCHNAME", null, null, this.id != null? this.bkBranchCode: "", null, false)+"</td>";
 	html += "</tr>"; 
         
         html += "<tr>";
@@ -246,12 +247,12 @@ final class CoBanks{
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("bankAccount", " Bank Account")+"</td>";
-	html += "<td>"+ gui.formSelect("bankAccount", "qset.GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "ACCOUNTNAME", "", this.id != null? this.bkAcc: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("bankAccount", this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "ACCOUNTNAME", "", this.id != null? this.bkAcc: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td nowrap>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("woAccount", " Write-Off Account")+"</td>";
-	html += "<td>"+ gui.formSelect("woAccount", "qset.GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "ACCOUNTNAME", "", this.id != null? this.woAcc: "", "", false)+ "</td>";
+	html += "<td>"+ gui.formSelect("woAccount", this.comCode+".GLACCOUNTS", "ACCOUNTCODE", "ACCOUNTNAME", "ACCOUNTNAME", "", this.id != null? this.woAcc: "", "", false)+ "</td>";
 	html += "</tr>";
         
         html += "<tr>";

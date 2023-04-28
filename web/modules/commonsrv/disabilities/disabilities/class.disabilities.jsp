@@ -215,7 +215,7 @@ final class Disabilities{
         
         html += "<tr>";
 	html += "<td width = \"15%\" nowrap>"+gui.formIcon(request.getContextPath(), "group.png", "", "")+" "+gui.formLabel("category", "Category")+"</td>";
-	html += "<td>"+gui.formSelect("category", "qset.CSDISABCAT", "DISABCATCODE", "DISABCATNAME", null, null, this.id != null? this.disabCatCode: "", null, false)+"</td>";
+	html += "<td>"+gui.formSelect("category", this.comCode+".CSDISABCAT", "DISABCATCODE", "DISABCATNAME", null, null, this.id != null? this.disabCatCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";

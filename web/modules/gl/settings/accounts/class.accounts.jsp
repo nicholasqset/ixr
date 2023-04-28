@@ -272,12 +272,12 @@ final class Accounts{
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("accountType", " Account Type")+"</td>";
-        html += "<td>"+ gui.formSelect("accountType", "qset.GLACCTYPES", "ACCTYPECODE", "ACCTYPENAME", "", "", this.id != null? this.accTypeCode: "", "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("accountType", this.comCode+".GLACCTYPES", "ACCTYPECODE", "ACCTYPENAME", "", "", this.id != null? this.accTypeCode: "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"page-edit.png", "", "")+ gui.formLabel("accountGroup", " Account Group")+"</td>";
-        html += "<td>"+ gui.formSelect("accountGroup", "qset.GLACCGRPS", "ACCGRPCODE", "ACCGRPNAME", "", "", this.id != null? this.accGrpCode: "", "", false)+"</td>";
+        html += "<td>"+ gui.formSelect("accountGroup", this.comCode+".GLACCGRPS", "ACCGRPCODE", "ACCGRPNAME", "", "", this.id != null? this.accGrpCode: "", "", false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";
