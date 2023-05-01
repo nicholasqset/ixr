@@ -10,7 +10,6 @@
 <%
 
     final class Houses {
-
         HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
         String table = "" + session.getAttribute("comCode") + ".re_houses";
@@ -18,8 +17,10 @@
 
         Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
         String locCode = request.getParameter("loc");
-        String buildingCode = request.getParameter("code");
-        String buildingName = request.getParameter("name");
+        String buildingCode = request.getParameter("building");
+        String houseCode = request.getParameter("code");
+        String houseName = request.getParameter("name");
+        String itemCode = request.getParameter("item");
 
         public String getGrid() {
             String html = "";
@@ -53,8 +54,8 @@
                             ArrayList<String> list = new ArrayList<String>();
 
                             list.add("loc_code");
-                            list.add("building_code");
-                            list.add("building_name");
+                            list.add("house_code");
+                            list.add("house_name");
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
                                     filterSql += " WHERE ( UPPER(" + list.get(i) + ") LIKE '%" + find.toUpperCase() + "%' ";
@@ -110,7 +111,7 @@
                     session.setAttribute("startRecord", 0);
                 }
 
-                String orderBy = "loc_code, building_code ";
+                String orderBy = "loc_code, house_code ";
                 String limitSql = "";
 
                 String dbType = ConnectionProvider.getDBType();
@@ -144,7 +145,7 @@
                     html += "<th>#</th>";
                     html += "<th>Code</th>";
                     html += "<th>Name</th>";
-                    html += "<th>Building</th>";
+                    html += "<th>House</th>";
                     html += "<th>Options</th>";
                     html += "</tr>";
 
@@ -154,8 +155,8 @@
 
                         Integer id = rs.getInt("ID");
                         String regionName = rs.getString("loc_code");
-                        String buildingCode = rs.getString("building_code");
-                        String buildingName = rs.getString("building_name");
+                        String houseCode = rs.getString("house_code");
+                        String houseName = rs.getString("house_name");
 
                         String bgcolor = (count % 2 > 0) ? "#FFFFFF" : "#F7F7F7";
 
@@ -163,8 +164,8 @@
 
                         html += "<tr bgcolor = \"" + bgcolor + "\">";
                         html += "<td>" + count + "</td>";
-                        html += "<td>" + buildingCode + "</td>";
-                        html += "<td>" + buildingName + "</td>";
+                        html += "<td>" + houseCode + "</td>";
+                        html += "<td>" + houseName + "</td>";
                         html += "<td>" + regionName + "</td>";
                         html += "<td>" + edit + "</td>";
                         html += "</tr>";
@@ -198,7 +199,9 @@
                     while (rs.next()) {
                         this.locCode = rs.getString("loc_code");
                         this.buildingCode = rs.getString("building_code");
-                        this.buildingName = rs.getString("building_name");
+                        this.houseCode = rs.getString("house_code");
+                        this.houseName = rs.getString("house_name");
+                        this.itemCode = rs.getString("item_code");
                     }
                 } catch (SQLException e) {
 
@@ -216,26 +219,36 @@
             html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
 
             html += "<tr>";
-            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "house.png", "", "") + " " + gui.formLabel("loc", "Region") + "</td>";
+            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "document-globe.png", "", "") + " " + gui.formLabel("loc", "Region") + "</td>";
             html += "<td>" + gui.formSelect("loc", this.comCode + ".re_locs", "loc_code", "loc_name", null, null, this.id != null ? this.locCode : "", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>" + gui.formIcon(request.getContextPath(), "page.png", "", "") + " " + gui.formLabel("code", "Building Code") + "</td>";
-            html += "<td>" + gui.formInput("text", "code", 10, this.id != null ? this.buildingCode : "", "", "") + "</td>";
+            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "building.png", "", "") + " " + gui.formLabel("building", "Building") + "</td>";
+            html += "<td>" + gui.formSelect("building", this.comCode + ".re_buildings", "building_code", "building_name", null, null, this.id != null ? this.buildingCode : "", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
-            html += "<td>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("name", "Building Name") + "</td>";
-            html += "<td>" + gui.formInput("text", "name", 30, this.id != null ? this.buildingName : "", "", "") + "</td>";
+            html += "<td>" + gui.formIcon(request.getContextPath(), "page.png", "", "") + " " + gui.formLabel("code", "House Code") + "</td>";
+            html += "<td>" + gui.formInput("text", "code", 10, this.id != null ? this.houseCode : "", "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td>" + gui.formIcon(request.getContextPath(), "page-edit.png", "", "") + " " + gui.formLabel("name", "House Name") + "</td>";
+            html += "<td>" + gui.formInput("text", "name", 30, this.id != null ? this.houseName : "", "", "") + "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
+            html += "<td width = \"15%\" nowrap>" + gui.formIcon(request.getContextPath(), "money.png", "", "") + " " + gui.formLabel("item", "Item") + "</td>";
+            html += "<td>" + gui.formSelect("item", this.comCode + ".icitems", "itemcode", "itemname", null, "catcode in (SELECT cat_code FROM "+this.comCode+".re_cats)", this.id != null ? this.itemCode : "", null, false) + "</td>";
             html += "</tr>";
 
             html += "<tr>";
             html += "<td>&nbsp;</td>";
             html += "<td>";
-            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"towns.save('loc code name');\"", "");
+            html += gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"towns.save('loc building code name');\"", "");
             if (this.id != null) {
-                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"towns.purge(" + this.id + ",'" + this.buildingName + "');\"", "");
+                html += gui.formButton(request.getContextPath(), "button", "btnDelete", "Delete", "delete.png", "onclick = \"towns.purge(" + this.id + ",'" + this.houseName + "');\"", "");
             }
             html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getModule();\"", "");
             html += "</td>";
@@ -248,7 +261,6 @@
         }
 
         public JSONObject save() throws Exception {
-
             Integer saved = 0;
 
             JSONObject obj = new JSONObject();
@@ -265,19 +277,23 @@
 
                 if (this.id == null) {
                     query = "INSERT INTO " + this.table + " "
-                            + "(loc_code, building_code, building_name)"
+                            + "(loc_code, building_code, house_code, house_name, item_code)"
                             + "VALUES"
                             + "("
                             + "'" + this.locCode + "',"
                             + "'" + this.buildingCode + "',"
-                            + "'" + this.buildingName + "'"
+                            + "'" + this.houseCode + "',"
+                            + "'" + this.houseName + "',"
+                            + "'" + this.itemCode + "'"
                             + ")";
                 } else {
 
                     query = "UPDATE " + this.table + " SET "
                             + "loc_code   = '" + this.locCode + "',"
                             + "building_code  = '" + this.buildingCode + "',"
-                            + "building_name  = '" + this.buildingName + "'"
+                            + "house_code  = '" + this.houseCode + "',"
+                            + "house_name  = '" + this.houseName + "',"
+                            + "item_code  = '" + this.itemCode + "'"
                             + "WHERE ID     = " + this.id;
                 }
 
