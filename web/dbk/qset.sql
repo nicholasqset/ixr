@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.12 (Ubuntu 12.12-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 14.7 (Ubuntu 14.7-0ubuntu0.22.04.1)
+-- Dumped from database version 14.3
+-- Dumped by pg_dump version 14.3
 
--- Started on 2023-04-28 07:31:08 EAT
+-- Started on 2023-05-01 16:32:51 EAT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 7 (class 2615 OID 19490)
+-- TOC entry 6 (class 2615 OID 119455)
 -- Name: qset; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
@@ -29,7 +29,7 @@ CREATE SCHEMA qset;
 ALTER SCHEMA qset OWNER TO postgres;
 
 --
--- TOC entry 1184 (class 1255 OID 19501)
+-- TOC entry 652 (class 1255 OID 119456)
 -- Name: get_date_item_ps_sales(character varying, date); Type: FUNCTION; Schema: qset; Owner: postgres
 --
 
@@ -49,7 +49,7 @@ $$;
 ALTER FUNCTION qset.get_date_item_ps_sales(v_itemcode character varying, v_entrydate date) OWNER TO postgres;
 
 --
--- TOC entry 1185 (class 1255 OID 19502)
+-- TOC entry 655 (class 1255 OID 119457)
 -- Name: get_date_item_sales(character varying, date); Type: FUNCTION; Schema: qset; Owner: postgres
 --
 
@@ -69,7 +69,7 @@ $$;
 ALTER FUNCTION qset.get_date_item_sales(v_itemcode character varying, v_entrydate date) OWNER TO postgres;
 
 --
--- TOC entry 1186 (class 1255 OID 19503)
+-- TOC entry 656 (class 1255 OID 119458)
 -- Name: get_py_slip_amount(character varying, character varying, bigint, bigint); Type: FUNCTION; Schema: qset; Owner: postgres
 --
 
@@ -104,7 +104,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 746 (class 1259 OID 21506)
+-- TOC entry 220 (class 1259 OID 119459)
 -- Name: aagradesys; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -120,7 +120,7 @@ CREATE TABLE qset.aagradesys (
 ALTER TABLE qset.aagradesys OWNER TO postgres;
 
 --
--- TOC entry 747 (class 1259 OID 21509)
+-- TOC entry 221 (class 1259 OID 119462)
 -- Name: aclevels; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -135,7 +135,7 @@ CREATE TABLE qset.aclevels (
 ALTER TABLE qset.aclevels OWNER TO postgres;
 
 --
--- TOC entry 748 (class 1259 OID 21512)
+-- TOC entry 222 (class 1259 OID 119465)
 -- Name: amaccsets; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -155,7 +155,7 @@ CREATE TABLE qset.amaccsets (
 ALTER TABLE qset.amaccsets OWNER TO postgres;
 
 --
--- TOC entry 749 (class 1259 OID 21515)
+-- TOC entry 223 (class 1259 OID 119468)
 -- Name: amaqbatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -174,7 +174,7 @@ CREATE TABLE qset.amaqbatches (
 ALTER TABLE qset.amaqbatches OWNER TO postgres;
 
 --
--- TOC entry 750 (class 1259 OID 21518)
+-- TOC entry 224 (class 1259 OID 119471)
 -- Name: amaqcodes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -189,7 +189,7 @@ CREATE TABLE qset.amaqcodes (
 ALTER TABLE qset.amaqcodes OWNER TO postgres;
 
 --
--- TOC entry 751 (class 1259 OID 21521)
+-- TOC entry 225 (class 1259 OID 119474)
 -- Name: amaqdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -221,7 +221,7 @@ CREATE TABLE qset.amaqdtls (
 ALTER TABLE qset.amaqdtls OWNER TO postgres;
 
 --
--- TOC entry 1108 (class 1259 OID 109303)
+-- TOC entry 226 (class 1259 OID 119477)
 -- Name: amaqhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -243,7 +243,7 @@ CREATE TABLE qset.amaqhdr (
 ALTER TABLE qset.amaqhdr OWNER TO postgres;
 
 --
--- TOC entry 1109 (class 1259 OID 109313)
+-- TOC entry 227 (class 1259 OID 119480)
 -- Name: amassets; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -281,7 +281,7 @@ CREATE TABLE qset.amassets (
 ALTER TABLE qset.amassets OWNER TO postgres;
 
 --
--- TOC entry 1107 (class 1259 OID 109298)
+-- TOC entry 228 (class 1259 OID 119483)
 -- Name: amaststatus; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -296,7 +296,7 @@ CREATE TABLE qset.amaststatus (
 ALTER TABLE qset.amaststatus OWNER TO postgres;
 
 --
--- TOC entry 1104 (class 1259 OID 109283)
+-- TOC entry 229 (class 1259 OID 119486)
 -- Name: amcats; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -311,7 +311,7 @@ CREATE TABLE qset.amcats (
 ALTER TABLE qset.amcats OWNER TO postgres;
 
 --
--- TOC entry 752 (class 1259 OID 21524)
+-- TOC entry 230 (class 1259 OID 119489)
 -- Name: amdepmethods; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -327,7 +327,7 @@ CREATE TABLE qset.amdepmethods (
 ALTER TABLE qset.amdepmethods OWNER TO postgres;
 
 --
--- TOC entry 1105 (class 1259 OID 109288)
+-- TOC entry 231 (class 1259 OID 119492)
 -- Name: amdibatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -346,7 +346,7 @@ CREATE TABLE qset.amdibatches (
 ALTER TABLE qset.amdibatches OWNER TO postgres;
 
 --
--- TOC entry 1110 (class 1259 OID 109318)
+-- TOC entry 232 (class 1259 OID 119495)
 -- Name: amdidtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -373,7 +373,7 @@ CREATE TABLE qset.amdidtls (
 ALTER TABLE qset.amdidtls OWNER TO postgres;
 
 --
--- TOC entry 1111 (class 1259 OID 109323)
+-- TOC entry 233 (class 1259 OID 119498)
 -- Name: amdihdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -395,7 +395,7 @@ CREATE TABLE qset.amdihdr (
 ALTER TABLE qset.amdihdr OWNER TO postgres;
 
 --
--- TOC entry 1106 (class 1259 OID 109293)
+-- TOC entry 234 (class 1259 OID 119501)
 -- Name: amdpbatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -414,7 +414,7 @@ CREATE TABLE qset.amdpbatches (
 ALTER TABLE qset.amdpbatches OWNER TO postgres;
 
 --
--- TOC entry 1112 (class 1259 OID 109328)
+-- TOC entry 235 (class 1259 OID 119504)
 -- Name: amdpdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -443,7 +443,7 @@ CREATE TABLE qset.amdpdtls (
 ALTER TABLE qset.amdpdtls OWNER TO postgres;
 
 --
--- TOC entry 1113 (class 1259 OID 109333)
+-- TOC entry 236 (class 1259 OID 119507)
 -- Name: amdphdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -465,7 +465,7 @@ CREATE TABLE qset.amdphdr (
 ALTER TABLE qset.amdphdr OWNER TO postgres;
 
 --
--- TOC entry 753 (class 1259 OID 21527)
+-- TOC entry 237 (class 1259 OID 119510)
 -- Name: apaccsets; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -480,7 +480,7 @@ CREATE TABLE qset.apaccsets (
 ALTER TABLE qset.apaccsets OWNER TO postgres;
 
 --
--- TOC entry 754 (class 1259 OID 21530)
+-- TOC entry 238 (class 1259 OID 119513)
 -- Name: apconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -492,7 +492,7 @@ CREATE TABLE qset.apconfig (
 ALTER TABLE qset.apconfig OWNER TO postgres;
 
 --
--- TOC entry 755 (class 1259 OID 21533)
+-- TOC entry 239 (class 1259 OID 119516)
 -- Name: apdtbs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -508,7 +508,7 @@ CREATE TABLE qset.apdtbs (
 ALTER TABLE qset.apdtbs OWNER TO postgres;
 
 --
--- TOC entry 756 (class 1259 OID 21536)
+-- TOC entry 240 (class 1259 OID 119519)
 -- Name: apinbatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -528,7 +528,7 @@ CREATE TABLE qset.apinbatches (
 ALTER TABLE qset.apinbatches OWNER TO postgres;
 
 --
--- TOC entry 757 (class 1259 OID 21539)
+-- TOC entry 241 (class 1259 OID 119522)
 -- Name: apindtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -554,7 +554,7 @@ CREATE TABLE qset.apindtls (
 ALTER TABLE qset.apindtls OWNER TO postgres;
 
 --
--- TOC entry 758 (class 1259 OID 21542)
+-- TOC entry 242 (class 1259 OID 119525)
 -- Name: apinhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -576,7 +576,7 @@ CREATE TABLE qset.apinhdr (
 ALTER TABLE qset.apinhdr OWNER TO postgres;
 
 --
--- TOC entry 759 (class 1259 OID 21545)
+-- TOC entry 243 (class 1259 OID 119528)
 -- Name: appybatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -595,7 +595,7 @@ CREATE TABLE qset.appybatches (
 ALTER TABLE qset.appybatches OWNER TO postgres;
 
 --
--- TOC entry 760 (class 1259 OID 21548)
+-- TOC entry 244 (class 1259 OID 119531)
 -- Name: appydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -617,7 +617,7 @@ CREATE TABLE qset.appydtls (
 ALTER TABLE qset.appydtls OWNER TO postgres;
 
 --
--- TOC entry 761 (class 1259 OID 21551)
+-- TOC entry 245 (class 1259 OID 119534)
 -- Name: appyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -639,7 +639,7 @@ CREATE TABLE qset.appyhdr (
 ALTER TABLE qset.appyhdr OWNER TO postgres;
 
 --
--- TOC entry 762 (class 1259 OID 21554)
+-- TOC entry 246 (class 1259 OID 119537)
 -- Name: apsupgrps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -656,7 +656,7 @@ CREATE TABLE qset.apsupgrps (
 ALTER TABLE qset.apsupgrps OWNER TO postgres;
 
 --
--- TOC entry 763 (class 1259 OID 21557)
+-- TOC entry 247 (class 1259 OID 119540)
 -- Name: apsuppliers; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -690,7 +690,7 @@ CREATE TABLE qset.apsuppliers (
 ALTER TABLE qset.apsuppliers OWNER TO postgres;
 
 --
--- TOC entry 764 (class 1259 OID 21563)
+-- TOC entry 248 (class 1259 OID 119545)
 -- Name: araccsets; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -706,7 +706,7 @@ CREATE TABLE qset.araccsets (
 ALTER TABLE qset.araccsets OWNER TO postgres;
 
 --
--- TOC entry 765 (class 1259 OID 21566)
+-- TOC entry 249 (class 1259 OID 119548)
 -- Name: arconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -718,7 +718,7 @@ CREATE TABLE qset.arconfig (
 ALTER TABLE qset.arconfig OWNER TO postgres;
 
 --
--- TOC entry 766 (class 1259 OID 21569)
+-- TOC entry 250 (class 1259 OID 119551)
 -- Name: arcusgrps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -733,7 +733,7 @@ CREATE TABLE qset.arcusgrps (
 ALTER TABLE qset.arcusgrps OWNER TO postgres;
 
 --
--- TOC entry 767 (class 1259 OID 21572)
+-- TOC entry 251 (class 1259 OID 119554)
 -- Name: arcustomers; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -767,7 +767,7 @@ CREATE TABLE qset.arcustomers (
 ALTER TABLE qset.arcustomers OWNER TO postgres;
 
 --
--- TOC entry 768 (class 1259 OID 21578)
+-- TOC entry 252 (class 1259 OID 119559)
 -- Name: ardtbs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -784,7 +784,7 @@ CREATE TABLE qset.ardtbs (
 ALTER TABLE qset.ardtbs OWNER TO postgres;
 
 --
--- TOC entry 769 (class 1259 OID 21581)
+-- TOC entry 253 (class 1259 OID 119562)
 -- Name: arinbatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -803,7 +803,7 @@ CREATE TABLE qset.arinbatches (
 ALTER TABLE qset.arinbatches OWNER TO postgres;
 
 --
--- TOC entry 770 (class 1259 OID 21584)
+-- TOC entry 254 (class 1259 OID 119565)
 -- Name: arindtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -830,7 +830,7 @@ CREATE TABLE qset.arindtls (
 ALTER TABLE qset.arindtls OWNER TO postgres;
 
 --
--- TOC entry 771 (class 1259 OID 21587)
+-- TOC entry 255 (class 1259 OID 119568)
 -- Name: arinhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -853,7 +853,7 @@ CREATE TABLE qset.arinhdr (
 ALTER TABLE qset.arinhdr OWNER TO postgres;
 
 --
--- TOC entry 772 (class 1259 OID 21590)
+-- TOC entry 256 (class 1259 OID 119571)
 -- Name: aritems; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -870,7 +870,7 @@ CREATE TABLE qset.aritems (
 ALTER TABLE qset.aritems OWNER TO postgres;
 
 --
--- TOC entry 773 (class 1259 OID 21593)
+-- TOC entry 257 (class 1259 OID 119574)
 -- Name: arpybatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -889,7 +889,7 @@ CREATE TABLE qset.arpybatches (
 ALTER TABLE qset.arpybatches OWNER TO postgres;
 
 --
--- TOC entry 774 (class 1259 OID 21596)
+-- TOC entry 258 (class 1259 OID 119577)
 -- Name: arpydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -911,7 +911,7 @@ CREATE TABLE qset.arpydtls (
 ALTER TABLE qset.arpydtls OWNER TO postgres;
 
 --
--- TOC entry 775 (class 1259 OID 21599)
+-- TOC entry 259 (class 1259 OID 119580)
 -- Name: arpyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -937,7 +937,7 @@ CREATE TABLE qset.arpyhdr (
 ALTER TABLE qset.arpyhdr OWNER TO postgres;
 
 --
--- TOC entry 1148 (class 1259 OID 191267)
+-- TOC entry 260 (class 1259 OID 119583)
 -- Name: cl_acad_years; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -952,12 +952,11 @@ CREATE TABLE qset.cl_acad_years (
 ALTER TABLE qset.cl_acad_years OWNER TO postgres;
 
 --
--- TOC entry 1147 (class 1259 OID 191265)
+-- TOC entry 261 (class 1259 OID 119586)
 -- Name: cl_acad_years_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_acad_years_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -968,8 +967,8 @@ CREATE SEQUENCE qset.cl_acad_years_id_seq
 ALTER TABLE qset.cl_acad_years_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7563 (class 0 OID 0)
--- Dependencies: 1147
+-- TOC entry 7039 (class 0 OID 0)
+-- Dependencies: 261
 -- Name: cl_acad_years_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -977,7 +976,7 @@ ALTER SEQUENCE qset.cl_acad_years_id_seq OWNED BY qset.cl_acad_years.id;
 
 
 --
--- TOC entry 1152 (class 1259 OID 199397)
+-- TOC entry 262 (class 1259 OID 119587)
 -- Name: cl_campus; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -991,12 +990,11 @@ CREATE TABLE qset.cl_campus (
 ALTER TABLE qset.cl_campus OWNER TO postgres;
 
 --
--- TOC entry 1151 (class 1259 OID 199395)
+-- TOC entry 263 (class 1259 OID 119590)
 -- Name: cl_campus_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_campus_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1007,8 +1005,8 @@ CREATE SEQUENCE qset.cl_campus_id_seq
 ALTER TABLE qset.cl_campus_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7564 (class 0 OID 0)
--- Dependencies: 1151
+-- TOC entry 7040 (class 0 OID 0)
+-- Dependencies: 263
 -- Name: cl_campus_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1016,7 +1014,7 @@ ALTER SEQUENCE qset.cl_campus_id_seq OWNED BY qset.cl_campus.id;
 
 
 --
--- TOC entry 1156 (class 1259 OID 199421)
+-- TOC entry 264 (class 1259 OID 119591)
 -- Name: cl_depts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1031,12 +1029,11 @@ CREATE TABLE qset.cl_depts (
 ALTER TABLE qset.cl_depts OWNER TO postgres;
 
 --
--- TOC entry 1155 (class 1259 OID 199419)
+-- TOC entry 265 (class 1259 OID 119594)
 -- Name: cl_depts_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_depts_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1047,8 +1044,8 @@ CREATE SEQUENCE qset.cl_depts_id_seq
 ALTER TABLE qset.cl_depts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7565 (class 0 OID 0)
--- Dependencies: 1155
+-- TOC entry 7041 (class 0 OID 0)
+-- Dependencies: 265
 -- Name: cl_depts_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1056,7 +1053,7 @@ ALTER SEQUENCE qset.cl_depts_id_seq OWNED BY qset.cl_depts.id;
 
 
 --
--- TOC entry 1142 (class 1259 OID 191233)
+-- TOC entry 266 (class 1259 OID 119595)
 -- Name: cl_programmes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1070,12 +1067,11 @@ CREATE TABLE qset.cl_programmes (
 ALTER TABLE qset.cl_programmes OWNER TO postgres;
 
 --
--- TOC entry 1141 (class 1259 OID 191231)
+-- TOC entry 267 (class 1259 OID 119598)
 -- Name: cl_programmes_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_programmes_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1086,8 +1082,8 @@ CREATE SEQUENCE qset.cl_programmes_id_seq
 ALTER TABLE qset.cl_programmes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7566 (class 0 OID 0)
--- Dependencies: 1141
+-- TOC entry 7042 (class 0 OID 0)
+-- Dependencies: 267
 -- Name: cl_programmes_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1095,7 +1091,7 @@ ALTER SEQUENCE qset.cl_programmes_id_seq OWNED BY qset.cl_programmes.id;
 
 
 --
--- TOC entry 1154 (class 1259 OID 199409)
+-- TOC entry 268 (class 1259 OID 119599)
 -- Name: cl_schools; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1109,12 +1105,11 @@ CREATE TABLE qset.cl_schools (
 ALTER TABLE qset.cl_schools OWNER TO postgres;
 
 --
--- TOC entry 1153 (class 1259 OID 199407)
+-- TOC entry 269 (class 1259 OID 119602)
 -- Name: cl_schools_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_schools_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1125,8 +1120,8 @@ CREATE SEQUENCE qset.cl_schools_id_seq
 ALTER TABLE qset.cl_schools_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7567 (class 0 OID 0)
--- Dependencies: 1153
+-- TOC entry 7043 (class 0 OID 0)
+-- Dependencies: 269
 -- Name: cl_schools_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1134,7 +1129,7 @@ ALTER SEQUENCE qset.cl_schools_id_seq OWNED BY qset.cl_schools.id;
 
 
 --
--- TOC entry 1150 (class 1259 OID 191277)
+-- TOC entry 270 (class 1259 OID 119603)
 -- Name: cl_sem_ses; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1148,12 +1143,11 @@ CREATE TABLE qset.cl_sem_ses (
 ALTER TABLE qset.cl_sem_ses OWNER TO postgres;
 
 --
--- TOC entry 1149 (class 1259 OID 191275)
+-- TOC entry 271 (class 1259 OID 119606)
 -- Name: cl_sem_ses_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_sem_ses_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1164,8 +1158,8 @@ CREATE SEQUENCE qset.cl_sem_ses_id_seq
 ALTER TABLE qset.cl_sem_ses_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7568 (class 0 OID 0)
--- Dependencies: 1149
+-- TOC entry 7044 (class 0 OID 0)
+-- Dependencies: 271
 -- Name: cl_sem_ses_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1173,7 +1167,7 @@ ALTER SEQUENCE qset.cl_sem_ses_id_seq OWNED BY qset.cl_sem_ses.id;
 
 
 --
--- TOC entry 1160 (class 1259 OID 207601)
+-- TOC entry 272 (class 1259 OID 119607)
 -- Name: cl_student_cats; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1187,12 +1181,11 @@ CREATE TABLE qset.cl_student_cats (
 ALTER TABLE qset.cl_student_cats OWNER TO postgres;
 
 --
--- TOC entry 1159 (class 1259 OID 207599)
+-- TOC entry 273 (class 1259 OID 119610)
 -- Name: cl_student_cats_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_student_cats_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1203,8 +1196,8 @@ CREATE SEQUENCE qset.cl_student_cats_id_seq
 ALTER TABLE qset.cl_student_cats_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7569 (class 0 OID 0)
--- Dependencies: 1159
+-- TOC entry 7045 (class 0 OID 0)
+-- Dependencies: 273
 -- Name: cl_student_cats_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1212,7 +1205,7 @@ ALTER SEQUENCE qset.cl_student_cats_id_seq OWNED BY qset.cl_student_cats.id;
 
 
 --
--- TOC entry 1164 (class 1259 OID 207625)
+-- TOC entry 274 (class 1259 OID 119611)
 -- Name: cl_student_status; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1226,12 +1219,11 @@ CREATE TABLE qset.cl_student_status (
 ALTER TABLE qset.cl_student_status OWNER TO postgres;
 
 --
--- TOC entry 1163 (class 1259 OID 207623)
+-- TOC entry 275 (class 1259 OID 119614)
 -- Name: cl_student_status_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_student_status_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1242,8 +1234,8 @@ CREATE SEQUENCE qset.cl_student_status_id_seq
 ALTER TABLE qset.cl_student_status_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7570 (class 0 OID 0)
--- Dependencies: 1163
+-- TOC entry 7046 (class 0 OID 0)
+-- Dependencies: 275
 -- Name: cl_student_status_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1251,7 +1243,7 @@ ALTER SEQUENCE qset.cl_student_status_id_seq OWNED BY qset.cl_student_status.id;
 
 
 --
--- TOC entry 1162 (class 1259 OID 207613)
+-- TOC entry 276 (class 1259 OID 119615)
 -- Name: cl_student_types; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1265,12 +1257,11 @@ CREATE TABLE qset.cl_student_types (
 ALTER TABLE qset.cl_student_types OWNER TO postgres;
 
 --
--- TOC entry 1161 (class 1259 OID 207611)
+-- TOC entry 277 (class 1259 OID 119618)
 -- Name: cl_student_types_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cl_student_types_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1281,8 +1272,8 @@ CREATE SEQUENCE qset.cl_student_types_id_seq
 ALTER TABLE qset.cl_student_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7571 (class 0 OID 0)
--- Dependencies: 1161
+-- TOC entry 7047 (class 0 OID 0)
+-- Dependencies: 277
 -- Name: cl_student_types_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1290,7 +1281,7 @@ ALTER SEQUENCE qset.cl_student_types_id_seq OWNED BY qset.cl_student_types.id;
 
 
 --
--- TOC entry 1146 (class 1259 OID 191257)
+-- TOC entry 278 (class 1259 OID 119619)
 -- Name: cl_students; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1321,7 +1312,7 @@ CREATE TABLE qset.cl_students (
 ALTER TABLE qset.cl_students OWNER TO postgres;
 
 --
--- TOC entry 1145 (class 1259 OID 191255)
+-- TOC entry 279 (class 1259 OID 119624)
 -- Name: cl_students_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1336,8 +1327,8 @@ CREATE SEQUENCE qset.cl_students_id_seq
 ALTER TABLE qset.cl_students_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7572 (class 0 OID 0)
--- Dependencies: 1145
+-- TOC entry 7048 (class 0 OID 0)
+-- Dependencies: 279
 -- Name: cl_students_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1345,7 +1336,7 @@ ALTER SEQUENCE qset.cl_students_id_seq OWNED BY qset.cl_students.id;
 
 
 --
--- TOC entry 1158 (class 1259 OID 207589)
+-- TOC entry 280 (class 1259 OID 119625)
 -- Name: cl_study_methods; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1359,7 +1350,7 @@ CREATE TABLE qset.cl_study_methods (
 ALTER TABLE qset.cl_study_methods OWNER TO postgres;
 
 --
--- TOC entry 1157 (class 1259 OID 207587)
+-- TOC entry 281 (class 1259 OID 119628)
 -- Name: cl_study_methods_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1374,8 +1365,8 @@ CREATE SEQUENCE qset.cl_study_methods_id_seq
 ALTER TABLE qset.cl_study_methods_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7573 (class 0 OID 0)
--- Dependencies: 1157
+-- TOC entry 7049 (class 0 OID 0)
+-- Dependencies: 281
 -- Name: cl_study_methods_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1383,7 +1374,7 @@ ALTER SEQUENCE qset.cl_study_methods_id_seq OWNED BY qset.cl_study_methods.id;
 
 
 --
--- TOC entry 1144 (class 1259 OID 191245)
+-- TOC entry 282 (class 1259 OID 119629)
 -- Name: cl_units; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1397,7 +1388,7 @@ CREATE TABLE qset.cl_units (
 ALTER TABLE qset.cl_units OWNER TO postgres;
 
 --
--- TOC entry 1143 (class 1259 OID 191243)
+-- TOC entry 283 (class 1259 OID 119632)
 -- Name: cl_units_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1412,8 +1403,8 @@ CREATE SEQUENCE qset.cl_units_id_seq
 ALTER TABLE qset.cl_units_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7574 (class 0 OID 0)
--- Dependencies: 1143
+-- TOC entry 7050 (class 0 OID 0)
+-- Dependencies: 283
 -- Name: cl_units_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1421,7 +1412,7 @@ ALTER SEQUENCE qset.cl_units_id_seq OWNED BY qset.cl_units.id;
 
 
 --
--- TOC entry 1136 (class 1259 OID 150294)
+-- TOC entry 284 (class 1259 OID 119633)
 -- Name: cm_campaigns; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1436,7 +1427,7 @@ CREATE TABLE qset.cm_campaigns (
 ALTER TABLE qset.cm_campaigns OWNER TO postgres;
 
 --
--- TOC entry 1135 (class 1259 OID 150292)
+-- TOC entry 285 (class 1259 OID 119638)
 -- Name: cm_campaigns_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1451,8 +1442,8 @@ CREATE SEQUENCE qset.cm_campaigns_id_seq
 ALTER TABLE qset.cm_campaigns_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7575 (class 0 OID 0)
--- Dependencies: 1135
+-- TOC entry 7051 (class 0 OID 0)
+-- Dependencies: 285
 -- Name: cm_campaigns_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1460,7 +1451,7 @@ ALTER SEQUENCE qset.cm_campaigns_id_seq OWNED BY qset.cm_campaigns.id;
 
 
 --
--- TOC entry 1129 (class 1259 OID 150245)
+-- TOC entry 286 (class 1259 OID 119639)
 -- Name: cm_groups; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1475,12 +1466,11 @@ CREATE TABLE qset.cm_groups (
 ALTER TABLE qset.cm_groups OWNER TO postgres;
 
 --
--- TOC entry 1128 (class 1259 OID 150243)
+-- TOC entry 287 (class 1259 OID 119642)
 -- Name: cm_groups_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.cm_groups_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1491,8 +1481,8 @@ CREATE SEQUENCE qset.cm_groups_id_seq
 ALTER TABLE qset.cm_groups_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7576 (class 0 OID 0)
--- Dependencies: 1128
+-- TOC entry 7052 (class 0 OID 0)
+-- Dependencies: 287
 -- Name: cm_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1500,7 +1490,7 @@ ALTER SEQUENCE qset.cm_groups_id_seq OWNED BY qset.cm_groups.id;
 
 
 --
--- TOC entry 1138 (class 1259 OID 150307)
+-- TOC entry 288 (class 1259 OID 119643)
 -- Name: cm_queue; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1527,7 +1517,7 @@ CREATE TABLE qset.cm_queue (
 ALTER TABLE qset.cm_queue OWNER TO postgres;
 
 --
--- TOC entry 1139 (class 1259 OID 166627)
+-- TOC entry 289 (class 1259 OID 119648)
 -- Name: cm_queue_hdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1542,7 +1532,7 @@ CREATE TABLE qset.cm_queue_hdr (
 ALTER TABLE qset.cm_queue_hdr OWNER TO postgres;
 
 --
--- TOC entry 1140 (class 1259 OID 166630)
+-- TOC entry 290 (class 1259 OID 119651)
 -- Name: cm_queue_hdr_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1557,8 +1547,8 @@ CREATE SEQUENCE qset.cm_queue_hdr_id_seq
 ALTER TABLE qset.cm_queue_hdr_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7577 (class 0 OID 0)
--- Dependencies: 1140
+-- TOC entry 7053 (class 0 OID 0)
+-- Dependencies: 290
 -- Name: cm_queue_hdr_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1566,7 +1556,7 @@ ALTER SEQUENCE qset.cm_queue_hdr_id_seq OWNED BY qset.cm_queue_hdr.id;
 
 
 --
--- TOC entry 1137 (class 1259 OID 150305)
+-- TOC entry 291 (class 1259 OID 119652)
 -- Name: cm_queue_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1581,8 +1571,8 @@ CREATE SEQUENCE qset.cm_queue_id_seq
 ALTER TABLE qset.cm_queue_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7578 (class 0 OID 0)
--- Dependencies: 1137
+-- TOC entry 7054 (class 0 OID 0)
+-- Dependencies: 291
 -- Name: cm_queue_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1590,7 +1580,7 @@ ALTER SEQUENCE qset.cm_queue_id_seq OWNED BY qset.cm_queue.id;
 
 
 --
--- TOC entry 1134 (class 1259 OID 150271)
+-- TOC entry 292 (class 1259 OID 119653)
 -- Name: cm_subscriber_grps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1604,7 +1594,7 @@ CREATE TABLE qset.cm_subscriber_grps (
 ALTER TABLE qset.cm_subscriber_grps OWNER TO postgres;
 
 --
--- TOC entry 1132 (class 1259 OID 150267)
+-- TOC entry 293 (class 1259 OID 119656)
 -- Name: cm_subscriber_grps_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1619,8 +1609,8 @@ CREATE SEQUENCE qset.cm_subscriber_grps_id_seq
 ALTER TABLE qset.cm_subscriber_grps_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7579 (class 0 OID 0)
--- Dependencies: 1132
+-- TOC entry 7055 (class 0 OID 0)
+-- Dependencies: 293
 -- Name: cm_subscriber_grps_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1628,7 +1618,7 @@ ALTER SEQUENCE qset.cm_subscriber_grps_id_seq OWNED BY qset.cm_subscriber_grps.i
 
 
 --
--- TOC entry 1133 (class 1259 OID 150269)
+-- TOC entry 294 (class 1259 OID 119657)
 -- Name: cm_subscriber_grps_subscriber_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1643,8 +1633,8 @@ CREATE SEQUENCE qset.cm_subscriber_grps_subscriber_id_seq
 ALTER TABLE qset.cm_subscriber_grps_subscriber_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7580 (class 0 OID 0)
--- Dependencies: 1133
+-- TOC entry 7056 (class 0 OID 0)
+-- Dependencies: 294
 -- Name: cm_subscriber_grps_subscriber_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1652,7 +1642,7 @@ ALTER SEQUENCE qset.cm_subscriber_grps_subscriber_id_seq OWNED BY qset.cm_subscr
 
 
 --
--- TOC entry 1131 (class 1259 OID 150257)
+-- TOC entry 295 (class 1259 OID 119658)
 -- Name: cm_subscribers; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1679,7 +1669,7 @@ CREATE TABLE qset.cm_subscribers (
 ALTER TABLE qset.cm_subscribers OWNER TO postgres;
 
 --
--- TOC entry 1130 (class 1259 OID 150255)
+-- TOC entry 296 (class 1259 OID 119663)
 -- Name: cm_subscribers_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -1694,8 +1684,8 @@ CREATE SEQUENCE qset.cm_subscribers_id_seq
 ALTER TABLE qset.cm_subscribers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7581 (class 0 OID 0)
--- Dependencies: 1130
+-- TOC entry 7057 (class 0 OID 0)
+-- Dependencies: 296
 -- Name: cm_subscribers_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -1703,7 +1693,7 @@ ALTER SEQUENCE qset.cm_subscribers_id_seq OWNED BY qset.cm_subscribers.id;
 
 
 --
--- TOC entry 776 (class 1259 OID 21602)
+-- TOC entry 297 (class 1259 OID 119664)
 -- Name: csbranches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1717,7 +1707,7 @@ CREATE TABLE qset.csbranches (
 ALTER TABLE qset.csbranches OWNER TO postgres;
 
 --
--- TOC entry 777 (class 1259 OID 21605)
+-- TOC entry 298 (class 1259 OID 119667)
 -- Name: cscologo; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1738,7 +1728,7 @@ CREATE TABLE qset.cscologo (
 ALTER TABLE qset.cscologo OWNER TO postgres;
 
 --
--- TOC entry 778 (class 1259 OID 21611)
+-- TOC entry 299 (class 1259 OID 119672)
 -- Name: csconstituencies; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1753,7 +1743,7 @@ CREATE TABLE qset.csconstituencies (
 ALTER TABLE qset.csconstituencies OWNER TO postgres;
 
 --
--- TOC entry 779 (class 1259 OID 21614)
+-- TOC entry 300 (class 1259 OID 119675)
 -- Name: cscoprofile; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1779,7 +1769,7 @@ CREATE TABLE qset.cscoprofile (
 ALTER TABLE qset.cscoprofile OWNER TO postgres;
 
 --
--- TOC entry 780 (class 1259 OID 21620)
+-- TOC entry 301 (class 1259 OID 119680)
 -- Name: cscounties; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1793,7 +1783,7 @@ CREATE TABLE qset.cscounties (
 ALTER TABLE qset.cscounties OWNER TO postgres;
 
 --
--- TOC entry 781 (class 1259 OID 21623)
+-- TOC entry 302 (class 1259 OID 119683)
 -- Name: cscountries; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1809,7 +1799,7 @@ CREATE TABLE qset.cscountries (
 ALTER TABLE qset.cscountries OWNER TO postgres;
 
 --
--- TOC entry 782 (class 1259 OID 21626)
+-- TOC entry 303 (class 1259 OID 119686)
 -- Name: cscountryregs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1823,7 +1813,7 @@ CREATE TABLE qset.cscountryregs (
 ALTER TABLE qset.cscountryregs OWNER TO postgres;
 
 --
--- TOC entry 783 (class 1259 OID 21629)
+-- TOC entry 304 (class 1259 OID 119689)
 -- Name: csdepts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1837,7 +1827,7 @@ CREATE TABLE qset.csdepts (
 ALTER TABLE qset.csdepts OWNER TO postgres;
 
 --
--- TOC entry 784 (class 1259 OID 21632)
+-- TOC entry 305 (class 1259 OID 119692)
 -- Name: csdisab; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1852,7 +1842,7 @@ CREATE TABLE qset.csdisab (
 ALTER TABLE qset.csdisab OWNER TO postgres;
 
 --
--- TOC entry 785 (class 1259 OID 21635)
+-- TOC entry 306 (class 1259 OID 119695)
 -- Name: csdisabcat; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1866,7 +1856,7 @@ CREATE TABLE qset.csdisabcat (
 ALTER TABLE qset.csdisabcat OWNER TO postgres;
 
 --
--- TOC entry 786 (class 1259 OID 21638)
+-- TOC entry 307 (class 1259 OID 119698)
 -- Name: csgender; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1880,7 +1870,7 @@ CREATE TABLE qset.csgender (
 ALTER TABLE qset.csgender OWNER TO postgres;
 
 --
--- TOC entry 787 (class 1259 OID 21641)
+-- TOC entry 308 (class 1259 OID 119701)
 -- Name: cssalutation; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1894,7 +1884,7 @@ CREATE TABLE qset.cssalutation (
 ALTER TABLE qset.cssalutation OWNER TO postgres;
 
 --
--- TOC entry 788 (class 1259 OID 21644)
+-- TOC entry 309 (class 1259 OID 119704)
 -- Name: cssections; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1909,7 +1899,7 @@ CREATE TABLE qset.cssections (
 ALTER TABLE qset.cssections OWNER TO postgres;
 
 --
--- TOC entry 789 (class 1259 OID 21647)
+-- TOC entry 310 (class 1259 OID 119707)
 -- Name: cstowns; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1924,7 +1914,7 @@ CREATE TABLE qset.cstowns (
 ALTER TABLE qset.cstowns OWNER TO postgres;
 
 --
--- TOC entry 790 (class 1259 OID 21650)
+-- TOC entry 311 (class 1259 OID 119710)
 -- Name: fnbankbranch; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1939,7 +1929,7 @@ CREATE TABLE qset.fnbankbranch (
 ALTER TABLE qset.fnbankbranch OWNER TO postgres;
 
 --
--- TOC entry 791 (class 1259 OID 21653)
+-- TOC entry 312 (class 1259 OID 119713)
 -- Name: fnbanks; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1954,7 +1944,7 @@ CREATE TABLE qset.fnbanks (
 ALTER TABLE qset.fnbanks OWNER TO postgres;
 
 --
--- TOC entry 792 (class 1259 OID 21656)
+-- TOC entry 313 (class 1259 OID 119716)
 -- Name: fnbkchqtpls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1970,7 +1960,7 @@ CREATE TABLE qset.fnbkchqtpls (
 ALTER TABLE qset.fnbkchqtpls OWNER TO postgres;
 
 --
--- TOC entry 793 (class 1259 OID 21659)
+-- TOC entry 314 (class 1259 OID 119719)
 -- Name: fncobanks; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -1987,7 +1977,7 @@ CREATE TABLE qset.fncobanks (
 ALTER TABLE qset.fncobanks OWNER TO postgres;
 
 --
--- TOC entry 794 (class 1259 OID 21662)
+-- TOC entry 315 (class 1259 OID 119722)
 -- Name: fnconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2002,7 +1992,7 @@ CREATE TABLE qset.fnconfig (
 ALTER TABLE qset.fnconfig OWNER TO postgres;
 
 --
--- TOC entry 795 (class 1259 OID 21665)
+-- TOC entry 316 (class 1259 OID 119725)
 -- Name: fnfiscalprd; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2018,7 +2008,7 @@ CREATE TABLE qset.fnfiscalprd (
 ALTER TABLE qset.fnfiscalprd OWNER TO postgres;
 
 --
--- TOC entry 796 (class 1259 OID 21668)
+-- TOC entry 317 (class 1259 OID 119728)
 -- Name: fnfiscalyear; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2034,7 +2024,7 @@ CREATE TABLE qset.fnfiscalyear (
 ALTER TABLE qset.fnfiscalyear OWNER TO postgres;
 
 --
--- TOC entry 797 (class 1259 OID 21671)
+-- TOC entry 318 (class 1259 OID 119731)
 -- Name: fnpaymodes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2051,7 +2041,7 @@ CREATE TABLE qset.fnpaymodes (
 ALTER TABLE qset.fnpaymodes OWNER TO postgres;
 
 --
--- TOC entry 798 (class 1259 OID 21674)
+-- TOC entry 319 (class 1259 OID 119734)
 -- Name: glaccgrpcat; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2066,7 +2056,7 @@ CREATE TABLE qset.glaccgrpcat (
 ALTER TABLE qset.glaccgrpcat OWNER TO postgres;
 
 --
--- TOC entry 799 (class 1259 OID 21677)
+-- TOC entry 320 (class 1259 OID 119737)
 -- Name: glaccgrps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2081,7 +2071,7 @@ CREATE TABLE qset.glaccgrps (
 ALTER TABLE qset.glaccgrps OWNER TO postgres;
 
 --
--- TOC entry 800 (class 1259 OID 21680)
+-- TOC entry 321 (class 1259 OID 119740)
 -- Name: glaccounts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2099,7 +2089,7 @@ CREATE TABLE qset.glaccounts (
 ALTER TABLE qset.glaccounts OWNER TO postgres;
 
 --
--- TOC entry 801 (class 1259 OID 21683)
+-- TOC entry 322 (class 1259 OID 119743)
 -- Name: glacctypes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2113,7 +2103,7 @@ CREATE TABLE qset.glacctypes (
 ALTER TABLE qset.glacctypes OWNER TO postgres;
 
 --
--- TOC entry 802 (class 1259 OID 21686)
+-- TOC entry 323 (class 1259 OID 119746)
 -- Name: glbatches; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2134,7 +2124,7 @@ CREATE TABLE qset.glbatches (
 ALTER TABLE qset.glbatches OWNER TO postgres;
 
 --
--- TOC entry 803 (class 1259 OID 21689)
+-- TOC entry 324 (class 1259 OID 119749)
 -- Name: glbdg; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2154,7 +2144,7 @@ CREATE TABLE qset.glbdg (
 ALTER TABLE qset.glbdg OWNER TO postgres;
 
 --
--- TOC entry 804 (class 1259 OID 21692)
+-- TOC entry 325 (class 1259 OID 119752)
 -- Name: glconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2166,7 +2156,7 @@ CREATE TABLE qset.glconfig (
 ALTER TABLE qset.glconfig OWNER TO postgres;
 
 --
--- TOC entry 805 (class 1259 OID 21695)
+-- TOC entry 326 (class 1259 OID 119755)
 -- Name: gldtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2189,7 +2179,7 @@ CREATE TABLE qset.gldtls (
 ALTER TABLE qset.gldtls OWNER TO postgres;
 
 --
--- TOC entry 806 (class 1259 OID 21698)
+-- TOC entry 327 (class 1259 OID 119758)
 -- Name: glhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2208,7 +2198,7 @@ CREATE TABLE qset.glhdr (
 ALTER TABLE qset.glhdr OWNER TO postgres;
 
 --
--- TOC entry 807 (class 1259 OID 21701)
+-- TOC entry 328 (class 1259 OID 119761)
 -- Name: gltb; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2230,7 +2220,7 @@ CREATE TABLE qset.gltb (
 ALTER TABLE qset.gltb OWNER TO postgres;
 
 --
--- TOC entry 808 (class 1259 OID 21704)
+-- TOC entry 329 (class 1259 OID 119764)
 -- Name: hgacademicyears; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2245,7 +2235,7 @@ CREATE TABLE qset.hgacademicyears (
 ALTER TABLE qset.hgacademicyears OWNER TO postgres;
 
 --
--- TOC entry 809 (class 1259 OID 21707)
+-- TOC entry 330 (class 1259 OID 119767)
 -- Name: hgcalendar; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2262,7 +2252,7 @@ CREATE TABLE qset.hgcalendar (
 ALTER TABLE qset.hgcalendar OWNER TO postgres;
 
 --
--- TOC entry 810 (class 1259 OID 21710)
+-- TOC entry 331 (class 1259 OID 119770)
 -- Name: hgconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2274,7 +2264,7 @@ CREATE TABLE qset.hgconfig (
 ALTER TABLE qset.hgconfig OWNER TO postgres;
 
 --
--- TOC entry 811 (class 1259 OID 21713)
+-- TOC entry 332 (class 1259 OID 119773)
 -- Name: hgcoresubjects; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2288,7 +2278,7 @@ CREATE TABLE qset.hgcoresubjects (
 ALTER TABLE qset.hgcoresubjects OWNER TO postgres;
 
 --
--- TOC entry 812 (class 1259 OID 21716)
+-- TOC entry 333 (class 1259 OID 119776)
 -- Name: hgexamconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2300,7 +2290,7 @@ CREATE TABLE qset.hgexamconfig (
 ALTER TABLE qset.hgexamconfig OWNER TO postgres;
 
 --
--- TOC entry 813 (class 1259 OID 21719)
+-- TOC entry 334 (class 1259 OID 119779)
 -- Name: hgexams; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2314,7 +2304,7 @@ CREATE TABLE qset.hgexams (
 ALTER TABLE qset.hgexams OWNER TO postgres;
 
 --
--- TOC entry 814 (class 1259 OID 21722)
+-- TOC entry 335 (class 1259 OID 119782)
 -- Name: hgforms; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2329,7 +2319,7 @@ CREATE TABLE qset.hgforms (
 ALTER TABLE qset.hgforms OWNER TO postgres;
 
 --
--- TOC entry 815 (class 1259 OID 21725)
+-- TOC entry 336 (class 1259 OID 119785)
 -- Name: hgformsbjs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2343,7 +2333,7 @@ CREATE TABLE qset.hgformsbjs (
 ALTER TABLE qset.hgformsbjs OWNER TO postgres;
 
 --
--- TOC entry 816 (class 1259 OID 21728)
+-- TOC entry 337 (class 1259 OID 119788)
 -- Name: hgfsdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2365,7 +2355,7 @@ CREATE TABLE qset.hgfsdtls (
 ALTER TABLE qset.hgfsdtls OWNER TO postgres;
 
 --
--- TOC entry 817 (class 1259 OID 21731)
+-- TOC entry 338 (class 1259 OID 119791)
 -- Name: hgfshdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2385,7 +2375,7 @@ CREATE TABLE qset.hgfshdr (
 ALTER TABLE qset.hgfshdr OWNER TO postgres;
 
 --
--- TOC entry 818 (class 1259 OID 21734)
+-- TOC entry 339 (class 1259 OID 119794)
 -- Name: hggrpsbjs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2400,7 +2390,7 @@ CREATE TABLE qset.hggrpsbjs (
 ALTER TABLE qset.hggrpsbjs OWNER TO postgres;
 
 --
--- TOC entry 819 (class 1259 OID 21737)
+-- TOC entry 340 (class 1259 OID 119797)
 -- Name: hginvsdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2419,7 +2409,7 @@ CREATE TABLE qset.hginvsdtls (
 ALTER TABLE qset.hginvsdtls OWNER TO postgres;
 
 --
--- TOC entry 820 (class 1259 OID 21740)
+-- TOC entry 341 (class 1259 OID 119800)
 -- Name: hginvshdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2443,7 +2433,7 @@ CREATE TABLE qset.hginvshdr (
 ALTER TABLE qset.hginvshdr OWNER TO postgres;
 
 --
--- TOC entry 821 (class 1259 OID 21743)
+-- TOC entry 342 (class 1259 OID 119803)
 -- Name: hgitems; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2459,7 +2449,7 @@ CREATE TABLE qset.hgitems (
 ALTER TABLE qset.hgitems OWNER TO postgres;
 
 --
--- TOC entry 822 (class 1259 OID 21746)
+-- TOC entry 343 (class 1259 OID 119806)
 -- Name: hgmarksheet; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2526,7 +2516,7 @@ CREATE TABLE qset.hgmarksheet (
 ALTER TABLE qset.hgmarksheet OWNER TO postgres;
 
 --
--- TOC entry 823 (class 1259 OID 21749)
+-- TOC entry 344 (class 1259 OID 119809)
 -- Name: hgobl; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2549,7 +2539,7 @@ CREATE TABLE qset.hgobl (
 ALTER TABLE qset.hgobl OWNER TO postgres;
 
 --
--- TOC entry 824 (class 1259 OID 21752)
+-- TOC entry 345 (class 1259 OID 119812)
 -- Name: hgobs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2569,7 +2559,7 @@ CREATE TABLE qset.hgobs (
 ALTER TABLE qset.hgobs OWNER TO postgres;
 
 --
--- TOC entry 825 (class 1259 OID 21755)
+-- TOC entry 346 (class 1259 OID 119815)
 -- Name: hgqddtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2588,7 +2578,7 @@ CREATE TABLE qset.hgqddtls (
 ALTER TABLE qset.hgqddtls OWNER TO postgres;
 
 --
--- TOC entry 826 (class 1259 OID 21758)
+-- TOC entry 347 (class 1259 OID 119818)
 -- Name: hgqdhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2612,7 +2602,7 @@ CREATE TABLE qset.hgqdhdr (
 ALTER TABLE qset.hgqdhdr OWNER TO postgres;
 
 --
--- TOC entry 827 (class 1259 OID 21761)
+-- TOC entry 348 (class 1259 OID 119821)
 -- Name: hgrcpts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2640,7 +2630,7 @@ CREATE TABLE qset.hgrcpts (
 ALTER TABLE qset.hgrcpts OWNER TO postgres;
 
 --
--- TOC entry 828 (class 1259 OID 21764)
+-- TOC entry 349 (class 1259 OID 119824)
 -- Name: hgregistration; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2660,7 +2650,7 @@ CREATE TABLE qset.hgregistration (
 ALTER TABLE qset.hgregistration OWNER TO postgres;
 
 --
--- TOC entry 829 (class 1259 OID 21767)
+-- TOC entry 350 (class 1259 OID 119827)
 -- Name: hgstreams; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2675,7 +2665,7 @@ CREATE TABLE qset.hgstreams (
 ALTER TABLE qset.hgstreams OWNER TO postgres;
 
 --
--- TOC entry 830 (class 1259 OID 21770)
+-- TOC entry 351 (class 1259 OID 119830)
 -- Name: hgstudcoresbjs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2696,7 +2686,7 @@ CREATE TABLE qset.hgstudcoresbjs (
 ALTER TABLE qset.hgstudcoresbjs OWNER TO postgres;
 
 --
--- TOC entry 831 (class 1259 OID 21773)
+-- TOC entry 352 (class 1259 OID 119833)
 -- Name: hgstudelectsbjs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2717,7 +2707,7 @@ CREATE TABLE qset.hgstudelectsbjs (
 ALTER TABLE qset.hgstudelectsbjs OWNER TO postgres;
 
 --
--- TOC entry 832 (class 1259 OID 21776)
+-- TOC entry 353 (class 1259 OID 119836)
 -- Name: hgstudentmarks; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2740,7 +2730,7 @@ CREATE TABLE qset.hgstudentmarks (
 ALTER TABLE qset.hgstudentmarks OWNER TO postgres;
 
 --
--- TOC entry 833 (class 1259 OID 21779)
+-- TOC entry 354 (class 1259 OID 119839)
 -- Name: hgstudents; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2779,7 +2769,7 @@ CREATE TABLE qset.hgstudents (
 ALTER TABLE qset.hgstudents OWNER TO postgres;
 
 --
--- TOC entry 834 (class 1259 OID 21785)
+-- TOC entry 355 (class 1259 OID 119844)
 -- Name: hgstudnos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2793,7 +2783,7 @@ CREATE TABLE qset.hgstudnos (
 ALTER TABLE qset.hgstudnos OWNER TO postgres;
 
 --
--- TOC entry 835 (class 1259 OID 21788)
+-- TOC entry 356 (class 1259 OID 119847)
 -- Name: hgstudphotos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2814,7 +2804,7 @@ CREATE TABLE qset.hgstudphotos (
 ALTER TABLE qset.hgstudphotos OWNER TO postgres;
 
 --
--- TOC entry 836 (class 1259 OID 21794)
+-- TOC entry 357 (class 1259 OID 119852)
 -- Name: hgstudprds; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2830,7 +2820,7 @@ CREATE TABLE qset.hgstudprds (
 ALTER TABLE qset.hgstudprds OWNER TO postgres;
 
 --
--- TOC entry 837 (class 1259 OID 21797)
+-- TOC entry 358 (class 1259 OID 119855)
 -- Name: hgstudselsbjtts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2851,7 +2841,7 @@ CREATE TABLE qset.hgstudselsbjtts (
 ALTER TABLE qset.hgstudselsbjtts OWNER TO postgres;
 
 --
--- TOC entry 838 (class 1259 OID 21800)
+-- TOC entry 359 (class 1259 OID 119858)
 -- Name: hgstudstatus; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2866,7 +2856,7 @@ CREATE TABLE qset.hgstudstatus (
 ALTER TABLE qset.hgstudstatus OWNER TO postgres;
 
 --
--- TOC entry 839 (class 1259 OID 21803)
+-- TOC entry 360 (class 1259 OID 119861)
 -- Name: hgstudsubjects; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2886,7 +2876,7 @@ CREATE TABLE qset.hgstudsubjects (
 ALTER TABLE qset.hgstudsubjects OWNER TO postgres;
 
 --
--- TOC entry 840 (class 1259 OID 21806)
+-- TOC entry 361 (class 1259 OID 119864)
 -- Name: hgstudtypes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2901,7 +2891,7 @@ CREATE TABLE qset.hgstudtypes (
 ALTER TABLE qset.hgstudtypes OWNER TO postgres;
 
 --
--- TOC entry 841 (class 1259 OID 21809)
+-- TOC entry 362 (class 1259 OID 119867)
 -- Name: hgstudyears; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2916,7 +2906,7 @@ CREATE TABLE qset.hgstudyears (
 ALTER TABLE qset.hgstudyears OWNER TO postgres;
 
 --
--- TOC entry 842 (class 1259 OID 21812)
+-- TOC entry 363 (class 1259 OID 119870)
 -- Name: hgsubjectgrps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2930,7 +2920,7 @@ CREATE TABLE qset.hgsubjectgrps (
 ALTER TABLE qset.hgsubjectgrps OWNER TO postgres;
 
 --
--- TOC entry 843 (class 1259 OID 21815)
+-- TOC entry 364 (class 1259 OID 119873)
 -- Name: hgsubjects; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2945,7 +2935,7 @@ CREATE TABLE qset.hgsubjects (
 ALTER TABLE qset.hgsubjects OWNER TO postgres;
 
 --
--- TOC entry 844 (class 1259 OID 21818)
+-- TOC entry 365 (class 1259 OID 119876)
 -- Name: hgterms; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2959,7 +2949,7 @@ CREATE TABLE qset.hgterms (
 ALTER TABLE qset.hgterms OWNER TO postgres;
 
 --
--- TOC entry 845 (class 1259 OID 21821)
+-- TOC entry 366 (class 1259 OID 119879)
 -- Name: hmbloodgrps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2973,7 +2963,7 @@ CREATE TABLE qset.hmbloodgrps (
 ALTER TABLE qset.hmbloodgrps OWNER TO postgres;
 
 --
--- TOC entry 846 (class 1259 OID 21824)
+-- TOC entry 367 (class 1259 OID 119882)
 -- Name: hmcats; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -2987,7 +2977,7 @@ CREATE TABLE qset.hmcats (
 ALTER TABLE qset.hmcats OWNER TO postgres;
 
 --
--- TOC entry 847 (class 1259 OID 21827)
+-- TOC entry 368 (class 1259 OID 119885)
 -- Name: hmcomplaints; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3001,7 +2991,7 @@ CREATE TABLE qset.hmcomplaints (
 ALTER TABLE qset.hmcomplaints OWNER TO postgres;
 
 --
--- TOC entry 848 (class 1259 OID 21830)
+-- TOC entry 369 (class 1259 OID 119888)
 -- Name: hmdepts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3015,7 +3005,7 @@ CREATE TABLE qset.hmdepts (
 ALTER TABLE qset.hmdepts OWNER TO postgres;
 
 --
--- TOC entry 849 (class 1259 OID 21833)
+-- TOC entry 370 (class 1259 OID 119891)
 -- Name: hmdiagnosis; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3029,7 +3019,7 @@ CREATE TABLE qset.hmdiagnosis (
 ALTER TABLE qset.hmdiagnosis OWNER TO postgres;
 
 --
--- TOC entry 850 (class 1259 OID 21836)
+-- TOC entry 371 (class 1259 OID 119894)
 -- Name: hmmedication; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3052,7 +3042,7 @@ CREATE TABLE qset.hmmedication (
 ALTER TABLE qset.hmmedication OWNER TO postgres;
 
 --
--- TOC entry 1096 (class 1259 OID 82709)
+-- TOC entry 372 (class 1259 OID 119899)
 -- Name: hmpharmdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3086,7 +3076,7 @@ CREATE TABLE qset.hmpharmdtls (
 ALTER TABLE qset.hmpharmdtls OWNER TO postgres;
 
 --
--- TOC entry 1095 (class 1259 OID 82691)
+-- TOC entry 373 (class 1259 OID 119904)
 -- Name: hmpharmhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3125,7 +3115,7 @@ CREATE TABLE qset.hmpharmhdr (
 ALTER TABLE qset.hmpharmhdr OWNER TO postgres;
 
 --
--- TOC entry 851 (class 1259 OID 21839)
+-- TOC entry 374 (class 1259 OID 119909)
 -- Name: hmptcomplaints; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3145,7 +3135,7 @@ CREATE TABLE qset.hmptcomplaints (
 ALTER TABLE qset.hmptcomplaints OWNER TO postgres;
 
 --
--- TOC entry 852 (class 1259 OID 21842)
+-- TOC entry 375 (class 1259 OID 119914)
 -- Name: hmptdiagnosis; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3165,7 +3155,7 @@ CREATE TABLE qset.hmptdiagnosis (
 ALTER TABLE qset.hmptdiagnosis OWNER TO postgres;
 
 --
--- TOC entry 853 (class 1259 OID 21845)
+-- TOC entry 376 (class 1259 OID 119919)
 -- Name: hmptlab; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3186,7 +3176,7 @@ CREATE TABLE qset.hmptlab (
 ALTER TABLE qset.hmptlab OWNER TO postgres;
 
 --
--- TOC entry 1083 (class 1259 OID 25335)
+-- TOC entry 377 (class 1259 OID 119924)
 -- Name: hmptlabdocs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3207,7 +3197,7 @@ CREATE TABLE qset.hmptlabdocs (
 ALTER TABLE qset.hmptlabdocs OWNER TO postgres;
 
 --
--- TOC entry 1082 (class 1259 OID 25333)
+-- TOC entry 378 (class 1259 OID 119927)
 -- Name: hmptlabdocs_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -3222,8 +3212,8 @@ CREATE SEQUENCE qset.hmptlabdocs_id_seq
 ALTER TABLE qset.hmptlabdocs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7659 (class 0 OID 0)
--- Dependencies: 1082
+-- TOC entry 7135 (class 0 OID 0)
+-- Dependencies: 378
 -- Name: hmptlabdocs_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -3231,7 +3221,7 @@ ALTER SEQUENCE qset.hmptlabdocs_id_seq OWNED BY qset.hmptlabdocs.id;
 
 
 --
--- TOC entry 854 (class 1259 OID 21851)
+-- TOC entry 379 (class 1259 OID 119928)
 -- Name: hmptphotos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3252,7 +3242,7 @@ CREATE TABLE qset.hmptphotos (
 ALTER TABLE qset.hmptphotos OWNER TO postgres;
 
 --
--- TOC entry 855 (class 1259 OID 21857)
+-- TOC entry 380 (class 1259 OID 119933)
 -- Name: hmptprofile; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3300,7 +3290,7 @@ CREATE TABLE qset.hmptprofile (
 ALTER TABLE qset.hmptprofile OWNER TO postgres;
 
 --
--- TOC entry 856 (class 1259 OID 21863)
+-- TOC entry 381 (class 1259 OID 119938)
 -- Name: hmpydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3327,7 +3317,7 @@ CREATE TABLE qset.hmpydtls (
 ALTER TABLE qset.hmpydtls OWNER TO postgres;
 
 --
--- TOC entry 857 (class 1259 OID 21866)
+-- TOC entry 382 (class 1259 OID 119941)
 -- Name: hmpyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3361,7 +3351,7 @@ CREATE TABLE qset.hmpyhdr (
 ALTER TABLE qset.hmpyhdr OWNER TO postgres;
 
 --
--- TOC entry 858 (class 1259 OID 21869)
+-- TOC entry 383 (class 1259 OID 119944)
 -- Name: hmrcptsmiscdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3385,7 +3375,7 @@ CREATE TABLE qset.hmrcptsmiscdtls (
 ALTER TABLE qset.hmrcptsmiscdtls OWNER TO postgres;
 
 --
--- TOC entry 859 (class 1259 OID 21872)
+-- TOC entry 384 (class 1259 OID 119947)
 -- Name: hmrcptsmischdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3408,7 +3398,7 @@ CREATE TABLE qset.hmrcptsmischdr (
 ALTER TABLE qset.hmrcptsmischdr OWNER TO postgres;
 
 --
--- TOC entry 860 (class 1259 OID 21875)
+-- TOC entry 385 (class 1259 OID 119950)
 -- Name: hmregistration; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3440,7 +3430,7 @@ CREATE TABLE qset.hmregistration (
 ALTER TABLE qset.hmregistration OWNER TO postgres;
 
 --
--- TOC entry 1089 (class 1259 OID 58116)
+-- TOC entry 386 (class 1259 OID 119955)
 -- Name: hmspecialists; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3454,12 +3444,11 @@ CREATE TABLE qset.hmspecialists (
 ALTER TABLE qset.hmspecialists OWNER TO postgres;
 
 --
--- TOC entry 1088 (class 1259 OID 58114)
+-- TOC entry 387 (class 1259 OID 119958)
 -- Name: hmspecialists_sp_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.hmspecialists_sp_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -3470,8 +3459,8 @@ CREATE SEQUENCE qset.hmspecialists_sp_id_seq
 ALTER TABLE qset.hmspecialists_sp_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7665 (class 0 OID 0)
--- Dependencies: 1088
+-- TOC entry 7141 (class 0 OID 0)
+-- Dependencies: 387
 -- Name: hmspecialists_sp_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -3479,7 +3468,7 @@ ALTER SEQUENCE qset.hmspecialists_sp_id_seq OWNED BY qset.hmspecialists.sp_id;
 
 
 --
--- TOC entry 1122 (class 1259 OID 125669)
+-- TOC entry 388 (class 1259 OID 119959)
 -- Name: hmstaffphotos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3500,7 +3489,7 @@ CREATE TABLE qset.hmstaffphotos (
 ALTER TABLE qset.hmstaffphotos OWNER TO postgres;
 
 --
--- TOC entry 861 (class 1259 OID 21878)
+-- TOC entry 389 (class 1259 OID 119964)
 -- Name: hmstaffprofile; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3539,7 +3528,7 @@ CREATE TABLE qset.hmstaffprofile (
 ALTER TABLE qset.hmstaffprofile OWNER TO postgres;
 
 --
--- TOC entry 1100 (class 1259 OID 90884)
+-- TOC entry 390 (class 1259 OID 119969)
 -- Name: hmstaffspexs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3556,7 +3545,7 @@ CREATE TABLE qset.hmstaffspexs (
 ALTER TABLE qset.hmstaffspexs OWNER TO postgres;
 
 --
--- TOC entry 1099 (class 1259 OID 90882)
+-- TOC entry 391 (class 1259 OID 119972)
 -- Name: hmstaffspexs_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -3571,8 +3560,8 @@ CREATE SEQUENCE qset.hmstaffspexs_id_seq
 ALTER TABLE qset.hmstaffspexs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7667 (class 0 OID 0)
--- Dependencies: 1099
+-- TOC entry 7143 (class 0 OID 0)
+-- Dependencies: 391
 -- Name: hmstaffspexs_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -3580,7 +3569,7 @@ ALTER SEQUENCE qset.hmstaffspexs_id_seq OWNED BY qset.hmstaffspexs.id;
 
 
 --
--- TOC entry 862 (class 1259 OID 21884)
+-- TOC entry 392 (class 1259 OID 119973)
 -- Name: hmstafftypes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3597,7 +3586,7 @@ CREATE TABLE qset.hmstafftypes (
 ALTER TABLE qset.hmstafftypes OWNER TO postgres;
 
 --
--- TOC entry 863 (class 1259 OID 21887)
+-- TOC entry 393 (class 1259 OID 119976)
 -- Name: hmtriage; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3620,7 +3609,7 @@ CREATE TABLE qset.hmtriage (
 ALTER TABLE qset.hmtriage OWNER TO postgres;
 
 --
--- TOC entry 864 (class 1259 OID 21890)
+-- TOC entry 394 (class 1259 OID 119979)
 -- Name: hrcategory; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3634,7 +3623,7 @@ CREATE TABLE qset.hrcategory (
 ALTER TABLE qset.hrcategory OWNER TO postgres;
 
 --
--- TOC entry 865 (class 1259 OID 21893)
+-- TOC entry 395 (class 1259 OID 119982)
 -- Name: hrengterms; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3648,7 +3637,7 @@ CREATE TABLE qset.hrengterms (
 ALTER TABLE qset.hrengterms OWNER TO postgres;
 
 --
--- TOC entry 866 (class 1259 OID 21896)
+-- TOC entry 396 (class 1259 OID 119985)
 -- Name: hrgrades; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3662,7 +3651,7 @@ CREATE TABLE qset.hrgrades (
 ALTER TABLE qset.hrgrades OWNER TO postgres;
 
 --
--- TOC entry 867 (class 1259 OID 21899)
+-- TOC entry 397 (class 1259 OID 119988)
 -- Name: hrlvapps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3703,7 +3692,7 @@ CREATE TABLE qset.hrlvapps (
 ALTER TABLE qset.hrlvapps OWNER TO postgres;
 
 --
--- TOC entry 868 (class 1259 OID 21902)
+-- TOC entry 398 (class 1259 OID 119991)
 -- Name: hrlvconf; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3716,7 +3705,7 @@ CREATE TABLE qset.hrlvconf (
 ALTER TABLE qset.hrlvconf OWNER TO postgres;
 
 --
--- TOC entry 869 (class 1259 OID 21905)
+-- TOC entry 399 (class 1259 OID 119994)
 -- Name: hrlvdays; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3731,7 +3720,7 @@ CREATE TABLE qset.hrlvdays (
 ALTER TABLE qset.hrlvdays OWNER TO postgres;
 
 --
--- TOC entry 870 (class 1259 OID 21908)
+-- TOC entry 400 (class 1259 OID 119997)
 -- Name: hrlvroster; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3755,7 +3744,7 @@ CREATE TABLE qset.hrlvroster (
 ALTER TABLE qset.hrlvroster OWNER TO postgres;
 
 --
--- TOC entry 871 (class 1259 OID 21911)
+-- TOC entry 401 (class 1259 OID 120000)
 -- Name: hrlvschedule; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3779,7 +3768,7 @@ CREATE TABLE qset.hrlvschedule (
 ALTER TABLE qset.hrlvschedule OWNER TO postgres;
 
 --
--- TOC entry 872 (class 1259 OID 21914)
+-- TOC entry 402 (class 1259 OID 120003)
 -- Name: hrlvtypes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3796,7 +3785,7 @@ CREATE TABLE qset.hrlvtypes (
 ALTER TABLE qset.hrlvtypes OWNER TO postgres;
 
 --
--- TOC entry 873 (class 1259 OID 21917)
+-- TOC entry 403 (class 1259 OID 120006)
 -- Name: hrpositions; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3811,7 +3800,7 @@ CREATE TABLE qset.hrpositions (
 ALTER TABLE qset.hrpositions OWNER TO postgres;
 
 --
--- TOC entry 874 (class 1259 OID 21920)
+-- TOC entry 404 (class 1259 OID 120009)
 -- Name: hrstaffphotos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3832,7 +3821,7 @@ CREATE TABLE qset.hrstaffphotos (
 ALTER TABLE qset.hrstaffphotos OWNER TO postgres;
 
 --
--- TOC entry 875 (class 1259 OID 21926)
+-- TOC entry 405 (class 1259 OID 120014)
 -- Name: hrstaffprofile; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3879,7 +3868,7 @@ CREATE TABLE qset.hrstaffprofile (
 ALTER TABLE qset.hrstaffprofile OWNER TO postgres;
 
 --
--- TOC entry 876 (class 1259 OID 21932)
+-- TOC entry 406 (class 1259 OID 120019)
 -- Name: hrstatus; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3894,7 +3883,7 @@ CREATE TABLE qset.hrstatus (
 ALTER TABLE qset.hrstatus OWNER TO postgres;
 
 --
--- TOC entry 877 (class 1259 OID 21935)
+-- TOC entry 407 (class 1259 OID 120022)
 -- Name: icaccsets; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3910,7 +3899,7 @@ CREATE TABLE qset.icaccsets (
 ALTER TABLE qset.icaccsets OWNER TO postgres;
 
 --
--- TOC entry 878 (class 1259 OID 21938)
+-- TOC entry 408 (class 1259 OID 120025)
 -- Name: icitemcats; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3928,7 +3917,7 @@ CREATE TABLE qset.icitemcats (
 ALTER TABLE qset.icitemcats OWNER TO postgres;
 
 --
--- TOC entry 879 (class 1259 OID 21941)
+-- TOC entry 409 (class 1259 OID 120028)
 -- Name: icitemphotos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3949,7 +3938,7 @@ CREATE TABLE qset.icitemphotos (
 ALTER TABLE qset.icitemphotos OWNER TO postgres;
 
 --
--- TOC entry 880 (class 1259 OID 21947)
+-- TOC entry 410 (class 1259 OID 120033)
 -- Name: icitems; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -3986,7 +3975,7 @@ CREATE TABLE qset.icitems (
 ALTER TABLE qset.icitems OWNER TO postgres;
 
 --
--- TOC entry 881 (class 1259 OID 21953)
+-- TOC entry 411 (class 1259 OID 120038)
 -- Name: icitems_log; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4028,7 +4017,7 @@ CREATE TABLE qset.icitems_log (
 ALTER TABLE qset.icitems_log OWNER TO postgres;
 
 --
--- TOC entry 882 (class 1259 OID 21958)
+-- TOC entry 412 (class 1259 OID 120043)
 -- Name: iciudtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4049,7 +4038,7 @@ CREATE TABLE qset.iciudtls (
 ALTER TABLE qset.iciudtls OWNER TO postgres;
 
 --
--- TOC entry 883 (class 1259 OID 21961)
+-- TOC entry 413 (class 1259 OID 120046)
 -- Name: iciuhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4067,7 +4056,7 @@ CREATE TABLE qset.iciuhdr (
 ALTER TABLE qset.iciuhdr OWNER TO postgres;
 
 --
--- TOC entry 884 (class 1259 OID 21964)
+-- TOC entry 414 (class 1259 OID 120049)
 -- Name: icpydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4089,7 +4078,7 @@ CREATE TABLE qset.icpydtls (
 ALTER TABLE qset.icpydtls OWNER TO postgres;
 
 --
--- TOC entry 885 (class 1259 OID 21967)
+-- TOC entry 415 (class 1259 OID 120052)
 -- Name: icpyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4108,7 +4097,7 @@ CREATE TABLE qset.icpyhdr (
 ALTER TABLE qset.icpyhdr OWNER TO postgres;
 
 --
--- TOC entry 886 (class 1259 OID 21970)
+-- TOC entry 416 (class 1259 OID 120055)
 -- Name: icuom; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4123,7 +4112,7 @@ CREATE TABLE qset.icuom (
 ALTER TABLE qset.icuom OWNER TO postgres;
 
 --
--- TOC entry 887 (class 1259 OID 21973)
+-- TOC entry 417 (class 1259 OID 120058)
 -- Name: poindtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4149,7 +4138,7 @@ CREATE TABLE qset.poindtls (
 ALTER TABLE qset.poindtls OWNER TO postgres;
 
 --
--- TOC entry 888 (class 1259 OID 21976)
+-- TOC entry 418 (class 1259 OID 120061)
 -- Name: poinhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4169,7 +4158,7 @@ CREATE TABLE qset.poinhdr (
 ALTER TABLE qset.poinhdr OWNER TO postgres;
 
 --
--- TOC entry 889 (class 1259 OID 21979)
+-- TOC entry 419 (class 1259 OID 120064)
 -- Name: popodtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4195,7 +4184,7 @@ CREATE TABLE qset.popodtls (
 ALTER TABLE qset.popodtls OWNER TO postgres;
 
 --
--- TOC entry 890 (class 1259 OID 21982)
+-- TOC entry 420 (class 1259 OID 120067)
 -- Name: popohdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4216,7 +4205,7 @@ CREATE TABLE qset.popohdr (
 ALTER TABLE qset.popohdr OWNER TO postgres;
 
 --
--- TOC entry 891 (class 1259 OID 21985)
+-- TOC entry 421 (class 1259 OID 120070)
 -- Name: popydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4242,7 +4231,7 @@ CREATE TABLE qset.popydtls (
 ALTER TABLE qset.popydtls OWNER TO postgres;
 
 --
--- TOC entry 892 (class 1259 OID 21988)
+-- TOC entry 422 (class 1259 OID 120073)
 -- Name: popyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4263,7 +4252,7 @@ CREATE TABLE qset.popyhdr (
 ALTER TABLE qset.popyhdr OWNER TO postgres;
 
 --
--- TOC entry 893 (class 1259 OID 21991)
+-- TOC entry 423 (class 1259 OID 120076)
 -- Name: porqdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4284,7 +4273,7 @@ CREATE TABLE qset.porqdtls (
 ALTER TABLE qset.porqdtls OWNER TO postgres;
 
 --
--- TOC entry 894 (class 1259 OID 21994)
+-- TOC entry 424 (class 1259 OID 120079)
 -- Name: porqhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4305,7 +4294,7 @@ CREATE TABLE qset.porqhdr (
 ALTER TABLE qset.porqhdr OWNER TO postgres;
 
 --
--- TOC entry 895 (class 1259 OID 21997)
+-- TOC entry 425 (class 1259 OID 120082)
 -- Name: pracademicyears; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4320,7 +4309,7 @@ CREATE TABLE qset.pracademicyears (
 ALTER TABLE qset.pracademicyears OWNER TO postgres;
 
 --
--- TOC entry 896 (class 1259 OID 22000)
+-- TOC entry 426 (class 1259 OID 120085)
 -- Name: prcalendar; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4337,7 +4326,7 @@ CREATE TABLE qset.prcalendar (
 ALTER TABLE qset.prcalendar OWNER TO postgres;
 
 --
--- TOC entry 897 (class 1259 OID 22003)
+-- TOC entry 427 (class 1259 OID 120088)
 -- Name: prclasses; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4352,7 +4341,7 @@ CREATE TABLE qset.prclasses (
 ALTER TABLE qset.prclasses OWNER TO postgres;
 
 --
--- TOC entry 898 (class 1259 OID 22006)
+-- TOC entry 428 (class 1259 OID 120091)
 -- Name: prconfig2; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4364,7 +4353,7 @@ CREATE TABLE qset.prconfig2 (
 ALTER TABLE qset.prconfig2 OWNER TO postgres;
 
 --
--- TOC entry 899 (class 1259 OID 22009)
+-- TOC entry 429 (class 1259 OID 120094)
 -- Name: prexams; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4378,7 +4367,7 @@ CREATE TABLE qset.prexams (
 ALTER TABLE qset.prexams OWNER TO postgres;
 
 --
--- TOC entry 900 (class 1259 OID 22012)
+-- TOC entry 430 (class 1259 OID 120097)
 -- Name: prfsdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4400,7 +4389,7 @@ CREATE TABLE qset.prfsdtls (
 ALTER TABLE qset.prfsdtls OWNER TO postgres;
 
 --
--- TOC entry 901 (class 1259 OID 22015)
+-- TOC entry 431 (class 1259 OID 120100)
 -- Name: prfshdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4420,7 +4409,7 @@ CREATE TABLE qset.prfshdr (
 ALTER TABLE qset.prfshdr OWNER TO postgres;
 
 --
--- TOC entry 902 (class 1259 OID 22018)
+-- TOC entry 432 (class 1259 OID 120103)
 -- Name: prinvsdtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4439,7 +4428,7 @@ CREATE TABLE qset.prinvsdtls (
 ALTER TABLE qset.prinvsdtls OWNER TO postgres;
 
 --
--- TOC entry 903 (class 1259 OID 22021)
+-- TOC entry 433 (class 1259 OID 120106)
 -- Name: prinvshdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4463,7 +4452,7 @@ CREATE TABLE qset.prinvshdr (
 ALTER TABLE qset.prinvshdr OWNER TO postgres;
 
 --
--- TOC entry 904 (class 1259 OID 22024)
+-- TOC entry 434 (class 1259 OID 120109)
 -- Name: pritems; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4479,7 +4468,7 @@ CREATE TABLE qset.pritems (
 ALTER TABLE qset.pritems OWNER TO postgres;
 
 --
--- TOC entry 905 (class 1259 OID 22027)
+-- TOC entry 435 (class 1259 OID 120112)
 -- Name: prmarksheet; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4512,7 +4501,7 @@ CREATE TABLE qset.prmarksheet (
 ALTER TABLE qset.prmarksheet OWNER TO postgres;
 
 --
--- TOC entry 906 (class 1259 OID 22030)
+-- TOC entry 436 (class 1259 OID 120115)
 -- Name: probl; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4535,7 +4524,7 @@ CREATE TABLE qset.probl (
 ALTER TABLE qset.probl OWNER TO postgres;
 
 --
--- TOC entry 907 (class 1259 OID 22033)
+-- TOC entry 437 (class 1259 OID 120118)
 -- Name: probs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4555,7 +4544,7 @@ CREATE TABLE qset.probs (
 ALTER TABLE qset.probs OWNER TO postgres;
 
 --
--- TOC entry 908 (class 1259 OID 22036)
+-- TOC entry 438 (class 1259 OID 120121)
 -- Name: prqddtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4574,7 +4563,7 @@ CREATE TABLE qset.prqddtls (
 ALTER TABLE qset.prqddtls OWNER TO postgres;
 
 --
--- TOC entry 909 (class 1259 OID 22039)
+-- TOC entry 439 (class 1259 OID 120124)
 -- Name: prqdhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4598,7 +4587,7 @@ CREATE TABLE qset.prqdhdr (
 ALTER TABLE qset.prqdhdr OWNER TO postgres;
 
 --
--- TOC entry 910 (class 1259 OID 22042)
+-- TOC entry 440 (class 1259 OID 120127)
 -- Name: prrcpts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4626,7 +4615,7 @@ CREATE TABLE qset.prrcpts (
 ALTER TABLE qset.prrcpts OWNER TO postgres;
 
 --
--- TOC entry 911 (class 1259 OID 22045)
+-- TOC entry 441 (class 1259 OID 120130)
 -- Name: prregistration; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4646,7 +4635,7 @@ CREATE TABLE qset.prregistration (
 ALTER TABLE qset.prregistration OWNER TO postgres;
 
 --
--- TOC entry 912 (class 1259 OID 22048)
+-- TOC entry 442 (class 1259 OID 120133)
 -- Name: prstreams; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4661,7 +4650,7 @@ CREATE TABLE qset.prstreams (
 ALTER TABLE qset.prstreams OWNER TO postgres;
 
 --
--- TOC entry 913 (class 1259 OID 22051)
+-- TOC entry 443 (class 1259 OID 120136)
 -- Name: prstudentmarks; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4684,7 +4673,7 @@ CREATE TABLE qset.prstudentmarks (
 ALTER TABLE qset.prstudentmarks OWNER TO postgres;
 
 --
--- TOC entry 914 (class 1259 OID 22054)
+-- TOC entry 444 (class 1259 OID 120139)
 -- Name: prstudents; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4723,7 +4712,7 @@ CREATE TABLE qset.prstudents (
 ALTER TABLE qset.prstudents OWNER TO postgres;
 
 --
--- TOC entry 915 (class 1259 OID 22060)
+-- TOC entry 445 (class 1259 OID 120144)
 -- Name: prstudnos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4737,7 +4726,7 @@ CREATE TABLE qset.prstudnos (
 ALTER TABLE qset.prstudnos OWNER TO postgres;
 
 --
--- TOC entry 916 (class 1259 OID 22063)
+-- TOC entry 446 (class 1259 OID 120147)
 -- Name: prstudphotos; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4758,7 +4747,7 @@ CREATE TABLE qset.prstudphotos (
 ALTER TABLE qset.prstudphotos OWNER TO postgres;
 
 --
--- TOC entry 917 (class 1259 OID 22069)
+-- TOC entry 447 (class 1259 OID 120152)
 -- Name: prstudprds; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4774,7 +4763,7 @@ CREATE TABLE qset.prstudprds (
 ALTER TABLE qset.prstudprds OWNER TO postgres;
 
 --
--- TOC entry 918 (class 1259 OID 22072)
+-- TOC entry 448 (class 1259 OID 120155)
 -- Name: prstudstatus; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4789,7 +4778,7 @@ CREATE TABLE qset.prstudstatus (
 ALTER TABLE qset.prstudstatus OWNER TO postgres;
 
 --
--- TOC entry 919 (class 1259 OID 22075)
+-- TOC entry 449 (class 1259 OID 120158)
 -- Name: prstudsubjects; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4809,7 +4798,7 @@ CREATE TABLE qset.prstudsubjects (
 ALTER TABLE qset.prstudsubjects OWNER TO postgres;
 
 --
--- TOC entry 920 (class 1259 OID 22078)
+-- TOC entry 450 (class 1259 OID 120161)
 -- Name: prstudtypes; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4824,7 +4813,7 @@ CREATE TABLE qset.prstudtypes (
 ALTER TABLE qset.prstudtypes OWNER TO postgres;
 
 --
--- TOC entry 921 (class 1259 OID 22081)
+-- TOC entry 451 (class 1259 OID 120164)
 -- Name: prstudyears; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4839,7 +4828,7 @@ CREATE TABLE qset.prstudyears (
 ALTER TABLE qset.prstudyears OWNER TO postgres;
 
 --
--- TOC entry 922 (class 1259 OID 22084)
+-- TOC entry 452 (class 1259 OID 120167)
 -- Name: prsubjects; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4853,7 +4842,7 @@ CREATE TABLE qset.prsubjects (
 ALTER TABLE qset.prsubjects OWNER TO postgres;
 
 --
--- TOC entry 923 (class 1259 OID 22087)
+-- TOC entry 453 (class 1259 OID 120170)
 -- Name: prterms; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4867,7 +4856,7 @@ CREATE TABLE qset.prterms (
 ALTER TABLE qset.prterms OWNER TO postgres;
 
 --
--- TOC entry 924 (class 1259 OID 22090)
+-- TOC entry 454 (class 1259 OID 120173)
 -- Name: pspydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4901,7 +4890,7 @@ CREATE TABLE qset.pspydtls (
 ALTER TABLE qset.pspydtls OWNER TO postgres;
 
 --
--- TOC entry 925 (class 1259 OID 22096)
+-- TOC entry 455 (class 1259 OID 120178)
 -- Name: pspyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4940,7 +4929,7 @@ CREATE TABLE qset.pspyhdr (
 ALTER TABLE qset.pspyhdr OWNER TO postgres;
 
 --
--- TOC entry 926 (class 1259 OID 22102)
+-- TOC entry 456 (class 1259 OID 120183)
 -- Name: pspyhdr_log; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -4994,7 +4983,7 @@ CREATE TABLE qset.pspyhdr_log (
 ALTER TABLE qset.pspyhdr_log OWNER TO postgres;
 
 --
--- TOC entry 927 (class 1259 OID 22110)
+-- TOC entry 457 (class 1259 OID 120190)
 -- Name: pstills; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5010,7 +4999,7 @@ CREATE TABLE qset.pstills (
 ALTER TABLE qset.pstills OWNER TO postgres;
 
 --
--- TOC entry 928 (class 1259 OID 22113)
+-- TOC entry 458 (class 1259 OID 120193)
 -- Name: pyconfig; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5038,7 +5027,7 @@ CREATE TABLE qset.pyconfig (
 ALTER TABLE qset.pyconfig OWNER TO postgres;
 
 --
--- TOC entry 929 (class 1259 OID 22116)
+-- TOC entry 459 (class 1259 OID 120196)
 -- Name: pydepomaps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5056,7 +5045,7 @@ CREATE TABLE qset.pydepomaps (
 ALTER TABLE qset.pydepomaps OWNER TO postgres;
 
 --
--- TOC entry 930 (class 1259 OID 22119)
+-- TOC entry 460 (class 1259 OID 120199)
 -- Name: pyfml; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5082,7 +5071,7 @@ CREATE TABLE qset.pyfml (
 ALTER TABLE qset.pyfml OWNER TO postgres;
 
 --
--- TOC entry 931 (class 1259 OID 22122)
+-- TOC entry 461 (class 1259 OID 120202)
 -- Name: pyfmt; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5096,7 +5085,7 @@ CREATE TABLE qset.pyfmt (
 ALTER TABLE qset.pyfmt OWNER TO postgres;
 
 --
--- TOC entry 932 (class 1259 OID 22125)
+-- TOC entry 462 (class 1259 OID 120205)
 -- Name: pyitemexm; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5116,7 +5105,7 @@ CREATE TABLE qset.pyitemexm (
 ALTER TABLE qset.pyitemexm OWNER TO postgres;
 
 --
--- TOC entry 933 (class 1259 OID 22128)
+-- TOC entry 463 (class 1259 OID 120208)
 -- Name: pyitems; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5141,7 +5130,7 @@ CREATE TABLE qset.pyitems (
 ALTER TABLE qset.pyitems OWNER TO postgres;
 
 --
--- TOC entry 934 (class 1259 OID 22131)
+-- TOC entry 464 (class 1259 OID 120211)
 -- Name: pyitp; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5163,7 +5152,7 @@ CREATE TABLE qset.pyitp (
 ALTER TABLE qset.pyitp OWNER TO postgres;
 
 --
--- TOC entry 935 (class 1259 OID 22134)
+-- TOC entry 465 (class 1259 OID 120214)
 -- Name: pyleaverates; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5179,7 +5168,7 @@ CREATE TABLE qset.pyleaverates (
 ALTER TABLE qset.pyleaverates OWNER TO postgres;
 
 --
--- TOC entry 936 (class 1259 OID 22137)
+-- TOC entry 466 (class 1259 OID 120217)
 -- Name: pylnmaps; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5197,7 +5186,7 @@ CREATE TABLE qset.pylnmaps (
 ALTER TABLE qset.pylnmaps OWNER TO postgres;
 
 --
--- TOC entry 937 (class 1259 OID 22140)
+-- TOC entry 467 (class 1259 OID 120220)
 -- Name: pynhifrates; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5213,7 +5202,7 @@ CREATE TABLE qset.pynhifrates (
 ALTER TABLE qset.pynhifrates OWNER TO postgres;
 
 --
--- TOC entry 938 (class 1259 OID 22143)
+-- TOC entry 468 (class 1259 OID 120223)
 -- Name: pypaypoints; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5227,7 +5216,7 @@ CREATE TABLE qset.pypaypoints (
 ALTER TABLE qset.pypaypoints OWNER TO postgres;
 
 --
--- TOC entry 939 (class 1259 OID 22146)
+-- TOC entry 469 (class 1259 OID 120226)
 -- Name: pypcadtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5249,7 +5238,7 @@ CREATE TABLE qset.pypcadtls (
 ALTER TABLE qset.pypcadtls OWNER TO postgres;
 
 --
--- TOC entry 940 (class 1259 OID 22149)
+-- TOC entry 470 (class 1259 OID 120229)
 -- Name: pypcahdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5278,7 +5267,7 @@ CREATE TABLE qset.pypcahdr (
 ALTER TABLE qset.pypcahdr OWNER TO postgres;
 
 --
--- TOC entry 941 (class 1259 OID 22152)
+-- TOC entry 471 (class 1259 OID 120232)
 -- Name: pypslhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5294,7 +5283,7 @@ CREATE TABLE qset.pypslhdr (
 ALTER TABLE qset.pypslhdr OWNER TO postgres;
 
 --
--- TOC entry 942 (class 1259 OID 22155)
+-- TOC entry 472 (class 1259 OID 120235)
 -- Name: pyslip; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5315,7 +5304,7 @@ CREATE TABLE qset.pyslip (
 ALTER TABLE qset.pyslip OWNER TO postgres;
 
 --
--- TOC entry 943 (class 1259 OID 22158)
+-- TOC entry 473 (class 1259 OID 120238)
 -- Name: pystaffbanks; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5335,7 +5324,7 @@ CREATE TABLE qset.pystaffbanks (
 ALTER TABLE qset.pystaffbanks OWNER TO postgres;
 
 --
--- TOC entry 944 (class 1259 OID 22161)
+-- TOC entry 474 (class 1259 OID 120241)
 -- Name: pystaffexempt; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5354,7 +5343,7 @@ CREATE TABLE qset.pystaffexempt (
 ALTER TABLE qset.pystaffexempt OWNER TO postgres;
 
 --
--- TOC entry 945 (class 1259 OID 22164)
+-- TOC entry 475 (class 1259 OID 120244)
 -- Name: pystaffitems; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5376,7 +5365,7 @@ CREATE TABLE qset.pystaffitems (
 ALTER TABLE qset.pystaffitems OWNER TO postgres;
 
 --
--- TOC entry 946 (class 1259 OID 22167)
+-- TOC entry 476 (class 1259 OID 120247)
 -- Name: pytaxrates; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5393,7 +5382,7 @@ CREATE TABLE qset.pytaxrates (
 ALTER TABLE qset.pytaxrates OWNER TO postgres;
 
 --
--- TOC entry 1172 (class 1259 OID 215813)
+-- TOC entry 477 (class 1259 OID 120250)
 -- Name: re_buildings; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5408,12 +5397,11 @@ CREATE TABLE qset.re_buildings (
 ALTER TABLE qset.re_buildings OWNER TO postgres;
 
 --
--- TOC entry 1171 (class 1259 OID 215811)
+-- TOC entry 478 (class 1259 OID 120253)
 -- Name: re_buildings_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.re_buildings_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -5424,8 +5412,8 @@ CREATE SEQUENCE qset.re_buildings_id_seq
 ALTER TABLE qset.re_buildings_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7722 (class 0 OID 0)
--- Dependencies: 1171
+-- TOC entry 7198 (class 0 OID 0)
+-- Dependencies: 478
 -- Name: re_buildings_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5433,7 +5421,45 @@ ALTER SEQUENCE qset.re_buildings_id_seq OWNED BY qset.re_buildings.id;
 
 
 --
--- TOC entry 1166 (class 1259 OID 215781)
+-- TOC entry 641 (class 1259 OID 121935)
+-- Name: re_cats; Type: TABLE; Schema: qset; Owner: postgres
+--
+
+CREATE TABLE qset.re_cats (
+    id integer NOT NULL,
+    cat_code character varying(10) NOT NULL
+);
+
+
+ALTER TABLE qset.re_cats OWNER TO postgres;
+
+--
+-- TOC entry 640 (class 1259 OID 121934)
+-- Name: re_cats_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
+--
+
+CREATE SEQUENCE qset.re_cats_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE qset.re_cats_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 7199 (class 0 OID 0)
+-- Dependencies: 640
+-- Name: re_cats_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
+--
+
+ALTER SEQUENCE qset.re_cats_id_seq OWNED BY qset.re_cats.id;
+
+
+--
+-- TOC entry 479 (class 1259 OID 120254)
 -- Name: re_config; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5446,12 +5472,11 @@ CREATE TABLE qset.re_config (
 ALTER TABLE qset.re_config OWNER TO postgres;
 
 --
--- TOC entry 1165 (class 1259 OID 215779)
+-- TOC entry 480 (class 1259 OID 120257)
 -- Name: re_config_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.re_config_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -5462,8 +5487,8 @@ CREATE SEQUENCE qset.re_config_id_seq
 ALTER TABLE qset.re_config_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7723 (class 0 OID 0)
--- Dependencies: 1165
+-- TOC entry 7200 (class 0 OID 0)
+-- Dependencies: 480
 -- Name: re_config_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5471,7 +5496,7 @@ ALTER SEQUENCE qset.re_config_id_seq OWNED BY qset.re_config.id;
 
 
 --
--- TOC entry 1168 (class 1259 OID 215789)
+-- TOC entry 481 (class 1259 OID 120258)
 -- Name: re_house_types; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5485,12 +5510,11 @@ CREATE TABLE qset.re_house_types (
 ALTER TABLE qset.re_house_types OWNER TO postgres;
 
 --
--- TOC entry 1167 (class 1259 OID 215787)
+-- TOC entry 482 (class 1259 OID 120261)
 -- Name: re_house_types_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.re_house_types_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -5501,8 +5525,8 @@ CREATE SEQUENCE qset.re_house_types_id_seq
 ALTER TABLE qset.re_house_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7724 (class 0 OID 0)
--- Dependencies: 1167
+-- TOC entry 7201 (class 0 OID 0)
+-- Dependencies: 482
 -- Name: re_house_types_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5510,7 +5534,7 @@ ALTER SEQUENCE qset.re_house_types_id_seq OWNED BY qset.re_house_types.id;
 
 
 --
--- TOC entry 1174 (class 1259 OID 215829)
+-- TOC entry 483 (class 1259 OID 120262)
 -- Name: re_houses; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5527,12 +5551,11 @@ CREATE TABLE qset.re_houses (
 ALTER TABLE qset.re_houses OWNER TO postgres;
 
 --
--- TOC entry 1173 (class 1259 OID 215827)
+-- TOC entry 484 (class 1259 OID 120265)
 -- Name: re_houses_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.re_houses_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -5543,8 +5566,8 @@ CREATE SEQUENCE qset.re_houses_id_seq
 ALTER TABLE qset.re_houses_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7725 (class 0 OID 0)
--- Dependencies: 1173
+-- TOC entry 7202 (class 0 OID 0)
+-- Dependencies: 484
 -- Name: re_houses_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5552,7 +5575,7 @@ ALTER SEQUENCE qset.re_houses_id_seq OWNED BY qset.re_houses.id;
 
 
 --
--- TOC entry 1170 (class 1259 OID 215801)
+-- TOC entry 485 (class 1259 OID 120266)
 -- Name: re_locs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5566,12 +5589,11 @@ CREATE TABLE qset.re_locs (
 ALTER TABLE qset.re_locs OWNER TO postgres;
 
 --
--- TOC entry 1169 (class 1259 OID 215799)
+-- TOC entry 486 (class 1259 OID 120269)
 -- Name: re_locs_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
 CREATE SEQUENCE qset.re_locs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -5582,8 +5604,8 @@ CREATE SEQUENCE qset.re_locs_id_seq
 ALTER TABLE qset.re_locs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7726 (class 0 OID 0)
--- Dependencies: 1169
+-- TOC entry 7203 (class 0 OID 0)
+-- Dependencies: 486
 -- Name: re_locs_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5591,7 +5613,7 @@ ALTER SEQUENCE qset.re_locs_id_seq OWNED BY qset.re_locs.id;
 
 
 --
--- TOC entry 947 (class 1259 OID 22170)
+-- TOC entry 487 (class 1259 OID 120270)
 -- Name: rtcats; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5605,7 +5627,7 @@ CREATE TABLE qset.rtcats (
 ALTER TABLE qset.rtcats OWNER TO postgres;
 
 --
--- TOC entry 948 (class 1259 OID 22173)
+-- TOC entry 488 (class 1259 OID 120273)
 -- Name: rtdepts; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5619,7 +5641,7 @@ CREATE TABLE qset.rtdepts (
 ALTER TABLE qset.rtdepts OWNER TO postgres;
 
 --
--- TOC entry 949 (class 1259 OID 22176)
+-- TOC entry 489 (class 1259 OID 120276)
 -- Name: rtpydtls; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5652,7 +5674,7 @@ CREATE TABLE qset.rtpydtls (
 ALTER TABLE qset.rtpydtls OWNER TO postgres;
 
 --
--- TOC entry 950 (class 1259 OID 22182)
+-- TOC entry 490 (class 1259 OID 120281)
 -- Name: rtpyhdr; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5689,7 +5711,7 @@ CREATE TABLE qset.rtpyhdr (
 ALTER TABLE qset.rtpyhdr OWNER TO postgres;
 
 --
--- TOC entry 951 (class 1259 OID 22188)
+-- TOC entry 491 (class 1259 OID 120286)
 -- Name: rttables; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5703,7 +5725,7 @@ CREATE TABLE qset.rttables (
 ALTER TABLE qset.rttables OWNER TO postgres;
 
 --
--- TOC entry 952 (class 1259 OID 22191)
+-- TOC entry 492 (class 1259 OID 120289)
 -- Name: sysmenus; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5725,7 +5747,7 @@ CREATE TABLE qset.sysmenus (
 ALTER TABLE qset.sysmenus OWNER TO postgres;
 
 --
--- TOC entry 953 (class 1259 OID 22194)
+-- TOC entry 493 (class 1259 OID 120292)
 -- Name: sysmenus_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -5740,8 +5762,8 @@ CREATE SEQUENCE qset.sysmenus_id_seq
 ALTER TABLE qset.sysmenus_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7727 (class 0 OID 0)
--- Dependencies: 953
+-- TOC entry 7204 (class 0 OID 0)
+-- Dependencies: 493
 -- Name: sysmenus_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5749,7 +5771,7 @@ ALTER SEQUENCE qset.sysmenus_id_seq OWNED BY qset.sysmenus.id;
 
 
 --
--- TOC entry 954 (class 1259 OID 22196)
+-- TOC entry 494 (class 1259 OID 120293)
 -- Name: sysmenus_menucode_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -5764,8 +5786,8 @@ CREATE SEQUENCE qset.sysmenus_menucode_seq
 ALTER TABLE qset.sysmenus_menucode_seq OWNER TO postgres;
 
 --
--- TOC entry 7728 (class 0 OID 0)
--- Dependencies: 954
+-- TOC entry 7205 (class 0 OID 0)
+-- Dependencies: 494
 -- Name: sysmenus_menucode_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5773,7 +5795,7 @@ ALTER SEQUENCE qset.sysmenus_menucode_seq OWNED BY qset.sysmenus.menucode;
 
 
 --
--- TOC entry 955 (class 1259 OID 22198)
+-- TOC entry 495 (class 1259 OID 120294)
 -- Name: syspvgs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5788,7 +5810,7 @@ CREATE TABLE qset.syspvgs (
 ALTER TABLE qset.syspvgs OWNER TO postgres;
 
 --
--- TOC entry 956 (class 1259 OID 22201)
+-- TOC entry 496 (class 1259 OID 120297)
 -- Name: syspvgs_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -5803,8 +5825,8 @@ CREATE SEQUENCE qset.syspvgs_id_seq
 ALTER TABLE qset.syspvgs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7729 (class 0 OID 0)
--- Dependencies: 956
+-- TOC entry 7206 (class 0 OID 0)
+-- Dependencies: 496
 -- Name: syspvgs_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5812,7 +5834,7 @@ ALTER SEQUENCE qset.syspvgs_id_seq OWNED BY qset.syspvgs.id;
 
 
 --
--- TOC entry 957 (class 1259 OID 22203)
+-- TOC entry 497 (class 1259 OID 120298)
 -- Name: sysroles; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5828,7 +5850,7 @@ CREATE TABLE qset.sysroles (
 ALTER TABLE qset.sysroles OWNER TO postgres;
 
 --
--- TOC entry 1085 (class 1259 OID 33540)
+-- TOC entry 498 (class 1259 OID 120301)
 -- Name: sysses; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5844,7 +5866,7 @@ CREATE TABLE qset.sysses (
 ALTER TABLE qset.sysses OWNER TO postgres;
 
 --
--- TOC entry 1084 (class 1259 OID 33538)
+-- TOC entry 499 (class 1259 OID 120304)
 -- Name: sysses_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -5859,8 +5881,8 @@ CREATE SEQUENCE qset.sysses_id_seq
 ALTER TABLE qset.sysses_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7730 (class 0 OID 0)
--- Dependencies: 1084
+-- TOC entry 7207 (class 0 OID 0)
+-- Dependencies: 499
 -- Name: sysses_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5868,7 +5890,7 @@ ALTER SEQUENCE qset.sysses_id_seq OWNED BY qset.sysses.id;
 
 
 --
--- TOC entry 958 (class 1259 OID 22206)
+-- TOC entry 500 (class 1259 OID 120305)
 -- Name: sysusrpvgs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5882,7 +5904,7 @@ CREATE TABLE qset.sysusrpvgs (
 ALTER TABLE qset.sysusrpvgs OWNER TO postgres;
 
 --
--- TOC entry 959 (class 1259 OID 22209)
+-- TOC entry 501 (class 1259 OID 120308)
 -- Name: sysusrpvgs_id_seq; Type: SEQUENCE; Schema: qset; Owner: postgres
 --
 
@@ -5897,8 +5919,8 @@ CREATE SEQUENCE qset.sysusrpvgs_id_seq
 ALTER TABLE qset.sysusrpvgs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 7731 (class 0 OID 0)
--- Dependencies: 959
+-- TOC entry 7208 (class 0 OID 0)
+-- Dependencies: 501
 -- Name: sysusrpvgs_id_seq; Type: SEQUENCE OWNED BY; Schema: qset; Owner: postgres
 --
 
@@ -5906,7 +5928,7 @@ ALTER SEQUENCE qset.sysusrpvgs_id_seq OWNED BY qset.sysusrpvgs.id;
 
 
 --
--- TOC entry 960 (class 1259 OID 22211)
+-- TOC entry 502 (class 1259 OID 120309)
 -- Name: sysusrs; Type: TABLE; Schema: qset; Owner: postgres
 --
 
@@ -5923,7 +5945,7 @@ CREATE TABLE qset.sysusrs (
 ALTER TABLE qset.sysusrs OWNER TO postgres;
 
 --
--- TOC entry 1114 (class 1259 OID 109338)
+-- TOC entry 503 (class 1259 OID 120314)
 -- Name: viewamaqdtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -5971,7 +5993,7 @@ CREATE VIEW qset.viewamaqdtls AS
 ALTER TABLE qset.viewamaqdtls OWNER TO postgres;
 
 --
--- TOC entry 1115 (class 1259 OID 109343)
+-- TOC entry 504 (class 1259 OID 120319)
 -- Name: viewamaqhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -5995,7 +6017,7 @@ CREATE VIEW qset.viewamaqhdr AS
 ALTER TABLE qset.viewamaqhdr OWNER TO postgres;
 
 --
--- TOC entry 1116 (class 1259 OID 109347)
+-- TOC entry 505 (class 1259 OID 120324)
 -- Name: viewamassets; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6040,7 +6062,7 @@ CREATE VIEW qset.viewamassets AS
 ALTER TABLE qset.viewamassets OWNER TO postgres;
 
 --
--- TOC entry 1117 (class 1259 OID 109352)
+-- TOC entry 506 (class 1259 OID 120329)
 -- Name: viewamdidtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6082,7 +6104,7 @@ CREATE VIEW qset.viewamdidtls AS
 ALTER TABLE qset.viewamdidtls OWNER TO postgres;
 
 --
--- TOC entry 1118 (class 1259 OID 109357)
+-- TOC entry 507 (class 1259 OID 120334)
 -- Name: viewamdihdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6106,7 +6128,7 @@ CREATE VIEW qset.viewamdihdr AS
 ALTER TABLE qset.viewamdihdr OWNER TO postgres;
 
 --
--- TOC entry 1119 (class 1259 OID 109361)
+-- TOC entry 508 (class 1259 OID 120339)
 -- Name: viewamdpdtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6151,7 +6173,7 @@ CREATE VIEW qset.viewamdpdtls AS
 ALTER TABLE qset.viewamdpdtls OWNER TO postgres;
 
 --
--- TOC entry 1120 (class 1259 OID 109366)
+-- TOC entry 509 (class 1259 OID 120344)
 -- Name: viewamdphdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6175,7 +6197,7 @@ CREATE VIEW qset.viewamdphdr AS
 ALTER TABLE qset.viewamdphdr OWNER TO postgres;
 
 --
--- TOC entry 961 (class 1259 OID 22217)
+-- TOC entry 510 (class 1259 OID 120349)
 -- Name: viewapsuppliers; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6215,7 +6237,7 @@ CREATE VIEW qset.viewapsuppliers AS
 ALTER TABLE qset.viewapsuppliers OWNER TO postgres;
 
 --
--- TOC entry 962 (class 1259 OID 22222)
+-- TOC entry 511 (class 1259 OID 120354)
 -- Name: viewapindtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6256,7 +6278,7 @@ CREATE VIEW qset.viewapindtls AS
 ALTER TABLE qset.viewapindtls OWNER TO postgres;
 
 --
--- TOC entry 963 (class 1259 OID 22227)
+-- TOC entry 512 (class 1259 OID 120359)
 -- Name: viewapinhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6283,7 +6305,7 @@ CREATE VIEW qset.viewapinhdr AS
 ALTER TABLE qset.viewapinhdr OWNER TO postgres;
 
 --
--- TOC entry 964 (class 1259 OID 22232)
+-- TOC entry 513 (class 1259 OID 120364)
 -- Name: viewappydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6322,7 +6344,7 @@ CREATE VIEW qset.viewappydtls AS
 ALTER TABLE qset.viewappydtls OWNER TO postgres;
 
 --
--- TOC entry 965 (class 1259 OID 22237)
+-- TOC entry 514 (class 1259 OID 120369)
 -- Name: viewapob; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6354,7 +6376,7 @@ UNION
 ALTER TABLE qset.viewapob OWNER TO postgres;
 
 --
--- TOC entry 966 (class 1259 OID 22242)
+-- TOC entry 515 (class 1259 OID 120374)
 -- Name: viewappyhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6387,7 +6409,7 @@ CREATE VIEW qset.viewappyhdr AS
 ALTER TABLE qset.viewappyhdr OWNER TO postgres;
 
 --
--- TOC entry 967 (class 1259 OID 22247)
+-- TOC entry 516 (class 1259 OID 120379)
 -- Name: viewarcustomers; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6427,7 +6449,7 @@ CREATE VIEW qset.viewarcustomers AS
 ALTER TABLE qset.viewarcustomers OWNER TO postgres;
 
 --
--- TOC entry 968 (class 1259 OID 22252)
+-- TOC entry 517 (class 1259 OID 120384)
 -- Name: viewarindtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6469,7 +6491,7 @@ CREATE VIEW qset.viewarindtls AS
 ALTER TABLE qset.viewarindtls OWNER TO postgres;
 
 --
--- TOC entry 969 (class 1259 OID 22257)
+-- TOC entry 518 (class 1259 OID 120389)
 -- Name: viewarinhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6498,7 +6520,7 @@ CREATE VIEW qset.viewarinhdr AS
 ALTER TABLE qset.viewarinhdr OWNER TO postgres;
 
 --
--- TOC entry 970 (class 1259 OID 22262)
+-- TOC entry 519 (class 1259 OID 120394)
 -- Name: viewarpydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6536,7 +6558,7 @@ CREATE VIEW qset.viewarpydtls AS
 ALTER TABLE qset.viewarpydtls OWNER TO postgres;
 
 --
--- TOC entry 971 (class 1259 OID 22267)
+-- TOC entry 520 (class 1259 OID 120399)
 -- Name: viewarob; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6568,7 +6590,7 @@ UNION
 ALTER TABLE qset.viewarob OWNER TO postgres;
 
 --
--- TOC entry 972 (class 1259 OID 22272)
+-- TOC entry 521 (class 1259 OID 120404)
 -- Name: viewarpyhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6603,7 +6625,7 @@ CREATE VIEW qset.viewarpyhdr AS
 ALTER TABLE qset.viewarpyhdr OWNER TO postgres;
 
 --
--- TOC entry 973 (class 1259 OID 22277)
+-- TOC entry 522 (class 1259 OID 120409)
 -- Name: viewbankbranch; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6620,7 +6642,7 @@ CREATE VIEW qset.viewbankbranch AS
 ALTER TABLE qset.viewbankbranch OWNER TO postgres;
 
 --
--- TOC entry 974 (class 1259 OID 22281)
+-- TOC entry 523 (class 1259 OID 120413)
 -- Name: viewitems; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6657,7 +6679,7 @@ UNION
 ALTER TABLE qset.viewitems OWNER TO postgres;
 
 --
--- TOC entry 975 (class 1259 OID 22286)
+-- TOC entry 524 (class 1259 OID 120418)
 -- Name: viewbankremittance; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6685,7 +6707,7 @@ CREATE VIEW qset.viewbankremittance AS
 ALTER TABLE qset.viewbankremittance OWNER TO postgres;
 
 --
--- TOC entry 976 (class 1259 OID 22291)
+-- TOC entry 525 (class 1259 OID 120423)
 -- Name: viewconstituencies; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6702,7 +6724,7 @@ CREATE VIEW qset.viewconstituencies AS
 ALTER TABLE qset.viewconstituencies OWNER TO postgres;
 
 --
--- TOC entry 977 (class 1259 OID 22295)
+-- TOC entry 526 (class 1259 OID 120427)
 -- Name: viewcountries; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6719,7 +6741,7 @@ CREATE VIEW qset.viewcountries AS
 ALTER TABLE qset.viewcountries OWNER TO postgres;
 
 --
--- TOC entry 978 (class 1259 OID 22299)
+-- TOC entry 527 (class 1259 OID 120431)
 -- Name: viewcssections; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6736,7 +6758,7 @@ CREATE VIEW qset.viewcssections AS
 ALTER TABLE qset.viewcssections OWNER TO postgres;
 
 --
--- TOC entry 979 (class 1259 OID 22303)
+-- TOC entry 528 (class 1259 OID 120435)
 -- Name: viewdisabilities; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6753,7 +6775,7 @@ CREATE VIEW qset.viewdisabilities AS
 ALTER TABLE qset.viewdisabilities OWNER TO postgres;
 
 --
--- TOC entry 1124 (class 1259 OID 142051)
+-- TOC entry 529 (class 1259 OID 120439)
 -- Name: viewhmpyhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6793,7 +6815,7 @@ CREATE VIEW qset.viewhmpyhdr AS
 ALTER TABLE qset.viewhmpyhdr OWNER TO postgres;
 
 --
--- TOC entry 1090 (class 1259 OID 66316)
+-- TOC entry 530 (class 1259 OID 120444)
 -- Name: viewhmregistration; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6832,7 +6854,7 @@ CREATE VIEW qset.viewhmregistration AS
 ALTER TABLE qset.viewhmregistration OWNER TO postgres;
 
 --
--- TOC entry 1125 (class 1259 OID 142056)
+-- TOC entry 531 (class 1259 OID 120449)
 -- Name: viewdoctoropds; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6870,7 +6892,7 @@ CREATE VIEW qset.viewdoctoropds AS
 ALTER TABLE qset.viewdoctoropds OWNER TO postgres;
 
 --
--- TOC entry 980 (class 1259 OID 22322)
+-- TOC entry 532 (class 1259 OID 120454)
 -- Name: viewfnbkchqtpls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6889,7 +6911,7 @@ CREATE VIEW qset.viewfnbkchqtpls AS
 ALTER TABLE qset.viewfnbkchqtpls OWNER TO postgres;
 
 --
--- TOC entry 981 (class 1259 OID 22326)
+-- TOC entry 533 (class 1259 OID 120458)
 -- Name: viewfncobanks; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6911,7 +6933,7 @@ CREATE VIEW qset.viewfncobanks AS
 ALTER TABLE qset.viewfncobanks OWNER TO postgres;
 
 --
--- TOC entry 982 (class 1259 OID 22330)
+-- TOC entry 534 (class 1259 OID 120462)
 -- Name: viewformstreams; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6929,7 +6951,7 @@ CREATE VIEW qset.viewformstreams AS
 ALTER TABLE qset.viewformstreams OWNER TO postgres;
 
 --
--- TOC entry 983 (class 1259 OID 22334)
+-- TOC entry 535 (class 1259 OID 120466)
 -- Name: viewglaccgrps; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6946,7 +6968,7 @@ CREATE VIEW qset.viewglaccgrps AS
 ALTER TABLE qset.viewglaccgrps OWNER TO postgres;
 
 --
--- TOC entry 984 (class 1259 OID 22338)
+-- TOC entry 536 (class 1259 OID 120470)
 -- Name: viewglaccounts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -6968,7 +6990,7 @@ CREATE VIEW qset.viewglaccounts AS
 ALTER TABLE qset.viewglaccounts OWNER TO postgres;
 
 --
--- TOC entry 985 (class 1259 OID 22342)
+-- TOC entry 537 (class 1259 OID 120474)
 -- Name: viewgldtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7008,7 +7030,7 @@ CREATE VIEW qset.viewgldtls AS
 ALTER TABLE qset.viewgldtls OWNER TO postgres;
 
 --
--- TOC entry 986 (class 1259 OID 22347)
+-- TOC entry 538 (class 1259 OID 120479)
 -- Name: viewglhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7030,7 +7052,7 @@ CREATE VIEW qset.viewglhdr AS
 ALTER TABLE qset.viewglhdr OWNER TO postgres;
 
 --
--- TOC entry 987 (class 1259 OID 22351)
+-- TOC entry 539 (class 1259 OID 120483)
 -- Name: viewgltb; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7074,7 +7096,7 @@ CREATE VIEW qset.viewgltb AS
 ALTER TABLE qset.viewgltb OWNER TO postgres;
 
 --
--- TOC entry 988 (class 1259 OID 22356)
+-- TOC entry 540 (class 1259 OID 120488)
 -- Name: viewgltbsm; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7097,7 +7119,7 @@ CREATE VIEW qset.viewgltbsm AS
 ALTER TABLE qset.viewgltbsm OWNER TO postgres;
 
 --
--- TOC entry 989 (class 1259 OID 22360)
+-- TOC entry 541 (class 1259 OID 120492)
 -- Name: viewgltbsmfy; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7118,7 +7140,7 @@ CREATE VIEW qset.viewgltbsmfy AS
 ALTER TABLE qset.viewgltbsmfy OWNER TO postgres;
 
 --
--- TOC entry 990 (class 1259 OID 22364)
+-- TOC entry 542 (class 1259 OID 120496)
 -- Name: viewhgcalendar; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7137,7 +7159,7 @@ CREATE VIEW qset.viewhgcalendar AS
 ALTER TABLE qset.viewhgcalendar OWNER TO postgres;
 
 --
--- TOC entry 991 (class 1259 OID 22368)
+-- TOC entry 543 (class 1259 OID 120500)
 -- Name: viewhgcoresubjects; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7155,7 +7177,7 @@ CREATE VIEW qset.viewhgcoresubjects AS
 ALTER TABLE qset.viewhgcoresubjects OWNER TO postgres;
 
 --
--- TOC entry 992 (class 1259 OID 22372)
+-- TOC entry 544 (class 1259 OID 120504)
 -- Name: viewhgqddetails; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7190,7 +7212,7 @@ CREATE VIEW qset.viewhgqddetails AS
 ALTER TABLE qset.viewhgqddetails OWNER TO postgres;
 
 --
--- TOC entry 993 (class 1259 OID 22377)
+-- TOC entry 545 (class 1259 OID 120509)
 -- Name: viewhgcreditnotes; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7220,7 +7242,7 @@ CREATE VIEW qset.viewhgcreditnotes AS
 ALTER TABLE qset.viewhgcreditnotes OWNER TO postgres;
 
 --
--- TOC entry 994 (class 1259 OID 22381)
+-- TOC entry 546 (class 1259 OID 120513)
 -- Name: viewhgdebitnotes; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7250,7 +7272,7 @@ CREATE VIEW qset.viewhgdebitnotes AS
 ALTER TABLE qset.viewhgdebitnotes OWNER TO postgres;
 
 --
--- TOC entry 995 (class 1259 OID 22385)
+-- TOC entry 547 (class 1259 OID 120517)
 -- Name: viewhgformsbjs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7266,7 +7288,7 @@ CREATE VIEW qset.viewhgformsbjs AS
 ALTER TABLE qset.viewhgformsbjs OWNER TO postgres;
 
 --
--- TOC entry 996 (class 1259 OID 22389)
+-- TOC entry 548 (class 1259 OID 120521)
 -- Name: viewhgfsdetails; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7292,7 +7314,7 @@ CREATE VIEW qset.viewhgfsdetails AS
 ALTER TABLE qset.viewhgfsdetails OWNER TO postgres;
 
 --
--- TOC entry 997 (class 1259 OID 22394)
+-- TOC entry 549 (class 1259 OID 120526)
 -- Name: viewhgfsheader; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7314,7 +7336,7 @@ CREATE VIEW qset.viewhgfsheader AS
 ALTER TABLE qset.viewhgfsheader OWNER TO postgres;
 
 --
--- TOC entry 998 (class 1259 OID 22399)
+-- TOC entry 550 (class 1259 OID 120531)
 -- Name: viewhggrpsbjs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7333,7 +7355,7 @@ CREATE VIEW qset.viewhggrpsbjs AS
 ALTER TABLE qset.viewhggrpsbjs OWNER TO postgres;
 
 --
--- TOC entry 999 (class 1259 OID 22403)
+-- TOC entry 551 (class 1259 OID 120535)
 -- Name: viewhginvsdetails; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7372,7 +7394,7 @@ CREATE VIEW qset.viewhginvsdetails AS
 ALTER TABLE qset.viewhginvsdetails OWNER TO postgres;
 
 --
--- TOC entry 1000 (class 1259 OID 22408)
+-- TOC entry 552 (class 1259 OID 120540)
 -- Name: viewhgmarksheet; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7451,7 +7473,7 @@ CREATE VIEW qset.viewhgmarksheet AS
 ALTER TABLE qset.viewhgmarksheet OWNER TO postgres;
 
 --
--- TOC entry 1001 (class 1259 OID 22413)
+-- TOC entry 553 (class 1259 OID 120545)
 -- Name: viewhgobs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7475,7 +7497,7 @@ CREATE VIEW qset.viewhgobs AS
 ALTER TABLE qset.viewhgobs OWNER TO postgres;
 
 --
--- TOC entry 1002 (class 1259 OID 22418)
+-- TOC entry 554 (class 1259 OID 120550)
 -- Name: viewhgreceipts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7513,7 +7535,7 @@ CREATE VIEW qset.viewhgreceipts AS
 ALTER TABLE qset.viewhgreceipts OWNER TO postgres;
 
 --
--- TOC entry 1003 (class 1259 OID 22423)
+-- TOC entry 555 (class 1259 OID 120555)
 -- Name: viewhgprocrcpts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7548,7 +7570,7 @@ CREATE VIEW qset.viewhgprocrcpts AS
 ALTER TABLE qset.viewhgprocrcpts OWNER TO postgres;
 
 --
--- TOC entry 1004 (class 1259 OID 22428)
+-- TOC entry 556 (class 1259 OID 120560)
 -- Name: viewhgqdheader; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7578,7 +7600,7 @@ CREATE VIEW qset.viewhgqdheader AS
 ALTER TABLE qset.viewhgqdheader OWNER TO postgres;
 
 --
--- TOC entry 1005 (class 1259 OID 22433)
+-- TOC entry 557 (class 1259 OID 120565)
 -- Name: viewhgregistration; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7608,7 +7630,7 @@ CREATE VIEW qset.viewhgregistration AS
 ALTER TABLE qset.viewhgregistration OWNER TO postgres;
 
 --
--- TOC entry 1006 (class 1259 OID 22438)
+-- TOC entry 558 (class 1259 OID 120570)
 -- Name: viewhgselsbjs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7633,7 +7655,7 @@ UNION
 ALTER TABLE qset.viewhgselsbjs OWNER TO postgres;
 
 --
--- TOC entry 1007 (class 1259 OID 22442)
+-- TOC entry 559 (class 1259 OID 120574)
 -- Name: viewhgselsbjscores; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7653,7 +7675,7 @@ CREATE VIEW qset.viewhgselsbjscores AS
 ALTER TABLE qset.viewhgselsbjscores OWNER TO postgres;
 
 --
--- TOC entry 1008 (class 1259 OID 22447)
+-- TOC entry 560 (class 1259 OID 120579)
 -- Name: viewhgselsbjstts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7670,7 +7692,7 @@ CREATE VIEW qset.viewhgselsbjstts AS
 ALTER TABLE qset.viewhgselsbjstts OWNER TO postgres;
 
 --
--- TOC entry 1009 (class 1259 OID 22451)
+-- TOC entry 561 (class 1259 OID 120583)
 -- Name: viewhgstudentmarks; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7711,7 +7733,7 @@ CREATE VIEW qset.viewhgstudentmarks AS
 ALTER TABLE qset.viewhgstudentmarks OWNER TO postgres;
 
 --
--- TOC entry 1010 (class 1259 OID 22456)
+-- TOC entry 562 (class 1259 OID 120588)
 -- Name: viewhgstudentprofile; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7770,7 +7792,7 @@ CREATE VIEW qset.viewhgstudentprofile AS
 ALTER TABLE qset.viewhgstudentprofile OWNER TO postgres;
 
 --
--- TOC entry 1011 (class 1259 OID 22461)
+-- TOC entry 563 (class 1259 OID 120593)
 -- Name: viewhgstudsubjects; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7802,7 +7824,7 @@ CREATE VIEW qset.viewhgstudsubjects AS
 ALTER TABLE qset.viewhgstudsubjects OWNER TO postgres;
 
 --
--- TOC entry 1012 (class 1259 OID 22466)
+-- TOC entry 564 (class 1259 OID 120598)
 -- Name: viewhgsubjects; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7819,7 +7841,7 @@ CREATE VIEW qset.viewhgsubjects AS
 ALTER TABLE qset.viewhgsubjects OWNER TO postgres;
 
 --
--- TOC entry 1013 (class 1259 OID 22470)
+-- TOC entry 565 (class 1259 OID 120602)
 -- Name: viewhgunverfdrcpts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7854,7 +7876,7 @@ CREATE VIEW qset.viewhgunverfdrcpts AS
 ALTER TABLE qset.viewhgunverfdrcpts OWNER TO postgres;
 
 --
--- TOC entry 1014 (class 1259 OID 22474)
+-- TOC entry 566 (class 1259 OID 120607)
 -- Name: viewhgverfdrcpts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7889,7 +7911,7 @@ CREATE VIEW qset.viewhgverfdrcpts AS
 ALTER TABLE qset.viewhgverfdrcpts OWNER TO postgres;
 
 --
--- TOC entry 1015 (class 1259 OID 22479)
+-- TOC entry 567 (class 1259 OID 120612)
 -- Name: viewhmcats; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7905,7 +7927,7 @@ CREATE VIEW qset.viewhmcats AS
 ALTER TABLE qset.viewhmcats OWNER TO postgres;
 
 --
--- TOC entry 1016 (class 1259 OID 22483)
+-- TOC entry 568 (class 1259 OID 120616)
 -- Name: viewhmstaffprofile; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7953,7 +7975,7 @@ CREATE VIEW qset.viewhmstaffprofile AS
 ALTER TABLE qset.viewhmstaffprofile OWNER TO postgres;
 
 --
--- TOC entry 1017 (class 1259 OID 22488)
+-- TOC entry 569 (class 1259 OID 120621)
 -- Name: viewhmdoctors; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -7996,7 +8018,7 @@ CREATE VIEW qset.viewhmdoctors AS
 ALTER TABLE qset.viewhmdoctors OWNER TO postgres;
 
 --
--- TOC entry 1094 (class 1259 OID 74502)
+-- TOC entry 570 (class 1259 OID 120626)
 -- Name: viewhmmiscrcptsdtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8029,7 +8051,7 @@ CREATE VIEW qset.viewhmmiscrcptsdtls AS
 ALTER TABLE qset.viewhmmiscrcptsdtls OWNER TO postgres;
 
 --
--- TOC entry 1093 (class 1259 OID 74498)
+-- TOC entry 571 (class 1259 OID 120631)
 -- Name: viewhmmiscrcptshdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8054,7 +8076,7 @@ CREATE VIEW qset.viewhmmiscrcptshdr AS
 ALTER TABLE qset.viewhmmiscrcptshdr OWNER TO postgres;
 
 --
--- TOC entry 1018 (class 1259 OID 22493)
+-- TOC entry 572 (class 1259 OID 120636)
 -- Name: viewhmnurses; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8097,7 +8119,7 @@ CREATE VIEW qset.viewhmnurses AS
 ALTER TABLE qset.viewhmnurses OWNER TO postgres;
 
 --
--- TOC entry 1098 (class 1259 OID 82727)
+-- TOC entry 573 (class 1259 OID 120641)
 -- Name: viewhmpharmdtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8151,7 +8173,7 @@ CREATE VIEW qset.viewhmpharmdtls AS
 ALTER TABLE qset.viewhmpharmdtls OWNER TO postgres;
 
 --
--- TOC entry 1097 (class 1259 OID 82722)
+-- TOC entry 574 (class 1259 OID 120646)
 -- Name: viewhmpharmhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8193,7 +8215,7 @@ CREATE VIEW qset.viewhmpharmhdr AS
 ALTER TABLE qset.viewhmpharmhdr OWNER TO postgres;
 
 --
--- TOC entry 1127 (class 1259 OID 142071)
+-- TOC entry 575 (class 1259 OID 120651)
 -- Name: viewhmpydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8238,7 +8260,7 @@ CREATE VIEW qset.viewhmpydtls AS
 ALTER TABLE qset.viewhmpydtls OWNER TO postgres;
 
 --
--- TOC entry 1091 (class 1259 OID 66326)
+-- TOC entry 576 (class 1259 OID 120656)
 -- Name: viewhmregopds; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8270,7 +8292,7 @@ CREATE VIEW qset.viewhmregopds AS
 ALTER TABLE qset.viewhmregopds OWNER TO postgres;
 
 --
--- TOC entry 1019 (class 1259 OID 22507)
+-- TOC entry 577 (class 1259 OID 120661)
 -- Name: viewhrlvapps; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8315,7 +8337,7 @@ CREATE VIEW qset.viewhrlvapps AS
 ALTER TABLE qset.viewhrlvapps OWNER TO postgres;
 
 --
--- TOC entry 1020 (class 1259 OID 22512)
+-- TOC entry 578 (class 1259 OID 120666)
 -- Name: viewhrlvdays; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8334,7 +8356,7 @@ CREATE VIEW qset.viewhrlvdays AS
 ALTER TABLE qset.viewhrlvdays OWNER TO postgres;
 
 --
--- TOC entry 1021 (class 1259 OID 22516)
+-- TOC entry 579 (class 1259 OID 120670)
 -- Name: viewhrlvschedule; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8362,7 +8384,7 @@ CREATE VIEW qset.viewhrlvschedule AS
 ALTER TABLE qset.viewhrlvschedule OWNER TO postgres;
 
 --
--- TOC entry 1022 (class 1259 OID 22521)
+-- TOC entry 580 (class 1259 OID 120675)
 -- Name: viewhrpositions; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8379,7 +8401,7 @@ CREATE VIEW qset.viewhrpositions AS
 ALTER TABLE qset.viewhrpositions OWNER TO postgres;
 
 --
--- TOC entry 1121 (class 1259 OID 117483)
+-- TOC entry 581 (class 1259 OID 120679)
 -- Name: viewicitems; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8409,7 +8431,7 @@ CREATE VIEW qset.viewicitems AS
 ALTER TABLE qset.viewicitems OWNER TO postgres;
 
 --
--- TOC entry 1023 (class 1259 OID 22530)
+-- TOC entry 582 (class 1259 OID 120684)
 -- Name: viewiciudtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8437,7 +8459,7 @@ CREATE VIEW qset.viewiciudtls AS
 ALTER TABLE qset.viewiciudtls OWNER TO postgres;
 
 --
--- TOC entry 1024 (class 1259 OID 22535)
+-- TOC entry 583 (class 1259 OID 120689)
 -- Name: viewicpydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8472,7 +8494,7 @@ CREATE VIEW qset.viewicpydtls AS
 ALTER TABLE qset.viewicpydtls OWNER TO postgres;
 
 --
--- TOC entry 1126 (class 1259 OID 142061)
+-- TOC entry 584 (class 1259 OID 120694)
 -- Name: viewnurseopds; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8506,7 +8528,7 @@ CREATE VIEW qset.viewnurseopds AS
 ALTER TABLE qset.viewnurseopds OWNER TO postgres;
 
 --
--- TOC entry 1025 (class 1259 OID 22545)
+-- TOC entry 585 (class 1259 OID 120699)
 -- Name: viewpatientprofile; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8560,7 +8582,7 @@ CREATE VIEW qset.viewpatientprofile AS
 ALTER TABLE qset.viewpatientprofile OWNER TO postgres;
 
 --
--- TOC entry 1026 (class 1259 OID 22550)
+-- TOC entry 586 (class 1259 OID 120704)
 -- Name: viewpoindtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8595,7 +8617,7 @@ CREATE VIEW qset.viewpoindtls AS
 ALTER TABLE qset.viewpoindtls OWNER TO postgres;
 
 --
--- TOC entry 1027 (class 1259 OID 22555)
+-- TOC entry 587 (class 1259 OID 120709)
 -- Name: viewpoinhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8618,7 +8640,7 @@ CREATE VIEW qset.viewpoinhdr AS
 ALTER TABLE qset.viewpoinhdr OWNER TO postgres;
 
 --
--- TOC entry 1028 (class 1259 OID 22560)
+-- TOC entry 588 (class 1259 OID 120714)
 -- Name: viewpopodtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8647,7 +8669,7 @@ CREATE VIEW qset.viewpopodtls AS
 ALTER TABLE qset.viewpopodtls OWNER TO postgres;
 
 --
--- TOC entry 1029 (class 1259 OID 22565)
+-- TOC entry 589 (class 1259 OID 120719)
 -- Name: viewpopohdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8669,7 +8691,7 @@ CREATE VIEW qset.viewpopohdr AS
 ALTER TABLE qset.viewpopohdr OWNER TO postgres;
 
 --
--- TOC entry 1030 (class 1259 OID 22570)
+-- TOC entry 590 (class 1259 OID 120724)
 -- Name: viewpopydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8703,7 +8725,7 @@ CREATE VIEW qset.viewpopydtls AS
 ALTER TABLE qset.viewpopydtls OWNER TO postgres;
 
 --
--- TOC entry 1031 (class 1259 OID 22575)
+-- TOC entry 591 (class 1259 OID 120729)
 -- Name: viewpopyhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8726,7 +8748,7 @@ CREATE VIEW qset.viewpopyhdr AS
 ALTER TABLE qset.viewpopyhdr OWNER TO postgres;
 
 --
--- TOC entry 1032 (class 1259 OID 22580)
+-- TOC entry 592 (class 1259 OID 120734)
 -- Name: viewporqdtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8750,7 +8772,7 @@ CREATE VIEW qset.viewporqdtls AS
 ALTER TABLE qset.viewporqdtls OWNER TO postgres;
 
 --
--- TOC entry 1033 (class 1259 OID 22585)
+-- TOC entry 593 (class 1259 OID 120739)
 -- Name: viewporqhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8774,7 +8796,7 @@ CREATE VIEW qset.viewporqhdr AS
 ALTER TABLE qset.viewporqhdr OWNER TO postgres;
 
 --
--- TOC entry 1034 (class 1259 OID 22590)
+-- TOC entry 594 (class 1259 OID 120744)
 -- Name: viewprcalendar; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8793,7 +8815,7 @@ CREATE VIEW qset.viewprcalendar AS
 ALTER TABLE qset.viewprcalendar OWNER TO postgres;
 
 --
--- TOC entry 1035 (class 1259 OID 22594)
+-- TOC entry 595 (class 1259 OID 120748)
 -- Name: viewprclasses; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8811,7 +8833,7 @@ CREATE VIEW qset.viewprclasses AS
 ALTER TABLE qset.viewprclasses OWNER TO postgres;
 
 --
--- TOC entry 1036 (class 1259 OID 22598)
+-- TOC entry 596 (class 1259 OID 120752)
 -- Name: viewprqddetails; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8846,7 +8868,7 @@ CREATE VIEW qset.viewprqddetails AS
 ALTER TABLE qset.viewprqddetails OWNER TO postgres;
 
 --
--- TOC entry 1037 (class 1259 OID 22603)
+-- TOC entry 597 (class 1259 OID 120757)
 -- Name: viewprcreditnotes; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8876,7 +8898,7 @@ CREATE VIEW qset.viewprcreditnotes AS
 ALTER TABLE qset.viewprcreditnotes OWNER TO postgres;
 
 --
--- TOC entry 1038 (class 1259 OID 22607)
+-- TOC entry 598 (class 1259 OID 120761)
 -- Name: viewprdebitnotes; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8906,7 +8928,7 @@ CREATE VIEW qset.viewprdebitnotes AS
 ALTER TABLE qset.viewprdebitnotes OWNER TO postgres;
 
 --
--- TOC entry 1039 (class 1259 OID 22611)
+-- TOC entry 599 (class 1259 OID 120765)
 -- Name: viewprfsdetails; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8932,7 +8954,7 @@ CREATE VIEW qset.viewprfsdetails AS
 ALTER TABLE qset.viewprfsdetails OWNER TO postgres;
 
 --
--- TOC entry 1040 (class 1259 OID 22616)
+-- TOC entry 600 (class 1259 OID 120770)
 -- Name: viewprfsheader; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8954,7 +8976,7 @@ CREATE VIEW qset.viewprfsheader AS
 ALTER TABLE qset.viewprfsheader OWNER TO postgres;
 
 --
--- TOC entry 1041 (class 1259 OID 22621)
+-- TOC entry 601 (class 1259 OID 120775)
 -- Name: viewprinvsdetails; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -8993,7 +9015,7 @@ CREATE VIEW qset.viewprinvsdetails AS
 ALTER TABLE qset.viewprinvsdetails OWNER TO postgres;
 
 --
--- TOC entry 1042 (class 1259 OID 22626)
+-- TOC entry 602 (class 1259 OID 120780)
 -- Name: viewprmarksheet; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9038,7 +9060,7 @@ CREATE VIEW qset.viewprmarksheet AS
 ALTER TABLE qset.viewprmarksheet OWNER TO postgres;
 
 --
--- TOC entry 1043 (class 1259 OID 22631)
+-- TOC entry 603 (class 1259 OID 120785)
 -- Name: viewprobs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9062,7 +9084,7 @@ CREATE VIEW qset.viewprobs AS
 ALTER TABLE qset.viewprobs OWNER TO postgres;
 
 --
--- TOC entry 1044 (class 1259 OID 22636)
+-- TOC entry 604 (class 1259 OID 120790)
 -- Name: viewprreceipts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9100,7 +9122,7 @@ CREATE VIEW qset.viewprreceipts AS
 ALTER TABLE qset.viewprreceipts OWNER TO postgres;
 
 --
--- TOC entry 1045 (class 1259 OID 22641)
+-- TOC entry 605 (class 1259 OID 120795)
 -- Name: viewprprocrcpts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9135,7 +9157,7 @@ CREATE VIEW qset.viewprprocrcpts AS
 ALTER TABLE qset.viewprprocrcpts OWNER TO postgres;
 
 --
--- TOC entry 1046 (class 1259 OID 22646)
+-- TOC entry 606 (class 1259 OID 120800)
 -- Name: viewprqdheader; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9165,7 +9187,7 @@ CREATE VIEW qset.viewprqdheader AS
 ALTER TABLE qset.viewprqdheader OWNER TO postgres;
 
 --
--- TOC entry 1047 (class 1259 OID 22651)
+-- TOC entry 607 (class 1259 OID 120805)
 -- Name: viewprregistration; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9195,7 +9217,7 @@ CREATE VIEW qset.viewprregistration AS
 ALTER TABLE qset.viewprregistration OWNER TO postgres;
 
 --
--- TOC entry 1048 (class 1259 OID 22656)
+-- TOC entry 608 (class 1259 OID 120810)
 -- Name: viewprstreams; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9216,7 +9238,7 @@ CREATE VIEW qset.viewprstreams AS
 ALTER TABLE qset.viewprstreams OWNER TO postgres;
 
 --
--- TOC entry 1049 (class 1259 OID 22660)
+-- TOC entry 609 (class 1259 OID 120814)
 -- Name: viewprstudentmarks; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9254,7 +9276,7 @@ CREATE VIEW qset.viewprstudentmarks AS
 ALTER TABLE qset.viewprstudentmarks OWNER TO postgres;
 
 --
--- TOC entry 1050 (class 1259 OID 22665)
+-- TOC entry 610 (class 1259 OID 120819)
 -- Name: viewprstudentprofile; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9313,7 +9335,7 @@ CREATE VIEW qset.viewprstudentprofile AS
 ALTER TABLE qset.viewprstudentprofile OWNER TO postgres;
 
 --
--- TOC entry 1051 (class 1259 OID 22670)
+-- TOC entry 611 (class 1259 OID 120824)
 -- Name: viewprstudprds; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9337,7 +9359,7 @@ CREATE VIEW qset.viewprstudprds AS
 ALTER TABLE qset.viewprstudprds OWNER TO postgres;
 
 --
--- TOC entry 1052 (class 1259 OID 22675)
+-- TOC entry 612 (class 1259 OID 120829)
 -- Name: viewprstudsubjects; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9369,7 +9391,7 @@ CREATE VIEW qset.viewprstudsubjects AS
 ALTER TABLE qset.viewprstudsubjects OWNER TO postgres;
 
 --
--- TOC entry 1053 (class 1259 OID 22680)
+-- TOC entry 613 (class 1259 OID 120834)
 -- Name: viewprunverfdrcpts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9404,7 +9426,7 @@ CREATE VIEW qset.viewprunverfdrcpts AS
 ALTER TABLE qset.viewprunverfdrcpts OWNER TO postgres;
 
 --
--- TOC entry 1054 (class 1259 OID 22684)
+-- TOC entry 614 (class 1259 OID 120839)
 -- Name: viewprverfdrcpts; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9439,7 +9461,7 @@ CREATE VIEW qset.viewprverfdrcpts AS
 ALTER TABLE qset.viewprverfdrcpts OWNER TO postgres;
 
 --
--- TOC entry 1086 (class 1259 OID 49947)
+-- TOC entry 615 (class 1259 OID 120844)
 -- Name: viewpspydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9493,7 +9515,7 @@ CREATE VIEW qset.viewpspydtls AS
 ALTER TABLE qset.viewpspydtls OWNER TO postgres;
 
 --
--- TOC entry 1087 (class 1259 OID 49952)
+-- TOC entry 616 (class 1259 OID 120849)
 -- Name: viewpspyhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9535,7 +9557,7 @@ CREATE VIEW qset.viewpspyhdr AS
 ALTER TABLE qset.viewpspyhdr OWNER TO postgres;
 
 --
--- TOC entry 1102 (class 1259 OID 92906)
+-- TOC entry 617 (class 1259 OID 120854)
 -- Name: viewptcomplaints; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9556,7 +9578,7 @@ CREATE VIEW qset.viewptcomplaints AS
 ALTER TABLE qset.viewptcomplaints OWNER TO postgres;
 
 --
--- TOC entry 1103 (class 1259 OID 92941)
+-- TOC entry 618 (class 1259 OID 120858)
 -- Name: viewptdiagnosis; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9577,7 +9599,7 @@ CREATE VIEW qset.viewptdiagnosis AS
 ALTER TABLE qset.viewptdiagnosis OWNER TO postgres;
 
 --
--- TOC entry 1092 (class 1259 OID 66336)
+-- TOC entry 619 (class 1259 OID 120862)
 -- Name: viewptmedication; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9613,7 +9635,7 @@ CREATE VIEW qset.viewptmedication AS
 ALTER TABLE qset.viewptmedication OWNER TO postgres;
 
 --
--- TOC entry 1055 (class 1259 OID 22712)
+-- TOC entry 620 (class 1259 OID 120867)
 -- Name: viewpystaffitems; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9650,7 +9672,7 @@ CREATE VIEW qset.viewpystaffitems AS
 ALTER TABLE qset.viewpystaffitems OWNER TO postgres;
 
 --
--- TOC entry 1056 (class 1259 OID 22717)
+-- TOC entry 621 (class 1259 OID 120872)
 -- Name: viewpyactvtrans; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9683,7 +9705,7 @@ CREATE VIEW qset.viewpyactvtrans AS
 ALTER TABLE qset.viewpyactvtrans OWNER TO postgres;
 
 --
--- TOC entry 1057 (class 1259 OID 22721)
+-- TOC entry 622 (class 1259 OID 120877)
 -- Name: viewpydepomaps; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9701,7 +9723,7 @@ CREATE VIEW qset.viewpydepomaps AS
 ALTER TABLE qset.viewpydepomaps OWNER TO postgres;
 
 --
--- TOC entry 1058 (class 1259 OID 22726)
+-- TOC entry 623 (class 1259 OID 120882)
 -- Name: viewpyitemexm; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9725,7 +9747,7 @@ CREATE VIEW qset.viewpyitemexm AS
 ALTER TABLE qset.viewpyitemexm OWNER TO postgres;
 
 --
--- TOC entry 1059 (class 1259 OID 22731)
+-- TOC entry 624 (class 1259 OID 120887)
 -- Name: viewpylnmaps; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9743,7 +9765,7 @@ CREATE VIEW qset.viewpylnmaps AS
 ALTER TABLE qset.viewpylnmaps OWNER TO postgres;
 
 --
--- TOC entry 1060 (class 1259 OID 22736)
+-- TOC entry 625 (class 1259 OID 120892)
 -- Name: viewpypcadtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9781,7 +9803,7 @@ CREATE VIEW qset.viewpypcadtls AS
 ALTER TABLE qset.viewpypcadtls OWNER TO postgres;
 
 --
--- TOC entry 1061 (class 1259 OID 22741)
+-- TOC entry 626 (class 1259 OID 120897)
 -- Name: viewpypcahdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9810,7 +9832,7 @@ CREATE VIEW qset.viewpypcahdr AS
 ALTER TABLE qset.viewpypcahdr OWNER TO postgres;
 
 --
--- TOC entry 1062 (class 1259 OID 22745)
+-- TOC entry 627 (class 1259 OID 120901)
 -- Name: viewpyslip; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9843,7 +9865,7 @@ CREATE VIEW qset.viewpyslip AS
 ALTER TABLE qset.viewpyslip OWNER TO postgres;
 
 --
--- TOC entry 1063 (class 1259 OID 22750)
+-- TOC entry 628 (class 1259 OID 120906)
 -- Name: viewpystaffbanks; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9866,7 +9888,7 @@ CREATE VIEW qset.viewpystaffbanks AS
 ALTER TABLE qset.viewpystaffbanks OWNER TO postgres;
 
 --
--- TOC entry 1064 (class 1259 OID 22755)
+-- TOC entry 629 (class 1259 OID 120911)
 -- Name: viewpystaffexempt; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9885,7 +9907,7 @@ CREATE VIEW qset.viewpystaffexempt AS
 ALTER TABLE qset.viewpystaffexempt OWNER TO postgres;
 
 --
--- TOC entry 1065 (class 1259 OID 22760)
+-- TOC entry 630 (class 1259 OID 120916)
 -- Name: viewpystaffloans; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9922,7 +9944,7 @@ CREATE VIEW qset.viewpystaffloans AS
 ALTER TABLE qset.viewpystaffloans OWNER TO postgres;
 
 --
--- TOC entry 1066 (class 1259 OID 22765)
+-- TOC entry 631 (class 1259 OID 120921)
 -- Name: viewrtcats; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9940,7 +9962,7 @@ CREATE VIEW qset.viewrtcats AS
 ALTER TABLE qset.viewrtcats OWNER TO postgres;
 
 --
--- TOC entry 1067 (class 1259 OID 22769)
+-- TOC entry 632 (class 1259 OID 120925)
 -- Name: viewrtpydtls; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -9999,7 +10021,7 @@ CREATE VIEW qset.viewrtpydtls AS
 ALTER TABLE qset.viewrtpydtls OWNER TO postgres;
 
 --
--- TOC entry 1068 (class 1259 OID 22774)
+-- TOC entry 633 (class 1259 OID 120930)
 -- Name: viewrtpyhdr; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10040,7 +10062,7 @@ CREATE VIEW qset.viewrtpyhdr AS
 ALTER TABLE qset.viewrtpyhdr OWNER TO postgres;
 
 --
--- TOC entry 1069 (class 1259 OID 22779)
+-- TOC entry 634 (class 1259 OID 120935)
 -- Name: viewstaffdepitems; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10077,7 +10099,7 @@ CREATE VIEW qset.viewstaffdepitems AS
 ALTER TABLE qset.viewstaffdepitems OWNER TO postgres;
 
 --
--- TOC entry 1070 (class 1259 OID 22784)
+-- TOC entry 635 (class 1259 OID 120940)
 -- Name: viewstaffprofile; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10145,7 +10167,7 @@ CREATE VIEW qset.viewstaffprofile AS
 ALTER TABLE qset.viewstaffprofile OWNER TO postgres;
 
 --
--- TOC entry 1071 (class 1259 OID 22789)
+-- TOC entry 636 (class 1259 OID 120945)
 -- Name: viewsyspvgs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10171,7 +10193,7 @@ CREATE VIEW qset.viewsyspvgs AS
 ALTER TABLE qset.viewsyspvgs OWNER TO postgres;
 
 --
--- TOC entry 1072 (class 1259 OID 22794)
+-- TOC entry 637 (class 1259 OID 120950)
 -- Name: viewsysusrs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10188,7 +10210,7 @@ CREATE VIEW qset.viewsysusrs AS
 ALTER TABLE qset.viewsysusrs OWNER TO postgres;
 
 --
--- TOC entry 1073 (class 1259 OID 22798)
+-- TOC entry 638 (class 1259 OID 120954)
 -- Name: viewtowns; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10205,7 +10227,7 @@ CREATE VIEW qset.viewtowns AS
 ALTER TABLE qset.viewtowns OWNER TO postgres;
 
 --
--- TOC entry 1101 (class 1259 OID 92891)
+-- TOC entry 639 (class 1259 OID 120958)
 -- Name: vwhmstaffspexs; Type: VIEW; Schema: qset; Owner: postgres
 --
 
@@ -10223,7 +10245,7 @@ CREATE VIEW qset.vwhmstaffspexs AS
 ALTER TABLE qset.vwhmstaffspexs OWNER TO postgres;
 
 --
--- TOC entry 6177 (class 2604 OID 191270)
+-- TOC entry 5781 (class 2604 OID 120963)
 -- Name: cl_acad_years id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10231,7 +10253,7 @@ ALTER TABLE ONLY qset.cl_acad_years ALTER COLUMN id SET DEFAULT nextval('qset.cl
 
 
 --
--- TOC entry 6179 (class 2604 OID 199400)
+-- TOC entry 5782 (class 2604 OID 120964)
 -- Name: cl_campus id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10239,7 +10261,7 @@ ALTER TABLE ONLY qset.cl_campus ALTER COLUMN id SET DEFAULT nextval('qset.cl_cam
 
 
 --
--- TOC entry 6181 (class 2604 OID 199424)
+-- TOC entry 5783 (class 2604 OID 120965)
 -- Name: cl_depts id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10247,7 +10269,7 @@ ALTER TABLE ONLY qset.cl_depts ALTER COLUMN id SET DEFAULT nextval('qset.cl_dept
 
 
 --
--- TOC entry 6174 (class 2604 OID 191236)
+-- TOC entry 5784 (class 2604 OID 120966)
 -- Name: cl_programmes id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10255,7 +10277,7 @@ ALTER TABLE ONLY qset.cl_programmes ALTER COLUMN id SET DEFAULT nextval('qset.cl
 
 
 --
--- TOC entry 6180 (class 2604 OID 199412)
+-- TOC entry 5785 (class 2604 OID 120967)
 -- Name: cl_schools id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10263,7 +10285,7 @@ ALTER TABLE ONLY qset.cl_schools ALTER COLUMN id SET DEFAULT nextval('qset.cl_sc
 
 
 --
--- TOC entry 6178 (class 2604 OID 191280)
+-- TOC entry 5786 (class 2604 OID 120968)
 -- Name: cl_sem_ses id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10271,7 +10293,7 @@ ALTER TABLE ONLY qset.cl_sem_ses ALTER COLUMN id SET DEFAULT nextval('qset.cl_se
 
 
 --
--- TOC entry 6183 (class 2604 OID 207604)
+-- TOC entry 5787 (class 2604 OID 120969)
 -- Name: cl_student_cats id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10279,7 +10301,7 @@ ALTER TABLE ONLY qset.cl_student_cats ALTER COLUMN id SET DEFAULT nextval('qset.
 
 
 --
--- TOC entry 6185 (class 2604 OID 207628)
+-- TOC entry 5788 (class 2604 OID 120970)
 -- Name: cl_student_status id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10287,7 +10309,7 @@ ALTER TABLE ONLY qset.cl_student_status ALTER COLUMN id SET DEFAULT nextval('qse
 
 
 --
--- TOC entry 6184 (class 2604 OID 207616)
+-- TOC entry 5789 (class 2604 OID 120971)
 -- Name: cl_student_types id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10295,7 +10317,7 @@ ALTER TABLE ONLY qset.cl_student_types ALTER COLUMN id SET DEFAULT nextval('qset
 
 
 --
--- TOC entry 6176 (class 2604 OID 191260)
+-- TOC entry 5790 (class 2604 OID 120972)
 -- Name: cl_students id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10303,7 +10325,7 @@ ALTER TABLE ONLY qset.cl_students ALTER COLUMN id SET DEFAULT nextval('qset.cl_s
 
 
 --
--- TOC entry 6182 (class 2604 OID 207592)
+-- TOC entry 5791 (class 2604 OID 120973)
 -- Name: cl_study_methods id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10311,7 +10333,7 @@ ALTER TABLE ONLY qset.cl_study_methods ALTER COLUMN id SET DEFAULT nextval('qset
 
 
 --
--- TOC entry 6175 (class 2604 OID 191248)
+-- TOC entry 5792 (class 2604 OID 120974)
 -- Name: cl_units id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10319,7 +10341,7 @@ ALTER TABLE ONLY qset.cl_units ALTER COLUMN id SET DEFAULT nextval('qset.cl_unit
 
 
 --
--- TOC entry 6171 (class 2604 OID 150297)
+-- TOC entry 5793 (class 2604 OID 120975)
 -- Name: cm_campaigns id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10327,7 +10349,7 @@ ALTER TABLE ONLY qset.cm_campaigns ALTER COLUMN id SET DEFAULT nextval('qset.cm_
 
 
 --
--- TOC entry 6167 (class 2604 OID 150248)
+-- TOC entry 5794 (class 2604 OID 120976)
 -- Name: cm_groups id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10335,7 +10357,7 @@ ALTER TABLE ONLY qset.cm_groups ALTER COLUMN id SET DEFAULT nextval('qset.cm_gro
 
 
 --
--- TOC entry 6172 (class 2604 OID 150310)
+-- TOC entry 5795 (class 2604 OID 120977)
 -- Name: cm_queue id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10343,7 +10365,7 @@ ALTER TABLE ONLY qset.cm_queue ALTER COLUMN id SET DEFAULT nextval('qset.cm_queu
 
 
 --
--- TOC entry 6173 (class 2604 OID 166632)
+-- TOC entry 5796 (class 2604 OID 120978)
 -- Name: cm_queue_hdr id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10351,7 +10373,7 @@ ALTER TABLE ONLY qset.cm_queue_hdr ALTER COLUMN id SET DEFAULT nextval('qset.cm_
 
 
 --
--- TOC entry 6169 (class 2604 OID 150274)
+-- TOC entry 5797 (class 2604 OID 120979)
 -- Name: cm_subscriber_grps id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10359,7 +10381,7 @@ ALTER TABLE ONLY qset.cm_subscriber_grps ALTER COLUMN id SET DEFAULT nextval('qs
 
 
 --
--- TOC entry 6170 (class 2604 OID 150275)
+-- TOC entry 5798 (class 2604 OID 120980)
 -- Name: cm_subscriber_grps subscriber_id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10367,7 +10389,7 @@ ALTER TABLE ONLY qset.cm_subscriber_grps ALTER COLUMN subscriber_id SET DEFAULT 
 
 
 --
--- TOC entry 6168 (class 2604 OID 150260)
+-- TOC entry 5799 (class 2604 OID 120981)
 -- Name: cm_subscribers id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10375,7 +10397,7 @@ ALTER TABLE ONLY qset.cm_subscribers ALTER COLUMN id SET DEFAULT nextval('qset.c
 
 
 --
--- TOC entry 6163 (class 2604 OID 25338)
+-- TOC entry 5800 (class 2604 OID 120982)
 -- Name: hmptlabdocs id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10383,7 +10405,7 @@ ALTER TABLE ONLY qset.hmptlabdocs ALTER COLUMN id SET DEFAULT nextval('qset.hmpt
 
 
 --
--- TOC entry 6165 (class 2604 OID 58119)
+-- TOC entry 5801 (class 2604 OID 120983)
 -- Name: hmspecialists sp_id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10391,7 +10413,7 @@ ALTER TABLE ONLY qset.hmspecialists ALTER COLUMN sp_id SET DEFAULT nextval('qset
 
 
 --
--- TOC entry 6166 (class 2604 OID 90887)
+-- TOC entry 5802 (class 2604 OID 120984)
 -- Name: hmstaffspexs id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10399,7 +10421,7 @@ ALTER TABLE ONLY qset.hmstaffspexs ALTER COLUMN id SET DEFAULT nextval('qset.hms
 
 
 --
--- TOC entry 6189 (class 2604 OID 215816)
+-- TOC entry 5807 (class 2604 OID 120985)
 -- Name: re_buildings id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10407,7 +10429,15 @@ ALTER TABLE ONLY qset.re_buildings ALTER COLUMN id SET DEFAULT nextval('qset.re_
 
 
 --
--- TOC entry 6186 (class 2604 OID 215784)
+-- TOC entry 5817 (class 2604 OID 121938)
+-- Name: re_cats id; Type: DEFAULT; Schema: qset; Owner: postgres
+--
+
+ALTER TABLE ONLY qset.re_cats ALTER COLUMN id SET DEFAULT nextval('qset.re_cats_id_seq'::regclass);
+
+
+--
+-- TOC entry 5808 (class 2604 OID 120986)
 -- Name: re_config id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10415,7 +10445,7 @@ ALTER TABLE ONLY qset.re_config ALTER COLUMN id SET DEFAULT nextval('qset.re_con
 
 
 --
--- TOC entry 6187 (class 2604 OID 215792)
+-- TOC entry 5809 (class 2604 OID 120987)
 -- Name: re_house_types id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10423,7 +10453,7 @@ ALTER TABLE ONLY qset.re_house_types ALTER COLUMN id SET DEFAULT nextval('qset.r
 
 
 --
--- TOC entry 6190 (class 2604 OID 215832)
+-- TOC entry 5810 (class 2604 OID 120988)
 -- Name: re_houses id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10431,7 +10461,7 @@ ALTER TABLE ONLY qset.re_houses ALTER COLUMN id SET DEFAULT nextval('qset.re_hou
 
 
 --
--- TOC entry 6188 (class 2604 OID 215804)
+-- TOC entry 5811 (class 2604 OID 120989)
 -- Name: re_locs id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10439,7 +10469,7 @@ ALTER TABLE ONLY qset.re_locs ALTER COLUMN id SET DEFAULT nextval('qset.re_locs_
 
 
 --
--- TOC entry 6159 (class 2604 OID 22842)
+-- TOC entry 5812 (class 2604 OID 120990)
 -- Name: sysmenus id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10447,7 +10477,7 @@ ALTER TABLE ONLY qset.sysmenus ALTER COLUMN id SET DEFAULT nextval('qset.sysmenu
 
 
 --
--- TOC entry 6160 (class 2604 OID 22843)
+-- TOC entry 5813 (class 2604 OID 120991)
 -- Name: sysmenus menucode; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10455,7 +10485,7 @@ ALTER TABLE ONLY qset.sysmenus ALTER COLUMN menucode SET DEFAULT nextval('qset.s
 
 
 --
--- TOC entry 6161 (class 2604 OID 22844)
+-- TOC entry 5814 (class 2604 OID 120992)
 -- Name: syspvgs id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10463,7 +10493,7 @@ ALTER TABLE ONLY qset.syspvgs ALTER COLUMN id SET DEFAULT nextval('qset.syspvgs_
 
 
 --
--- TOC entry 6164 (class 2604 OID 33543)
+-- TOC entry 5815 (class 2604 OID 120993)
 -- Name: sysses id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10471,7 +10501,7 @@ ALTER TABLE ONLY qset.sysses ALTER COLUMN id SET DEFAULT nextval('qset.sysses_id
 
 
 --
--- TOC entry 6162 (class 2604 OID 22845)
+-- TOC entry 5816 (class 2604 OID 120994)
 -- Name: sysusrpvgs id; Type: DEFAULT; Schema: qset; Owner: postgres
 --
 
@@ -10479,8 +10509,8 @@ ALTER TABLE ONLY qset.sysusrpvgs ALTER COLUMN id SET DEFAULT nextval('qset.sysus
 
 
 --
--- TOC entry 7257 (class 0 OID 21506)
--- Dependencies: 746
+-- TOC entry 6731 (class 0 OID 119459)
+-- Dependencies: 220
 -- Data for Name: aagradesys; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10500,8 +10530,8 @@ INSERT INTO qset.aagradesys (id, grade, minper, maxper, points) VALUES (1, 'A', 
 
 
 --
--- TOC entry 7258 (class 0 OID 21509)
--- Dependencies: 747
+-- TOC entry 6732 (class 0 OID 119462)
+-- Dependencies: 221
 -- Data for Name: aclevels; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10513,8 +10543,8 @@ INSERT INTO qset.aclevels (id, levelcode, levelname, syslevel) VALUES (1, '0', '
 
 
 --
--- TOC entry 7259 (class 0 OID 21512)
--- Dependencies: 748
+-- TOC entry 6733 (class 0 OID 119465)
+-- Dependencies: 222
 -- Data for Name: amaccsets; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10522,8 +10552,8 @@ INSERT INTO qset.amaccsets (id, accsetcode, accsetname, astctlacc, acmdepacc, de
 
 
 --
--- TOC entry 7260 (class 0 OID 21515)
--- Dependencies: 749
+-- TOC entry 6734 (class 0 OID 119468)
+-- Dependencies: 223
 -- Data for Name: amaqbatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10532,8 +10562,8 @@ INSERT INTO qset.amaqbatches (id, batchno, batchdesc, datecreated, dateedited, r
 
 
 --
--- TOC entry 7261 (class 0 OID 21518)
--- Dependencies: 750
+-- TOC entry 6735 (class 0 OID 119471)
+-- Dependencies: 224
 -- Data for Name: amaqcodes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10542,8 +10572,8 @@ INSERT INTO qset.amaqcodes (id, aqcode, aqname, dtbcode) VALUES (1, 'AQ01', 'Equ
 
 
 --
--- TOC entry 7262 (class 0 OID 21521)
--- Dependencies: 751
+-- TOC entry 6736 (class 0 OID 119474)
+-- Dependencies: 225
 -- Data for Name: amaqdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10555,8 +10585,8 @@ INSERT INTO qset.amaqdtls (id, batchno, entryno, aqno, aqdesc, catcode, aqcode, 
 
 
 --
--- TOC entry 7486 (class 0 OID 109303)
--- Dependencies: 1108
+-- TOC entry 6737 (class 0 OID 119477)
+-- Dependencies: 226
 -- Data for Name: amaqhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10567,8 +10597,8 @@ INSERT INTO qset.amaqhdr (id, batchno, entryno, entrydesc, entrydate, pyear, pmo
 
 
 --
--- TOC entry 7487 (class 0 OID 109313)
--- Dependencies: 1109
+-- TOC entry 6738 (class 0 OID 119480)
+-- Dependencies: 227
 -- Data for Name: amassets; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10579,8 +10609,8 @@ INSERT INTO qset.amassets (id, assetno, assetdesc, aqno, aqdate, serialno, statu
 
 
 --
--- TOC entry 7485 (class 0 OID 109298)
--- Dependencies: 1107
+-- TOC entry 6739 (class 0 OID 119483)
+-- Dependencies: 228
 -- Data for Name: amaststatus; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10591,8 +10621,8 @@ INSERT INTO qset.amaststatus (id, statuscode, statusname, statustype) VALUES (3,
 
 
 --
--- TOC entry 7482 (class 0 OID 109283)
--- Dependencies: 1104
+-- TOC entry 6740 (class 0 OID 119486)
+-- Dependencies: 229
 -- Data for Name: amcats; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10601,8 +10631,8 @@ INSERT INTO qset.amcats (id, catcode, catname, accsetcode) VALUES (1, 'C01', 'Ca
 
 
 --
--- TOC entry 7263 (class 0 OID 21524)
--- Dependencies: 752
+-- TOC entry 6741 (class 0 OID 119489)
+-- Dependencies: 230
 -- Data for Name: amdepmethods; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10611,8 +10641,8 @@ INSERT INTO qset.amdepmethods (id, depcode, depname, deptype, fml) VALUES (2, 'S
 
 
 --
--- TOC entry 7483 (class 0 OID 109288)
--- Dependencies: 1105
+-- TOC entry 6742 (class 0 OID 119492)
+-- Dependencies: 231
 -- Data for Name: amdibatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10623,8 +10653,8 @@ INSERT INTO qset.amdibatches (id, batchno, batchdesc, datecreated, dateedited, r
 
 
 --
--- TOC entry 7488 (class 0 OID 109318)
--- Dependencies: 1110
+-- TOC entry 6743 (class 0 OID 119495)
+-- Dependencies: 232
 -- Data for Name: amdidtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10634,8 +10664,8 @@ INSERT INTO qset.amdidtls (id, batchno, entryno, assetno, opc, acmdepv, nbv, sal
 
 
 --
--- TOC entry 7489 (class 0 OID 109323)
--- Dependencies: 1111
+-- TOC entry 6744 (class 0 OID 119498)
+-- Dependencies: 233
 -- Data for Name: amdihdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10645,8 +10675,8 @@ INSERT INTO qset.amdihdr (id, batchno, entryno, entrydesc, entrydate, pyear, pmo
 
 
 --
--- TOC entry 7484 (class 0 OID 109293)
--- Dependencies: 1106
+-- TOC entry 6745 (class 0 OID 119501)
+-- Dependencies: 234
 -- Data for Name: amdpbatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10657,8 +10687,8 @@ INSERT INTO qset.amdpbatches (id, batchno, batchdesc, datecreated, dateedited, r
 
 
 --
--- TOC entry 7490 (class 0 OID 109328)
--- Dependencies: 1112
+-- TOC entry 6746 (class 0 OID 119504)
+-- Dependencies: 235
 -- Data for Name: amdpdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10669,8 +10699,8 @@ INSERT INTO qset.amdpdtls (id, batchno, entryno, assetno, opc, nbvs, depcode, de
 
 
 --
--- TOC entry 7491 (class 0 OID 109333)
--- Dependencies: 1113
+-- TOC entry 6747 (class 0 OID 119507)
+-- Dependencies: 236
 -- Data for Name: amdphdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10680,8 +10710,8 @@ INSERT INTO qset.amdphdr (id, batchno, entryno, entrydesc, entrydate, pyear, pmo
 
 
 --
--- TOC entry 7264 (class 0 OID 21527)
--- Dependencies: 753
+-- TOC entry 6748 (class 0 OID 119510)
+-- Dependencies: 237
 -- Data for Name: apaccsets; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10689,16 +10719,16 @@ INSERT INTO qset.apaccsets (id, accsetcode, accsetname, pctlacc) VALUES (1, 'PAS
 
 
 --
--- TOC entry 7265 (class 0 OID 21530)
--- Dependencies: 754
+-- TOC entry 6749 (class 0 OID 119513)
+-- Dependencies: 238
 -- Data for Name: apconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7266 (class 0 OID 21533)
--- Dependencies: 755
+-- TOC entry 6750 (class 0 OID 119516)
+-- Dependencies: 239
 -- Data for Name: apdtbs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10707,8 +10737,8 @@ INSERT INTO qset.apdtbs (id, dtbcode, dtbname, glacc, invdflt) VALUES (2, '6105'
 
 
 --
--- TOC entry 7267 (class 0 OID 21536)
--- Dependencies: 756
+-- TOC entry 6751 (class 0 OID 119519)
+-- Dependencies: 240
 -- Data for Name: apinbatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10722,8 +10752,8 @@ INSERT INTO qset.apinbatches (id, batchno, batchdesc, srcdocno, datecreated, dat
 
 
 --
--- TOC entry 7268 (class 0 OID 21539)
--- Dependencies: 757
+-- TOC entry 6752 (class 0 OID 119522)
+-- Dependencies: 241
 -- Data for Name: apindtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10734,8 +10764,8 @@ INSERT INTO qset.apindtls (id, batchno, inno, lineno, dtbcode, taxincl, taxrate,
 
 
 --
--- TOC entry 7269 (class 0 OID 21542)
--- Dependencies: 758
+-- TOC entry 6753 (class 0 OID 119525)
+-- Dependencies: 242
 -- Data for Name: apinhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10746,8 +10776,8 @@ INSERT INTO qset.apinhdr (id, batchno, inno, indesc, supplierno, entrydate, pyea
 
 
 --
--- TOC entry 7270 (class 0 OID 21545)
--- Dependencies: 759
+-- TOC entry 6754 (class 0 OID 119528)
+-- Dependencies: 243
 -- Data for Name: appybatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10761,8 +10791,8 @@ INSERT INTO qset.appybatches (id, batchno, batchdesc, datecreated, dateedited, r
 
 
 --
--- TOC entry 7271 (class 0 OID 21548)
--- Dependencies: 760
+-- TOC entry 6755 (class 0 OID 119531)
+-- Dependencies: 244
 -- Data for Name: appydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10772,8 +10802,8 @@ INSERT INTO qset.appydtls (id, pyno, lineno, docno, curbal, aplamount, netbal, a
 
 
 --
--- TOC entry 7272 (class 0 OID 21551)
--- Dependencies: 761
+-- TOC entry 6756 (class 0 OID 119534)
+-- Dependencies: 245
 -- Data for Name: appyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10783,8 +10813,8 @@ INSERT INTO qset.appyhdr (id, batchno, pyno, pydesc, entrydate, pyear, pmonth, s
 
 
 --
--- TOC entry 7273 (class 0 OID 21554)
--- Dependencies: 762
+-- TOC entry 6757 (class 0 OID 119537)
+-- Dependencies: 246
 -- Data for Name: apsupgrps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10792,8 +10822,8 @@ INSERT INTO qset.apsupgrps (id, supgrpcode, supgrpname, accsetcode, bkbranchcode
 
 
 --
--- TOC entry 7274 (class 0 OID 21557)
--- Dependencies: 763
+-- TOC entry 6758 (class 0 OID 119540)
+-- Dependencies: 247
 -- Data for Name: apsuppliers; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10803,8 +10833,8 @@ INSERT INTO qset.apsuppliers (id, supplierno, firstname, middlename, lastname, f
 
 
 --
--- TOC entry 7275 (class 0 OID 21563)
--- Dependencies: 764
+-- TOC entry 6759 (class 0 OID 119545)
+-- Dependencies: 248
 -- Data for Name: araccsets; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10812,16 +10842,16 @@ INSERT INTO qset.araccsets (id, accsetcode, accsetname, rctlacc, ppacc) VALUES (
 
 
 --
--- TOC entry 7276 (class 0 OID 21566)
--- Dependencies: 765
+-- TOC entry 6760 (class 0 OID 119548)
+-- Dependencies: 249
 -- Data for Name: arconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7277 (class 0 OID 21569)
--- Dependencies: 766
+-- TOC entry 6761 (class 0 OID 119551)
+-- Dependencies: 250
 -- Data for Name: arcusgrps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10829,8 +10859,8 @@ INSERT INTO qset.arcusgrps (id, cusgrpcode, cusgrpname, accsetcode) VALUES (1, '
 
 
 --
--- TOC entry 7278 (class 0 OID 21572)
--- Dependencies: 767
+-- TOC entry 6762 (class 0 OID 119554)
+-- Dependencies: 251
 -- Data for Name: arcustomers; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10839,8 +10869,8 @@ INSERT INTO qset.arcustomers (id, customerno, firstname, middlename, lastname, f
 
 
 --
--- TOC entry 7279 (class 0 OID 21578)
--- Dependencies: 768
+-- TOC entry 6763 (class 0 OID 119559)
+-- Dependencies: 252
 -- Data for Name: ardtbs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10848,8 +10878,8 @@ INSERT INTO qset.ardtbs (id, dtbcode, dtbname, revacc, invacc, cosacc) VALUES (1
 
 
 --
--- TOC entry 7280 (class 0 OID 21581)
--- Dependencies: 769
+-- TOC entry 6764 (class 0 OID 119562)
+-- Dependencies: 253
 -- Data for Name: arinbatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10862,8 +10892,8 @@ INSERT INTO qset.arinbatches (id, batchno, batchdesc, datecreated, dateedited, r
 
 
 --
--- TOC entry 7281 (class 0 OID 21584)
--- Dependencies: 770
+-- TOC entry 6765 (class 0 OID 119565)
+-- Dependencies: 254
 -- Data for Name: arindtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10873,8 +10903,8 @@ INSERT INTO qset.arindtls (id, inno, lineno, itemdtbcode, qty, unitprice, taxinc
 
 
 --
--- TOC entry 7282 (class 0 OID 21587)
--- Dependencies: 771
+-- TOC entry 6766 (class 0 OID 119568)
+-- Dependencies: 255
 -- Data for Name: arinhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10884,16 +10914,16 @@ INSERT INTO qset.arinhdr (id, batchno, inno, indesc, customerno, entrytype, entr
 
 
 --
--- TOC entry 7283 (class 0 OID 21590)
--- Dependencies: 772
+-- TOC entry 6767 (class 0 OID 119571)
+-- Dependencies: 256
 -- Data for Name: aritems; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7284 (class 0 OID 21593)
--- Dependencies: 773
+-- TOC entry 6768 (class 0 OID 119574)
+-- Dependencies: 257
 -- Data for Name: arpybatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10906,8 +10936,8 @@ INSERT INTO qset.arpybatches (id, batchno, batchdesc, datecreated, dateedited, r
 
 
 --
--- TOC entry 7285 (class 0 OID 21596)
--- Dependencies: 774
+-- TOC entry 6769 (class 0 OID 119577)
+-- Dependencies: 258
 -- Data for Name: arpydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10918,8 +10948,8 @@ INSERT INTO qset.arpydtls (id, pyno, lineno, docno, curbal, aplamount, netbal, a
 
 
 --
--- TOC entry 7286 (class 0 OID 21599)
--- Dependencies: 775
+-- TOC entry 6770 (class 0 OID 119580)
+-- Dependencies: 259
 -- Data for Name: arpyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10930,8 +10960,8 @@ INSERT INTO qset.arpyhdr (id, batchno, pyno, pydesc, entrydate, pyear, pmonth, c
 
 
 --
--- TOC entry 7513 (class 0 OID 191267)
--- Dependencies: 1148
+-- TOC entry 6771 (class 0 OID 119583)
+-- Dependencies: 260
 -- Data for Name: cl_acad_years; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10940,8 +10970,8 @@ INSERT INTO qset.cl_acad_years (id, acad_year, start_date, end_date) VALUES (3, 
 
 
 --
--- TOC entry 7517 (class 0 OID 199397)
--- Dependencies: 1152
+-- TOC entry 6773 (class 0 OID 119587)
+-- Dependencies: 262
 -- Data for Name: cl_campus; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10949,8 +10979,8 @@ INSERT INTO qset.cl_campus (id, campus_code, campus_name) VALUES (1, 'C1', 'Main
 
 
 --
--- TOC entry 7521 (class 0 OID 199421)
--- Dependencies: 1156
+-- TOC entry 6775 (class 0 OID 119591)
+-- Dependencies: 264
 -- Data for Name: cl_depts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10959,8 +10989,8 @@ INSERT INTO qset.cl_depts (id, school_code, dept_code, dept_name) VALUES (2, 'SO
 
 
 --
--- TOC entry 7507 (class 0 OID 191233)
--- Dependencies: 1142
+-- TOC entry 6777 (class 0 OID 119595)
+-- Dependencies: 266
 -- Data for Name: cl_programmes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10969,8 +10999,8 @@ INSERT INTO qset.cl_programmes (id, prog_code, prog_name) VALUES (3, 'BA', 'Bach
 
 
 --
--- TOC entry 7519 (class 0 OID 199409)
--- Dependencies: 1154
+-- TOC entry 6779 (class 0 OID 119599)
+-- Dependencies: 268
 -- Data for Name: cl_schools; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10979,8 +11009,8 @@ INSERT INTO qset.cl_schools (id, school_code, school_name) VALUES (1, 'SOA', 'Sc
 
 
 --
--- TOC entry 7515 (class 0 OID 191277)
--- Dependencies: 1150
+-- TOC entry 6781 (class 0 OID 119603)
+-- Dependencies: 270
 -- Data for Name: cl_sem_ses; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10989,8 +11019,8 @@ INSERT INTO qset.cl_sem_ses (id, ses_code, ses_name) VALUES (2, 'S2', 'Semester 
 
 
 --
--- TOC entry 7525 (class 0 OID 207601)
--- Dependencies: 1160
+-- TOC entry 6783 (class 0 OID 119607)
+-- Dependencies: 272
 -- Data for Name: cl_student_cats; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -10999,8 +11029,8 @@ INSERT INTO qset.cl_student_cats (id, cat_code, cat_name) VALUES (1, 'GSP', 'Gov
 
 
 --
--- TOC entry 7529 (class 0 OID 207625)
--- Dependencies: 1164
+-- TOC entry 6785 (class 0 OID 119611)
+-- Dependencies: 274
 -- Data for Name: cl_student_status; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11009,8 +11039,8 @@ INSERT INTO qset.cl_student_status (id, ss_code, ss_name) VALUES (2, 'SS02', 'DE
 
 
 --
--- TOC entry 7527 (class 0 OID 207613)
--- Dependencies: 1162
+-- TOC entry 6787 (class 0 OID 119615)
+-- Dependencies: 276
 -- Data for Name: cl_student_types; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11019,16 +11049,16 @@ INSERT INTO qset.cl_student_types (id, st_code, st_name) VALUES (2, 'C', 'Contin
 
 
 --
--- TOC entry 7511 (class 0 OID 191257)
--- Dependencies: 1146
+-- TOC entry 6789 (class 0 OID 119619)
+-- Dependencies: 278
 -- Data for Name: cl_students; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7523 (class 0 OID 207589)
--- Dependencies: 1158
+-- TOC entry 6791 (class 0 OID 119625)
+-- Dependencies: 280
 -- Data for Name: cl_study_methods; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11037,8 +11067,8 @@ INSERT INTO qset.cl_study_methods (id, sm_code, sm_name) VALUES (2, 'EV', 'EVENI
 
 
 --
--- TOC entry 7509 (class 0 OID 191245)
--- Dependencies: 1144
+-- TOC entry 6793 (class 0 OID 119629)
+-- Dependencies: 282
 -- Data for Name: cl_units; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11047,8 +11077,8 @@ INSERT INTO qset.cl_units (id, unit_code, unit_name) VALUES (2, 'SCS102', 'DISTR
 
 
 --
--- TOC entry 7501 (class 0 OID 150294)
--- Dependencies: 1136
+-- TOC entry 6795 (class 0 OID 119633)
+-- Dependencies: 284
 -- Data for Name: cm_campaigns; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11059,8 +11089,8 @@ hope you are doing as greatest');
 
 
 --
--- TOC entry 7494 (class 0 OID 150245)
--- Dependencies: 1129
+-- TOC entry 6797 (class 0 OID 119639)
+-- Dependencies: 286
 -- Data for Name: cm_groups; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11071,16 +11101,16 @@ INSERT INTO qset.cm_groups (id, grp_code, grp_desc, is_default) VALUES (4, 'grp3
 
 
 --
--- TOC entry 7503 (class 0 OID 150307)
--- Dependencies: 1138
+-- TOC entry 6799 (class 0 OID 119643)
+-- Dependencies: 288
 -- Data for Name: cm_queue; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7504 (class 0 OID 166627)
--- Dependencies: 1139
+-- TOC entry 6800 (class 0 OID 119648)
+-- Dependencies: 289
 -- Data for Name: cm_queue_hdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11112,8 +11142,8 @@ INSERT INTO qset.cm_queue_hdr (id, campaign_id, grp_code, queue_date) VALUES (25
 
 
 --
--- TOC entry 7499 (class 0 OID 150271)
--- Dependencies: 1134
+-- TOC entry 6803 (class 0 OID 119653)
+-- Dependencies: 292
 -- Data for Name: cm_subscriber_grps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11129,8 +11159,8 @@ INSERT INTO qset.cm_subscriber_grps (id, subscriber_id, grp_code) VALUES (13, 1,
 
 
 --
--- TOC entry 7496 (class 0 OID 150257)
--- Dependencies: 1131
+-- TOC entry 6806 (class 0 OID 119658)
+-- Dependencies: 295
 -- Data for Name: cm_subscribers; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11148,8 +11178,8 @@ INSERT INTO qset.cm_subscribers (id, first_name, last_name, phone_no, email, cou
 
 
 --
--- TOC entry 7287 (class 0 OID 21602)
--- Dependencies: 776
+-- TOC entry 6808 (class 0 OID 119664)
+-- Dependencies: 297
 -- Data for Name: csbranches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11157,8 +11187,8 @@ INSERT INTO qset.csbranches (id, branchcode, branchname) VALUES (1, 'B1', 'NAIRO
 
 
 --
--- TOC entry 7288 (class 0 OID 21605)
--- Dependencies: 777
+-- TOC entry 6809 (class 0 OID 119667)
+-- Dependencies: 298
 -- Data for Name: cscologo; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11167,8 +11197,8 @@ INSERT INTO qset.cscologo (id, companycode, logo, filename, filetype, filesize, 
 
 
 --
--- TOC entry 7289 (class 0 OID 21611)
--- Dependencies: 778
+-- TOC entry 6810 (class 0 OID 119672)
+-- Dependencies: 299
 -- Data for Name: csconstituencies; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11179,8 +11209,8 @@ INSERT INTO qset.csconstituencies (id, countycode, constituencycode, constituenc
 
 
 --
--- TOC entry 7290 (class 0 OID 21614)
--- Dependencies: 779
+-- TOC entry 6811 (class 0 OID 119675)
+-- Dependencies: 300
 -- Data for Name: cscoprofile; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11188,8 +11218,8 @@ INSERT INTO qset.cscoprofile (id, companycode, companyname, postaladr, postalcod
 
 
 --
--- TOC entry 7291 (class 0 OID 21620)
--- Dependencies: 780
+-- TOC entry 6812 (class 0 OID 119680)
+-- Dependencies: 301
 -- Data for Name: cscounties; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11203,8 +11233,8 @@ INSERT INTO qset.cscounties (id, countycode, countyname) VALUES (7, 'LD', 'Eldor
 
 
 --
--- TOC entry 7292 (class 0 OID 21623)
--- Dependencies: 781
+-- TOC entry 6813 (class 0 OID 119683)
+-- Dependencies: 302
 -- Data for Name: cscountries; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11220,8 +11250,8 @@ INSERT INTO qset.cscountries (id, regioncode, countrycode, countryname, isdefaul
 
 
 --
--- TOC entry 7293 (class 0 OID 21626)
--- Dependencies: 782
+-- TOC entry 6814 (class 0 OID 119686)
+-- Dependencies: 303
 -- Data for Name: cscountryregs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11232,8 +11262,8 @@ INSERT INTO qset.cscountryregs (id, regioncode, regionname) VALUES (4, 'AS', 'AS
 
 
 --
--- TOC entry 7294 (class 0 OID 21629)
--- Dependencies: 783
+-- TOC entry 6815 (class 0 OID 119689)
+-- Dependencies: 304
 -- Data for Name: csdepts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11243,8 +11273,8 @@ INSERT INTO qset.csdepts (id, deptcode, deptname) VALUES (1, 'D001', 'Administra
 
 
 --
--- TOC entry 7295 (class 0 OID 21632)
--- Dependencies: 784
+-- TOC entry 6816 (class 0 OID 119692)
+-- Dependencies: 305
 -- Data for Name: csdisab; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11253,8 +11283,8 @@ INSERT INTO qset.csdisab (id, disabcatcode, disabcode, disabname) VALUES (1, 'DC
 
 
 --
--- TOC entry 7296 (class 0 OID 21635)
--- Dependencies: 785
+-- TOC entry 6817 (class 0 OID 119695)
+-- Dependencies: 306
 -- Data for Name: csdisabcat; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11264,8 +11294,8 @@ INSERT INTO qset.csdisabcat (id, disabcatcode, disabcatname) VALUES (1, 'DC01', 
 
 
 --
--- TOC entry 7297 (class 0 OID 21638)
--- Dependencies: 786
+-- TOC entry 6818 (class 0 OID 119698)
+-- Dependencies: 307
 -- Data for Name: csgender; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11275,8 +11305,8 @@ INSERT INTO qset.csgender (id, gendercode, gendername) VALUES (3, 'Other', 'Othe
 
 
 --
--- TOC entry 7298 (class 0 OID 21641)
--- Dependencies: 787
+-- TOC entry 6819 (class 0 OID 119701)
+-- Dependencies: 308
 -- Data for Name: cssalutation; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11290,8 +11320,8 @@ INSERT INTO qset.cssalutation (id, salutationcode, salutationname) VALUES (4, 'D
 
 
 --
--- TOC entry 7299 (class 0 OID 21644)
--- Dependencies: 788
+-- TOC entry 6820 (class 0 OID 119704)
+-- Dependencies: 309
 -- Data for Name: cssections; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11300,8 +11330,8 @@ INSERT INTO qset.cssections (id, deptcode, sectioncode, sectionname) VALUES (1, 
 
 
 --
--- TOC entry 7300 (class 0 OID 21647)
--- Dependencies: 789
+-- TOC entry 6821 (class 0 OID 119707)
+-- Dependencies: 310
 -- Data for Name: cstowns; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11315,8 +11345,8 @@ INSERT INTO qset.cstowns (id, countrycode, towncode, townname) VALUES (4, 'GB', 
 
 
 --
--- TOC entry 7301 (class 0 OID 21650)
--- Dependencies: 790
+-- TOC entry 6822 (class 0 OID 119710)
+-- Dependencies: 311
 -- Data for Name: fnbankbranch; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11325,8 +11355,8 @@ INSERT INTO qset.fnbankbranch (id, bankcode, bkbranchcode, bkbranchname) VALUES 
 
 
 --
--- TOC entry 7302 (class 0 OID 21653)
--- Dependencies: 791
+-- TOC entry 6823 (class 0 OID 119713)
+-- Dependencies: 312
 -- Data for Name: fnbanks; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11334,16 +11364,16 @@ INSERT INTO qset.fnbanks (id, bankcode, bankname, swiftcode) VALUES (1, '01', 'B
 
 
 --
--- TOC entry 7303 (class 0 OID 21656)
--- Dependencies: 792
+-- TOC entry 6824 (class 0 OID 119716)
+-- Dependencies: 313
 -- Data for Name: fnbkchqtpls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7304 (class 0 OID 21659)
--- Dependencies: 793
+-- TOC entry 6825 (class 0 OID 119719)
+-- Dependencies: 314
 -- Data for Name: fncobanks; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11353,16 +11383,16 @@ INSERT INTO qset.fncobanks (id, bkbranchcode, accountno, isdefault, bkacc, woacc
 
 
 --
--- TOC entry 7305 (class 0 OID 21662)
--- Dependencies: 794
+-- TOC entry 6826 (class 0 OID 119722)
+-- Dependencies: 315
 -- Data for Name: fnconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7306 (class 0 OID 21665)
--- Dependencies: 795
+-- TOC entry 6827 (class 0 OID 119725)
+-- Dependencies: 316
 -- Data for Name: fnfiscalprd; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11392,8 +11422,8 @@ INSERT INTO qset.fnfiscalprd (id, fiscalyear, pyear, pmonth, active) VALUES (23,
 
 
 --
--- TOC entry 7307 (class 0 OID 21668)
--- Dependencies: 796
+-- TOC entry 6828 (class 0 OID 119728)
+-- Dependencies: 317
 -- Data for Name: fnfiscalyear; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11407,8 +11437,8 @@ INSERT INTO qset.fnfiscalyear (id, fiscalyear, startdate, enddate, active) VALUE
 
 
 --
--- TOC entry 7308 (class 0 OID 21671)
--- Dependencies: 797
+-- TOC entry 6829 (class 0 OID 119731)
+-- Dependencies: 318
 -- Data for Name: fnpaymodes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11418,8 +11448,8 @@ INSERT INTO qset.fnpaymodes (id, pmcode, pmname, iscash, ischeque, ismpesa) VALU
 
 
 --
--- TOC entry 7309 (class 0 OID 21674)
--- Dependencies: 798
+-- TOC entry 6830 (class 0 OID 119734)
+-- Dependencies: 319
 -- Data for Name: glaccgrpcat; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11447,8 +11477,8 @@ INSERT INTO qset.glaccgrpcat (id, accgrpcatcode, accgrpcatname, sortorder) VALUE
 
 
 --
--- TOC entry 7310 (class 0 OID 21677)
--- Dependencies: 799
+-- TOC entry 6831 (class 0 OID 119737)
+-- Dependencies: 320
 -- Data for Name: glaccgrps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11481,8 +11511,8 @@ INSERT INTO qset.glaccgrps (id, accgrpcatcode, accgrpcode, accgrpname) VALUES (1
 
 
 --
--- TOC entry 7311 (class 0 OID 21680)
--- Dependencies: 800
+-- TOC entry 6832 (class 0 OID 119740)
+-- Dependencies: 321
 -- Data for Name: glaccounts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11559,8 +11589,8 @@ INSERT INTO qset.glaccounts (id, accountcode, accountname, normalbal, acctypecod
 
 
 --
--- TOC entry 7312 (class 0 OID 21683)
--- Dependencies: 801
+-- TOC entry 6833 (class 0 OID 119743)
+-- Dependencies: 322
 -- Data for Name: glacctypes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11570,8 +11600,8 @@ INSERT INTO qset.glacctypes (id, acctypecode, acctypename) VALUES (2, 'BS', 'Bal
 
 
 --
--- TOC entry 7313 (class 0 OID 21686)
--- Dependencies: 802
+-- TOC entry 6834 (class 0 OID 119746)
+-- Dependencies: 323
 -- Data for Name: glbatches; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11586,8 +11616,8 @@ INSERT INTO qset.glbatches (id, batchno, batchdesc, srcbatchno, batchsrc, datecr
 
 
 --
--- TOC entry 7314 (class 0 OID 21689)
--- Dependencies: 803
+-- TOC entry 6835 (class 0 OID 119749)
+-- Dependencies: 324
 -- Data for Name: glbdg; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11662,16 +11692,16 @@ INSERT INTO qset.glbdg (id, pyear, pmonth, accountcode, amount, audituser, audit
 
 
 --
--- TOC entry 7315 (class 0 OID 21692)
--- Dependencies: 804
+-- TOC entry 6836 (class 0 OID 119752)
+-- Dependencies: 325
 -- Data for Name: glconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7316 (class 0 OID 21695)
--- Dependencies: 805
+-- TOC entry 6837 (class 0 OID 119755)
+-- Dependencies: 326
 -- Data for Name: gldtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11706,8 +11736,8 @@ INSERT INTO qset.gldtls (id, entryno, lineno, reference, accountcode, normalbal,
 
 
 --
--- TOC entry 7317 (class 0 OID 21698)
--- Dependencies: 806
+-- TOC entry 6838 (class 0 OID 119758)
+-- Dependencies: 327
 -- Data for Name: glhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11722,8 +11752,8 @@ INSERT INTO qset.glhdr (id, batchno, entryno, entrydesc, srcdocno, entrydate, py
 
 
 --
--- TOC entry 7318 (class 0 OID 21701)
--- Dependencies: 807
+-- TOC entry 6839 (class 0 OID 119761)
+-- Dependencies: 328
 -- Data for Name: gltb; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11752,8 +11782,8 @@ INSERT INTO qset.gltb (id, entryno, lineno, accountcode, normalbal, dramount, cr
 
 
 --
--- TOC entry 7319 (class 0 OID 21704)
--- Dependencies: 808
+-- TOC entry 6840 (class 0 OID 119764)
+-- Dependencies: 329
 -- Data for Name: hgacademicyears; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11765,8 +11795,8 @@ INSERT INTO qset.hgacademicyears (id, academicyear, startdate, enddate) VALUES (
 
 
 --
--- TOC entry 7320 (class 0 OID 21707)
--- Dependencies: 809
+-- TOC entry 6841 (class 0 OID 119767)
+-- Dependencies: 330
 -- Data for Name: hgcalendar; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11778,24 +11808,24 @@ INSERT INTO qset.hgcalendar (id, academicyear, termcode, startdate, enddate, act
 
 
 --
--- TOC entry 7321 (class 0 OID 21710)
--- Dependencies: 810
+-- TOC entry 6842 (class 0 OID 119770)
+-- Dependencies: 331
 -- Data for Name: hgconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7322 (class 0 OID 21713)
--- Dependencies: 811
+-- TOC entry 6843 (class 0 OID 119773)
+-- Dependencies: 332
 -- Data for Name: hgcoresubjects; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7323 (class 0 OID 21716)
--- Dependencies: 812
+-- TOC entry 6844 (class 0 OID 119776)
+-- Dependencies: 333
 -- Data for Name: hgexamconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11803,8 +11833,8 @@ INSERT INTO qset.hgexamconfig (id) VALUES (1);
 
 
 --
--- TOC entry 7324 (class 0 OID 21719)
--- Dependencies: 813
+-- TOC entry 6845 (class 0 OID 119779)
+-- Dependencies: 334
 -- Data for Name: hgexams; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11814,8 +11844,8 @@ INSERT INTO qset.hgexams (id, examcode, examname) VALUES (1, 'HT', 'Half Term Ex
 
 
 --
--- TOC entry 7325 (class 0 OID 21722)
--- Dependencies: 814
+-- TOC entry 6846 (class 0 OID 119782)
+-- Dependencies: 335
 -- Data for Name: hgforms; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11826,8 +11856,8 @@ INSERT INTO qset.hgforms (id, formcode, formname, studyrcode) VALUES (1, 'F1', '
 
 
 --
--- TOC entry 7326 (class 0 OID 21725)
--- Dependencies: 815
+-- TOC entry 6847 (class 0 OID 119785)
+-- Dependencies: 336
 -- Data for Name: hgformsbjs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11838,8 +11868,8 @@ INSERT INTO qset.hgformsbjs (id, formcode, minformsbjs) VALUES (1, 'F1', 8);
 
 
 --
--- TOC entry 7327 (class 0 OID 21728)
--- Dependencies: 816
+-- TOC entry 6848 (class 0 OID 119788)
+-- Dependencies: 337
 -- Data for Name: hgfsdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11858,8 +11888,8 @@ INSERT INTO qset.hgfsdtls (id, academicyear, termcode, formcode, studtypecode, i
 
 
 --
--- TOC entry 7328 (class 0 OID 21731)
--- Dependencies: 817
+-- TOC entry 6849 (class 0 OID 119791)
+-- Dependencies: 338
 -- Data for Name: hgfshdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11872,8 +11902,8 @@ INSERT INTO qset.hgfshdr (id, academicyear, termcode, formcode, studtypecode, au
 
 
 --
--- TOC entry 7329 (class 0 OID 21734)
--- Dependencies: 818
+-- TOC entry 6850 (class 0 OID 119794)
+-- Dependencies: 339
 -- Data for Name: hggrpsbjs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -11900,8 +11930,8 @@ INSERT INTO qset.hggrpsbjs (id, formcode, subjectgrpcode, mingrpsbjs) VALUES (1,
 
 
 --
--- TOC entry 7330 (class 0 OID 21737)
--- Dependencies: 819
+-- TOC entry 6851 (class 0 OID 119797)
+-- Dependencies: 340
 -- Data for Name: hginvsdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12001,8 +12031,8 @@ INSERT INTO qset.hginvsdtls (id, invno, itemcode, amount, audituser, auditdate, 
 
 
 --
--- TOC entry 7331 (class 0 OID 21740)
--- Dependencies: 820
+-- TOC entry 6852 (class 0 OID 119800)
+-- Dependencies: 341
 -- Data for Name: hginvshdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12043,8 +12073,8 @@ INSERT INTO qset.hginvshdr (id, academicyear, termcode, studentno, invno, invdes
 
 
 --
--- TOC entry 7332 (class 0 OID 21743)
--- Dependencies: 821
+-- TOC entry 6853 (class 0 OID 119803)
+-- Dependencies: 342
 -- Data for Name: hgitems; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12058,8 +12088,8 @@ INSERT INTO qset.hgitems (id, itemcode, itemname, itemdesc, accountcode) VALUES 
 
 
 --
--- TOC entry 7333 (class 0 OID 21746)
--- Dependencies: 822
+-- TOC entry 6854 (class 0 OID 119806)
+-- Dependencies: 343
 -- Data for Name: hgmarksheet; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12072,8 +12102,8 @@ INSERT INTO qset.hgmarksheet (id, studentno, academicyear, termcode, examcode, e
 
 
 --
--- TOC entry 7334 (class 0 OID 21749)
--- Dependencies: 823
+-- TOC entry 6855 (class 0 OID 119809)
+-- Dependencies: 344
 -- Data for Name: hgobl; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12121,8 +12151,8 @@ INSERT INTO qset.hgobl (id, studentno, academicyear, termcode, docno, docdesc, d
 
 
 --
--- TOC entry 7335 (class 0 OID 21752)
--- Dependencies: 824
+-- TOC entry 6856 (class 0 OID 119812)
+-- Dependencies: 345
 -- Data for Name: hgobs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12235,8 +12265,8 @@ INSERT INTO qset.hgobs (id, studentno, docno, itemcode, amount, audituser, audit
 
 
 --
--- TOC entry 7336 (class 0 OID 21755)
--- Dependencies: 825
+-- TOC entry 6857 (class 0 OID 119815)
+-- Dependencies: 346
 -- Data for Name: hgqddtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12253,8 +12283,8 @@ INSERT INTO qset.hgqddtls (id, docno, itemcode, amount, audituser, auditdate, au
 
 
 --
--- TOC entry 7337 (class 0 OID 21758)
--- Dependencies: 826
+-- TOC entry 6858 (class 0 OID 119818)
+-- Dependencies: 347
 -- Data for Name: hgqdhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12267,8 +12297,8 @@ INSERT INTO qset.hgqdhdr (id, academicyear, termcode, studentno, docno, doctype,
 
 
 --
--- TOC entry 7338 (class 0 OID 21761)
--- Dependencies: 827
+-- TOC entry 6859 (class 0 OID 119821)
+-- Dependencies: 348
 -- Data for Name: hgrcpts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12280,8 +12310,8 @@ INSERT INTO qset.hgrcpts (id, studentno, academicyear, termcode, rcptno, rcptdes
 
 
 --
--- TOC entry 7339 (class 0 OID 21764)
--- Dependencies: 828
+-- TOC entry 6860 (class 0 OID 119824)
+-- Dependencies: 349
 -- Data for Name: hgregistration; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12296,8 +12326,8 @@ INSERT INTO qset.hgregistration (id, studentno, academicyear, termcode, feesbal,
 
 
 --
--- TOC entry 7340 (class 0 OID 21767)
--- Dependencies: 829
+-- TOC entry 6861 (class 0 OID 119827)
+-- Dependencies: 350
 -- Data for Name: hgstreams; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12320,8 +12350,8 @@ INSERT INTO qset.hgstreams (id, formcode, streamcode, streamname) VALUES (2, 'F1
 
 
 --
--- TOC entry 7341 (class 0 OID 21770)
--- Dependencies: 830
+-- TOC entry 6862 (class 0 OID 119830)
+-- Dependencies: 351
 -- Data for Name: hgstudcoresbjs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12371,8 +12401,8 @@ INSERT INTO qset.hgstudcoresbjs (id, studentno, academicyear, termcode, examcode
 
 
 --
--- TOC entry 7342 (class 0 OID 21773)
--- Dependencies: 831
+-- TOC entry 6863 (class 0 OID 119833)
+-- Dependencies: 352
 -- Data for Name: hgstudelectsbjs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12384,8 +12414,8 @@ INSERT INTO qset.hgstudelectsbjs (id, studentno, academicyear, termcode, examcod
 
 
 --
--- TOC entry 7343 (class 0 OID 21776)
--- Dependencies: 832
+-- TOC entry 6864 (class 0 OID 119836)
+-- Dependencies: 353
 -- Data for Name: hgstudentmarks; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12443,8 +12473,8 @@ INSERT INTO qset.hgstudentmarks (id, studentno, academicyear, termcode, examcode
 
 
 --
--- TOC entry 7344 (class 0 OID 21779)
--- Dependencies: 833
+-- TOC entry 6865 (class 0 OID 119839)
+-- Dependencies: 354
 -- Data for Name: hgstudents; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12504,8 +12534,8 @@ INSERT INTO qset.hgstudents (id, studentno, firstname, middlename, lastname, ful
 
 
 --
--- TOC entry 7345 (class 0 OID 21785)
--- Dependencies: 834
+-- TOC entry 6866 (class 0 OID 119844)
+-- Dependencies: 355
 -- Data for Name: hgstudnos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12517,16 +12547,16 @@ INSERT INTO qset.hgstudnos (id, academicyear, curno) VALUES (6, 2022, 1001);
 
 
 --
--- TOC entry 7346 (class 0 OID 21788)
--- Dependencies: 835
+-- TOC entry 6867 (class 0 OID 119847)
+-- Dependencies: 356
 -- Data for Name: hgstudphotos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7347 (class 0 OID 21794)
--- Dependencies: 836
+-- TOC entry 6868 (class 0 OID 119852)
+-- Dependencies: 357
 -- Data for Name: hgstudprds; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12545,16 +12575,16 @@ INSERT INTO qset.hgstudprds (id, studprdcode, studprdname, formcode, termcode) V
 
 
 --
--- TOC entry 7348 (class 0 OID 21797)
--- Dependencies: 837
+-- TOC entry 6869 (class 0 OID 119855)
+-- Dependencies: 358
 -- Data for Name: hgstudselsbjtts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7349 (class 0 OID 21800)
--- Dependencies: 838
+-- TOC entry 6870 (class 0 OID 119858)
+-- Dependencies: 359
 -- Data for Name: hgstudstatus; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12567,8 +12597,8 @@ INSERT INTO qset.hgstudstatus (id, statuscode, statusname, active) VALUES (6, 'S
 
 
 --
--- TOC entry 7350 (class 0 OID 21803)
--- Dependencies: 839
+-- TOC entry 6871 (class 0 OID 119861)
+-- Dependencies: 360
 -- Data for Name: hgstudsubjects; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12626,8 +12656,8 @@ INSERT INTO qset.hgstudsubjects (id, studentno, academicyear, termcode, subjectc
 
 
 --
--- TOC entry 7351 (class 0 OID 21806)
--- Dependencies: 840
+-- TOC entry 6872 (class 0 OID 119864)
+-- Dependencies: 361
 -- Data for Name: hgstudtypes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12636,8 +12666,8 @@ INSERT INTO qset.hgstudtypes (id, studtypecode, studtypename, isnew) VALUES (2, 
 
 
 --
--- TOC entry 7352 (class 0 OID 21809)
--- Dependencies: 841
+-- TOC entry 6873 (class 0 OID 119867)
+-- Dependencies: 362
 -- Data for Name: hgstudyears; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12648,8 +12678,8 @@ INSERT INTO qset.hgstudyears (id, studyrcode, studyrname, studyrlevel) VALUES (1
 
 
 --
--- TOC entry 7353 (class 0 OID 21812)
--- Dependencies: 842
+-- TOC entry 6874 (class 0 OID 119870)
+-- Dependencies: 363
 -- Data for Name: hgsubjectgrps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12661,8 +12691,8 @@ INSERT INTO qset.hgsubjectgrps (id, subjectgrpcode, subjectgrpname) VALUES (5, '
 
 
 --
--- TOC entry 7354 (class 0 OID 21815)
--- Dependencies: 843
+-- TOC entry 6875 (class 0 OID 119873)
+-- Dependencies: 364
 -- Data for Name: hgsubjects; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12691,8 +12721,8 @@ INSERT INTO qset.hgsubjects (id, subjectgrpcode, subjectcode, subjectname) VALUE
 
 
 --
--- TOC entry 7355 (class 0 OID 21818)
--- Dependencies: 844
+-- TOC entry 6876 (class 0 OID 119876)
+-- Dependencies: 365
 -- Data for Name: hgterms; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12702,8 +12732,8 @@ INSERT INTO qset.hgterms (id, termcode, termname) VALUES (1, 'T1', 'Term 1');
 
 
 --
--- TOC entry 7356 (class 0 OID 21821)
--- Dependencies: 845
+-- TOC entry 6877 (class 0 OID 119879)
+-- Dependencies: 366
 -- Data for Name: hmbloodgrps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12711,8 +12741,8 @@ INSERT INTO qset.hmbloodgrps (id, bloodgrpcode, bloodgrpname) VALUES (1, 'A+', '
 
 
 --
--- TOC entry 7357 (class 0 OID 21824)
--- Dependencies: 846
+-- TOC entry 6878 (class 0 OID 119882)
+-- Dependencies: 367
 -- Data for Name: hmcats; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12721,8 +12751,8 @@ INSERT INTO qset.hmcats (id, catcode, islab) VALUES (1, 'CT0011', 0);
 
 
 --
--- TOC entry 7358 (class 0 OID 21827)
--- Dependencies: 847
+-- TOC entry 6879 (class 0 OID 119885)
+-- Dependencies: 368
 -- Data for Name: hmcomplaints; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12731,8 +12761,8 @@ INSERT INTO qset.hmcomplaints (id, complcode, complname) VALUES (2, '2', '2');
 
 
 --
--- TOC entry 7359 (class 0 OID 21830)
--- Dependencies: 848
+-- TOC entry 6880 (class 0 OID 119888)
+-- Dependencies: 369
 -- Data for Name: hmdepts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12741,8 +12771,8 @@ INSERT INTO qset.hmdepts (id, deptcode, deptname) VALUES (1, 'ADM', 'ADMIN');
 
 
 --
--- TOC entry 7360 (class 0 OID 21833)
--- Dependencies: 849
+-- TOC entry 6881 (class 0 OID 119891)
+-- Dependencies: 370
 -- Data for Name: hmdiagnosis; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12751,8 +12781,8 @@ INSERT INTO qset.hmdiagnosis (id, diagcode, diagname) VALUES (1, 'covid', 'covid
 
 
 --
--- TOC entry 7361 (class 0 OID 21836)
--- Dependencies: 850
+-- TOC entry 6882 (class 0 OID 119894)
+-- Dependencies: 371
 -- Data for Name: hmmedication; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12765,8 +12795,8 @@ INSERT INTO qset.hmmedication (id, regno, drugcode, instruction, advice, auditus
 
 
 --
--- TOC entry 7479 (class 0 OID 82709)
--- Dependencies: 1096
+-- TOC entry 6883 (class 0 OID 119899)
+-- Dependencies: 372
 -- Data for Name: hmpharmdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12776,8 +12806,8 @@ INSERT INTO qset.hmpharmdtls (id, pyno, itemcode, lineno, qty, unitcost, unitpri
 
 
 --
--- TOC entry 7478 (class 0 OID 82691)
--- Dependencies: 1095
+-- TOC entry 6884 (class 0 OID 119904)
+-- Dependencies: 373
 -- Data for Name: hmpharmhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12786,8 +12816,8 @@ INSERT INTO qset.hmpharmhdr (id, pyno, pydesc, entrydate, pyear, pmonth, custome
 
 
 --
--- TOC entry 7362 (class 0 OID 21839)
--- Dependencies: 851
+-- TOC entry 6885 (class 0 OID 119909)
+-- Dependencies: 374
 -- Data for Name: hmptcomplaints; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12864,8 +12894,8 @@ INSERT INTO qset.hmptcomplaints (id, regno, complcode, remarks, audituser, audit
 
 
 --
--- TOC entry 7363 (class 0 OID 21842)
--- Dependencies: 852
+-- TOC entry 6886 (class 0 OID 119914)
+-- Dependencies: 375
 -- Data for Name: hmptdiagnosis; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -12943,8 +12973,8 @@ INSERT INTO qset.hmptdiagnosis (id, regno, diagcode, remarks, audituser, auditda
 
 
 --
--- TOC entry 7364 (class 0 OID 21845)
--- Dependencies: 853
+-- TOC entry 6887 (class 0 OID 119919)
+-- Dependencies: 376
 -- Data for Name: hmptlab; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13026,8 +13056,8 @@ INSERT INTO qset.hmptlab (id, regno, labitemcode, labitemname, remarks, results,
 
 
 --
--- TOC entry 7473 (class 0 OID 25335)
--- Dependencies: 1083
+-- TOC entry 6888 (class 0 OID 119924)
+-- Dependencies: 377
 -- Data for Name: hmptlabdocs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13035,16 +13065,16 @@ INSERT INTO qset.hmptlabdocs (id, rid, refno, filename, filesize, filetype, audi
 
 
 --
--- TOC entry 7365 (class 0 OID 21851)
--- Dependencies: 854
+-- TOC entry 6890 (class 0 OID 119928)
+-- Dependencies: 379
 -- Data for Name: hmptphotos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7366 (class 0 OID 21857)
--- Dependencies: 855
+-- TOC entry 6891 (class 0 OID 119933)
+-- Dependencies: 380
 -- Data for Name: hmptprofile; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13062,8 +13092,8 @@ INSERT INTO qset.hmptprofile (id, ptno, salutationcode, firstname, middlename, l
 
 
 --
--- TOC entry 7367 (class 0 OID 21863)
--- Dependencies: 856
+-- TOC entry 6892 (class 0 OID 119938)
+-- Dependencies: 381
 -- Data for Name: hmpydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13081,8 +13111,8 @@ INSERT INTO qset.hmpydtls (id, pyno, itemcode, qty, unitcost, unitprice, taxincl
 
 
 --
--- TOC entry 7368 (class 0 OID 21866)
--- Dependencies: 857
+-- TOC entry 6893 (class 0 OID 119941)
+-- Dependencies: 382
 -- Data for Name: hmpyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13100,8 +13130,8 @@ INSERT INTO qset.hmpyhdr (id, regno, pyno, pydesc, entrydate, pyear, pmonth, til
 
 
 --
--- TOC entry 7369 (class 0 OID 21869)
--- Dependencies: 858
+-- TOC entry 6894 (class 0 OID 119944)
+-- Dependencies: 383
 -- Data for Name: hmrcptsmiscdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13109,8 +13139,8 @@ INSERT INTO qset.hmrcptsmiscdtls (id, rcptmno, itemcode, qty, rate, vatrate, vat
 
 
 --
--- TOC entry 7370 (class 0 OID 21872)
--- Dependencies: 859
+-- TOC entry 6895 (class 0 OID 119947)
+-- Dependencies: 384
 -- Data for Name: hmrcptsmischdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13118,8 +13148,8 @@ INSERT INTO qset.hmrcptsmischdr (id, rcptmno, pyear, pmonth, rcptmdate, pmcode, 
 
 
 --
--- TOC entry 7371 (class 0 OID 21875)
--- Dependencies: 860
+-- TOC entry 6896 (class 0 OID 119950)
+-- Dependencies: 385
 -- Data for Name: hmregistration; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13154,8 +13184,8 @@ INSERT INTO qset.hmregistration (id, regno, regtype, ptno, pttype, pyear, pmonth
 
 
 --
--- TOC entry 7477 (class 0 OID 58116)
--- Dependencies: 1089
+-- TOC entry 6897 (class 0 OID 119955)
+-- Dependencies: 386
 -- Data for Name: hmspecialists; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13167,16 +13197,16 @@ INSERT INTO qset.hmspecialists (sp_id, sp_code, sp_name) VALUES (2, 'DMT', 'Derm
 
 
 --
--- TOC entry 7492 (class 0 OID 125669)
--- Dependencies: 1122
+-- TOC entry 6899 (class 0 OID 119959)
+-- Dependencies: 388
 -- Data for Name: hmstaffphotos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7372 (class 0 OID 21878)
--- Dependencies: 861
+-- TOC entry 6900 (class 0 OID 119964)
+-- Dependencies: 389
 -- Data for Name: hmstaffprofile; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13185,8 +13215,8 @@ INSERT INTO qset.hmstaffprofile (id, staffno, salutationcode, firstname, middlen
 
 
 --
--- TOC entry 7481 (class 0 OID 90884)
--- Dependencies: 1100
+-- TOC entry 6901 (class 0 OID 119969)
+-- Dependencies: 390
 -- Data for Name: hmstaffspexs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13199,8 +13229,8 @@ INSERT INTO qset.hmstaffspexs (id, staffno, sp_code, audit_user, audit_date, aud
 
 
 --
--- TOC entry 7373 (class 0 OID 21884)
--- Dependencies: 862
+-- TOC entry 6903 (class 0 OID 119973)
+-- Dependencies: 392
 -- Data for Name: hmstafftypes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13210,8 +13240,8 @@ INSERT INTO qset.hmstafftypes (id, stafftypecode, stafftypename, isdoctor, isnur
 
 
 --
--- TOC entry 7374 (class 0 OID 21887)
--- Dependencies: 863
+-- TOC entry 6904 (class 0 OID 119976)
+-- Dependencies: 393
 -- Data for Name: hmtriage; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13224,8 +13254,8 @@ INSERT INTO qset.hmtriage (id, regno, pulserate, bloodpressure, temperature, res
 
 
 --
--- TOC entry 7375 (class 0 OID 21890)
--- Dependencies: 864
+-- TOC entry 6905 (class 0 OID 119979)
+-- Dependencies: 394
 -- Data for Name: hrcategory; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13234,8 +13264,8 @@ INSERT INTO qset.hrcategory (id, categorycode, categoryname) VALUES (2, 'NA', 'N
 
 
 --
--- TOC entry 7376 (class 0 OID 21893)
--- Dependencies: 865
+-- TOC entry 6906 (class 0 OID 119982)
+-- Dependencies: 395
 -- Data for Name: hrengterms; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13246,8 +13276,8 @@ INSERT INTO qset.hrengterms (id, engtrmcode, engtrmname) VALUES (4, 'T5', '2 YRS
 
 
 --
--- TOC entry 7377 (class 0 OID 21896)
--- Dependencies: 866
+-- TOC entry 6907 (class 0 OID 119985)
+-- Dependencies: 396
 -- Data for Name: hrgrades; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13272,8 +13302,8 @@ INSERT INTO qset.hrgrades (id, gradecode, gradename) VALUES (1, 'G01', 'Grade 1'
 
 
 --
--- TOC entry 7378 (class 0 OID 21899)
--- Dependencies: 867
+-- TOC entry 6908 (class 0 OID 119988)
+-- Dependencies: 397
 -- Data for Name: hrlvapps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13286,8 +13316,8 @@ INSERT INTO qset.hrlvapps (id, docno, pfno, pyear, lvtypecode, rosterno, apldays
 
 
 --
--- TOC entry 7379 (class 0 OID 21902)
--- Dependencies: 868
+-- TOC entry 6909 (class 0 OID 119991)
+-- Dependencies: 398
 -- Data for Name: hrlvconf; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13295,8 +13325,8 @@ INSERT INTO qset.hrlvconf (id, useroster) VALUES (1, 0);
 
 
 --
--- TOC entry 7380 (class 0 OID 21905)
--- Dependencies: 869
+-- TOC entry 6910 (class 0 OID 119994)
+-- Dependencies: 399
 -- Data for Name: hrlvdays; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13305,16 +13335,16 @@ INSERT INTO qset.hrlvdays (id, lvtypecode, gradecode, days) VALUES (2, 'AN', 'G0
 
 
 --
--- TOC entry 7381 (class 0 OID 21908)
--- Dependencies: 870
+-- TOC entry 6911 (class 0 OID 119997)
+-- Dependencies: 400
 -- Data for Name: hrlvroster; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7382 (class 0 OID 21911)
--- Dependencies: 871
+-- TOC entry 6912 (class 0 OID 120000)
+-- Dependencies: 401
 -- Data for Name: hrlvschedule; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13324,8 +13354,8 @@ INSERT INTO qset.hrlvschedule (id, pfno, pyear, lvtypecode, balbf, forfeited, en
 
 
 --
--- TOC entry 7383 (class 0 OID 21914)
--- Dependencies: 872
+-- TOC entry 6913 (class 0 OID 120003)
+-- Dependencies: 402
 -- Data for Name: hrlvtypes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13336,8 +13366,8 @@ INSERT INTO qset.hrlvtypes (id, lvtypecode, lvtypename, lvtype, hasgender, gende
 
 
 --
--- TOC entry 7384 (class 0 OID 21917)
--- Dependencies: 873
+-- TOC entry 6914 (class 0 OID 120006)
+-- Dependencies: 403
 -- Data for Name: hrpositions; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13348,8 +13378,8 @@ INSERT INTO qset.hrpositions (id, gradecode, positioncode, positionname) VALUES 
 
 
 --
--- TOC entry 7385 (class 0 OID 21920)
--- Dependencies: 874
+-- TOC entry 6915 (class 0 OID 120009)
+-- Dependencies: 404
 -- Data for Name: hrstaffphotos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13357,8 +13387,8 @@ INSERT INTO qset.hrstaffphotos (id, pfno, photo, filename, filetype, filesize, a
 
 
 --
--- TOC entry 7386 (class 0 OID 21926)
--- Dependencies: 875
+-- TOC entry 6916 (class 0 OID 120014)
+-- Dependencies: 405
 -- Data for Name: hrstaffprofile; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13368,8 +13398,8 @@ INSERT INTO qset.hrstaffprofile (id, pfno, salutationcode, firstname, middlename
 
 
 --
--- TOC entry 7387 (class 0 OID 21932)
--- Dependencies: 876
+-- TOC entry 6917 (class 0 OID 120019)
+-- Dependencies: 406
 -- Data for Name: hrstatus; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13380,8 +13410,8 @@ INSERT INTO qset.hrstatus (id, statuscode, statusname, active) VALUES (1, 'S01',
 
 
 --
--- TOC entry 7388 (class 0 OID 21935)
--- Dependencies: 877
+-- TOC entry 6918 (class 0 OID 120022)
+-- Dependencies: 407
 -- Data for Name: icaccsets; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13390,8 +13420,8 @@ INSERT INTO qset.icaccsets (id, accsetcode, accsetname, invctlacc, apclracc) VAL
 
 
 --
--- TOC entry 7389 (class 0 OID 21938)
--- Dependencies: 878
+-- TOC entry 6919 (class 0 OID 120025)
+-- Dependencies: 408
 -- Data for Name: icitemcats; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13407,11 +13437,12 @@ INSERT INTO qset.icitemcats (id, catcode, catname, revacc, cosacc, cvacc, iuacc)
 INSERT INTO qset.icitemcats (id, catcode, catname, revacc, cosacc, cvacc, iuacc) VALUES (13, 'CT0011', 'Pharmacy', '1100', '1100', '1100', '1100');
 INSERT INTO qset.icitemcats (id, catcode, catname, revacc, cosacc, cvacc, iuacc) VALUES (12, 'CAT001', 'Default Category', '1100', '1125', '1125', '1125');
 INSERT INTO qset.icitemcats (id, catcode, catname, revacc, cosacc, cvacc, iuacc) VALUES (14, 'CT0012', 'Laboratory', '1100', '1100', '1100', '1100');
+INSERT INTO qset.icitemcats (id, catcode, catname, revacc, cosacc, cvacc, iuacc) VALUES (15, 'CT0013', 'Real Estate', '1100', '1100', '1100', '1100');
 
 
 --
--- TOC entry 7390 (class 0 OID 21941)
--- Dependencies: 879
+-- TOC entry 6920 (class 0 OID 120028)
+-- Dependencies: 409
 -- Data for Name: icitemphotos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13420,8 +13451,8 @@ INSERT INTO qset.icitemphotos (id, itemcode, photo, filename, filetype, filesize
 
 
 --
--- TOC entry 7391 (class 0 OID 21947)
--- Dependencies: 880
+-- TOC entry 6921 (class 0 OID 120033)
+-- Dependencies: 410
 -- Data for Name: icitems; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -13814,11 +13845,13 @@ INSERT INTO qset.icitems (id, itemcode, itemname, catcode, accsetcode, uomcode, 
 INSERT INTO qset.icitems (id, itemcode, itemname, catcode, accsetcode, uomcode, unitcost, unitprice, stocked, qty, audituser, auditdate, audittime, auditipadr, supplierno, cmdtno, opt1, opt2, opt3, opt4, serialno, mfgdt, expdt, minlevel, wsprice, maxlevel) VALUES (10, 'P000010', 'Gripe water/Beta 100mls ', 'CAT001', 'STD', 'EA', 50.00, 100.00, 1, 6.00, 'INFO@QSET.CO.KE', '2023-02-21', 201058, '0:0:0:0:0:0:0:1', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-01-27 00:00:00', '2023-01-31 00:00:00', 5.00, 75.00, 4.00);
 INSERT INTO qset.icitems (id, itemcode, itemname, catcode, accsetcode, uomcode, unitcost, unitprice, stocked, qty, audituser, auditdate, audittime, auditipadr, supplierno, cmdtno, opt1, opt2, opt3, opt4, serialno, mfgdt, expdt, minlevel, wsprice, maxlevel) VALUES (1, 'P000001', 'cetrine/alzonex  5occ', 'CAT001', 'STD', 'EA', 25.00, 50.00, 1, 23.00, 'INFO@QSET.CO.KE', '2023-02-21', 202909, '0:0:0:0:0:0:0:1', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-01-27 00:00:00', '2023-08-25 00:00:00', 5.00, 37.50, 20.00);
 INSERT INTO qset.icitems (id, itemcode, itemname, catcode, accsetcode, uomcode, unitcost, unitprice, stocked, qty, audituser, auditdate, audittime, auditipadr, supplierno, cmdtno, opt1, opt2, opt3, opt4, serialno, mfgdt, expdt, minlevel, wsprice, maxlevel) VALUES (312, 'P000312', 'carditan-H', 'CAT001', 'STD', 'EA', 12.50, 25.00, 1, 53.00, 'INFO@QSET.CO.KE', '2023-01-27', 120712, '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-01-27 12:07:12.377559', '2023-06-25 00:00:00', 5.00, 18.75, 56.00);
+INSERT INTO qset.icitems (id, itemcode, itemname, catcode, accsetcode, uomcode, unitcost, unitprice, stocked, qty, audituser, auditdate, audittime, auditipadr, supplierno, cmdtno, opt1, opt2, opt3, opt4, serialno, mfgdt, expdt, minlevel, wsprice, maxlevel) VALUES (391, 'SRT2', 'Single Room Type 2 Service', 'CT0013', 'FIFO', 'EA', 1000.00, 4000.00, NULL, 10.00, 'INFO@QSET.CO.KE', '2023-05-01', 114831, '0:0:0:0:0:0:0:1', '', '0', '', '', '', '', '0', '2023-05-12 00:00:00', '2023-05-02 00:00:00', 1.00, 0.00, 0.00);
+INSERT INTO qset.icitems (id, itemcode, itemname, catcode, accsetcode, uomcode, unitcost, unitprice, stocked, qty, audituser, auditdate, audittime, auditipadr, supplierno, cmdtno, opt1, opt2, opt3, opt4, serialno, mfgdt, expdt, minlevel, wsprice, maxlevel) VALUES (390, 'SRT1', 'Single Room Type 1 Service', 'CT0013', 'FIFO', 'EA', 1000.00, 4000.00, NULL, 10.00, 'INFO@QSET.CO.KE', '2023-05-01', 114859, '0:0:0:0:0:0:0:1', '', '0', '', '', '', '', '0', '2023-05-12 00:00:00', '2023-05-02 00:00:00', 1.00, 3000.00, 0.00);
 
 
 --
--- TOC entry 7392 (class 0 OID 21953)
--- Dependencies: 881
+-- TOC entry 6922 (class 0 OID 120038)
+-- Dependencies: 411
 -- Data for Name: icitems_log; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15225,16 +15258,16 @@ INSERT INTO qset.icitems_log (operation, opdate, optime, id_old, id_new, itemcod
 
 
 --
--- TOC entry 7393 (class 0 OID 21958)
--- Dependencies: 882
+-- TOC entry 6923 (class 0 OID 120043)
+-- Dependencies: 412
 -- Data for Name: iciudtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7394 (class 0 OID 21961)
--- Dependencies: 883
+-- TOC entry 6924 (class 0 OID 120046)
+-- Dependencies: 413
 -- Data for Name: iciuhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15248,16 +15281,16 @@ INSERT INTO qset.iciuhdr (id, iuno, iudesc, entrydate, pyear, pmonth, posted) VA
 
 
 --
--- TOC entry 7395 (class 0 OID 21964)
--- Dependencies: 884
+-- TOC entry 6925 (class 0 OID 120049)
+-- Dependencies: 414
 -- Data for Name: icpydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7396 (class 0 OID 21967)
--- Dependencies: 885
+-- TOC entry 6926 (class 0 OID 120052)
+-- Dependencies: 415
 -- Data for Name: icpyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15285,8 +15318,8 @@ INSERT INTO qset.icpyhdr (id, pyno, pydesc, entrydate, pyear, pmonth, supplierno
 
 
 --
--- TOC entry 7397 (class 0 OID 21970)
--- Dependencies: 886
+-- TOC entry 6927 (class 0 OID 120055)
+-- Dependencies: 416
 -- Data for Name: icuom; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15295,8 +15328,8 @@ INSERT INTO qset.icuom (id, uomcode, uomname, cf) VALUES (2, 'DZ', 'Dozen', 12.0
 
 
 --
--- TOC entry 7398 (class 0 OID 21973)
--- Dependencies: 887
+-- TOC entry 6928 (class 0 OID 120058)
+-- Dependencies: 417
 -- Data for Name: poindtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15304,8 +15337,8 @@ INSERT INTO qset.poindtls (id, inno, itemcode, qty, unitcost, taxincl, taxrate, 
 
 
 --
--- TOC entry 7399 (class 0 OID 21976)
--- Dependencies: 888
+-- TOC entry 6929 (class 0 OID 120061)
+-- Dependencies: 418
 -- Data for Name: poinhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15313,8 +15346,8 @@ INSERT INTO qset.poinhdr (id, inno, indesc, entrydate, pyear, pmonth, supplierno
 
 
 --
--- TOC entry 7400 (class 0 OID 21979)
--- Dependencies: 889
+-- TOC entry 6930 (class 0 OID 120064)
+-- Dependencies: 419
 -- Data for Name: popodtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15325,8 +15358,8 @@ INSERT INTO qset.popodtls (id, pono, itemcode, qty, unitcost, taxincl, taxrate, 
 
 
 --
--- TOC entry 7401 (class 0 OID 21982)
--- Dependencies: 890
+-- TOC entry 6931 (class 0 OID 120067)
+-- Dependencies: 420
 -- Data for Name: popohdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15336,8 +15369,8 @@ INSERT INTO qset.popohdr (id, pono, podesc, entrydate, pyear, pmonth, supplierno
 
 
 --
--- TOC entry 7402 (class 0 OID 21985)
--- Dependencies: 891
+-- TOC entry 6932 (class 0 OID 120070)
+-- Dependencies: 421
 -- Data for Name: popydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15347,8 +15380,8 @@ INSERT INTO qset.popydtls (id, pyno, itemcode, qty, unitcost, taxincl, taxrate, 
 
 
 --
--- TOC entry 7403 (class 0 OID 21988)
--- Dependencies: 892
+-- TOC entry 6933 (class 0 OID 120073)
+-- Dependencies: 422
 -- Data for Name: popyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15357,8 +15390,8 @@ INSERT INTO qset.popyhdr (id, pyno, pydesc, entrydate, pyear, pmonth, supplierno
 
 
 --
--- TOC entry 7404 (class 0 OID 21991)
--- Dependencies: 893
+-- TOC entry 6934 (class 0 OID 120076)
+-- Dependencies: 423
 -- Data for Name: porqdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15369,8 +15402,8 @@ INSERT INTO qset.porqdtls (id, rqno, itemcode, qty, unitcost, amount, audituser,
 
 
 --
--- TOC entry 7405 (class 0 OID 21994)
--- Dependencies: 894
+-- TOC entry 6935 (class 0 OID 120079)
+-- Dependencies: 424
 -- Data for Name: porqhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15380,8 +15413,8 @@ INSERT INTO qset.porqhdr (id, rqno, rqdesc, entrydate, pyear, pmonth, supplierno
 
 
 --
--- TOC entry 7406 (class 0 OID 21997)
--- Dependencies: 895
+-- TOC entry 6936 (class 0 OID 120082)
+-- Dependencies: 425
 -- Data for Name: pracademicyears; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15393,8 +15426,8 @@ INSERT INTO qset.pracademicyears (id, academicyear, startdate, enddate) VALUES (
 
 
 --
--- TOC entry 7407 (class 0 OID 22000)
--- Dependencies: 896
+-- TOC entry 6937 (class 0 OID 120085)
+-- Dependencies: 426
 -- Data for Name: prcalendar; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15408,8 +15441,8 @@ INSERT INTO qset.prcalendar (id, academicyear, termcode, startdate, enddate, act
 
 
 --
--- TOC entry 7408 (class 0 OID 22003)
--- Dependencies: 897
+-- TOC entry 6938 (class 0 OID 120088)
+-- Dependencies: 427
 -- Data for Name: prclasses; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15427,16 +15460,16 @@ INSERT INTO qset.prclasses (id, classcode, classname, studyrcode) VALUES (1, 'BC
 
 
 --
--- TOC entry 7409 (class 0 OID 22006)
--- Dependencies: 898
+-- TOC entry 6939 (class 0 OID 120091)
+-- Dependencies: 428
 -- Data for Name: prconfig2; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7410 (class 0 OID 22009)
--- Dependencies: 899
+-- TOC entry 6940 (class 0 OID 120094)
+-- Dependencies: 429
 -- Data for Name: prexams; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15445,8 +15478,8 @@ INSERT INTO qset.prexams (id, examcode, examname) VALUES (1, 'HT', 'Half Term');
 
 
 --
--- TOC entry 7411 (class 0 OID 22012)
--- Dependencies: 900
+-- TOC entry 6941 (class 0 OID 120097)
+-- Dependencies: 430
 -- Data for Name: prfsdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15467,8 +15500,8 @@ INSERT INTO qset.prfsdtls (id, academicyear, termcode, classcode, studtypecode, 
 
 
 --
--- TOC entry 7412 (class 0 OID 22015)
--- Dependencies: 901
+-- TOC entry 6942 (class 0 OID 120100)
+-- Dependencies: 431
 -- Data for Name: prfshdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15483,8 +15516,8 @@ INSERT INTO qset.prfshdr (id, academicyear, termcode, classcode, studtypecode, a
 
 
 --
--- TOC entry 7413 (class 0 OID 22018)
--- Dependencies: 902
+-- TOC entry 6943 (class 0 OID 120103)
+-- Dependencies: 432
 -- Data for Name: prinvsdtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15519,8 +15552,8 @@ INSERT INTO qset.prinvsdtls (id, invno, itemcode, amount, audituser, auditdate, 
 
 
 --
--- TOC entry 7414 (class 0 OID 22021)
--- Dependencies: 903
+-- TOC entry 6944 (class 0 OID 120106)
+-- Dependencies: 433
 -- Data for Name: prinvshdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15543,8 +15576,8 @@ INSERT INTO qset.prinvshdr (id, academicyear, termcode, studentno, invno, invdes
 
 
 --
--- TOC entry 7415 (class 0 OID 22024)
--- Dependencies: 904
+-- TOC entry 6945 (class 0 OID 120109)
+-- Dependencies: 434
 -- Data for Name: pritems; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15557,8 +15590,8 @@ INSERT INTO qset.pritems (id, itemcode, itemname, itemdesc, accountcode) VALUES 
 
 
 --
--- TOC entry 7416 (class 0 OID 22027)
--- Dependencies: 905
+-- TOC entry 6946 (class 0 OID 120112)
+-- Dependencies: 435
 -- Data for Name: prmarksheet; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15569,8 +15602,8 @@ INSERT INTO qset.prmarksheet (id, studentno, academicyear, termcode, examcode, e
 
 
 --
--- TOC entry 7417 (class 0 OID 22030)
--- Dependencies: 906
+-- TOC entry 6947 (class 0 OID 120115)
+-- Dependencies: 436
 -- Data for Name: probl; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15601,8 +15634,8 @@ INSERT INTO qset.probl (id, studentno, academicyear, termcode, docno, docdesc, d
 
 
 --
--- TOC entry 7418 (class 0 OID 22033)
--- Dependencies: 907
+-- TOC entry 6948 (class 0 OID 120118)
+-- Dependencies: 437
 -- Data for Name: probs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15642,8 +15675,8 @@ INSERT INTO qset.probs (id, studentno, docno, itemcode, amount, audituser, audit
 
 
 --
--- TOC entry 7419 (class 0 OID 22036)
--- Dependencies: 908
+-- TOC entry 6949 (class 0 OID 120121)
+-- Dependencies: 438
 -- Data for Name: prqddtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15661,8 +15694,8 @@ INSERT INTO qset.prqddtls (id, docno, itemcode, amount, audituser, auditdate, au
 
 
 --
--- TOC entry 7420 (class 0 OID 22039)
--- Dependencies: 909
+-- TOC entry 6950 (class 0 OID 120124)
+-- Dependencies: 439
 -- Data for Name: prqdhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15674,8 +15707,8 @@ INSERT INTO qset.prqdhdr (id, academicyear, termcode, studentno, docno, doctype,
 
 
 --
--- TOC entry 7421 (class 0 OID 22042)
--- Dependencies: 910
+-- TOC entry 6951 (class 0 OID 120127)
+-- Dependencies: 440
 -- Data for Name: prrcpts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15690,8 +15723,8 @@ INSERT INTO qset.prrcpts (id, studentno, academicyear, termcode, rcptno, rcptdes
 
 
 --
--- TOC entry 7422 (class 0 OID 22045)
--- Dependencies: 911
+-- TOC entry 6952 (class 0 OID 120130)
+-- Dependencies: 441
 -- Data for Name: prregistration; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15703,8 +15736,8 @@ INSERT INTO qset.prregistration (id, studentno, academicyear, termcode, feesbal,
 
 
 --
--- TOC entry 7423 (class 0 OID 22048)
--- Dependencies: 912
+-- TOC entry 6953 (class 0 OID 120133)
+-- Dependencies: 442
 -- Data for Name: prstreams; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15730,8 +15763,8 @@ INSERT INTO qset.prstreams (id, classcode, streamcode, streamname) VALUES (1, 'B
 
 
 --
--- TOC entry 7424 (class 0 OID 22051)
--- Dependencies: 913
+-- TOC entry 6954 (class 0 OID 120136)
+-- Dependencies: 443
 -- Data for Name: prstudentmarks; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15747,8 +15780,8 @@ INSERT INTO qset.prstudentmarks (id, studentno, academicyear, termcode, examcode
 
 
 --
--- TOC entry 7425 (class 0 OID 22054)
--- Dependencies: 914
+-- TOC entry 6955 (class 0 OID 120139)
+-- Dependencies: 444
 -- Data for Name: prstudents; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15761,8 +15794,8 @@ INSERT INTO qset.prstudents (id, studentno, firstname, middlename, lastname, ful
 
 
 --
--- TOC entry 7426 (class 0 OID 22060)
--- Dependencies: 915
+-- TOC entry 6956 (class 0 OID 120144)
+-- Dependencies: 445
 -- Data for Name: prstudnos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15772,16 +15805,16 @@ INSERT INTO qset.prstudnos (id, academicyear, curno) VALUES (3, 2022, 1002);
 
 
 --
--- TOC entry 7427 (class 0 OID 22063)
--- Dependencies: 916
+-- TOC entry 6957 (class 0 OID 120147)
+-- Dependencies: 446
 -- Data for Name: prstudphotos; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7428 (class 0 OID 22069)
--- Dependencies: 917
+-- TOC entry 6958 (class 0 OID 120152)
+-- Dependencies: 447
 -- Data for Name: prstudprds; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15821,8 +15854,8 @@ INSERT INTO qset.prstudprds (id, studprdcode, studprdname, classcode, termcode) 
 
 
 --
--- TOC entry 7429 (class 0 OID 22072)
--- Dependencies: 918
+-- TOC entry 6959 (class 0 OID 120155)
+-- Dependencies: 448
 -- Data for Name: prstudstatus; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15835,8 +15868,8 @@ INSERT INTO qset.prstudstatus (id, statuscode, statusname, active) VALUES (1, 'S
 
 
 --
--- TOC entry 7430 (class 0 OID 22075)
--- Dependencies: 919
+-- TOC entry 6960 (class 0 OID 120158)
+-- Dependencies: 449
 -- Data for Name: prstudsubjects; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15854,8 +15887,8 @@ INSERT INTO qset.prstudsubjects (id, studentno, academicyear, termcode, subjectc
 
 
 --
--- TOC entry 7431 (class 0 OID 22078)
--- Dependencies: 920
+-- TOC entry 6961 (class 0 OID 120161)
+-- Dependencies: 450
 -- Data for Name: prstudtypes; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15864,8 +15897,8 @@ INSERT INTO qset.prstudtypes (id, studtypecode, studtypename, isnew) VALUES (1, 
 
 
 --
--- TOC entry 7432 (class 0 OID 22081)
--- Dependencies: 921
+-- TOC entry 6962 (class 0 OID 120164)
+-- Dependencies: 451
 -- Data for Name: prstudyears; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15883,8 +15916,8 @@ INSERT INTO qset.prstudyears (id, studyrcode, studyrname, studyrlevel) VALUES (1
 
 
 --
--- TOC entry 7433 (class 0 OID 22084)
--- Dependencies: 922
+-- TOC entry 6963 (class 0 OID 120167)
+-- Dependencies: 452
 -- Data for Name: prsubjects; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15896,8 +15929,8 @@ INSERT INTO qset.prsubjects (id, subjectcode, subjectname) VALUES (1, 'ENG', 'En
 
 
 --
--- TOC entry 7434 (class 0 OID 22087)
--- Dependencies: 923
+-- TOC entry 6964 (class 0 OID 120170)
+-- Dependencies: 453
 -- Data for Name: prterms; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15907,8 +15940,8 @@ INSERT INTO qset.prterms (id, termcode, termname) VALUES (1, 'T1', 'Term 1');
 
 
 --
--- TOC entry 7435 (class 0 OID 22090)
--- Dependencies: 924
+-- TOC entry 6965 (class 0 OID 120173)
+-- Dependencies: 454
 -- Data for Name: pspydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -15954,8 +15987,8 @@ INSERT INTO qset.pspydtls (id, pyno, itemcode, lineno, qty, unitcost, unitprice,
 
 
 --
--- TOC entry 7436 (class 0 OID 22096)
--- Dependencies: 925
+-- TOC entry 6966 (class 0 OID 120178)
+-- Dependencies: 455
 -- Data for Name: pspyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16002,8 +16035,8 @@ INSERT INTO qset.pspyhdr (id, pyno, pydesc, entrydate, pyear, pmonth, customerno
 
 
 --
--- TOC entry 7437 (class 0 OID 22102)
--- Dependencies: 926
+-- TOC entry 6967 (class 0 OID 120183)
+-- Dependencies: 456
 -- Data for Name: pspyhdr_log; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16070,8 +16103,8 @@ INSERT INTO qset.pspyhdr_log (operation, opdate, optime, id_old, id_new, pyno_ol
 
 
 --
--- TOC entry 7438 (class 0 OID 22110)
--- Dependencies: 927
+-- TOC entry 6968 (class 0 OID 120190)
+-- Dependencies: 457
 -- Data for Name: pstills; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16081,8 +16114,8 @@ INSERT INTO qset.pstills (id, tillno, tilldesc, userid, dflt) VALUES (1, '1', '1
 
 
 --
--- TOC entry 7439 (class 0 OID 22113)
--- Dependencies: 928
+-- TOC entry 6969 (class 0 OID 120193)
+-- Dependencies: 458
 -- Data for Name: pyconfig; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16090,8 +16123,8 @@ INSERT INTO qset.pyconfig (id, bp, hs, cm, cr, gp, np, lv, cb, cp, tx, pr, ir, m
 
 
 --
--- TOC entry 7440 (class 0 OID 22116)
--- Dependencies: 929
+-- TOC entry 6970 (class 0 OID 120196)
+-- Dependencies: 459
 -- Data for Name: pydepomaps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16099,8 +16132,8 @@ INSERT INTO qset.pydepomaps (id, itemdep, itemcum, audituser, auditdate, auditti
 
 
 --
--- TOC entry 7441 (class 0 OID 22119)
--- Dependencies: 930
+-- TOC entry 6971 (class 0 OID 120199)
+-- Dependencies: 460
 -- Data for Name: pyfml; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16122,8 +16155,8 @@ INSERT INTO qset.pyfml (id, hdrcode, itemtype, fmlcode, fmlname, fmtcode, formul
 
 
 --
--- TOC entry 7442 (class 0 OID 22122)
--- Dependencies: 931
+-- TOC entry 6972 (class 0 OID 120202)
+-- Dependencies: 461
 -- Data for Name: pyfmt; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16135,16 +16168,16 @@ INSERT INTO qset.pyfmt (id, fmtcode, fmtname) VALUES (5, 'Constant_Value', 'Cons
 
 
 --
--- TOC entry 7443 (class 0 OID 22125)
--- Dependencies: 932
+-- TOC entry 6973 (class 0 OID 120205)
+-- Dependencies: 462
 -- Data for Name: pyitemexm; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7444 (class 0 OID 22128)
--- Dependencies: 933
+-- TOC entry 6974 (class 0 OID 120208)
+-- Dependencies: 463
 -- Data for Name: pyitems; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16274,8 +16307,8 @@ INSERT INTO qset.pyitems (id, hdrcode, itemtype, transtype, itemcode, itemname, 
 
 
 --
--- TOC entry 7445 (class 0 OID 22131)
--- Dependencies: 934
+-- TOC entry 6975 (class 0 OID 120211)
+-- Dependencies: 464
 -- Data for Name: pyitp; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16292,16 +16325,16 @@ INSERT INTO qset.pyitp (id, itypecode, itypename, isearning, isdeduction, isinsp
 
 
 --
--- TOC entry 7446 (class 0 OID 22134)
--- Dependencies: 935
+-- TOC entry 6976 (class 0 OID 120214)
+-- Dependencies: 465
 -- Data for Name: pyleaverates; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7447 (class 0 OID 22137)
--- Dependencies: 936
+-- TOC entry 6977 (class 0 OID 120217)
+-- Dependencies: 466
 -- Data for Name: pylnmaps; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16312,8 +16345,8 @@ INSERT INTO qset.pylnmaps (id, itemrep, itembal, audituser, auditdate, audittime
 
 
 --
--- TOC entry 7448 (class 0 OID 22140)
--- Dependencies: 937
+-- TOC entry 6978 (class 0 OID 120220)
+-- Dependencies: 467
 -- Data for Name: pynhifrates; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16388,8 +16421,8 @@ INSERT INTO qset.pynhifrates (id, pyear, amtmin, amtmax, rate) VALUES (68, 2019,
 
 
 --
--- TOC entry 7449 (class 0 OID 22143)
--- Dependencies: 938
+-- TOC entry 6979 (class 0 OID 120223)
+-- Dependencies: 468
 -- Data for Name: pypaypoints; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16398,16 +16431,16 @@ INSERT INTO qset.pypaypoints (id, pyptcode, pyptname) VALUES (2, 'PP2', 'Pay Poi
 
 
 --
--- TOC entry 7450 (class 0 OID 22146)
--- Dependencies: 939
+-- TOC entry 6980 (class 0 OID 120226)
+-- Dependencies: 469
 -- Data for Name: pypcadtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7451 (class 0 OID 22149)
--- Dependencies: 940
+-- TOC entry 6981 (class 0 OID 120229)
+-- Dependencies: 470
 -- Data for Name: pypcahdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16422,8 +16455,8 @@ INSERT INTO qset.pypcahdr (id, refno, pcano, pcadesc, pyear, pmonth, efdate, apr
 
 
 --
--- TOC entry 7452 (class 0 OID 22152)
--- Dependencies: 941
+-- TOC entry 6982 (class 0 OID 120232)
+-- Dependencies: 471
 -- Data for Name: pypslhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16435,8 +16468,8 @@ INSERT INTO qset.pypslhdr (id, hdrcode, hdrname, hdrtype, hdrpos) VALUES (1, 'H1
 
 
 --
--- TOC entry 7453 (class 0 OID 22155)
--- Dependencies: 942
+-- TOC entry 6983 (class 0 OID 120235)
+-- Dependencies: 472
 -- Data for Name: pyslip; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16526,8 +16559,8 @@ INSERT INTO qset.pyslip (id, pfno, itemcode, pyear, pmonth, amount, audituser, a
 
 
 --
--- TOC entry 7454 (class 0 OID 22158)
--- Dependencies: 943
+-- TOC entry 6984 (class 0 OID 120238)
+-- Dependencies: 473
 -- Data for Name: pystaffbanks; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16536,8 +16569,8 @@ INSERT INTO qset.pystaffbanks (id, pfno, bkbranchcode, accountno, paypercent, au
 
 
 --
--- TOC entry 7455 (class 0 OID 22161)
--- Dependencies: 944
+-- TOC entry 6985 (class 0 OID 120241)
+-- Dependencies: 474
 -- Data for Name: pystaffexempt; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16545,8 +16578,8 @@ INSERT INTO qset.pystaffexempt (id, pfno, itemcode, exempt, audituser, auditdate
 
 
 --
--- TOC entry 7456 (class 0 OID 22164)
--- Dependencies: 945
+-- TOC entry 6986 (class 0 OID 120244)
+-- Dependencies: 475
 -- Data for Name: pystaffitems; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16563,8 +16596,8 @@ INSERT INTO qset.pystaffitems (id, pfno, itemcode, pyear, pmonth, amount, auditu
 
 
 --
--- TOC entry 7457 (class 0 OID 22167)
--- Dependencies: 946
+-- TOC entry 6987 (class 0 OID 120247)
+-- Dependencies: 476
 -- Data for Name: pytaxrates; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16591,8 +16624,8 @@ INSERT INTO qset.pytaxrates (id, pyear, amtmin, amtmax, rate, amttxd) VALUES (20
 
 
 --
--- TOC entry 7537 (class 0 OID 215813)
--- Dependencies: 1172
+-- TOC entry 6988 (class 0 OID 120250)
+-- Dependencies: 477
 -- Data for Name: re_buildings; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16602,36 +16635,47 @@ INSERT INTO qset.re_buildings (id, loc_code, building_code, building_name) VALUE
 
 
 --
--- TOC entry 7531 (class 0 OID 215781)
--- Dependencies: 1166
+-- TOC entry 7015 (class 0 OID 121935)
+-- Dependencies: 641
+-- Data for Name: re_cats; Type: TABLE DATA; Schema: qset; Owner: postgres
+--
+
+INSERT INTO qset.re_cats (id, cat_code) VALUES (1, 'CT0013');
+
+
+--
+-- TOC entry 6990 (class 0 OID 120254)
+-- Dependencies: 479
 -- Data for Name: re_config; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7533 (class 0 OID 215789)
--- Dependencies: 1168
+-- TOC entry 6992 (class 0 OID 120258)
+-- Dependencies: 481
 -- Data for Name: re_house_types; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 INSERT INTO qset.re_house_types (id, ht_code, ht_name) VALUES (1, 'S', 'Single');
 INSERT INTO qset.re_house_types (id, ht_code, ht_name) VALUES (2, 'D', 'Double');
-INSERT INTO qset.re_house_types (id, ht_code, ht_name) VALUES (3, 'B1', 'One Bedroom');
 INSERT INTO qset.re_house_types (id, ht_code, ht_name) VALUES (4, 'B2', 'Two Bedroom');
+INSERT INTO qset.re_house_types (id, ht_code, ht_name) VALUES (3, 'B1', 'One Bedroom');
 
 
 --
--- TOC entry 7539 (class 0 OID 215829)
--- Dependencies: 1174
+-- TOC entry 6994 (class 0 OID 120262)
+-- Dependencies: 483
 -- Data for Name: re_houses; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
+INSERT INTO qset.re_houses (id, loc_code, building_code, house_code, house_name, item_code) VALUES (8, 'CBD', 'B1', 'A2', 'A2', 'SRT2');
+INSERT INTO qset.re_houses (id, loc_code, building_code, house_code, house_name, item_code) VALUES (7, 'CBD', 'B1', 'A1', 'A1', 'SRT1');
 
 
 --
--- TOC entry 7535 (class 0 OID 215801)
--- Dependencies: 1170
+-- TOC entry 6996 (class 0 OID 120266)
+-- Dependencies: 485
 -- Data for Name: re_locs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16640,8 +16684,8 @@ INSERT INTO qset.re_locs (id, loc_code, loc_name) VALUES (2, 'PL', 'Pipeline');
 
 
 --
--- TOC entry 7458 (class 0 OID 22170)
--- Dependencies: 947
+-- TOC entry 6998 (class 0 OID 120270)
+-- Dependencies: 487
 -- Data for Name: rtcats; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16657,8 +16701,8 @@ INSERT INTO qset.rtcats (id, catcode, deptcode) VALUES (7, 'CT0004', 'D002');
 
 
 --
--- TOC entry 7459 (class 0 OID 22173)
--- Dependencies: 948
+-- TOC entry 6999 (class 0 OID 120273)
+-- Dependencies: 488
 -- Data for Name: rtdepts; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16667,16 +16711,16 @@ INSERT INTO qset.rtdepts (id, deptcode, deptname) VALUES (1, 'D001', 'BAR');
 
 
 --
--- TOC entry 7460 (class 0 OID 22176)
--- Dependencies: 949
+-- TOC entry 7000 (class 0 OID 120276)
+-- Dependencies: 489
 -- Data for Name: rtpydtls; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7461 (class 0 OID 22182)
--- Dependencies: 950
+-- TOC entry 7001 (class 0 OID 120281)
+-- Dependencies: 490
 -- Data for Name: rtpyhdr; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -16685,16 +16729,16 @@ INSERT INTO qset.rtpyhdr (id, pyno, pydesc, entrydate, pyear, pmonth, customerno
 
 
 --
--- TOC entry 7462 (class 0 OID 22188)
--- Dependencies: 951
+-- TOC entry 7002 (class 0 OID 120286)
+-- Dependencies: 491
 -- Data for Name: rttables; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 
 
 --
--- TOC entry 7463 (class 0 OID 22191)
--- Dependencies: 952
+-- TOC entry 7003 (class 0 OID 120289)
+-- Dependencies: 492
 -- Data for Name: sysmenus; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -17199,7 +17243,6 @@ INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (491, 491, 'Academic Years', 'Academic Years', 490, 1, 'calendar.png', 'modules/academic/college/settings/periods/academicyears/', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (492, 492, 'Sessions', 'Sessions', 490, 2, 'calendar.png', 'modules/academic/college/settings/periods/semses/', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (479, 479, 'Units', 'Units', 486, 2, 'page-edit.png', 'modules/academic/college/settings/academic/units/', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (523, 523, 'Houses', 'Houses', 518, 5, 'house.png', '', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (495, 495, 'Study Methods', 'Study Methods', 486, 3, 'page.png', 'modules/academic/college/settings/academic/studymethod/', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (494, 494, 'Student Category', 'Student Category', 487, 1, 'page.png', 'modules/academic/college/settings/academic/category/', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (488, 488, 'Student Type', 'Student Type', 487, 2, 'page.png', 'modules/academic/college/settings/academic/studenttype/', 1, 0.00, 0.00);
@@ -17207,17 +17250,18 @@ INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (518, 518, 'Settings', 'Settings', 402, 1, 'folder-go.png', '', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (519, 519, 'Transactions', 'Transactions', 402, 2, 'folder-go.png', '', 1, 0.00, 0.00);
 INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (520, 520, 'Reports', 'Reports', 402, 3, 'folder-go.png', '', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (521, 521, 'Region', 'Region', 518, 3, 'blue-document-globe.png', 'modules/re/settings/region', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (522, 522, 'Building', 'Building', 518, 4, 'building.png', 'modules/re/settings/building', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (525, 525, 'Auto Invoicing', 'Auto Invoicing', 519, 1, 'money.png', '', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (526, 526, 'Houses', 'Houses', 520, 1, 'report.png', '', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (527, 527, 'Config', 'Config', 518, 1, 'settings.png', '', 1, 0.00, 0.00);
-INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (524, 524, 'House Types', 'House Types', 518, 2, 'page-edit.png', 'modules/re/settings/housetypes', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (524, 524, 'House Types', 'House Types', 518, 2, 'page-edit.png', 'modules/re/settings/housetypes/', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (521, 521, 'Region', 'Region', 518, 3, 'blue-document-globe.png', 'modules/re/settings/region/', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (522, 522, 'Building', 'Building', 518, 4, 'building.png', 'modules/re/settings/building/', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (527, 527, 'Bill Item Category', 'Bill Item Category', 518, 1, 'coins.png', 'modules/re/settings/category/', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (523, 523, 'Houses', 'Houses', 518, 5, 'house.png', 'modules/re/settings/houses/', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (525, 525, 'Auto Invoicing', 'Auto Invoicing', 519, 1, 'money.png', 'modules/re/transactions/invoices/', 1, 0.00, 0.00);
+INSERT INTO qset.sysmenus (id, menucode, menuname, menudesc, menuparent, menupos, icon, url, uservsb, wdt, hgt) VALUES (526, 526, 'Houses', 'Houses', 520, 1, 'report.png', 'modules/re/reports/houses/', 1, 0.00, 0.00);
 
 
 --
--- TOC entry 7466 (class 0 OID 22198)
--- Dependencies: 955
+-- TOC entry 7006 (class 0 OID 120294)
+-- Dependencies: 495
 -- Data for Name: syspvgs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -17655,8 +17699,8 @@ INSERT INTO qset.syspvgs (id, rolecode, menupid, menucid) VALUES (448, 'SYSADMIN
 
 
 --
--- TOC entry 7468 (class 0 OID 22203)
--- Dependencies: 957
+-- TOC entry 7008 (class 0 OID 120298)
+-- Dependencies: 497
 -- Data for Name: sysroles; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -17667,8 +17711,8 @@ INSERT INTO qset.sysroles (id, rolecode, rolename, isadmin, isdefault) VALUES (4
 
 
 --
--- TOC entry 7475 (class 0 OID 33540)
--- Dependencies: 1085
+-- TOC entry 7009 (class 0 OID 120301)
+-- Dependencies: 498
 -- Data for Name: sysses; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -17947,11 +17991,19 @@ INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (336, '097D8D
 INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (337, '70BF0EB078C02B148306BC23347008D5', 'info@qset.co.ke', 'in', '2023-04-28 06:18:17.46818');
 INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (338, '8C859DFD9B0A0B9D0FFFE99BBE52D5C2', 'info@qset.co.ke', 'in', '2023-04-28 06:37:31.620149');
 INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (339, '8BB2E06C92B53BC55C20CE669A4BFAD2', 'info@qset.co.ke', 'in', '2023-04-28 07:17:55.992736');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (340, 'AD505D0F983ACF08C138F8418EC3EE1D', 'info@qset.co.ke', 'in', '2023-05-01 09:28:38.387736');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (341, 'AD505D0F983ACF08C138F8418EC3EE1D', 'INFO@QSET.CO.KE', 'out', '2023-05-01 09:28:58.480944');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (342, '105B9811ECC0514F7F6228B6D0F6FB1A', 'info@qset.co.ke', 'in', '2023-05-01 09:29:01.816541');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (343, 'AEB4A37CB8C505BF9DA006F73F4BCB82', 'info@qset.co.ke', 'in', '2023-05-01 09:53:01.034196');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (344, '9A4DE229AFACCC756035E8DD3AD801E0', 'info@qset.co.ke', 'in', '2023-05-01 09:54:14.759416');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (345, '7B58E677B2EA2797FC7191EE681071C3', 'info@qset.co.ke', 'in', '2023-05-01 11:30:09.829989');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (346, '498AA5C2F274009D98697E0D276FC48B', 'info@qset.co.ke', 'in', '2023-05-01 11:56:06.300258');
+INSERT INTO qset.sysses (id, sesid, userid, logtype, logdt) VALUES (347, 'CF746C3A8C33379134EC9A84FB4C5C53', 'info@qset.co.ke', 'in', '2023-05-01 16:20:44.896873');
 
 
 --
--- TOC entry 7469 (class 0 OID 22206)
--- Dependencies: 958
+-- TOC entry 7011 (class 0 OID 120305)
+-- Dependencies: 500
 -- Data for Name: sysusrpvgs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
@@ -17961,21 +18013,21 @@ INSERT INTO qset.sysusrpvgs (id, rolecode, userid) VALUES (7, 'MEDSPEX', '00001'
 
 
 --
--- TOC entry 7471 (class 0 OID 22211)
--- Dependencies: 960
+-- TOC entry 7013 (class 0 OID 120309)
+-- Dependencies: 502
 -- Data for Name: sysusrs; Type: TABLE DATA; Schema: qset; Owner: postgres
 --
 
 INSERT INTO qset.sysusrs (id, userid, password, username, email, cellphone) VALUES (3, '1234', '81dc9bdb52d04dc20036dbd8313ed055', 'Kim', 'kim@xyz.com', '1');
 INSERT INTO qset.sysusrs (id, userid, password, username, email, cellphone) VALUES (4, '4321', '81dc9bdb52d04dc20036dbd8313ed055', 'james', '4321', '1');
 INSERT INTO qset.sysusrs (id, userid, password, username, email, cellphone) VALUES (6, '00002', '******', 'Agnes 2 Mutheu', 'null', 'null');
-INSERT INTO qset.sysusrs (id, userid, password, username, email, cellphone) VALUES (1, 'info@qset.co.ke', '81dc9bdb52d04dc20036dbd8313ed055', 'System Administrator', 'info@qset.co.ke', '254725999504');
 INSERT INTO qset.sysusrs (id, userid, password, username, email, cellphone) VALUES (5, '00001', '4c68cea7e58591b579fd074bcdaff740', 'Nicholas doc', '00001', '0');
+INSERT INTO qset.sysusrs (id, userid, password, username, email, cellphone) VALUES (1, 'info@qset.co.ke', '65d2ea03425887a717c435081cfc5dbb', 'System Administrator', 'info@qset.co.ke', '254725999504');
 
 
 --
--- TOC entry 7759 (class 0 OID 0)
--- Dependencies: 1147
+-- TOC entry 7236 (class 0 OID 0)
+-- Dependencies: 261
 -- Name: cl_acad_years_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -17983,8 +18035,8 @@ SELECT pg_catalog.setval('qset.cl_acad_years_id_seq', 3, true);
 
 
 --
--- TOC entry 7760 (class 0 OID 0)
--- Dependencies: 1151
+-- TOC entry 7237 (class 0 OID 0)
+-- Dependencies: 263
 -- Name: cl_campus_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -17992,8 +18044,8 @@ SELECT pg_catalog.setval('qset.cl_campus_id_seq', 1, true);
 
 
 --
--- TOC entry 7761 (class 0 OID 0)
--- Dependencies: 1155
+-- TOC entry 7238 (class 0 OID 0)
+-- Dependencies: 265
 -- Name: cl_depts_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18001,8 +18053,8 @@ SELECT pg_catalog.setval('qset.cl_depts_id_seq', 2, true);
 
 
 --
--- TOC entry 7762 (class 0 OID 0)
--- Dependencies: 1141
+-- TOC entry 7239 (class 0 OID 0)
+-- Dependencies: 267
 -- Name: cl_programmes_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18010,8 +18062,8 @@ SELECT pg_catalog.setval('qset.cl_programmes_id_seq', 3, true);
 
 
 --
--- TOC entry 7763 (class 0 OID 0)
--- Dependencies: 1153
+-- TOC entry 7240 (class 0 OID 0)
+-- Dependencies: 269
 -- Name: cl_schools_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18019,8 +18071,8 @@ SELECT pg_catalog.setval('qset.cl_schools_id_seq', 2, true);
 
 
 --
--- TOC entry 7764 (class 0 OID 0)
--- Dependencies: 1149
+-- TOC entry 7241 (class 0 OID 0)
+-- Dependencies: 271
 -- Name: cl_sem_ses_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18028,8 +18080,8 @@ SELECT pg_catalog.setval('qset.cl_sem_ses_id_seq', 2, true);
 
 
 --
--- TOC entry 7765 (class 0 OID 0)
--- Dependencies: 1159
+-- TOC entry 7242 (class 0 OID 0)
+-- Dependencies: 273
 -- Name: cl_student_cats_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18037,8 +18089,8 @@ SELECT pg_catalog.setval('qset.cl_student_cats_id_seq', 2, true);
 
 
 --
--- TOC entry 7766 (class 0 OID 0)
--- Dependencies: 1163
+-- TOC entry 7243 (class 0 OID 0)
+-- Dependencies: 275
 -- Name: cl_student_status_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18046,8 +18098,8 @@ SELECT pg_catalog.setval('qset.cl_student_status_id_seq', 2, true);
 
 
 --
--- TOC entry 7767 (class 0 OID 0)
--- Dependencies: 1161
+-- TOC entry 7244 (class 0 OID 0)
+-- Dependencies: 277
 -- Name: cl_student_types_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18055,8 +18107,8 @@ SELECT pg_catalog.setval('qset.cl_student_types_id_seq', 2, true);
 
 
 --
--- TOC entry 7768 (class 0 OID 0)
--- Dependencies: 1145
+-- TOC entry 7245 (class 0 OID 0)
+-- Dependencies: 279
 -- Name: cl_students_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18064,8 +18116,8 @@ SELECT pg_catalog.setval('qset.cl_students_id_seq', 1, false);
 
 
 --
--- TOC entry 7769 (class 0 OID 0)
--- Dependencies: 1157
+-- TOC entry 7246 (class 0 OID 0)
+-- Dependencies: 281
 -- Name: cl_study_methods_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18073,8 +18125,8 @@ SELECT pg_catalog.setval('qset.cl_study_methods_id_seq', 2, true);
 
 
 --
--- TOC entry 7770 (class 0 OID 0)
--- Dependencies: 1143
+-- TOC entry 7247 (class 0 OID 0)
+-- Dependencies: 283
 -- Name: cl_units_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18082,8 +18134,8 @@ SELECT pg_catalog.setval('qset.cl_units_id_seq', 2, true);
 
 
 --
--- TOC entry 7771 (class 0 OID 0)
--- Dependencies: 1135
+-- TOC entry 7248 (class 0 OID 0)
+-- Dependencies: 285
 -- Name: cm_campaigns_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18091,8 +18143,8 @@ SELECT pg_catalog.setval('qset.cm_campaigns_id_seq', 2, true);
 
 
 --
--- TOC entry 7772 (class 0 OID 0)
--- Dependencies: 1128
+-- TOC entry 7249 (class 0 OID 0)
+-- Dependencies: 287
 -- Name: cm_groups_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18100,8 +18152,8 @@ SELECT pg_catalog.setval('qset.cm_groups_id_seq', 4, true);
 
 
 --
--- TOC entry 7773 (class 0 OID 0)
--- Dependencies: 1140
+-- TOC entry 7250 (class 0 OID 0)
+-- Dependencies: 290
 -- Name: cm_queue_hdr_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18109,8 +18161,8 @@ SELECT pg_catalog.setval('qset.cm_queue_hdr_id_seq', 25, true);
 
 
 --
--- TOC entry 7774 (class 0 OID 0)
--- Dependencies: 1137
+-- TOC entry 7251 (class 0 OID 0)
+-- Dependencies: 291
 -- Name: cm_queue_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18118,8 +18170,8 @@ SELECT pg_catalog.setval('qset.cm_queue_id_seq', 113, true);
 
 
 --
--- TOC entry 7775 (class 0 OID 0)
--- Dependencies: 1132
+-- TOC entry 7252 (class 0 OID 0)
+-- Dependencies: 293
 -- Name: cm_subscriber_grps_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18127,8 +18179,8 @@ SELECT pg_catalog.setval('qset.cm_subscriber_grps_id_seq', 13, true);
 
 
 --
--- TOC entry 7776 (class 0 OID 0)
--- Dependencies: 1133
+-- TOC entry 7253 (class 0 OID 0)
+-- Dependencies: 294
 -- Name: cm_subscriber_grps_subscriber_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18136,8 +18188,8 @@ SELECT pg_catalog.setval('qset.cm_subscriber_grps_subscriber_id_seq', 1, false);
 
 
 --
--- TOC entry 7777 (class 0 OID 0)
--- Dependencies: 1130
+-- TOC entry 7254 (class 0 OID 0)
+-- Dependencies: 296
 -- Name: cm_subscribers_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18145,8 +18197,8 @@ SELECT pg_catalog.setval('qset.cm_subscribers_id_seq', 11, true);
 
 
 --
--- TOC entry 7778 (class 0 OID 0)
--- Dependencies: 1082
+-- TOC entry 7255 (class 0 OID 0)
+-- Dependencies: 378
 -- Name: hmptlabdocs_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18154,8 +18206,8 @@ SELECT pg_catalog.setval('qset.hmptlabdocs_id_seq', 18, true);
 
 
 --
--- TOC entry 7779 (class 0 OID 0)
--- Dependencies: 1088
+-- TOC entry 7256 (class 0 OID 0)
+-- Dependencies: 387
 -- Name: hmspecialists_sp_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18163,8 +18215,8 @@ SELECT pg_catalog.setval('qset.hmspecialists_sp_id_seq', 1, false);
 
 
 --
--- TOC entry 7780 (class 0 OID 0)
--- Dependencies: 1099
+-- TOC entry 7257 (class 0 OID 0)
+-- Dependencies: 391
 -- Name: hmstaffspexs_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18172,8 +18224,8 @@ SELECT pg_catalog.setval('qset.hmstaffspexs_id_seq', 12, true);
 
 
 --
--- TOC entry 7781 (class 0 OID 0)
--- Dependencies: 1171
+-- TOC entry 7258 (class 0 OID 0)
+-- Dependencies: 478
 -- Name: re_buildings_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18181,8 +18233,17 @@ SELECT pg_catalog.setval('qset.re_buildings_id_seq', 3, true);
 
 
 --
--- TOC entry 7782 (class 0 OID 0)
--- Dependencies: 1165
+-- TOC entry 7259 (class 0 OID 0)
+-- Dependencies: 640
+-- Name: re_cats_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
+--
+
+SELECT pg_catalog.setval('qset.re_cats_id_seq', 1, true);
+
+
+--
+-- TOC entry 7260 (class 0 OID 0)
+-- Dependencies: 480
 -- Name: re_config_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18190,8 +18251,8 @@ SELECT pg_catalog.setval('qset.re_config_id_seq', 1, false);
 
 
 --
--- TOC entry 7783 (class 0 OID 0)
--- Dependencies: 1167
+-- TOC entry 7261 (class 0 OID 0)
+-- Dependencies: 482
 -- Name: re_house_types_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18199,17 +18260,17 @@ SELECT pg_catalog.setval('qset.re_house_types_id_seq', 4, true);
 
 
 --
--- TOC entry 7784 (class 0 OID 0)
--- Dependencies: 1173
+-- TOC entry 7262 (class 0 OID 0)
+-- Dependencies: 484
 -- Name: re_houses_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
-SELECT pg_catalog.setval('qset.re_houses_id_seq', 1, false);
+SELECT pg_catalog.setval('qset.re_houses_id_seq', 8, true);
 
 
 --
--- TOC entry 7785 (class 0 OID 0)
--- Dependencies: 1169
+-- TOC entry 7263 (class 0 OID 0)
+-- Dependencies: 486
 -- Name: re_locs_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18217,8 +18278,8 @@ SELECT pg_catalog.setval('qset.re_locs_id_seq', 2, true);
 
 
 --
--- TOC entry 7786 (class 0 OID 0)
--- Dependencies: 953
+-- TOC entry 7264 (class 0 OID 0)
+-- Dependencies: 493
 -- Name: sysmenus_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18226,8 +18287,8 @@ SELECT pg_catalog.setval('qset.sysmenus_id_seq', 527, true);
 
 
 --
--- TOC entry 7787 (class 0 OID 0)
--- Dependencies: 954
+-- TOC entry 7265 (class 0 OID 0)
+-- Dependencies: 494
 -- Name: sysmenus_menucode_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18235,8 +18296,8 @@ SELECT pg_catalog.setval('qset.sysmenus_menucode_seq', 527, true);
 
 
 --
--- TOC entry 7788 (class 0 OID 0)
--- Dependencies: 956
+-- TOC entry 7266 (class 0 OID 0)
+-- Dependencies: 496
 -- Name: syspvgs_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18244,17 +18305,17 @@ SELECT pg_catalog.setval('qset.syspvgs_id_seq', 448, true);
 
 
 --
--- TOC entry 7789 (class 0 OID 0)
--- Dependencies: 1084
+-- TOC entry 7267 (class 0 OID 0)
+-- Dependencies: 499
 -- Name: sysses_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
-SELECT pg_catalog.setval('qset.sysses_id_seq', 339, true);
+SELECT pg_catalog.setval('qset.sysses_id_seq', 347, true);
 
 
 --
--- TOC entry 7790 (class 0 OID 0)
--- Dependencies: 959
+-- TOC entry 7268 (class 0 OID 0)
+-- Dependencies: 501
 -- Name: sysusrpvgs_id_seq; Type: SEQUENCE SET; Schema: qset; Owner: postgres
 --
 
@@ -18262,7 +18323,7 @@ SELECT pg_catalog.setval('qset.sysusrpvgs_id_seq', 7, true);
 
 
 --
--- TOC entry 6192 (class 2606 OID 23534)
+-- TOC entry 5819 (class 2606 OID 121000)
 -- Name: aagradesys aagradesys_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18271,7 +18332,7 @@ ALTER TABLE ONLY qset.aagradesys
 
 
 --
--- TOC entry 6194 (class 2606 OID 23536)
+-- TOC entry 5821 (class 2606 OID 121002)
 -- Name: aclevels aclevels_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18280,7 +18341,7 @@ ALTER TABLE ONLY qset.aclevels
 
 
 --
--- TOC entry 6196 (class 2606 OID 23538)
+-- TOC entry 5823 (class 2606 OID 121004)
 -- Name: amaccsets amaccsets_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18289,7 +18350,7 @@ ALTER TABLE ONLY qset.amaccsets
 
 
 --
--- TOC entry 6198 (class 2606 OID 23540)
+-- TOC entry 5825 (class 2606 OID 121006)
 -- Name: amaqbatches amaqbatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18298,7 +18359,7 @@ ALTER TABLE ONLY qset.amaqbatches
 
 
 --
--- TOC entry 6200 (class 2606 OID 23542)
+-- TOC entry 5827 (class 2606 OID 121008)
 -- Name: amaqcodes amaqcodes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18307,7 +18368,7 @@ ALTER TABLE ONLY qset.amaqcodes
 
 
 --
--- TOC entry 6202 (class 2606 OID 23544)
+-- TOC entry 5829 (class 2606 OID 121010)
 -- Name: amaqdtls amaqdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18316,7 +18377,7 @@ ALTER TABLE ONLY qset.amaqdtls
 
 
 --
--- TOC entry 6622 (class 2606 OID 109307)
+-- TOC entry 5831 (class 2606 OID 121012)
 -- Name: amaqhdr amaqhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18325,7 +18386,7 @@ ALTER TABLE ONLY qset.amaqhdr
 
 
 --
--- TOC entry 6624 (class 2606 OID 109317)
+-- TOC entry 5833 (class 2606 OID 121014)
 -- Name: amassets amassets_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18334,7 +18395,7 @@ ALTER TABLE ONLY qset.amassets
 
 
 --
--- TOC entry 6620 (class 2606 OID 109302)
+-- TOC entry 5835 (class 2606 OID 121016)
 -- Name: amaststatus amaststatus_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18343,7 +18404,7 @@ ALTER TABLE ONLY qset.amaststatus
 
 
 --
--- TOC entry 6614 (class 2606 OID 109287)
+-- TOC entry 5837 (class 2606 OID 121018)
 -- Name: amcats amcats_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18352,7 +18413,7 @@ ALTER TABLE ONLY qset.amcats
 
 
 --
--- TOC entry 6204 (class 2606 OID 23546)
+-- TOC entry 5839 (class 2606 OID 121020)
 -- Name: amdepmethods amdepmethods_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18361,7 +18422,7 @@ ALTER TABLE ONLY qset.amdepmethods
 
 
 --
--- TOC entry 6616 (class 2606 OID 109292)
+-- TOC entry 5841 (class 2606 OID 121022)
 -- Name: amdibatches amdibatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18370,7 +18431,7 @@ ALTER TABLE ONLY qset.amdibatches
 
 
 --
--- TOC entry 6626 (class 2606 OID 109322)
+-- TOC entry 5843 (class 2606 OID 121024)
 -- Name: amdidtls amdidtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18379,7 +18440,7 @@ ALTER TABLE ONLY qset.amdidtls
 
 
 --
--- TOC entry 6628 (class 2606 OID 109327)
+-- TOC entry 5845 (class 2606 OID 121026)
 -- Name: amdihdr amdihdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18388,7 +18449,7 @@ ALTER TABLE ONLY qset.amdihdr
 
 
 --
--- TOC entry 6618 (class 2606 OID 109297)
+-- TOC entry 5847 (class 2606 OID 121028)
 -- Name: amdpbatches amdpbatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18397,7 +18458,7 @@ ALTER TABLE ONLY qset.amdpbatches
 
 
 --
--- TOC entry 6630 (class 2606 OID 109332)
+-- TOC entry 5849 (class 2606 OID 121030)
 -- Name: amdpdtls amdpdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18406,7 +18467,7 @@ ALTER TABLE ONLY qset.amdpdtls
 
 
 --
--- TOC entry 6632 (class 2606 OID 109337)
+-- TOC entry 5851 (class 2606 OID 121032)
 -- Name: amdphdr amdphdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18415,7 +18476,7 @@ ALTER TABLE ONLY qset.amdphdr
 
 
 --
--- TOC entry 6206 (class 2606 OID 23548)
+-- TOC entry 5853 (class 2606 OID 121034)
 -- Name: apaccsets apaccsets_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18424,7 +18485,7 @@ ALTER TABLE ONLY qset.apaccsets
 
 
 --
--- TOC entry 6208 (class 2606 OID 23550)
+-- TOC entry 5855 (class 2606 OID 121036)
 -- Name: apdtbs apdtbs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18433,7 +18494,7 @@ ALTER TABLE ONLY qset.apdtbs
 
 
 --
--- TOC entry 6210 (class 2606 OID 23552)
+-- TOC entry 5857 (class 2606 OID 121038)
 -- Name: apinbatches apinbatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18442,7 +18503,7 @@ ALTER TABLE ONLY qset.apinbatches
 
 
 --
--- TOC entry 6212 (class 2606 OID 23554)
+-- TOC entry 5859 (class 2606 OID 121040)
 -- Name: apindtls apindtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18451,7 +18512,7 @@ ALTER TABLE ONLY qset.apindtls
 
 
 --
--- TOC entry 6214 (class 2606 OID 23556)
+-- TOC entry 5861 (class 2606 OID 121042)
 -- Name: apinhdr apinhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18460,7 +18521,7 @@ ALTER TABLE ONLY qset.apinhdr
 
 
 --
--- TOC entry 6216 (class 2606 OID 23558)
+-- TOC entry 5863 (class 2606 OID 121044)
 -- Name: appybatches appybatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18469,7 +18530,7 @@ ALTER TABLE ONLY qset.appybatches
 
 
 --
--- TOC entry 6218 (class 2606 OID 23560)
+-- TOC entry 5865 (class 2606 OID 121046)
 -- Name: appydtls appydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18478,7 +18539,7 @@ ALTER TABLE ONLY qset.appydtls
 
 
 --
--- TOC entry 6220 (class 2606 OID 23562)
+-- TOC entry 5867 (class 2606 OID 121048)
 -- Name: appyhdr appyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18487,7 +18548,7 @@ ALTER TABLE ONLY qset.appyhdr
 
 
 --
--- TOC entry 6222 (class 2606 OID 23564)
+-- TOC entry 5869 (class 2606 OID 121050)
 -- Name: apsupgrps apsupgrps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18496,7 +18557,7 @@ ALTER TABLE ONLY qset.apsupgrps
 
 
 --
--- TOC entry 6224 (class 2606 OID 23566)
+-- TOC entry 5871 (class 2606 OID 121052)
 -- Name: apsuppliers apsuppliers_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18505,7 +18566,7 @@ ALTER TABLE ONLY qset.apsuppliers
 
 
 --
--- TOC entry 6226 (class 2606 OID 23568)
+-- TOC entry 5873 (class 2606 OID 121054)
 -- Name: araccsets araccsets_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18514,7 +18575,7 @@ ALTER TABLE ONLY qset.araccsets
 
 
 --
--- TOC entry 6228 (class 2606 OID 23570)
+-- TOC entry 5875 (class 2606 OID 121056)
 -- Name: arcusgrps arcusgrps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18523,7 +18584,7 @@ ALTER TABLE ONLY qset.arcusgrps
 
 
 --
--- TOC entry 6230 (class 2606 OID 23572)
+-- TOC entry 5877 (class 2606 OID 121058)
 -- Name: arcustomers arcustomers_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18532,7 +18593,7 @@ ALTER TABLE ONLY qset.arcustomers
 
 
 --
--- TOC entry 6232 (class 2606 OID 23574)
+-- TOC entry 5879 (class 2606 OID 121060)
 -- Name: ardtbs ardtbs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18541,7 +18602,7 @@ ALTER TABLE ONLY qset.ardtbs
 
 
 --
--- TOC entry 6234 (class 2606 OID 23576)
+-- TOC entry 5881 (class 2606 OID 121062)
 -- Name: arinbatches arinbatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18550,7 +18611,7 @@ ALTER TABLE ONLY qset.arinbatches
 
 
 --
--- TOC entry 6236 (class 2606 OID 23578)
+-- TOC entry 5883 (class 2606 OID 121064)
 -- Name: arindtls arindtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18559,7 +18620,7 @@ ALTER TABLE ONLY qset.arindtls
 
 
 --
--- TOC entry 6238 (class 2606 OID 23580)
+-- TOC entry 5885 (class 2606 OID 121066)
 -- Name: arinhdr arinhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18568,7 +18629,7 @@ ALTER TABLE ONLY qset.arinhdr
 
 
 --
--- TOC entry 6240 (class 2606 OID 23582)
+-- TOC entry 5887 (class 2606 OID 121068)
 -- Name: aritems aritems_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18577,7 +18638,7 @@ ALTER TABLE ONLY qset.aritems
 
 
 --
--- TOC entry 6242 (class 2606 OID 23584)
+-- TOC entry 5889 (class 2606 OID 121070)
 -- Name: arpybatches arpybatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18586,7 +18647,7 @@ ALTER TABLE ONLY qset.arpybatches
 
 
 --
--- TOC entry 6244 (class 2606 OID 23586)
+-- TOC entry 5891 (class 2606 OID 121072)
 -- Name: arpydtls arpydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18595,7 +18656,7 @@ ALTER TABLE ONLY qset.arpydtls
 
 
 --
--- TOC entry 6246 (class 2606 OID 23588)
+-- TOC entry 5893 (class 2606 OID 121074)
 -- Name: arpyhdr arpyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18604,7 +18665,7 @@ ALTER TABLE ONLY qset.arpyhdr
 
 
 --
--- TOC entry 6676 (class 2606 OID 191274)
+-- TOC entry 5895 (class 2606 OID 121076)
 -- Name: cl_acad_years cl_acad_years_acad_year_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18613,7 +18674,7 @@ ALTER TABLE ONLY qset.cl_acad_years
 
 
 --
--- TOC entry 6678 (class 2606 OID 191272)
+-- TOC entry 5897 (class 2606 OID 121078)
 -- Name: cl_acad_years cl_acad_years_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18622,7 +18683,7 @@ ALTER TABLE ONLY qset.cl_acad_years
 
 
 --
--- TOC entry 6686 (class 2606 OID 199404)
+-- TOC entry 5899 (class 2606 OID 121080)
 -- Name: cl_campus cl_campus_campus_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18631,7 +18692,7 @@ ALTER TABLE ONLY qset.cl_campus
 
 
 --
--- TOC entry 6688 (class 2606 OID 199406)
+-- TOC entry 5901 (class 2606 OID 121082)
 -- Name: cl_campus cl_campus_campus_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18640,7 +18701,7 @@ ALTER TABLE ONLY qset.cl_campus
 
 
 --
--- TOC entry 6690 (class 2606 OID 199402)
+-- TOC entry 5903 (class 2606 OID 121084)
 -- Name: cl_campus cl_campus_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18649,7 +18710,7 @@ ALTER TABLE ONLY qset.cl_campus
 
 
 --
--- TOC entry 6698 (class 2606 OID 199428)
+-- TOC entry 5905 (class 2606 OID 121086)
 -- Name: cl_depts cl_depts_dept_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18658,7 +18719,7 @@ ALTER TABLE ONLY qset.cl_depts
 
 
 --
--- TOC entry 6700 (class 2606 OID 199430)
+-- TOC entry 5907 (class 2606 OID 121088)
 -- Name: cl_depts cl_depts_dept_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18667,7 +18728,7 @@ ALTER TABLE ONLY qset.cl_depts
 
 
 --
--- TOC entry 6702 (class 2606 OID 199426)
+-- TOC entry 5909 (class 2606 OID 121090)
 -- Name: cl_depts cl_depts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18676,7 +18737,7 @@ ALTER TABLE ONLY qset.cl_depts
 
 
 --
--- TOC entry 6660 (class 2606 OID 191238)
+-- TOC entry 5911 (class 2606 OID 121092)
 -- Name: cl_programmes cl_programmes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18685,7 +18746,7 @@ ALTER TABLE ONLY qset.cl_programmes
 
 
 --
--- TOC entry 6662 (class 2606 OID 191240)
+-- TOC entry 5913 (class 2606 OID 121094)
 -- Name: cl_programmes cl_programmes_prog_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18694,7 +18755,7 @@ ALTER TABLE ONLY qset.cl_programmes
 
 
 --
--- TOC entry 6664 (class 2606 OID 191242)
+-- TOC entry 5915 (class 2606 OID 121096)
 -- Name: cl_programmes cl_programmes_prog_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18703,7 +18764,7 @@ ALTER TABLE ONLY qset.cl_programmes
 
 
 --
--- TOC entry 6692 (class 2606 OID 199414)
+-- TOC entry 5917 (class 2606 OID 121098)
 -- Name: cl_schools cl_schools_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18712,7 +18773,7 @@ ALTER TABLE ONLY qset.cl_schools
 
 
 --
--- TOC entry 6694 (class 2606 OID 199416)
+-- TOC entry 5919 (class 2606 OID 121100)
 -- Name: cl_schools cl_schools_school_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18721,7 +18782,7 @@ ALTER TABLE ONLY qset.cl_schools
 
 
 --
--- TOC entry 6696 (class 2606 OID 199418)
+-- TOC entry 5921 (class 2606 OID 121102)
 -- Name: cl_schools cl_schools_school_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18730,7 +18791,7 @@ ALTER TABLE ONLY qset.cl_schools
 
 
 --
--- TOC entry 6680 (class 2606 OID 191282)
+-- TOC entry 5923 (class 2606 OID 121104)
 -- Name: cl_sem_ses cl_sem_ses_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18739,7 +18800,7 @@ ALTER TABLE ONLY qset.cl_sem_ses
 
 
 --
--- TOC entry 6682 (class 2606 OID 191284)
+-- TOC entry 5925 (class 2606 OID 121106)
 -- Name: cl_sem_ses cl_sem_ses_ses_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18748,7 +18809,7 @@ ALTER TABLE ONLY qset.cl_sem_ses
 
 
 --
--- TOC entry 6684 (class 2606 OID 191286)
+-- TOC entry 5927 (class 2606 OID 121108)
 -- Name: cl_sem_ses cl_sem_ses_ses_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18757,7 +18818,7 @@ ALTER TABLE ONLY qset.cl_sem_ses
 
 
 --
--- TOC entry 6710 (class 2606 OID 207608)
+-- TOC entry 5929 (class 2606 OID 121110)
 -- Name: cl_student_cats cl_student_cats_cat_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18766,7 +18827,7 @@ ALTER TABLE ONLY qset.cl_student_cats
 
 
 --
--- TOC entry 6712 (class 2606 OID 207610)
+-- TOC entry 5931 (class 2606 OID 121112)
 -- Name: cl_student_cats cl_student_cats_cat_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18775,7 +18836,7 @@ ALTER TABLE ONLY qset.cl_student_cats
 
 
 --
--- TOC entry 6714 (class 2606 OID 207606)
+-- TOC entry 5933 (class 2606 OID 121114)
 -- Name: cl_student_cats cl_student_cats_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18784,7 +18845,7 @@ ALTER TABLE ONLY qset.cl_student_cats
 
 
 --
--- TOC entry 6722 (class 2606 OID 207630)
+-- TOC entry 5935 (class 2606 OID 121116)
 -- Name: cl_student_status cl_student_status_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18793,7 +18854,7 @@ ALTER TABLE ONLY qset.cl_student_status
 
 
 --
--- TOC entry 6724 (class 2606 OID 207632)
+-- TOC entry 5937 (class 2606 OID 121118)
 -- Name: cl_student_status cl_student_status_ss_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18802,7 +18863,7 @@ ALTER TABLE ONLY qset.cl_student_status
 
 
 --
--- TOC entry 6726 (class 2606 OID 207634)
+-- TOC entry 5939 (class 2606 OID 121120)
 -- Name: cl_student_status cl_student_status_ss_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18811,7 +18872,7 @@ ALTER TABLE ONLY qset.cl_student_status
 
 
 --
--- TOC entry 6716 (class 2606 OID 207618)
+-- TOC entry 5941 (class 2606 OID 121122)
 -- Name: cl_student_types cl_student_types_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18820,7 +18881,7 @@ ALTER TABLE ONLY qset.cl_student_types
 
 
 --
--- TOC entry 6718 (class 2606 OID 207620)
+-- TOC entry 5943 (class 2606 OID 121124)
 -- Name: cl_student_types cl_student_types_st_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18829,7 +18890,7 @@ ALTER TABLE ONLY qset.cl_student_types
 
 
 --
--- TOC entry 6720 (class 2606 OID 207622)
+-- TOC entry 5945 (class 2606 OID 121126)
 -- Name: cl_student_types cl_student_types_st_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18838,7 +18899,7 @@ ALTER TABLE ONLY qset.cl_student_types
 
 
 --
--- TOC entry 6672 (class 2606 OID 191262)
+-- TOC entry 5947 (class 2606 OID 121128)
 -- Name: cl_students cl_students_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18847,7 +18908,7 @@ ALTER TABLE ONLY qset.cl_students
 
 
 --
--- TOC entry 6674 (class 2606 OID 191264)
+-- TOC entry 5949 (class 2606 OID 121130)
 -- Name: cl_students cl_students_student_no_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18856,7 +18917,7 @@ ALTER TABLE ONLY qset.cl_students
 
 
 --
--- TOC entry 6704 (class 2606 OID 207594)
+-- TOC entry 5951 (class 2606 OID 121132)
 -- Name: cl_study_methods cl_study_methods_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18865,7 +18926,7 @@ ALTER TABLE ONLY qset.cl_study_methods
 
 
 --
--- TOC entry 6706 (class 2606 OID 207596)
+-- TOC entry 5953 (class 2606 OID 121134)
 -- Name: cl_study_methods cl_study_methods_sm_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18874,7 +18935,7 @@ ALTER TABLE ONLY qset.cl_study_methods
 
 
 --
--- TOC entry 6708 (class 2606 OID 207598)
+-- TOC entry 5955 (class 2606 OID 121136)
 -- Name: cl_study_methods cl_study_methods_sm_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18883,7 +18944,7 @@ ALTER TABLE ONLY qset.cl_study_methods
 
 
 --
--- TOC entry 6666 (class 2606 OID 191250)
+-- TOC entry 5957 (class 2606 OID 121138)
 -- Name: cl_units cl_units_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18892,7 +18953,7 @@ ALTER TABLE ONLY qset.cl_units
 
 
 --
--- TOC entry 6668 (class 2606 OID 191252)
+-- TOC entry 5959 (class 2606 OID 121140)
 -- Name: cl_units cl_units_unit_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18901,7 +18962,7 @@ ALTER TABLE ONLY qset.cl_units
 
 
 --
--- TOC entry 6670 (class 2606 OID 191254)
+-- TOC entry 5961 (class 2606 OID 121142)
 -- Name: cl_units cl_units_unit_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18910,7 +18971,7 @@ ALTER TABLE ONLY qset.cl_units
 
 
 --
--- TOC entry 6652 (class 2606 OID 150302)
+-- TOC entry 5963 (class 2606 OID 121144)
 -- Name: cm_campaigns cm_campaigns_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18919,7 +18980,7 @@ ALTER TABLE ONLY qset.cm_campaigns
 
 
 --
--- TOC entry 6654 (class 2606 OID 150304)
+-- TOC entry 5965 (class 2606 OID 121146)
 -- Name: cm_campaigns cm_campaigns_subject_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18928,7 +18989,7 @@ ALTER TABLE ONLY qset.cm_campaigns
 
 
 --
--- TOC entry 6636 (class 2606 OID 150252)
+-- TOC entry 5967 (class 2606 OID 121148)
 -- Name: cm_groups cm_groups_grp_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18937,7 +18998,7 @@ ALTER TABLE ONLY qset.cm_groups
 
 
 --
--- TOC entry 6638 (class 2606 OID 150254)
+-- TOC entry 5969 (class 2606 OID 121150)
 -- Name: cm_groups cm_groups_grp_desc_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18946,7 +19007,7 @@ ALTER TABLE ONLY qset.cm_groups
 
 
 --
--- TOC entry 6640 (class 2606 OID 150250)
+-- TOC entry 5971 (class 2606 OID 121152)
 -- Name: cm_groups cm_groups_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18955,7 +19016,7 @@ ALTER TABLE ONLY qset.cm_groups
 
 
 --
--- TOC entry 6658 (class 2606 OID 166637)
+-- TOC entry 5975 (class 2606 OID 121154)
 -- Name: cm_queue_hdr cm_queue_hdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18964,7 +19025,7 @@ ALTER TABLE ONLY qset.cm_queue_hdr
 
 
 --
--- TOC entry 6656 (class 2606 OID 150315)
+-- TOC entry 5973 (class 2606 OID 121156)
 -- Name: cm_queue cm_queue_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18973,7 +19034,7 @@ ALTER TABLE ONLY qset.cm_queue
 
 
 --
--- TOC entry 6648 (class 2606 OID 150277)
+-- TOC entry 5977 (class 2606 OID 121158)
 -- Name: cm_subscriber_grps cm_subscriber_grps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18982,7 +19043,7 @@ ALTER TABLE ONLY qset.cm_subscriber_grps
 
 
 --
--- TOC entry 6650 (class 2606 OID 150279)
+-- TOC entry 5979 (class 2606 OID 121160)
 -- Name: cm_subscriber_grps cm_subscriber_grps_subscriber_id_grp_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -18991,7 +19052,7 @@ ALTER TABLE ONLY qset.cm_subscriber_grps
 
 
 --
--- TOC entry 6642 (class 2606 OID 150266)
+-- TOC entry 5981 (class 2606 OID 121162)
 -- Name: cm_subscribers cm_subscribers_email_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19000,7 +19061,7 @@ ALTER TABLE ONLY qset.cm_subscribers
 
 
 --
--- TOC entry 6644 (class 2606 OID 150264)
+-- TOC entry 5983 (class 2606 OID 121164)
 -- Name: cm_subscribers cm_subscribers_phone_no_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19009,7 +19070,7 @@ ALTER TABLE ONLY qset.cm_subscribers
 
 
 --
--- TOC entry 6646 (class 2606 OID 150262)
+-- TOC entry 5985 (class 2606 OID 121166)
 -- Name: cm_subscribers cm_subscribers_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19018,7 +19079,7 @@ ALTER TABLE ONLY qset.cm_subscribers
 
 
 --
--- TOC entry 6248 (class 2606 OID 23590)
+-- TOC entry 5987 (class 2606 OID 121168)
 -- Name: csbranches csbranches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19027,7 +19088,7 @@ ALTER TABLE ONLY qset.csbranches
 
 
 --
--- TOC entry 6250 (class 2606 OID 23592)
+-- TOC entry 5989 (class 2606 OID 121170)
 -- Name: cscologo cscologo_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19036,7 +19097,7 @@ ALTER TABLE ONLY qset.cscologo
 
 
 --
--- TOC entry 6252 (class 2606 OID 23594)
+-- TOC entry 5991 (class 2606 OID 121172)
 -- Name: csconstituencies csconstituencies_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19045,7 +19106,7 @@ ALTER TABLE ONLY qset.csconstituencies
 
 
 --
--- TOC entry 6254 (class 2606 OID 23596)
+-- TOC entry 5993 (class 2606 OID 121174)
 -- Name: cscoprofile cscoprofile_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19054,7 +19115,7 @@ ALTER TABLE ONLY qset.cscoprofile
 
 
 --
--- TOC entry 6256 (class 2606 OID 23598)
+-- TOC entry 5995 (class 2606 OID 121176)
 -- Name: cscounties cscounties_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19063,7 +19124,7 @@ ALTER TABLE ONLY qset.cscounties
 
 
 --
--- TOC entry 6258 (class 2606 OID 23600)
+-- TOC entry 5997 (class 2606 OID 121178)
 -- Name: cscountries cscountries_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19072,7 +19133,7 @@ ALTER TABLE ONLY qset.cscountries
 
 
 --
--- TOC entry 6260 (class 2606 OID 23602)
+-- TOC entry 5999 (class 2606 OID 121180)
 -- Name: cscountryregs cscountryregs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19081,7 +19142,7 @@ ALTER TABLE ONLY qset.cscountryregs
 
 
 --
--- TOC entry 6262 (class 2606 OID 23604)
+-- TOC entry 6001 (class 2606 OID 121182)
 -- Name: csdepts csdepts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19090,7 +19151,7 @@ ALTER TABLE ONLY qset.csdepts
 
 
 --
--- TOC entry 6264 (class 2606 OID 23606)
+-- TOC entry 6003 (class 2606 OID 121184)
 -- Name: csdisab csdisab_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19099,7 +19160,7 @@ ALTER TABLE ONLY qset.csdisab
 
 
 --
--- TOC entry 6266 (class 2606 OID 23608)
+-- TOC entry 6005 (class 2606 OID 121186)
 -- Name: csdisabcat csdisabcat_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19108,7 +19169,7 @@ ALTER TABLE ONLY qset.csdisabcat
 
 
 --
--- TOC entry 6268 (class 2606 OID 23610)
+-- TOC entry 6007 (class 2606 OID 121188)
 -- Name: csgender csgender_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19117,7 +19178,7 @@ ALTER TABLE ONLY qset.csgender
 
 
 --
--- TOC entry 6270 (class 2606 OID 23612)
+-- TOC entry 6009 (class 2606 OID 121190)
 -- Name: cssalutation cssalutation_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19126,7 +19187,7 @@ ALTER TABLE ONLY qset.cssalutation
 
 
 --
--- TOC entry 6272 (class 2606 OID 23614)
+-- TOC entry 6011 (class 2606 OID 121192)
 -- Name: cssections cssections_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19135,7 +19196,7 @@ ALTER TABLE ONLY qset.cssections
 
 
 --
--- TOC entry 6274 (class 2606 OID 23616)
+-- TOC entry 6013 (class 2606 OID 121194)
 -- Name: cstowns cstowns_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19144,7 +19205,7 @@ ALTER TABLE ONLY qset.cstowns
 
 
 --
--- TOC entry 6276 (class 2606 OID 23618)
+-- TOC entry 6015 (class 2606 OID 121196)
 -- Name: fnbankbranch fnbankbranch_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19153,7 +19214,7 @@ ALTER TABLE ONLY qset.fnbankbranch
 
 
 --
--- TOC entry 6278 (class 2606 OID 23620)
+-- TOC entry 6017 (class 2606 OID 121198)
 -- Name: fnbanks fnbanks_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19162,7 +19223,7 @@ ALTER TABLE ONLY qset.fnbanks
 
 
 --
--- TOC entry 6280 (class 2606 OID 23622)
+-- TOC entry 6019 (class 2606 OID 121200)
 -- Name: fnbkchqtpls fnbkchqtpls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19171,7 +19232,7 @@ ALTER TABLE ONLY qset.fnbkchqtpls
 
 
 --
--- TOC entry 6282 (class 2606 OID 23624)
+-- TOC entry 6021 (class 2606 OID 121202)
 -- Name: fncobanks fncobanks_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19180,7 +19241,7 @@ ALTER TABLE ONLY qset.fncobanks
 
 
 --
--- TOC entry 6284 (class 2606 OID 23626)
+-- TOC entry 6023 (class 2606 OID 121204)
 -- Name: fnconfig fnconfig_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19189,7 +19250,7 @@ ALTER TABLE ONLY qset.fnconfig
 
 
 --
--- TOC entry 6286 (class 2606 OID 23628)
+-- TOC entry 6025 (class 2606 OID 121206)
 -- Name: fnfiscalprd fnfiscalprd_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19198,7 +19259,7 @@ ALTER TABLE ONLY qset.fnfiscalprd
 
 
 --
--- TOC entry 6288 (class 2606 OID 23630)
+-- TOC entry 6027 (class 2606 OID 121208)
 -- Name: fnfiscalyear fnfiscalyear_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19207,7 +19268,7 @@ ALTER TABLE ONLY qset.fnfiscalyear
 
 
 --
--- TOC entry 6290 (class 2606 OID 23632)
+-- TOC entry 6029 (class 2606 OID 121210)
 -- Name: fnpaymodes fnpaymodes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19216,7 +19277,7 @@ ALTER TABLE ONLY qset.fnpaymodes
 
 
 --
--- TOC entry 6292 (class 2606 OID 23634)
+-- TOC entry 6031 (class 2606 OID 121212)
 -- Name: glaccgrpcat glaccgrpcat_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19225,7 +19286,7 @@ ALTER TABLE ONLY qset.glaccgrpcat
 
 
 --
--- TOC entry 6294 (class 2606 OID 23636)
+-- TOC entry 6033 (class 2606 OID 121214)
 -- Name: glaccgrps glaccgrps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19234,7 +19295,7 @@ ALTER TABLE ONLY qset.glaccgrps
 
 
 --
--- TOC entry 6296 (class 2606 OID 23638)
+-- TOC entry 6035 (class 2606 OID 121216)
 -- Name: glaccounts glaccounts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19243,7 +19304,7 @@ ALTER TABLE ONLY qset.glaccounts
 
 
 --
--- TOC entry 6298 (class 2606 OID 23640)
+-- TOC entry 6037 (class 2606 OID 121218)
 -- Name: glacctypes glacctypes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19252,7 +19313,7 @@ ALTER TABLE ONLY qset.glacctypes
 
 
 --
--- TOC entry 6300 (class 2606 OID 23642)
+-- TOC entry 6039 (class 2606 OID 121220)
 -- Name: glbatches glbatches_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19261,7 +19322,7 @@ ALTER TABLE ONLY qset.glbatches
 
 
 --
--- TOC entry 6302 (class 2606 OID 23644)
+-- TOC entry 6041 (class 2606 OID 121222)
 -- Name: glbdg glbdg_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19270,7 +19331,7 @@ ALTER TABLE ONLY qset.glbdg
 
 
 --
--- TOC entry 6304 (class 2606 OID 23646)
+-- TOC entry 6043 (class 2606 OID 121224)
 -- Name: gldtls gldtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19279,7 +19340,7 @@ ALTER TABLE ONLY qset.gldtls
 
 
 --
--- TOC entry 6306 (class 2606 OID 23648)
+-- TOC entry 6045 (class 2606 OID 121226)
 -- Name: glhdr glhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19288,7 +19349,7 @@ ALTER TABLE ONLY qset.glhdr
 
 
 --
--- TOC entry 6308 (class 2606 OID 23650)
+-- TOC entry 6047 (class 2606 OID 121228)
 -- Name: gltb gltb_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19297,7 +19358,7 @@ ALTER TABLE ONLY qset.gltb
 
 
 --
--- TOC entry 6310 (class 2606 OID 23652)
+-- TOC entry 6049 (class 2606 OID 121230)
 -- Name: hgacademicyears hgacademicyears_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19306,7 +19367,7 @@ ALTER TABLE ONLY qset.hgacademicyears
 
 
 --
--- TOC entry 6312 (class 2606 OID 23654)
+-- TOC entry 6051 (class 2606 OID 121232)
 -- Name: hgcalendar hgcalendar_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19315,7 +19376,7 @@ ALTER TABLE ONLY qset.hgcalendar
 
 
 --
--- TOC entry 6314 (class 2606 OID 23656)
+-- TOC entry 6053 (class 2606 OID 121234)
 -- Name: hgcoresubjects hgcoresubjects_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19324,7 +19385,7 @@ ALTER TABLE ONLY qset.hgcoresubjects
 
 
 --
--- TOC entry 6316 (class 2606 OID 23658)
+-- TOC entry 6055 (class 2606 OID 121236)
 -- Name: hgexams hgexams_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19333,7 +19394,7 @@ ALTER TABLE ONLY qset.hgexams
 
 
 --
--- TOC entry 6318 (class 2606 OID 23660)
+-- TOC entry 6057 (class 2606 OID 121238)
 -- Name: hgforms hgforms_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19342,7 +19403,7 @@ ALTER TABLE ONLY qset.hgforms
 
 
 --
--- TOC entry 6320 (class 2606 OID 23662)
+-- TOC entry 6059 (class 2606 OID 121240)
 -- Name: hgformsbjs hgformsbjs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19351,7 +19412,7 @@ ALTER TABLE ONLY qset.hgformsbjs
 
 
 --
--- TOC entry 6322 (class 2606 OID 23664)
+-- TOC entry 6061 (class 2606 OID 121242)
 -- Name: hgfsdtls hgfsdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19360,7 +19421,7 @@ ALTER TABLE ONLY qset.hgfsdtls
 
 
 --
--- TOC entry 6324 (class 2606 OID 23666)
+-- TOC entry 6063 (class 2606 OID 121244)
 -- Name: hgfshdr hgfshdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19369,7 +19430,7 @@ ALTER TABLE ONLY qset.hgfshdr
 
 
 --
--- TOC entry 6326 (class 2606 OID 23668)
+-- TOC entry 6065 (class 2606 OID 121246)
 -- Name: hggrpsbjs hggrpsbjs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19378,7 +19439,7 @@ ALTER TABLE ONLY qset.hggrpsbjs
 
 
 --
--- TOC entry 6328 (class 2606 OID 23670)
+-- TOC entry 6067 (class 2606 OID 121248)
 -- Name: hginvsdtls hginvsdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19387,7 +19448,7 @@ ALTER TABLE ONLY qset.hginvsdtls
 
 
 --
--- TOC entry 6330 (class 2606 OID 23672)
+-- TOC entry 6069 (class 2606 OID 121250)
 -- Name: hginvshdr hginvshdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19396,7 +19457,7 @@ ALTER TABLE ONLY qset.hginvshdr
 
 
 --
--- TOC entry 6332 (class 2606 OID 23674)
+-- TOC entry 6071 (class 2606 OID 121252)
 -- Name: hgitems hgitems_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19405,7 +19466,7 @@ ALTER TABLE ONLY qset.hgitems
 
 
 --
--- TOC entry 6334 (class 2606 OID 23676)
+-- TOC entry 6073 (class 2606 OID 121254)
 -- Name: hgmarksheet hgmarksheet_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19414,7 +19475,7 @@ ALTER TABLE ONLY qset.hgmarksheet
 
 
 --
--- TOC entry 6336 (class 2606 OID 23678)
+-- TOC entry 6075 (class 2606 OID 121256)
 -- Name: hgobl hgobl_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19423,7 +19484,7 @@ ALTER TABLE ONLY qset.hgobl
 
 
 --
--- TOC entry 6338 (class 2606 OID 23680)
+-- TOC entry 6077 (class 2606 OID 121258)
 -- Name: hgobs hgobs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19432,7 +19493,7 @@ ALTER TABLE ONLY qset.hgobs
 
 
 --
--- TOC entry 6340 (class 2606 OID 23682)
+-- TOC entry 6079 (class 2606 OID 121260)
 -- Name: hgqddtls hgqddtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19441,7 +19502,7 @@ ALTER TABLE ONLY qset.hgqddtls
 
 
 --
--- TOC entry 6342 (class 2606 OID 23684)
+-- TOC entry 6081 (class 2606 OID 121262)
 -- Name: hgqdhdr hgqdhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19450,7 +19511,7 @@ ALTER TABLE ONLY qset.hgqdhdr
 
 
 --
--- TOC entry 6344 (class 2606 OID 23686)
+-- TOC entry 6083 (class 2606 OID 121264)
 -- Name: hgrcpts hgrcpts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19459,7 +19520,7 @@ ALTER TABLE ONLY qset.hgrcpts
 
 
 --
--- TOC entry 6346 (class 2606 OID 23688)
+-- TOC entry 6085 (class 2606 OID 121266)
 -- Name: hgregistration hgregistration_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19468,7 +19529,7 @@ ALTER TABLE ONLY qset.hgregistration
 
 
 --
--- TOC entry 6348 (class 2606 OID 23690)
+-- TOC entry 6087 (class 2606 OID 121268)
 -- Name: hgstreams hgstreams_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19477,7 +19538,7 @@ ALTER TABLE ONLY qset.hgstreams
 
 
 --
--- TOC entry 6350 (class 2606 OID 23692)
+-- TOC entry 6089 (class 2606 OID 121270)
 -- Name: hgstudcoresbjs hgstudcoresbjs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19486,7 +19547,7 @@ ALTER TABLE ONLY qset.hgstudcoresbjs
 
 
 --
--- TOC entry 6352 (class 2606 OID 23694)
+-- TOC entry 6091 (class 2606 OID 121272)
 -- Name: hgstudelectsbjs hgstudelectsbjs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19495,7 +19556,7 @@ ALTER TABLE ONLY qset.hgstudelectsbjs
 
 
 --
--- TOC entry 6354 (class 2606 OID 23696)
+-- TOC entry 6093 (class 2606 OID 121274)
 -- Name: hgstudentmarks hgstudentmarks_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19504,7 +19565,7 @@ ALTER TABLE ONLY qset.hgstudentmarks
 
 
 --
--- TOC entry 6356 (class 2606 OID 23698)
+-- TOC entry 6095 (class 2606 OID 121276)
 -- Name: hgstudents hgstudents_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19513,7 +19574,7 @@ ALTER TABLE ONLY qset.hgstudents
 
 
 --
--- TOC entry 6358 (class 2606 OID 23700)
+-- TOC entry 6097 (class 2606 OID 121278)
 -- Name: hgstudnos hgstudnos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19522,7 +19583,7 @@ ALTER TABLE ONLY qset.hgstudnos
 
 
 --
--- TOC entry 6360 (class 2606 OID 23702)
+-- TOC entry 6099 (class 2606 OID 121280)
 -- Name: hgstudphotos hgstudphotos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19531,7 +19592,7 @@ ALTER TABLE ONLY qset.hgstudphotos
 
 
 --
--- TOC entry 6362 (class 2606 OID 23704)
+-- TOC entry 6101 (class 2606 OID 121282)
 -- Name: hgstudprds hgstudprds_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19540,7 +19601,7 @@ ALTER TABLE ONLY qset.hgstudprds
 
 
 --
--- TOC entry 6364 (class 2606 OID 23706)
+-- TOC entry 6103 (class 2606 OID 121284)
 -- Name: hgstudselsbjtts hgstudselsbjtts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19549,7 +19610,7 @@ ALTER TABLE ONLY qset.hgstudselsbjtts
 
 
 --
--- TOC entry 6366 (class 2606 OID 23708)
+-- TOC entry 6105 (class 2606 OID 121286)
 -- Name: hgstudstatus hgstudstatus_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19558,7 +19619,7 @@ ALTER TABLE ONLY qset.hgstudstatus
 
 
 --
--- TOC entry 6368 (class 2606 OID 23710)
+-- TOC entry 6107 (class 2606 OID 121288)
 -- Name: hgstudsubjects hgstudsubjects_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19567,7 +19628,7 @@ ALTER TABLE ONLY qset.hgstudsubjects
 
 
 --
--- TOC entry 6370 (class 2606 OID 23712)
+-- TOC entry 6109 (class 2606 OID 121290)
 -- Name: hgstudtypes hgstudtypes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19576,7 +19637,7 @@ ALTER TABLE ONLY qset.hgstudtypes
 
 
 --
--- TOC entry 6372 (class 2606 OID 23714)
+-- TOC entry 6111 (class 2606 OID 121292)
 -- Name: hgstudyears hgstudyears_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19585,7 +19646,7 @@ ALTER TABLE ONLY qset.hgstudyears
 
 
 --
--- TOC entry 6374 (class 2606 OID 23716)
+-- TOC entry 6113 (class 2606 OID 121294)
 -- Name: hgsubjectgrps hgsubjectgrps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19594,7 +19655,7 @@ ALTER TABLE ONLY qset.hgsubjectgrps
 
 
 --
--- TOC entry 6376 (class 2606 OID 23718)
+-- TOC entry 6115 (class 2606 OID 121296)
 -- Name: hgsubjects hgsubjects_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19603,7 +19664,7 @@ ALTER TABLE ONLY qset.hgsubjects
 
 
 --
--- TOC entry 6378 (class 2606 OID 23720)
+-- TOC entry 6117 (class 2606 OID 121298)
 -- Name: hgterms hgterms_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19612,7 +19673,7 @@ ALTER TABLE ONLY qset.hgterms
 
 
 --
--- TOC entry 6380 (class 2606 OID 23722)
+-- TOC entry 6119 (class 2606 OID 121300)
 -- Name: hmbloodgrps hmbloodgrps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19621,7 +19682,7 @@ ALTER TABLE ONLY qset.hmbloodgrps
 
 
 --
--- TOC entry 6382 (class 2606 OID 23724)
+-- TOC entry 6121 (class 2606 OID 121302)
 -- Name: hmcats hmcats_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19630,7 +19691,7 @@ ALTER TABLE ONLY qset.hmcats
 
 
 --
--- TOC entry 6384 (class 2606 OID 23726)
+-- TOC entry 6123 (class 2606 OID 121304)
 -- Name: hmcomplaints hmcomplaints_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19639,7 +19700,7 @@ ALTER TABLE ONLY qset.hmcomplaints
 
 
 --
--- TOC entry 6386 (class 2606 OID 23728)
+-- TOC entry 6125 (class 2606 OID 121306)
 -- Name: hmdepts hmdepts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19648,7 +19709,7 @@ ALTER TABLE ONLY qset.hmdepts
 
 
 --
--- TOC entry 6388 (class 2606 OID 92940)
+-- TOC entry 6127 (class 2606 OID 121308)
 -- Name: hmdiagnosis hmdiagnosis_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19657,7 +19718,7 @@ ALTER TABLE ONLY qset.hmdiagnosis
 
 
 --
--- TOC entry 6390 (class 2606 OID 33552)
+-- TOC entry 6129 (class 2606 OID 121310)
 -- Name: hmmedication hmmedication_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19666,7 +19727,7 @@ ALTER TABLE ONLY qset.hmmedication
 
 
 --
--- TOC entry 6610 (class 2606 OID 82716)
+-- TOC entry 6131 (class 2606 OID 121312)
 -- Name: hmpharmdtls hmpharmdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19675,7 +19736,7 @@ ALTER TABLE ONLY qset.hmpharmdtls
 
 
 --
--- TOC entry 6606 (class 2606 OID 82700)
+-- TOC entry 6133 (class 2606 OID 121314)
 -- Name: hmpharmhdr hmpharmhdr_id_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19684,7 +19745,7 @@ ALTER TABLE ONLY qset.hmpharmhdr
 
 
 --
--- TOC entry 6608 (class 2606 OID 82698)
+-- TOC entry 6135 (class 2606 OID 121316)
 -- Name: hmpharmhdr hmpharmhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19693,7 +19754,7 @@ ALTER TABLE ONLY qset.hmpharmhdr
 
 
 --
--- TOC entry 6392 (class 2606 OID 23734)
+-- TOC entry 6137 (class 2606 OID 121318)
 -- Name: hmptcomplaints hmptcomplaints_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19702,7 +19763,7 @@ ALTER TABLE ONLY qset.hmptcomplaints
 
 
 --
--- TOC entry 6394 (class 2606 OID 92938)
+-- TOC entry 6139 (class 2606 OID 121320)
 -- Name: hmptdiagnosis hmptdiagnosis_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19711,7 +19772,7 @@ ALTER TABLE ONLY qset.hmptdiagnosis
 
 
 --
--- TOC entry 6396 (class 2606 OID 92911)
+-- TOC entry 6141 (class 2606 OID 121322)
 -- Name: hmptlab hmptlab_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19720,7 +19781,7 @@ ALTER TABLE ONLY qset.hmptlab
 
 
 --
--- TOC entry 6600 (class 2606 OID 25340)
+-- TOC entry 6143 (class 2606 OID 121324)
 -- Name: hmptlabdocs hmptlabdocs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19729,7 +19790,7 @@ ALTER TABLE ONLY qset.hmptlabdocs
 
 
 --
--- TOC entry 6398 (class 2606 OID 23740)
+-- TOC entry 6145 (class 2606 OID 121326)
 -- Name: hmptphotos hmptphotos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19738,7 +19799,7 @@ ALTER TABLE ONLY qset.hmptphotos
 
 
 --
--- TOC entry 6400 (class 2606 OID 23742)
+-- TOC entry 6147 (class 2606 OID 121328)
 -- Name: hmptprofile hmptprofile_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19747,7 +19808,7 @@ ALTER TABLE ONLY qset.hmptprofile
 
 
 --
--- TOC entry 6402 (class 2606 OID 23744)
+-- TOC entry 6149 (class 2606 OID 121330)
 -- Name: hmpydtls hmpydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19756,7 +19817,7 @@ ALTER TABLE ONLY qset.hmpydtls
 
 
 --
--- TOC entry 6404 (class 2606 OID 23746)
+-- TOC entry 6151 (class 2606 OID 121332)
 -- Name: hmpyhdr hmpyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19765,7 +19826,7 @@ ALTER TABLE ONLY qset.hmpyhdr
 
 
 --
--- TOC entry 6406 (class 2606 OID 23748)
+-- TOC entry 6153 (class 2606 OID 121334)
 -- Name: hmrcptsmiscdtls hmrcptsmiscdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19774,7 +19835,7 @@ ALTER TABLE ONLY qset.hmrcptsmiscdtls
 
 
 --
--- TOC entry 6408 (class 2606 OID 23750)
+-- TOC entry 6155 (class 2606 OID 121336)
 -- Name: hmrcptsmischdr hmrcptsmischdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19783,7 +19844,7 @@ ALTER TABLE ONLY qset.hmrcptsmischdr
 
 
 --
--- TOC entry 6410 (class 2606 OID 66308)
+-- TOC entry 6157 (class 2606 OID 121338)
 -- Name: hmregistration hmregistration_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19792,7 +19853,7 @@ ALTER TABLE ONLY qset.hmregistration
 
 
 --
--- TOC entry 6604 (class 2606 OID 58121)
+-- TOC entry 6159 (class 2606 OID 121340)
 -- Name: hmspecialists hmspecialists_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19801,7 +19862,7 @@ ALTER TABLE ONLY qset.hmspecialists
 
 
 --
--- TOC entry 6634 (class 2606 OID 125676)
+-- TOC entry 6161 (class 2606 OID 121342)
 -- Name: hmstaffphotos hmstaffphotos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19810,7 +19871,7 @@ ALTER TABLE ONLY qset.hmstaffphotos
 
 
 --
--- TOC entry 6412 (class 2606 OID 23754)
+-- TOC entry 6163 (class 2606 OID 121344)
 -- Name: hmstaffprofile hmstaffprofile_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19819,7 +19880,7 @@ ALTER TABLE ONLY qset.hmstaffprofile
 
 
 --
--- TOC entry 6612 (class 2606 OID 90889)
+-- TOC entry 6165 (class 2606 OID 121346)
 -- Name: hmstaffspexs hmstaffspexs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19828,7 +19889,7 @@ ALTER TABLE ONLY qset.hmstaffspexs
 
 
 --
--- TOC entry 6414 (class 2606 OID 23756)
+-- TOC entry 6167 (class 2606 OID 121348)
 -- Name: hmstafftypes hmstafftypes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19837,7 +19898,7 @@ ALTER TABLE ONLY qset.hmstafftypes
 
 
 --
--- TOC entry 6416 (class 2606 OID 23758)
+-- TOC entry 6169 (class 2606 OID 121350)
 -- Name: hmtriage hmtriage_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19846,7 +19907,7 @@ ALTER TABLE ONLY qset.hmtriage
 
 
 --
--- TOC entry 6418 (class 2606 OID 23760)
+-- TOC entry 6171 (class 2606 OID 121352)
 -- Name: hrcategory hrcategory_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19855,7 +19916,7 @@ ALTER TABLE ONLY qset.hrcategory
 
 
 --
--- TOC entry 6420 (class 2606 OID 23762)
+-- TOC entry 6173 (class 2606 OID 121354)
 -- Name: hrengterms hrengterms_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19864,7 +19925,7 @@ ALTER TABLE ONLY qset.hrengterms
 
 
 --
--- TOC entry 6422 (class 2606 OID 23764)
+-- TOC entry 6175 (class 2606 OID 121356)
 -- Name: hrgrades hrgrades_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19873,7 +19934,7 @@ ALTER TABLE ONLY qset.hrgrades
 
 
 --
--- TOC entry 6424 (class 2606 OID 23766)
+-- TOC entry 6177 (class 2606 OID 121358)
 -- Name: hrlvapps hrlvapps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19882,7 +19943,7 @@ ALTER TABLE ONLY qset.hrlvapps
 
 
 --
--- TOC entry 6426 (class 2606 OID 23768)
+-- TOC entry 6179 (class 2606 OID 121360)
 -- Name: hrlvconf hrlvconf_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19891,7 +19952,7 @@ ALTER TABLE ONLY qset.hrlvconf
 
 
 --
--- TOC entry 6428 (class 2606 OID 23770)
+-- TOC entry 6181 (class 2606 OID 121362)
 -- Name: hrlvdays hrlvdays_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19900,7 +19961,7 @@ ALTER TABLE ONLY qset.hrlvdays
 
 
 --
--- TOC entry 6430 (class 2606 OID 23772)
+-- TOC entry 6183 (class 2606 OID 121364)
 -- Name: hrlvroster hrlvroster_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19909,7 +19970,7 @@ ALTER TABLE ONLY qset.hrlvroster
 
 
 --
--- TOC entry 6432 (class 2606 OID 23774)
+-- TOC entry 6185 (class 2606 OID 121366)
 -- Name: hrlvschedule hrlvschedule_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19918,7 +19979,7 @@ ALTER TABLE ONLY qset.hrlvschedule
 
 
 --
--- TOC entry 6434 (class 2606 OID 23776)
+-- TOC entry 6187 (class 2606 OID 121368)
 -- Name: hrlvtypes hrlvtypes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19927,7 +19988,7 @@ ALTER TABLE ONLY qset.hrlvtypes
 
 
 --
--- TOC entry 6436 (class 2606 OID 23778)
+-- TOC entry 6189 (class 2606 OID 121370)
 -- Name: hrpositions hrpositions_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19936,7 +19997,7 @@ ALTER TABLE ONLY qset.hrpositions
 
 
 --
--- TOC entry 6438 (class 2606 OID 23780)
+-- TOC entry 6191 (class 2606 OID 121372)
 -- Name: hrstaffphotos hrstaffphotos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19945,7 +20006,7 @@ ALTER TABLE ONLY qset.hrstaffphotos
 
 
 --
--- TOC entry 6440 (class 2606 OID 23782)
+-- TOC entry 6193 (class 2606 OID 121374)
 -- Name: hrstaffprofile hrstaffprofile_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19954,7 +20015,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6442 (class 2606 OID 23784)
+-- TOC entry 6195 (class 2606 OID 121376)
 -- Name: hrstatus hrstatus_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19963,7 +20024,7 @@ ALTER TABLE ONLY qset.hrstatus
 
 
 --
--- TOC entry 6444 (class 2606 OID 23786)
+-- TOC entry 6197 (class 2606 OID 121378)
 -- Name: icaccsets icaccsets_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19972,7 +20033,7 @@ ALTER TABLE ONLY qset.icaccsets
 
 
 --
--- TOC entry 6446 (class 2606 OID 23788)
+-- TOC entry 6199 (class 2606 OID 121380)
 -- Name: icitemcats icitemcats_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19981,7 +20042,7 @@ ALTER TABLE ONLY qset.icitemcats
 
 
 --
--- TOC entry 6448 (class 2606 OID 23790)
+-- TOC entry 6201 (class 2606 OID 121382)
 -- Name: icitemphotos icitemphotos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19990,7 +20051,7 @@ ALTER TABLE ONLY qset.icitemphotos
 
 
 --
--- TOC entry 6450 (class 2606 OID 23792)
+-- TOC entry 6203 (class 2606 OID 121384)
 -- Name: icitems icitems_id_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -19999,7 +20060,7 @@ ALTER TABLE ONLY qset.icitems
 
 
 --
--- TOC entry 6452 (class 2606 OID 23794)
+-- TOC entry 6205 (class 2606 OID 121386)
 -- Name: icitems icitems_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20008,7 +20069,7 @@ ALTER TABLE ONLY qset.icitems
 
 
 --
--- TOC entry 6454 (class 2606 OID 23796)
+-- TOC entry 6207 (class 2606 OID 121388)
 -- Name: iciudtls iciudtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20017,7 +20078,7 @@ ALTER TABLE ONLY qset.iciudtls
 
 
 --
--- TOC entry 6456 (class 2606 OID 23798)
+-- TOC entry 6209 (class 2606 OID 121390)
 -- Name: iciuhdr iciuhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20026,7 +20087,7 @@ ALTER TABLE ONLY qset.iciuhdr
 
 
 --
--- TOC entry 6458 (class 2606 OID 23800)
+-- TOC entry 6211 (class 2606 OID 121392)
 -- Name: icpydtls icpydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20035,7 +20096,7 @@ ALTER TABLE ONLY qset.icpydtls
 
 
 --
--- TOC entry 6460 (class 2606 OID 23802)
+-- TOC entry 6213 (class 2606 OID 121394)
 -- Name: icpyhdr icpyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20044,7 +20105,7 @@ ALTER TABLE ONLY qset.icpyhdr
 
 
 --
--- TOC entry 6462 (class 2606 OID 23804)
+-- TOC entry 6215 (class 2606 OID 121396)
 -- Name: icuom icuom_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20053,7 +20114,7 @@ ALTER TABLE ONLY qset.icuom
 
 
 --
--- TOC entry 6464 (class 2606 OID 23806)
+-- TOC entry 6217 (class 2606 OID 121398)
 -- Name: poindtls poindtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20062,7 +20123,7 @@ ALTER TABLE ONLY qset.poindtls
 
 
 --
--- TOC entry 6466 (class 2606 OID 23808)
+-- TOC entry 6219 (class 2606 OID 121400)
 -- Name: poinhdr poinhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20071,7 +20132,7 @@ ALTER TABLE ONLY qset.poinhdr
 
 
 --
--- TOC entry 6468 (class 2606 OID 23810)
+-- TOC entry 6221 (class 2606 OID 121402)
 -- Name: popodtls popodtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20080,7 +20141,7 @@ ALTER TABLE ONLY qset.popodtls
 
 
 --
--- TOC entry 6470 (class 2606 OID 23812)
+-- TOC entry 6223 (class 2606 OID 121404)
 -- Name: popohdr popohdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20089,7 +20150,7 @@ ALTER TABLE ONLY qset.popohdr
 
 
 --
--- TOC entry 6472 (class 2606 OID 23814)
+-- TOC entry 6225 (class 2606 OID 121406)
 -- Name: popydtls popydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20098,7 +20159,7 @@ ALTER TABLE ONLY qset.popydtls
 
 
 --
--- TOC entry 6474 (class 2606 OID 23816)
+-- TOC entry 6227 (class 2606 OID 121408)
 -- Name: popyhdr popyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20107,7 +20168,7 @@ ALTER TABLE ONLY qset.popyhdr
 
 
 --
--- TOC entry 6476 (class 2606 OID 23818)
+-- TOC entry 6229 (class 2606 OID 121410)
 -- Name: porqdtls porqdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20116,7 +20177,7 @@ ALTER TABLE ONLY qset.porqdtls
 
 
 --
--- TOC entry 6478 (class 2606 OID 23820)
+-- TOC entry 6231 (class 2606 OID 121412)
 -- Name: porqhdr porqhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20125,7 +20186,7 @@ ALTER TABLE ONLY qset.porqhdr
 
 
 --
--- TOC entry 6480 (class 2606 OID 23822)
+-- TOC entry 6233 (class 2606 OID 121414)
 -- Name: pracademicyears pracademicyears_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20134,7 +20195,7 @@ ALTER TABLE ONLY qset.pracademicyears
 
 
 --
--- TOC entry 6482 (class 2606 OID 23824)
+-- TOC entry 6235 (class 2606 OID 121416)
 -- Name: prcalendar prcalendar_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20143,7 +20204,7 @@ ALTER TABLE ONLY qset.prcalendar
 
 
 --
--- TOC entry 6484 (class 2606 OID 23826)
+-- TOC entry 6237 (class 2606 OID 121418)
 -- Name: prclasses prclasses_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20152,7 +20213,7 @@ ALTER TABLE ONLY qset.prclasses
 
 
 --
--- TOC entry 6486 (class 2606 OID 23828)
+-- TOC entry 6239 (class 2606 OID 121420)
 -- Name: prexams prexams_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20161,7 +20222,7 @@ ALTER TABLE ONLY qset.prexams
 
 
 --
--- TOC entry 6488 (class 2606 OID 23830)
+-- TOC entry 6241 (class 2606 OID 121422)
 -- Name: prfsdtls prfsdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20170,7 +20231,7 @@ ALTER TABLE ONLY qset.prfsdtls
 
 
 --
--- TOC entry 6490 (class 2606 OID 23832)
+-- TOC entry 6243 (class 2606 OID 121424)
 -- Name: prfshdr prfshdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20179,7 +20240,7 @@ ALTER TABLE ONLY qset.prfshdr
 
 
 --
--- TOC entry 6492 (class 2606 OID 23834)
+-- TOC entry 6245 (class 2606 OID 121426)
 -- Name: prinvsdtls prinvsdtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20188,7 +20249,7 @@ ALTER TABLE ONLY qset.prinvsdtls
 
 
 --
--- TOC entry 6494 (class 2606 OID 23836)
+-- TOC entry 6247 (class 2606 OID 121428)
 -- Name: prinvshdr prinvshdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20197,7 +20258,7 @@ ALTER TABLE ONLY qset.prinvshdr
 
 
 --
--- TOC entry 6496 (class 2606 OID 23838)
+-- TOC entry 6249 (class 2606 OID 121430)
 -- Name: pritems pritems_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20206,7 +20267,7 @@ ALTER TABLE ONLY qset.pritems
 
 
 --
--- TOC entry 6498 (class 2606 OID 23840)
+-- TOC entry 6251 (class 2606 OID 121432)
 -- Name: prmarksheet prmarksheet_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20215,7 +20276,7 @@ ALTER TABLE ONLY qset.prmarksheet
 
 
 --
--- TOC entry 6500 (class 2606 OID 23842)
+-- TOC entry 6253 (class 2606 OID 121434)
 -- Name: probl probl_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20224,7 +20285,7 @@ ALTER TABLE ONLY qset.probl
 
 
 --
--- TOC entry 6502 (class 2606 OID 23844)
+-- TOC entry 6255 (class 2606 OID 121436)
 -- Name: probs probs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20233,7 +20294,7 @@ ALTER TABLE ONLY qset.probs
 
 
 --
--- TOC entry 6504 (class 2606 OID 23846)
+-- TOC entry 6257 (class 2606 OID 121438)
 -- Name: prqddtls prqddtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20242,7 +20303,7 @@ ALTER TABLE ONLY qset.prqddtls
 
 
 --
--- TOC entry 6506 (class 2606 OID 23848)
+-- TOC entry 6259 (class 2606 OID 121440)
 -- Name: prqdhdr prqdhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20251,7 +20312,7 @@ ALTER TABLE ONLY qset.prqdhdr
 
 
 --
--- TOC entry 6508 (class 2606 OID 23850)
+-- TOC entry 6261 (class 2606 OID 121442)
 -- Name: prrcpts prrcpts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20260,7 +20321,7 @@ ALTER TABLE ONLY qset.prrcpts
 
 
 --
--- TOC entry 6510 (class 2606 OID 23852)
+-- TOC entry 6263 (class 2606 OID 121444)
 -- Name: prregistration prregistration_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20269,7 +20330,7 @@ ALTER TABLE ONLY qset.prregistration
 
 
 --
--- TOC entry 6512 (class 2606 OID 23854)
+-- TOC entry 6265 (class 2606 OID 121446)
 -- Name: prstreams prstreams_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20278,7 +20339,7 @@ ALTER TABLE ONLY qset.prstreams
 
 
 --
--- TOC entry 6514 (class 2606 OID 23856)
+-- TOC entry 6267 (class 2606 OID 121448)
 -- Name: prstudentmarks prstudentmarks_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20287,7 +20348,7 @@ ALTER TABLE ONLY qset.prstudentmarks
 
 
 --
--- TOC entry 6516 (class 2606 OID 23858)
+-- TOC entry 6269 (class 2606 OID 121450)
 -- Name: prstudents prstudents_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20296,7 +20357,7 @@ ALTER TABLE ONLY qset.prstudents
 
 
 --
--- TOC entry 6518 (class 2606 OID 23860)
+-- TOC entry 6271 (class 2606 OID 121452)
 -- Name: prstudnos prstudnos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20305,7 +20366,7 @@ ALTER TABLE ONLY qset.prstudnos
 
 
 --
--- TOC entry 6520 (class 2606 OID 23862)
+-- TOC entry 6273 (class 2606 OID 121454)
 -- Name: prstudphotos prstudphotos_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20314,7 +20375,7 @@ ALTER TABLE ONLY qset.prstudphotos
 
 
 --
--- TOC entry 6522 (class 2606 OID 23864)
+-- TOC entry 6275 (class 2606 OID 121456)
 -- Name: prstudprds prstudprds_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20323,7 +20384,7 @@ ALTER TABLE ONLY qset.prstudprds
 
 
 --
--- TOC entry 6524 (class 2606 OID 23866)
+-- TOC entry 6277 (class 2606 OID 121458)
 -- Name: prstudstatus prstudstatus_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20332,7 +20393,7 @@ ALTER TABLE ONLY qset.prstudstatus
 
 
 --
--- TOC entry 6526 (class 2606 OID 23868)
+-- TOC entry 6279 (class 2606 OID 121460)
 -- Name: prstudsubjects prstudsubjects_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20341,7 +20402,7 @@ ALTER TABLE ONLY qset.prstudsubjects
 
 
 --
--- TOC entry 6528 (class 2606 OID 23870)
+-- TOC entry 6281 (class 2606 OID 121462)
 -- Name: prstudtypes prstudtypes_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20350,7 +20411,7 @@ ALTER TABLE ONLY qset.prstudtypes
 
 
 --
--- TOC entry 6530 (class 2606 OID 23872)
+-- TOC entry 6283 (class 2606 OID 121464)
 -- Name: prstudyears prstudyears_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20359,7 +20420,7 @@ ALTER TABLE ONLY qset.prstudyears
 
 
 --
--- TOC entry 6532 (class 2606 OID 23874)
+-- TOC entry 6285 (class 2606 OID 121466)
 -- Name: prsubjects prsubjects_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20368,7 +20429,7 @@ ALTER TABLE ONLY qset.prsubjects
 
 
 --
--- TOC entry 6534 (class 2606 OID 23876)
+-- TOC entry 6287 (class 2606 OID 121468)
 -- Name: prterms prterms_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20377,7 +20438,7 @@ ALTER TABLE ONLY qset.prterms
 
 
 --
--- TOC entry 6536 (class 2606 OID 23878)
+-- TOC entry 6289 (class 2606 OID 121470)
 -- Name: pspydtls pspydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20386,7 +20447,7 @@ ALTER TABLE ONLY qset.pspydtls
 
 
 --
--- TOC entry 6538 (class 2606 OID 23880)
+-- TOC entry 6291 (class 2606 OID 121472)
 -- Name: pspyhdr pspyhdr_id_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20395,7 +20456,7 @@ ALTER TABLE ONLY qset.pspyhdr
 
 
 --
--- TOC entry 6540 (class 2606 OID 23882)
+-- TOC entry 6293 (class 2606 OID 121474)
 -- Name: pspyhdr pspyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20404,7 +20465,7 @@ ALTER TABLE ONLY qset.pspyhdr
 
 
 --
--- TOC entry 6542 (class 2606 OID 23884)
+-- TOC entry 6295 (class 2606 OID 121476)
 -- Name: pstills pstills_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20413,7 +20474,7 @@ ALTER TABLE ONLY qset.pstills
 
 
 --
--- TOC entry 6544 (class 2606 OID 23886)
+-- TOC entry 6297 (class 2606 OID 121478)
 -- Name: pyconfig pyconfig_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20422,7 +20483,7 @@ ALTER TABLE ONLY qset.pyconfig
 
 
 --
--- TOC entry 6546 (class 2606 OID 23888)
+-- TOC entry 6299 (class 2606 OID 121480)
 -- Name: pydepomaps pydepomaps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20431,7 +20492,7 @@ ALTER TABLE ONLY qset.pydepomaps
 
 
 --
--- TOC entry 6548 (class 2606 OID 23890)
+-- TOC entry 6301 (class 2606 OID 121482)
 -- Name: pyfml pyfml_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20440,7 +20501,7 @@ ALTER TABLE ONLY qset.pyfml
 
 
 --
--- TOC entry 6550 (class 2606 OID 23892)
+-- TOC entry 6303 (class 2606 OID 121484)
 -- Name: pyfmt pyfmt_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20449,7 +20510,7 @@ ALTER TABLE ONLY qset.pyfmt
 
 
 --
--- TOC entry 6552 (class 2606 OID 23894)
+-- TOC entry 6305 (class 2606 OID 121486)
 -- Name: pyitemexm pyitemexm_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20458,7 +20519,7 @@ ALTER TABLE ONLY qset.pyitemexm
 
 
 --
--- TOC entry 6554 (class 2606 OID 23896)
+-- TOC entry 6307 (class 2606 OID 121488)
 -- Name: pyitems pyitems_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20467,7 +20528,7 @@ ALTER TABLE ONLY qset.pyitems
 
 
 --
--- TOC entry 6558 (class 2606 OID 23898)
+-- TOC entry 6311 (class 2606 OID 121490)
 -- Name: pyitp pyitp_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20476,7 +20537,7 @@ ALTER TABLE ONLY qset.pyitp
 
 
 --
--- TOC entry 6560 (class 2606 OID 23900)
+-- TOC entry 6313 (class 2606 OID 121492)
 -- Name: pyleaverates pyleaverates_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20485,7 +20546,7 @@ ALTER TABLE ONLY qset.pyleaverates
 
 
 --
--- TOC entry 6562 (class 2606 OID 23902)
+-- TOC entry 6315 (class 2606 OID 121494)
 -- Name: pylnmaps pylnmaps_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20494,7 +20555,7 @@ ALTER TABLE ONLY qset.pylnmaps
 
 
 --
--- TOC entry 6564 (class 2606 OID 23904)
+-- TOC entry 6317 (class 2606 OID 121496)
 -- Name: pypaypoints pypaypoints_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20503,7 +20564,7 @@ ALTER TABLE ONLY qset.pypaypoints
 
 
 --
--- TOC entry 6566 (class 2606 OID 23906)
+-- TOC entry 6319 (class 2606 OID 121498)
 -- Name: pypcadtls pypcadtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20512,7 +20573,7 @@ ALTER TABLE ONLY qset.pypcadtls
 
 
 --
--- TOC entry 6568 (class 2606 OID 23908)
+-- TOC entry 6321 (class 2606 OID 121500)
 -- Name: pypcahdr pypcahdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20521,7 +20582,7 @@ ALTER TABLE ONLY qset.pypcahdr
 
 
 --
--- TOC entry 6570 (class 2606 OID 23910)
+-- TOC entry 6323 (class 2606 OID 121502)
 -- Name: pypslhdr pypslhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20530,7 +20591,7 @@ ALTER TABLE ONLY qset.pypslhdr
 
 
 --
--- TOC entry 6572 (class 2606 OID 23912)
+-- TOC entry 6325 (class 2606 OID 121504)
 -- Name: pyslip pyslip_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20539,7 +20600,7 @@ ALTER TABLE ONLY qset.pyslip
 
 
 --
--- TOC entry 6574 (class 2606 OID 23914)
+-- TOC entry 6327 (class 2606 OID 121506)
 -- Name: pystaffbanks pystaffbanks_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20548,7 +20609,7 @@ ALTER TABLE ONLY qset.pystaffbanks
 
 
 --
--- TOC entry 6576 (class 2606 OID 23916)
+-- TOC entry 6329 (class 2606 OID 121508)
 -- Name: pystaffexempt pystaffexempt_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20557,7 +20618,7 @@ ALTER TABLE ONLY qset.pystaffexempt
 
 
 --
--- TOC entry 6578 (class 2606 OID 23918)
+-- TOC entry 6331 (class 2606 OID 121510)
 -- Name: pystaffitems pystaffitems_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20566,7 +20627,7 @@ ALTER TABLE ONLY qset.pystaffitems
 
 
 --
--- TOC entry 6742 (class 2606 OID 215820)
+-- TOC entry 6333 (class 2606 OID 121512)
 -- Name: re_buildings re_buildings_loc_code_building_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20575,7 +20636,7 @@ ALTER TABLE ONLY qset.re_buildings
 
 
 --
--- TOC entry 6745 (class 2606 OID 215818)
+-- TOC entry 6336 (class 2606 OID 121514)
 -- Name: re_buildings re_buildings_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20584,7 +20645,16 @@ ALTER TABLE ONLY qset.re_buildings
 
 
 --
--- TOC entry 6728 (class 2606 OID 215786)
+-- TOC entry 6378 (class 2606 OID 121940)
+-- Name: re_cats re_cats_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
+--
+
+ALTER TABLE ONLY qset.re_cats
+    ADD CONSTRAINT re_cats_pkey PRIMARY KEY (cat_code);
+
+
+--
+-- TOC entry 6338 (class 2606 OID 121516)
 -- Name: re_config re_config_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20593,7 +20663,7 @@ ALTER TABLE ONLY qset.re_config
 
 
 --
--- TOC entry 6730 (class 2606 OID 215796)
+-- TOC entry 6340 (class 2606 OID 121518)
 -- Name: re_house_types re_house_types_ht_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20602,7 +20672,7 @@ ALTER TABLE ONLY qset.re_house_types
 
 
 --
--- TOC entry 6732 (class 2606 OID 215798)
+-- TOC entry 6342 (class 2606 OID 121520)
 -- Name: re_house_types re_house_types_ht_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20611,7 +20681,7 @@ ALTER TABLE ONLY qset.re_house_types
 
 
 --
--- TOC entry 6734 (class 2606 OID 215794)
+-- TOC entry 6344 (class 2606 OID 121522)
 -- Name: re_house_types re_house_types_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20620,7 +20690,7 @@ ALTER TABLE ONLY qset.re_house_types
 
 
 --
--- TOC entry 6747 (class 2606 OID 215836)
+-- TOC entry 6346 (class 2606 OID 121524)
 -- Name: re_houses re_houses_loc_code_building_code_house_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20629,7 +20699,7 @@ ALTER TABLE ONLY qset.re_houses
 
 
 --
--- TOC entry 6749 (class 2606 OID 215834)
+-- TOC entry 6348 (class 2606 OID 121526)
 -- Name: re_houses re_houses_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20638,7 +20708,7 @@ ALTER TABLE ONLY qset.re_houses
 
 
 --
--- TOC entry 6736 (class 2606 OID 215808)
+-- TOC entry 6350 (class 2606 OID 121528)
 -- Name: re_locs re_locs_loc_code_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20647,7 +20717,7 @@ ALTER TABLE ONLY qset.re_locs
 
 
 --
--- TOC entry 6738 (class 2606 OID 215810)
+-- TOC entry 6352 (class 2606 OID 121530)
 -- Name: re_locs re_locs_loc_name_key; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20656,7 +20726,7 @@ ALTER TABLE ONLY qset.re_locs
 
 
 --
--- TOC entry 6740 (class 2606 OID 215806)
+-- TOC entry 6354 (class 2606 OID 121532)
 -- Name: re_locs re_locs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20665,7 +20735,7 @@ ALTER TABLE ONLY qset.re_locs
 
 
 --
--- TOC entry 6580 (class 2606 OID 23920)
+-- TOC entry 6356 (class 2606 OID 121534)
 -- Name: rtcats rtcats_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20674,7 +20744,7 @@ ALTER TABLE ONLY qset.rtcats
 
 
 --
--- TOC entry 6582 (class 2606 OID 23922)
+-- TOC entry 6358 (class 2606 OID 121536)
 -- Name: rtdepts rtdepts_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20683,7 +20753,7 @@ ALTER TABLE ONLY qset.rtdepts
 
 
 --
--- TOC entry 6584 (class 2606 OID 23924)
+-- TOC entry 6360 (class 2606 OID 121538)
 -- Name: rtpydtls rtpydtls_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20692,7 +20762,7 @@ ALTER TABLE ONLY qset.rtpydtls
 
 
 --
--- TOC entry 6586 (class 2606 OID 23926)
+-- TOC entry 6362 (class 2606 OID 121540)
 -- Name: rtpyhdr rtpyhdr_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20701,7 +20771,7 @@ ALTER TABLE ONLY qset.rtpyhdr
 
 
 --
--- TOC entry 6588 (class 2606 OID 23928)
+-- TOC entry 6364 (class 2606 OID 121542)
 -- Name: rttables rttables_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20710,7 +20780,7 @@ ALTER TABLE ONLY qset.rttables
 
 
 --
--- TOC entry 6590 (class 2606 OID 23930)
+-- TOC entry 6366 (class 2606 OID 121544)
 -- Name: sysmenus sysmenus_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20719,7 +20789,7 @@ ALTER TABLE ONLY qset.sysmenus
 
 
 --
--- TOC entry 6592 (class 2606 OID 23932)
+-- TOC entry 6368 (class 2606 OID 121546)
 -- Name: syspvgs syspvgs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20728,7 +20798,7 @@ ALTER TABLE ONLY qset.syspvgs
 
 
 --
--- TOC entry 6594 (class 2606 OID 23934)
+-- TOC entry 6370 (class 2606 OID 121548)
 -- Name: sysroles sysroles_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20737,7 +20807,7 @@ ALTER TABLE ONLY qset.sysroles
 
 
 --
--- TOC entry 6602 (class 2606 OID 33545)
+-- TOC entry 6372 (class 2606 OID 121550)
 -- Name: sysses sysses_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20746,7 +20816,7 @@ ALTER TABLE ONLY qset.sysses
 
 
 --
--- TOC entry 6598 (class 2606 OID 23936)
+-- TOC entry 6376 (class 2606 OID 121552)
 -- Name: sysusrs sysusers_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20755,7 +20825,7 @@ ALTER TABLE ONLY qset.sysusrs
 
 
 --
--- TOC entry 6596 (class 2606 OID 23938)
+-- TOC entry 6374 (class 2606 OID 121554)
 -- Name: sysusrpvgs sysusrpvgs_pkey; Type: CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20764,7 +20834,7 @@ ALTER TABLE ONLY qset.sysusrpvgs
 
 
 --
--- TOC entry 6555 (class 1259 OID 23963)
+-- TOC entry 6308 (class 1259 OID 121555)
 -- Name: idx_pk; Type: INDEX; Schema: qset; Owner: postgres
 --
 
@@ -20772,7 +20842,7 @@ CREATE UNIQUE INDEX idx_pk ON qset.pyitp USING btree (itypecode);
 
 
 --
--- TOC entry 6556 (class 1259 OID 23964)
+-- TOC entry 6309 (class 1259 OID 121556)
 -- Name: idx_search; Type: INDEX; Schema: qset; Owner: postgres
 --
 
@@ -20780,7 +20850,7 @@ CREATE INDEX idx_search ON qset.pyitp USING btree (itypecode, itypename);
 
 
 --
--- TOC entry 6743 (class 1259 OID 215826)
+-- TOC entry 6334 (class 1259 OID 121557)
 -- Name: re_buildings_loc_code_idx; Type: INDEX; Schema: qset; Owner: postgres
 --
 
@@ -20788,7 +20858,7 @@ CREATE INDEX re_buildings_loc_code_idx ON qset.re_buildings USING btree (loc_cod
 
 
 --
--- TOC entry 6750 (class 2606 OID 24955)
+-- TOC entry 6379 (class 2606 OID 121558)
 -- Name: apaccsets apaccsets_pctlacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20797,7 +20867,7 @@ ALTER TABLE ONLY qset.apaccsets
 
 
 --
--- TOC entry 6751 (class 2606 OID 24960)
+-- TOC entry 6380 (class 2606 OID 121563)
 -- Name: apdtbs apdtbs_glacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20806,7 +20876,7 @@ ALTER TABLE ONLY qset.apdtbs
 
 
 --
--- TOC entry 6752 (class 2606 OID 24965)
+-- TOC entry 6381 (class 2606 OID 121568)
 -- Name: apindtls apindtls_inno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20815,7 +20885,7 @@ ALTER TABLE ONLY qset.apindtls
 
 
 --
--- TOC entry 6753 (class 2606 OID 24970)
+-- TOC entry 6382 (class 2606 OID 121573)
 -- Name: apinhdr apinhdr_batchno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20824,7 +20894,7 @@ ALTER TABLE ONLY qset.apinhdr
 
 
 --
--- TOC entry 6754 (class 2606 OID 24975)
+-- TOC entry 6383 (class 2606 OID 121578)
 -- Name: apinhdr apinhdr_supplierno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20833,7 +20903,7 @@ ALTER TABLE ONLY qset.apinhdr
 
 
 --
--- TOC entry 6755 (class 2606 OID 24980)
+-- TOC entry 6384 (class 2606 OID 121583)
 -- Name: appydtls appydtls_pyno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20842,7 +20912,7 @@ ALTER TABLE ONLY qset.appydtls
 
 
 --
--- TOC entry 6756 (class 2606 OID 24985)
+-- TOC entry 6385 (class 2606 OID 121588)
 -- Name: appyhdr appyhdr_batchno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20851,7 +20921,7 @@ ALTER TABLE ONLY qset.appyhdr
 
 
 --
--- TOC entry 6757 (class 2606 OID 24990)
+-- TOC entry 6386 (class 2606 OID 121593)
 -- Name: appyhdr appyhdr_supplierno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20860,7 +20930,7 @@ ALTER TABLE ONLY qset.appyhdr
 
 
 --
--- TOC entry 6758 (class 2606 OID 24995)
+-- TOC entry 6387 (class 2606 OID 121598)
 -- Name: apsupgrps apsupgrps_accsetcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20869,7 +20939,7 @@ ALTER TABLE ONLY qset.apsupgrps
 
 
 --
--- TOC entry 6759 (class 2606 OID 25000)
+-- TOC entry 6388 (class 2606 OID 121603)
 -- Name: apsuppliers apsuppliers_supgrpcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20878,7 +20948,7 @@ ALTER TABLE ONLY qset.apsuppliers
 
 
 --
--- TOC entry 6760 (class 2606 OID 25005)
+-- TOC entry 6389 (class 2606 OID 121608)
 -- Name: araccsets araccsets_ppacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20887,7 +20957,7 @@ ALTER TABLE ONLY qset.araccsets
 
 
 --
--- TOC entry 6761 (class 2606 OID 25010)
+-- TOC entry 6390 (class 2606 OID 121613)
 -- Name: araccsets araccsets_rctlacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20896,7 +20966,7 @@ ALTER TABLE ONLY qset.araccsets
 
 
 --
--- TOC entry 6762 (class 2606 OID 25015)
+-- TOC entry 6391 (class 2606 OID 121618)
 -- Name: arcusgrps arcusgrps_accsetcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20905,7 +20975,7 @@ ALTER TABLE ONLY qset.arcusgrps
 
 
 --
--- TOC entry 6763 (class 2606 OID 25020)
+-- TOC entry 6392 (class 2606 OID 121623)
 -- Name: arcustomers arcustomers_cusgrpcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20914,7 +20984,7 @@ ALTER TABLE ONLY qset.arcustomers
 
 
 --
--- TOC entry 6764 (class 2606 OID 25025)
+-- TOC entry 6393 (class 2606 OID 121628)
 -- Name: ardtbs ardtbs_cosacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20923,7 +20993,7 @@ ALTER TABLE ONLY qset.ardtbs
 
 
 --
--- TOC entry 6765 (class 2606 OID 25030)
+-- TOC entry 6394 (class 2606 OID 121633)
 -- Name: ardtbs ardtbs_invacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20932,7 +21002,7 @@ ALTER TABLE ONLY qset.ardtbs
 
 
 --
--- TOC entry 6766 (class 2606 OID 25035)
+-- TOC entry 6395 (class 2606 OID 121638)
 -- Name: ardtbs ardtbs_revacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20941,7 +21011,7 @@ ALTER TABLE ONLY qset.ardtbs
 
 
 --
--- TOC entry 6767 (class 2606 OID 25040)
+-- TOC entry 6396 (class 2606 OID 121643)
 -- Name: arindtls arindtls_inno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20950,7 +21020,7 @@ ALTER TABLE ONLY qset.arindtls
 
 
 --
--- TOC entry 6768 (class 2606 OID 25045)
+-- TOC entry 6397 (class 2606 OID 121648)
 -- Name: arinhdr arinhdr_batchno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20959,7 +21029,7 @@ ALTER TABLE ONLY qset.arinhdr
 
 
 --
--- TOC entry 6769 (class 2606 OID 25050)
+-- TOC entry 6398 (class 2606 OID 121653)
 -- Name: arinhdr arinhdr_customerno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20968,7 +21038,7 @@ ALTER TABLE ONLY qset.arinhdr
 
 
 --
--- TOC entry 6770 (class 2606 OID 25055)
+-- TOC entry 6399 (class 2606 OID 121658)
 -- Name: arpydtls arpydtls_pyno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20977,7 +21047,7 @@ ALTER TABLE ONLY qset.arpydtls
 
 
 --
--- TOC entry 6771 (class 2606 OID 25060)
+-- TOC entry 6400 (class 2606 OID 121663)
 -- Name: arpyhdr arpyhdr_batchno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20986,7 +21056,7 @@ ALTER TABLE ONLY qset.arpyhdr
 
 
 --
--- TOC entry 6772 (class 2606 OID 25065)
+-- TOC entry 6401 (class 2606 OID 121668)
 -- Name: arpyhdr arpyhdr_customerno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -20995,7 +21065,7 @@ ALTER TABLE ONLY qset.arpyhdr
 
 
 --
--- TOC entry 6821 (class 2606 OID 150287)
+-- TOC entry 6402 (class 2606 OID 121673)
 -- Name: cm_subscriber_grps cm_subscriber_grps_grp_code_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21004,7 +21074,7 @@ ALTER TABLE ONLY qset.cm_subscriber_grps
 
 
 --
--- TOC entry 6822 (class 2606 OID 150282)
+-- TOC entry 6403 (class 2606 OID 121678)
 -- Name: cm_subscriber_grps cm_subscriber_grps_subscriber_id_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21013,7 +21083,7 @@ ALTER TABLE ONLY qset.cm_subscriber_grps
 
 
 --
--- TOC entry 6773 (class 2606 OID 25070)
+-- TOC entry 6404 (class 2606 OID 121683)
 -- Name: cssections cssections_deptcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21022,7 +21092,7 @@ ALTER TABLE ONLY qset.cssections
 
 
 --
--- TOC entry 6774 (class 2606 OID 25075)
+-- TOC entry 6405 (class 2606 OID 121688)
 -- Name: fnbankbranch fnbankbranch_bankcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21031,7 +21101,7 @@ ALTER TABLE ONLY qset.fnbankbranch
 
 
 --
--- TOC entry 6775 (class 2606 OID 25080)
+-- TOC entry 6406 (class 2606 OID 121693)
 -- Name: fnconfig fnconfig_taxlbacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21040,7 +21110,7 @@ ALTER TABLE ONLY qset.fnconfig
 
 
 --
--- TOC entry 6776 (class 2606 OID 25085)
+-- TOC entry 6407 (class 2606 OID 121698)
 -- Name: glaccgrps glaccgrps_accgrpcatcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21049,7 +21119,7 @@ ALTER TABLE ONLY qset.glaccgrps
 
 
 --
--- TOC entry 6777 (class 2606 OID 25090)
+-- TOC entry 6408 (class 2606 OID 121703)
 -- Name: glaccounts glaccounts_acctypecode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21058,7 +21128,7 @@ ALTER TABLE ONLY qset.glaccounts
 
 
 --
--- TOC entry 6778 (class 2606 OID 25095)
+-- TOC entry 6409 (class 2606 OID 121708)
 -- Name: glbdg glbdg_accountcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21067,7 +21137,7 @@ ALTER TABLE ONLY qset.glbdg
 
 
 --
--- TOC entry 6779 (class 2606 OID 25100)
+-- TOC entry 6410 (class 2606 OID 121713)
 -- Name: gldtls gldtls_accountcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21076,7 +21146,7 @@ ALTER TABLE ONLY qset.gldtls
 
 
 --
--- TOC entry 6780 (class 2606 OID 25105)
+-- TOC entry 6411 (class 2606 OID 121718)
 -- Name: gldtls gldtls_entryno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21085,7 +21155,7 @@ ALTER TABLE ONLY qset.gldtls
 
 
 --
--- TOC entry 6781 (class 2606 OID 25110)
+-- TOC entry 6412 (class 2606 OID 121723)
 -- Name: glhdr glhdr_batchno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21094,7 +21164,7 @@ ALTER TABLE ONLY qset.glhdr
 
 
 --
--- TOC entry 6782 (class 2606 OID 25115)
+-- TOC entry 6413 (class 2606 OID 121728)
 -- Name: gltb gltb_accountcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21103,7 +21173,7 @@ ALTER TABLE ONLY qset.gltb
 
 
 --
--- TOC entry 6783 (class 2606 OID 25120)
+-- TOC entry 6414 (class 2606 OID 121733)
 -- Name: gltb gltb_entryno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21112,7 +21182,7 @@ ALTER TABLE ONLY qset.gltb
 
 
 --
--- TOC entry 6820 (class 2606 OID 82717)
+-- TOC entry 6415 (class 2606 OID 121738)
 -- Name: hmpharmdtls hmpharmdtls_pyno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21121,7 +21191,7 @@ ALTER TABLE ONLY qset.hmpharmdtls
 
 
 --
--- TOC entry 6784 (class 2606 OID 25125)
+-- TOC entry 6416 (class 2606 OID 121743)
 -- Name: hrpositions hrpositions_gradecode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21130,7 +21200,7 @@ ALTER TABLE ONLY qset.hrpositions
 
 
 --
--- TOC entry 6785 (class 2606 OID 25130)
+-- TOC entry 6417 (class 2606 OID 121748)
 -- Name: hrstaffprofile hrstaffprofile_branchcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21139,7 +21209,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6786 (class 2606 OID 25135)
+-- TOC entry 6418 (class 2606 OID 121753)
 -- Name: hrstaffprofile hrstaffprofile_categorycode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21148,7 +21218,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6787 (class 2606 OID 25140)
+-- TOC entry 6419 (class 2606 OID 121758)
 -- Name: hrstaffprofile hrstaffprofile_deptcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21157,7 +21227,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6788 (class 2606 OID 25145)
+-- TOC entry 6420 (class 2606 OID 121763)
 -- Name: hrstaffprofile hrstaffprofile_engtrmcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21166,7 +21236,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6789 (class 2606 OID 25150)
+-- TOC entry 6421 (class 2606 OID 121768)
 -- Name: hrstaffprofile hrstaffprofile_gradecode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21175,7 +21245,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6790 (class 2606 OID 25155)
+-- TOC entry 6422 (class 2606 OID 121773)
 -- Name: hrstaffprofile hrstaffprofile_sectioncode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21184,7 +21254,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6791 (class 2606 OID 25160)
+-- TOC entry 6423 (class 2606 OID 121778)
 -- Name: hrstaffprofile hrstaffprofile_statuscode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21193,7 +21263,7 @@ ALTER TABLE ONLY qset.hrstaffprofile
 
 
 --
--- TOC entry 6792 (class 2606 OID 25165)
+-- TOC entry 6424 (class 2606 OID 121783)
 -- Name: icaccsets icaccsets_apclracc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21202,7 +21272,7 @@ ALTER TABLE ONLY qset.icaccsets
 
 
 --
--- TOC entry 6793 (class 2606 OID 25170)
+-- TOC entry 6425 (class 2606 OID 121788)
 -- Name: icaccsets icaccsets_invctlacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21211,7 +21281,7 @@ ALTER TABLE ONLY qset.icaccsets
 
 
 --
--- TOC entry 6794 (class 2606 OID 25175)
+-- TOC entry 6426 (class 2606 OID 121793)
 -- Name: icitemcats icitemcats_cosacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21220,7 +21290,7 @@ ALTER TABLE ONLY qset.icitemcats
 
 
 --
--- TOC entry 6795 (class 2606 OID 25180)
+-- TOC entry 6427 (class 2606 OID 121798)
 -- Name: icitemcats icitemcats_cvacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21229,7 +21299,7 @@ ALTER TABLE ONLY qset.icitemcats
 
 
 --
--- TOC entry 6796 (class 2606 OID 25185)
+-- TOC entry 6428 (class 2606 OID 121803)
 -- Name: icitemcats icitemcats_iuacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21238,7 +21308,7 @@ ALTER TABLE ONLY qset.icitemcats
 
 
 --
--- TOC entry 6797 (class 2606 OID 25190)
+-- TOC entry 6429 (class 2606 OID 121808)
 -- Name: icitemcats icitemcats_revacc_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21247,7 +21317,7 @@ ALTER TABLE ONLY qset.icitemcats
 
 
 --
--- TOC entry 6798 (class 2606 OID 25195)
+-- TOC entry 6430 (class 2606 OID 121813)
 -- Name: icitems icitems_catcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21256,7 +21326,7 @@ ALTER TABLE ONLY qset.icitems
 
 
 --
--- TOC entry 6799 (class 2606 OID 25200)
+-- TOC entry 6431 (class 2606 OID 121818)
 -- Name: iciudtls iciudtls_itemcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21265,7 +21335,7 @@ ALTER TABLE ONLY qset.iciudtls
 
 
 --
--- TOC entry 6800 (class 2606 OID 25205)
+-- TOC entry 6432 (class 2606 OID 121823)
 -- Name: iciudtls iciudtls_iuno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21274,7 +21344,7 @@ ALTER TABLE ONLY qset.iciudtls
 
 
 --
--- TOC entry 6801 (class 2606 OID 25210)
+-- TOC entry 6433 (class 2606 OID 121828)
 -- Name: icpydtls icpydtls_itemcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21283,7 +21353,7 @@ ALTER TABLE ONLY qset.icpydtls
 
 
 --
--- TOC entry 6802 (class 2606 OID 25215)
+-- TOC entry 6434 (class 2606 OID 121833)
 -- Name: icpydtls icpydtls_pyno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21292,7 +21362,7 @@ ALTER TABLE ONLY qset.icpydtls
 
 
 --
--- TOC entry 6803 (class 2606 OID 25220)
+-- TOC entry 6435 (class 2606 OID 121838)
 -- Name: pspydtls pspydtls_pyno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21301,7 +21371,7 @@ ALTER TABLE ONLY qset.pspydtls
 
 
 --
--- TOC entry 6804 (class 2606 OID 25225)
+-- TOC entry 6436 (class 2606 OID 121843)
 -- Name: pydepomaps pydepomaps_itemcum_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21310,7 +21380,7 @@ ALTER TABLE ONLY qset.pydepomaps
 
 
 --
--- TOC entry 6805 (class 2606 OID 25230)
+-- TOC entry 6437 (class 2606 OID 121848)
 -- Name: pydepomaps pydepomaps_itemdep_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21319,7 +21389,7 @@ ALTER TABLE ONLY qset.pydepomaps
 
 
 --
--- TOC entry 6806 (class 2606 OID 25235)
+-- TOC entry 6438 (class 2606 OID 121853)
 -- Name: pyitems pyitems_hdrcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21328,7 +21398,7 @@ ALTER TABLE ONLY qset.pyitems
 
 
 --
--- TOC entry 6807 (class 2606 OID 25240)
+-- TOC entry 6439 (class 2606 OID 121858)
 -- Name: pylnmaps pylnmaps_itembal_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21337,7 +21407,7 @@ ALTER TABLE ONLY qset.pylnmaps
 
 
 --
--- TOC entry 6808 (class 2606 OID 25245)
+-- TOC entry 6440 (class 2606 OID 121863)
 -- Name: pylnmaps pylnmaps_itemrep_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21346,7 +21416,7 @@ ALTER TABLE ONLY qset.pylnmaps
 
 
 --
--- TOC entry 6809 (class 2606 OID 25250)
+-- TOC entry 6441 (class 2606 OID 121868)
 -- Name: pypcadtls pypcadtls_pfno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21355,7 +21425,7 @@ ALTER TABLE ONLY qset.pypcadtls
 
 
 --
--- TOC entry 6810 (class 2606 OID 25255)
+-- TOC entry 6442 (class 2606 OID 121873)
 -- Name: pypcadtls pypcadtls_refno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21364,7 +21434,7 @@ ALTER TABLE ONLY qset.pypcadtls
 
 
 --
--- TOC entry 6811 (class 2606 OID 25260)
+-- TOC entry 6443 (class 2606 OID 121878)
 -- Name: pyslip pyslip_pfno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21373,7 +21443,7 @@ ALTER TABLE ONLY qset.pyslip
 
 
 --
--- TOC entry 6812 (class 2606 OID 25265)
+-- TOC entry 6444 (class 2606 OID 121883)
 -- Name: pystaffbanks pystaffbanks_bkbranchcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21382,7 +21452,7 @@ ALTER TABLE ONLY qset.pystaffbanks
 
 
 --
--- TOC entry 6813 (class 2606 OID 25270)
+-- TOC entry 6445 (class 2606 OID 121888)
 -- Name: pystaffbanks pystaffbanks_pfno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21391,7 +21461,7 @@ ALTER TABLE ONLY qset.pystaffbanks
 
 
 --
--- TOC entry 6814 (class 2606 OID 25275)
+-- TOC entry 6446 (class 2606 OID 121893)
 -- Name: pystaffexempt pystaffexempt_pfno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21400,7 +21470,7 @@ ALTER TABLE ONLY qset.pystaffexempt
 
 
 --
--- TOC entry 6815 (class 2606 OID 25280)
+-- TOC entry 6447 (class 2606 OID 121898)
 -- Name: pystaffitems pystaffitems_itemcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21409,7 +21479,7 @@ ALTER TABLE ONLY qset.pystaffitems
 
 
 --
--- TOC entry 6816 (class 2606 OID 25285)
+-- TOC entry 6448 (class 2606 OID 121903)
 -- Name: pystaffitems pystaffitems_pfno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21418,7 +21488,7 @@ ALTER TABLE ONLY qset.pystaffitems
 
 
 --
--- TOC entry 6823 (class 2606 OID 215821)
+-- TOC entry 6449 (class 2606 OID 121908)
 -- Name: re_buildings re_buildings_loc_code_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21427,7 +21497,16 @@ ALTER TABLE ONLY qset.re_buildings
 
 
 --
--- TOC entry 6817 (class 2606 OID 25290)
+-- TOC entry 6453 (class 2606 OID 121941)
+-- Name: re_cats re_cats_cat_code_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
+--
+
+ALTER TABLE ONLY qset.re_cats
+    ADD CONSTRAINT re_cats_cat_code_fkey FOREIGN KEY (cat_code) REFERENCES qset.icitemcats(catcode) NOT VALID;
+
+
+--
+-- TOC entry 6450 (class 2606 OID 121913)
 -- Name: rtcats rtcats_catcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21436,7 +21515,7 @@ ALTER TABLE ONLY qset.rtcats
 
 
 --
--- TOC entry 6818 (class 2606 OID 25295)
+-- TOC entry 6451 (class 2606 OID 121918)
 -- Name: rtpydtls rtpydtls_itemcode_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21445,7 +21524,7 @@ ALTER TABLE ONLY qset.rtpydtls
 
 
 --
--- TOC entry 6819 (class 2606 OID 25300)
+-- TOC entry 6452 (class 2606 OID 121923)
 -- Name: rtpydtls rtpydtls_pyno_fkey; Type: FK CONSTRAINT; Schema: qset; Owner: postgres
 --
 
@@ -21454,8 +21533,8 @@ ALTER TABLE ONLY qset.rtpydtls
 
 
 --
--- TOC entry 7545 (class 0 OID 0)
--- Dependencies: 746
+-- TOC entry 7021 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: TABLE aagradesys; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21463,8 +21542,8 @@ GRANT ALL ON TABLE qset.aagradesys TO PUBLIC;
 
 
 --
--- TOC entry 7546 (class 0 OID 0)
--- Dependencies: 753
+-- TOC entry 7022 (class 0 OID 0)
+-- Dependencies: 237
 -- Name: TABLE apaccsets; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21472,8 +21551,8 @@ GRANT ALL ON TABLE qset.apaccsets TO PUBLIC;
 
 
 --
--- TOC entry 7547 (class 0 OID 0)
--- Dependencies: 754
+-- TOC entry 7023 (class 0 OID 0)
+-- Dependencies: 238
 -- Name: TABLE apconfig; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21481,8 +21560,8 @@ GRANT ALL ON TABLE qset.apconfig TO PUBLIC;
 
 
 --
--- TOC entry 7548 (class 0 OID 0)
--- Dependencies: 755
+-- TOC entry 7024 (class 0 OID 0)
+-- Dependencies: 239
 -- Name: TABLE apdtbs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21490,8 +21569,8 @@ GRANT ALL ON TABLE qset.apdtbs TO PUBLIC;
 
 
 --
--- TOC entry 7549 (class 0 OID 0)
--- Dependencies: 759
+-- TOC entry 7025 (class 0 OID 0)
+-- Dependencies: 243
 -- Name: TABLE appybatches; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21499,8 +21578,8 @@ GRANT ALL ON TABLE qset.appybatches TO PUBLIC;
 
 
 --
--- TOC entry 7550 (class 0 OID 0)
--- Dependencies: 760
+-- TOC entry 7026 (class 0 OID 0)
+-- Dependencies: 244
 -- Name: TABLE appydtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21508,8 +21587,8 @@ GRANT ALL ON TABLE qset.appydtls TO PUBLIC;
 
 
 --
--- TOC entry 7551 (class 0 OID 0)
--- Dependencies: 761
+-- TOC entry 7027 (class 0 OID 0)
+-- Dependencies: 245
 -- Name: TABLE appyhdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21517,8 +21596,8 @@ GRANT ALL ON TABLE qset.appyhdr TO PUBLIC;
 
 
 --
--- TOC entry 7552 (class 0 OID 0)
--- Dependencies: 762
+-- TOC entry 7028 (class 0 OID 0)
+-- Dependencies: 246
 -- Name: TABLE apsupgrps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21526,8 +21605,8 @@ GRANT ALL ON TABLE qset.apsupgrps TO PUBLIC;
 
 
 --
--- TOC entry 7553 (class 0 OID 0)
--- Dependencies: 763
+-- TOC entry 7029 (class 0 OID 0)
+-- Dependencies: 247
 -- Name: TABLE apsuppliers; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21535,8 +21614,8 @@ GRANT ALL ON TABLE qset.apsuppliers TO PUBLIC;
 
 
 --
--- TOC entry 7554 (class 0 OID 0)
--- Dependencies: 764
+-- TOC entry 7030 (class 0 OID 0)
+-- Dependencies: 248
 -- Name: TABLE araccsets; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21544,8 +21623,8 @@ GRANT ALL ON TABLE qset.araccsets TO PUBLIC;
 
 
 --
--- TOC entry 7555 (class 0 OID 0)
--- Dependencies: 765
+-- TOC entry 7031 (class 0 OID 0)
+-- Dependencies: 249
 -- Name: TABLE arconfig; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21553,8 +21632,8 @@ GRANT ALL ON TABLE qset.arconfig TO PUBLIC;
 
 
 --
--- TOC entry 7556 (class 0 OID 0)
--- Dependencies: 766
+-- TOC entry 7032 (class 0 OID 0)
+-- Dependencies: 250
 -- Name: TABLE arcusgrps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21562,8 +21641,8 @@ GRANT ALL ON TABLE qset.arcusgrps TO PUBLIC;
 
 
 --
--- TOC entry 7557 (class 0 OID 0)
--- Dependencies: 767
+-- TOC entry 7033 (class 0 OID 0)
+-- Dependencies: 251
 -- Name: TABLE arcustomers; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21571,8 +21650,8 @@ GRANT ALL ON TABLE qset.arcustomers TO PUBLIC;
 
 
 --
--- TOC entry 7558 (class 0 OID 0)
--- Dependencies: 768
+-- TOC entry 7034 (class 0 OID 0)
+-- Dependencies: 252
 -- Name: TABLE ardtbs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21580,8 +21659,8 @@ GRANT ALL ON TABLE qset.ardtbs TO PUBLIC;
 
 
 --
--- TOC entry 7559 (class 0 OID 0)
--- Dependencies: 772
+-- TOC entry 7035 (class 0 OID 0)
+-- Dependencies: 256
 -- Name: TABLE aritems; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21589,8 +21668,8 @@ GRANT ALL ON TABLE qset.aritems TO PUBLIC;
 
 
 --
--- TOC entry 7560 (class 0 OID 0)
--- Dependencies: 773
+-- TOC entry 7036 (class 0 OID 0)
+-- Dependencies: 257
 -- Name: TABLE arpybatches; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21598,8 +21677,8 @@ GRANT ALL ON TABLE qset.arpybatches TO PUBLIC;
 
 
 --
--- TOC entry 7561 (class 0 OID 0)
--- Dependencies: 774
+-- TOC entry 7037 (class 0 OID 0)
+-- Dependencies: 258
 -- Name: TABLE arpydtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21607,8 +21686,8 @@ GRANT ALL ON TABLE qset.arpydtls TO PUBLIC;
 
 
 --
--- TOC entry 7562 (class 0 OID 0)
--- Dependencies: 775
+-- TOC entry 7038 (class 0 OID 0)
+-- Dependencies: 259
 -- Name: TABLE arpyhdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21616,8 +21695,8 @@ GRANT ALL ON TABLE qset.arpyhdr TO PUBLIC;
 
 
 --
--- TOC entry 7582 (class 0 OID 0)
--- Dependencies: 776
+-- TOC entry 7058 (class 0 OID 0)
+-- Dependencies: 297
 -- Name: TABLE csbranches; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21625,8 +21704,8 @@ GRANT ALL ON TABLE qset.csbranches TO PUBLIC;
 
 
 --
--- TOC entry 7583 (class 0 OID 0)
--- Dependencies: 777
+-- TOC entry 7059 (class 0 OID 0)
+-- Dependencies: 298
 -- Name: TABLE cscologo; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21634,8 +21713,8 @@ GRANT ALL ON TABLE qset.cscologo TO PUBLIC;
 
 
 --
--- TOC entry 7584 (class 0 OID 0)
--- Dependencies: 778
+-- TOC entry 7060 (class 0 OID 0)
+-- Dependencies: 299
 -- Name: TABLE csconstituencies; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21643,8 +21722,8 @@ GRANT ALL ON TABLE qset.csconstituencies TO PUBLIC;
 
 
 --
--- TOC entry 7585 (class 0 OID 0)
--- Dependencies: 779
+-- TOC entry 7061 (class 0 OID 0)
+-- Dependencies: 300
 -- Name: TABLE cscoprofile; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21652,8 +21731,8 @@ GRANT ALL ON TABLE qset.cscoprofile TO PUBLIC;
 
 
 --
--- TOC entry 7586 (class 0 OID 0)
--- Dependencies: 780
+-- TOC entry 7062 (class 0 OID 0)
+-- Dependencies: 301
 -- Name: TABLE cscounties; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21661,8 +21740,8 @@ GRANT ALL ON TABLE qset.cscounties TO PUBLIC;
 
 
 --
--- TOC entry 7587 (class 0 OID 0)
--- Dependencies: 781
+-- TOC entry 7063 (class 0 OID 0)
+-- Dependencies: 302
 -- Name: TABLE cscountries; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21670,8 +21749,8 @@ GRANT ALL ON TABLE qset.cscountries TO PUBLIC;
 
 
 --
--- TOC entry 7588 (class 0 OID 0)
--- Dependencies: 782
+-- TOC entry 7064 (class 0 OID 0)
+-- Dependencies: 303
 -- Name: TABLE cscountryregs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21679,8 +21758,8 @@ GRANT ALL ON TABLE qset.cscountryregs TO PUBLIC;
 
 
 --
--- TOC entry 7589 (class 0 OID 0)
--- Dependencies: 783
+-- TOC entry 7065 (class 0 OID 0)
+-- Dependencies: 304
 -- Name: TABLE csdepts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21688,8 +21767,8 @@ GRANT ALL ON TABLE qset.csdepts TO PUBLIC;
 
 
 --
--- TOC entry 7590 (class 0 OID 0)
--- Dependencies: 784
+-- TOC entry 7066 (class 0 OID 0)
+-- Dependencies: 305
 -- Name: TABLE csdisab; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21697,8 +21776,8 @@ GRANT ALL ON TABLE qset.csdisab TO PUBLIC;
 
 
 --
--- TOC entry 7591 (class 0 OID 0)
--- Dependencies: 785
+-- TOC entry 7067 (class 0 OID 0)
+-- Dependencies: 306
 -- Name: TABLE csdisabcat; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21706,8 +21785,8 @@ GRANT ALL ON TABLE qset.csdisabcat TO PUBLIC;
 
 
 --
--- TOC entry 7592 (class 0 OID 0)
--- Dependencies: 786
+-- TOC entry 7068 (class 0 OID 0)
+-- Dependencies: 307
 -- Name: TABLE csgender; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21715,8 +21794,8 @@ GRANT ALL ON TABLE qset.csgender TO PUBLIC;
 
 
 --
--- TOC entry 7593 (class 0 OID 0)
--- Dependencies: 787
+-- TOC entry 7069 (class 0 OID 0)
+-- Dependencies: 308
 -- Name: TABLE cssalutation; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21724,8 +21803,8 @@ GRANT ALL ON TABLE qset.cssalutation TO PUBLIC;
 
 
 --
--- TOC entry 7594 (class 0 OID 0)
--- Dependencies: 788
+-- TOC entry 7070 (class 0 OID 0)
+-- Dependencies: 309
 -- Name: TABLE cssections; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21733,8 +21812,8 @@ GRANT ALL ON TABLE qset.cssections TO PUBLIC;
 
 
 --
--- TOC entry 7595 (class 0 OID 0)
--- Dependencies: 789
+-- TOC entry 7071 (class 0 OID 0)
+-- Dependencies: 310
 -- Name: TABLE cstowns; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21742,8 +21821,8 @@ GRANT ALL ON TABLE qset.cstowns TO PUBLIC;
 
 
 --
--- TOC entry 7596 (class 0 OID 0)
--- Dependencies: 790
+-- TOC entry 7072 (class 0 OID 0)
+-- Dependencies: 311
 -- Name: TABLE fnbankbranch; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21751,8 +21830,8 @@ GRANT ALL ON TABLE qset.fnbankbranch TO PUBLIC;
 
 
 --
--- TOC entry 7597 (class 0 OID 0)
--- Dependencies: 791
+-- TOC entry 7073 (class 0 OID 0)
+-- Dependencies: 312
 -- Name: TABLE fnbanks; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21760,8 +21839,8 @@ GRANT ALL ON TABLE qset.fnbanks TO PUBLIC;
 
 
 --
--- TOC entry 7598 (class 0 OID 0)
--- Dependencies: 792
+-- TOC entry 7074 (class 0 OID 0)
+-- Dependencies: 313
 -- Name: TABLE fnbkchqtpls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21769,8 +21848,8 @@ GRANT ALL ON TABLE qset.fnbkchqtpls TO PUBLIC;
 
 
 --
--- TOC entry 7599 (class 0 OID 0)
--- Dependencies: 793
+-- TOC entry 7075 (class 0 OID 0)
+-- Dependencies: 314
 -- Name: TABLE fncobanks; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21778,8 +21857,8 @@ GRANT ALL ON TABLE qset.fncobanks TO PUBLIC;
 
 
 --
--- TOC entry 7600 (class 0 OID 0)
--- Dependencies: 794
+-- TOC entry 7076 (class 0 OID 0)
+-- Dependencies: 315
 -- Name: TABLE fnconfig; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21787,8 +21866,8 @@ GRANT ALL ON TABLE qset.fnconfig TO PUBLIC;
 
 
 --
--- TOC entry 7601 (class 0 OID 0)
--- Dependencies: 795
+-- TOC entry 7077 (class 0 OID 0)
+-- Dependencies: 316
 -- Name: TABLE fnfiscalprd; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21796,8 +21875,8 @@ GRANT ALL ON TABLE qset.fnfiscalprd TO PUBLIC;
 
 
 --
--- TOC entry 7602 (class 0 OID 0)
--- Dependencies: 796
+-- TOC entry 7078 (class 0 OID 0)
+-- Dependencies: 317
 -- Name: TABLE fnfiscalyear; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21805,8 +21884,8 @@ GRANT ALL ON TABLE qset.fnfiscalyear TO PUBLIC;
 
 
 --
--- TOC entry 7603 (class 0 OID 0)
--- Dependencies: 797
+-- TOC entry 7079 (class 0 OID 0)
+-- Dependencies: 318
 -- Name: TABLE fnpaymodes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21814,8 +21893,8 @@ GRANT ALL ON TABLE qset.fnpaymodes TO PUBLIC;
 
 
 --
--- TOC entry 7604 (class 0 OID 0)
--- Dependencies: 798
+-- TOC entry 7080 (class 0 OID 0)
+-- Dependencies: 319
 -- Name: TABLE glaccgrpcat; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21823,8 +21902,8 @@ GRANT ALL ON TABLE qset.glaccgrpcat TO PUBLIC;
 
 
 --
--- TOC entry 7605 (class 0 OID 0)
--- Dependencies: 799
+-- TOC entry 7081 (class 0 OID 0)
+-- Dependencies: 320
 -- Name: TABLE glaccgrps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21832,8 +21911,8 @@ GRANT ALL ON TABLE qset.glaccgrps TO PUBLIC;
 
 
 --
--- TOC entry 7606 (class 0 OID 0)
--- Dependencies: 800
+-- TOC entry 7082 (class 0 OID 0)
+-- Dependencies: 321
 -- Name: TABLE glaccounts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21841,8 +21920,8 @@ GRANT ALL ON TABLE qset.glaccounts TO PUBLIC;
 
 
 --
--- TOC entry 7607 (class 0 OID 0)
--- Dependencies: 801
+-- TOC entry 7083 (class 0 OID 0)
+-- Dependencies: 322
 -- Name: TABLE glacctypes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21850,8 +21929,8 @@ GRANT ALL ON TABLE qset.glacctypes TO PUBLIC;
 
 
 --
--- TOC entry 7608 (class 0 OID 0)
--- Dependencies: 802
+-- TOC entry 7084 (class 0 OID 0)
+-- Dependencies: 323
 -- Name: TABLE glbatches; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21859,8 +21938,8 @@ GRANT ALL ON TABLE qset.glbatches TO PUBLIC;
 
 
 --
--- TOC entry 7609 (class 0 OID 0)
--- Dependencies: 803
+-- TOC entry 7085 (class 0 OID 0)
+-- Dependencies: 324
 -- Name: TABLE glbdg; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21868,8 +21947,8 @@ GRANT ALL ON TABLE qset.glbdg TO PUBLIC;
 
 
 --
--- TOC entry 7610 (class 0 OID 0)
--- Dependencies: 804
+-- TOC entry 7086 (class 0 OID 0)
+-- Dependencies: 325
 -- Name: TABLE glconfig; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21877,8 +21956,8 @@ GRANT ALL ON TABLE qset.glconfig TO PUBLIC;
 
 
 --
--- TOC entry 7611 (class 0 OID 0)
--- Dependencies: 805
+-- TOC entry 7087 (class 0 OID 0)
+-- Dependencies: 326
 -- Name: TABLE gldtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21886,8 +21965,8 @@ GRANT ALL ON TABLE qset.gldtls TO PUBLIC;
 
 
 --
--- TOC entry 7612 (class 0 OID 0)
--- Dependencies: 806
+-- TOC entry 7088 (class 0 OID 0)
+-- Dependencies: 327
 -- Name: TABLE glhdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21895,8 +21974,8 @@ GRANT ALL ON TABLE qset.glhdr TO PUBLIC;
 
 
 --
--- TOC entry 7613 (class 0 OID 0)
--- Dependencies: 807
+-- TOC entry 7089 (class 0 OID 0)
+-- Dependencies: 328
 -- Name: TABLE gltb; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21904,8 +21983,8 @@ GRANT ALL ON TABLE qset.gltb TO PUBLIC;
 
 
 --
--- TOC entry 7614 (class 0 OID 0)
--- Dependencies: 808
+-- TOC entry 7090 (class 0 OID 0)
+-- Dependencies: 329
 -- Name: TABLE hgacademicyears; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21913,8 +21992,8 @@ GRANT ALL ON TABLE qset.hgacademicyears TO PUBLIC;
 
 
 --
--- TOC entry 7615 (class 0 OID 0)
--- Dependencies: 809
+-- TOC entry 7091 (class 0 OID 0)
+-- Dependencies: 330
 -- Name: TABLE hgcalendar; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21922,8 +22001,8 @@ GRANT ALL ON TABLE qset.hgcalendar TO PUBLIC;
 
 
 --
--- TOC entry 7616 (class 0 OID 0)
--- Dependencies: 810
+-- TOC entry 7092 (class 0 OID 0)
+-- Dependencies: 331
 -- Name: TABLE hgconfig; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21931,8 +22010,8 @@ GRANT ALL ON TABLE qset.hgconfig TO PUBLIC;
 
 
 --
--- TOC entry 7617 (class 0 OID 0)
--- Dependencies: 811
+-- TOC entry 7093 (class 0 OID 0)
+-- Dependencies: 332
 -- Name: TABLE hgcoresubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21940,8 +22019,8 @@ GRANT ALL ON TABLE qset.hgcoresubjects TO PUBLIC;
 
 
 --
--- TOC entry 7618 (class 0 OID 0)
--- Dependencies: 812
+-- TOC entry 7094 (class 0 OID 0)
+-- Dependencies: 333
 -- Name: TABLE hgexamconfig; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21949,8 +22028,8 @@ GRANT ALL ON TABLE qset.hgexamconfig TO PUBLIC;
 
 
 --
--- TOC entry 7619 (class 0 OID 0)
--- Dependencies: 813
+-- TOC entry 7095 (class 0 OID 0)
+-- Dependencies: 334
 -- Name: TABLE hgexams; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21958,8 +22037,8 @@ GRANT ALL ON TABLE qset.hgexams TO PUBLIC;
 
 
 --
--- TOC entry 7620 (class 0 OID 0)
--- Dependencies: 814
+-- TOC entry 7096 (class 0 OID 0)
+-- Dependencies: 335
 -- Name: TABLE hgforms; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21967,8 +22046,8 @@ GRANT ALL ON TABLE qset.hgforms TO PUBLIC;
 
 
 --
--- TOC entry 7621 (class 0 OID 0)
--- Dependencies: 815
+-- TOC entry 7097 (class 0 OID 0)
+-- Dependencies: 336
 -- Name: TABLE hgformsbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21976,8 +22055,8 @@ GRANT ALL ON TABLE qset.hgformsbjs TO PUBLIC;
 
 
 --
--- TOC entry 7622 (class 0 OID 0)
--- Dependencies: 816
+-- TOC entry 7098 (class 0 OID 0)
+-- Dependencies: 337
 -- Name: TABLE hgfsdtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21985,8 +22064,8 @@ GRANT ALL ON TABLE qset.hgfsdtls TO PUBLIC;
 
 
 --
--- TOC entry 7623 (class 0 OID 0)
--- Dependencies: 817
+-- TOC entry 7099 (class 0 OID 0)
+-- Dependencies: 338
 -- Name: TABLE hgfshdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -21994,8 +22073,8 @@ GRANT ALL ON TABLE qset.hgfshdr TO PUBLIC;
 
 
 --
--- TOC entry 7624 (class 0 OID 0)
--- Dependencies: 818
+-- TOC entry 7100 (class 0 OID 0)
+-- Dependencies: 339
 -- Name: TABLE hggrpsbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22003,8 +22082,8 @@ GRANT ALL ON TABLE qset.hggrpsbjs TO PUBLIC;
 
 
 --
--- TOC entry 7625 (class 0 OID 0)
--- Dependencies: 819
+-- TOC entry 7101 (class 0 OID 0)
+-- Dependencies: 340
 -- Name: TABLE hginvsdtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22012,8 +22091,8 @@ GRANT ALL ON TABLE qset.hginvsdtls TO PUBLIC;
 
 
 --
--- TOC entry 7626 (class 0 OID 0)
--- Dependencies: 820
+-- TOC entry 7102 (class 0 OID 0)
+-- Dependencies: 341
 -- Name: TABLE hginvshdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22021,8 +22100,8 @@ GRANT ALL ON TABLE qset.hginvshdr TO PUBLIC;
 
 
 --
--- TOC entry 7627 (class 0 OID 0)
--- Dependencies: 821
+-- TOC entry 7103 (class 0 OID 0)
+-- Dependencies: 342
 -- Name: TABLE hgitems; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22030,8 +22109,8 @@ GRANT ALL ON TABLE qset.hgitems TO PUBLIC;
 
 
 --
--- TOC entry 7628 (class 0 OID 0)
--- Dependencies: 822
+-- TOC entry 7104 (class 0 OID 0)
+-- Dependencies: 343
 -- Name: TABLE hgmarksheet; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22039,8 +22118,8 @@ GRANT ALL ON TABLE qset.hgmarksheet TO PUBLIC;
 
 
 --
--- TOC entry 7629 (class 0 OID 0)
--- Dependencies: 823
+-- TOC entry 7105 (class 0 OID 0)
+-- Dependencies: 344
 -- Name: TABLE hgobl; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22048,8 +22127,8 @@ GRANT ALL ON TABLE qset.hgobl TO PUBLIC;
 
 
 --
--- TOC entry 7630 (class 0 OID 0)
--- Dependencies: 824
+-- TOC entry 7106 (class 0 OID 0)
+-- Dependencies: 345
 -- Name: TABLE hgobs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22057,8 +22136,8 @@ GRANT ALL ON TABLE qset.hgobs TO PUBLIC;
 
 
 --
--- TOC entry 7631 (class 0 OID 0)
--- Dependencies: 825
+-- TOC entry 7107 (class 0 OID 0)
+-- Dependencies: 346
 -- Name: TABLE hgqddtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22066,8 +22145,8 @@ GRANT ALL ON TABLE qset.hgqddtls TO PUBLIC;
 
 
 --
--- TOC entry 7632 (class 0 OID 0)
--- Dependencies: 826
+-- TOC entry 7108 (class 0 OID 0)
+-- Dependencies: 347
 -- Name: TABLE hgqdhdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22075,8 +22154,8 @@ GRANT ALL ON TABLE qset.hgqdhdr TO PUBLIC;
 
 
 --
--- TOC entry 7633 (class 0 OID 0)
--- Dependencies: 827
+-- TOC entry 7109 (class 0 OID 0)
+-- Dependencies: 348
 -- Name: TABLE hgrcpts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22084,8 +22163,8 @@ GRANT ALL ON TABLE qset.hgrcpts TO PUBLIC;
 
 
 --
--- TOC entry 7634 (class 0 OID 0)
--- Dependencies: 828
+-- TOC entry 7110 (class 0 OID 0)
+-- Dependencies: 349
 -- Name: TABLE hgregistration; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22093,8 +22172,8 @@ GRANT ALL ON TABLE qset.hgregistration TO PUBLIC;
 
 
 --
--- TOC entry 7635 (class 0 OID 0)
--- Dependencies: 829
+-- TOC entry 7111 (class 0 OID 0)
+-- Dependencies: 350
 -- Name: TABLE hgstreams; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22102,8 +22181,8 @@ GRANT ALL ON TABLE qset.hgstreams TO PUBLIC;
 
 
 --
--- TOC entry 7636 (class 0 OID 0)
--- Dependencies: 830
+-- TOC entry 7112 (class 0 OID 0)
+-- Dependencies: 351
 -- Name: TABLE hgstudcoresbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22111,8 +22190,8 @@ GRANT ALL ON TABLE qset.hgstudcoresbjs TO PUBLIC;
 
 
 --
--- TOC entry 7637 (class 0 OID 0)
--- Dependencies: 831
+-- TOC entry 7113 (class 0 OID 0)
+-- Dependencies: 352
 -- Name: TABLE hgstudelectsbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22120,8 +22199,8 @@ GRANT ALL ON TABLE qset.hgstudelectsbjs TO PUBLIC;
 
 
 --
--- TOC entry 7638 (class 0 OID 0)
--- Dependencies: 832
+-- TOC entry 7114 (class 0 OID 0)
+-- Dependencies: 353
 -- Name: TABLE hgstudentmarks; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22129,8 +22208,8 @@ GRANT ALL ON TABLE qset.hgstudentmarks TO PUBLIC;
 
 
 --
--- TOC entry 7639 (class 0 OID 0)
--- Dependencies: 833
+-- TOC entry 7115 (class 0 OID 0)
+-- Dependencies: 354
 -- Name: TABLE hgstudents; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22138,8 +22217,8 @@ GRANT ALL ON TABLE qset.hgstudents TO PUBLIC;
 
 
 --
--- TOC entry 7640 (class 0 OID 0)
--- Dependencies: 834
+-- TOC entry 7116 (class 0 OID 0)
+-- Dependencies: 355
 -- Name: TABLE hgstudnos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22147,8 +22226,8 @@ GRANT ALL ON TABLE qset.hgstudnos TO PUBLIC;
 
 
 --
--- TOC entry 7641 (class 0 OID 0)
--- Dependencies: 835
+-- TOC entry 7117 (class 0 OID 0)
+-- Dependencies: 356
 -- Name: TABLE hgstudphotos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22156,8 +22235,8 @@ GRANT ALL ON TABLE qset.hgstudphotos TO PUBLIC;
 
 
 --
--- TOC entry 7642 (class 0 OID 0)
--- Dependencies: 836
+-- TOC entry 7118 (class 0 OID 0)
+-- Dependencies: 357
 -- Name: TABLE hgstudprds; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22165,8 +22244,8 @@ GRANT ALL ON TABLE qset.hgstudprds TO PUBLIC;
 
 
 --
--- TOC entry 7643 (class 0 OID 0)
--- Dependencies: 837
+-- TOC entry 7119 (class 0 OID 0)
+-- Dependencies: 358
 -- Name: TABLE hgstudselsbjtts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22174,8 +22253,8 @@ GRANT ALL ON TABLE qset.hgstudselsbjtts TO PUBLIC;
 
 
 --
--- TOC entry 7644 (class 0 OID 0)
--- Dependencies: 838
+-- TOC entry 7120 (class 0 OID 0)
+-- Dependencies: 359
 -- Name: TABLE hgstudstatus; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22183,8 +22262,8 @@ GRANT ALL ON TABLE qset.hgstudstatus TO PUBLIC;
 
 
 --
--- TOC entry 7645 (class 0 OID 0)
--- Dependencies: 839
+-- TOC entry 7121 (class 0 OID 0)
+-- Dependencies: 360
 -- Name: TABLE hgstudsubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22192,8 +22271,8 @@ GRANT ALL ON TABLE qset.hgstudsubjects TO PUBLIC;
 
 
 --
--- TOC entry 7646 (class 0 OID 0)
--- Dependencies: 840
+-- TOC entry 7122 (class 0 OID 0)
+-- Dependencies: 361
 -- Name: TABLE hgstudtypes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22201,8 +22280,8 @@ GRANT ALL ON TABLE qset.hgstudtypes TO PUBLIC;
 
 
 --
--- TOC entry 7647 (class 0 OID 0)
--- Dependencies: 841
+-- TOC entry 7123 (class 0 OID 0)
+-- Dependencies: 362
 -- Name: TABLE hgstudyears; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22210,8 +22289,8 @@ GRANT ALL ON TABLE qset.hgstudyears TO PUBLIC;
 
 
 --
--- TOC entry 7648 (class 0 OID 0)
--- Dependencies: 842
+-- TOC entry 7124 (class 0 OID 0)
+-- Dependencies: 363
 -- Name: TABLE hgsubjectgrps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22219,8 +22298,8 @@ GRANT ALL ON TABLE qset.hgsubjectgrps TO PUBLIC;
 
 
 --
--- TOC entry 7649 (class 0 OID 0)
--- Dependencies: 843
+-- TOC entry 7125 (class 0 OID 0)
+-- Dependencies: 364
 -- Name: TABLE hgsubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22228,8 +22307,8 @@ GRANT ALL ON TABLE qset.hgsubjects TO PUBLIC;
 
 
 --
--- TOC entry 7650 (class 0 OID 0)
--- Dependencies: 844
+-- TOC entry 7126 (class 0 OID 0)
+-- Dependencies: 365
 -- Name: TABLE hgterms; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22237,8 +22316,8 @@ GRANT ALL ON TABLE qset.hgterms TO PUBLIC;
 
 
 --
--- TOC entry 7651 (class 0 OID 0)
--- Dependencies: 845
+-- TOC entry 7127 (class 0 OID 0)
+-- Dependencies: 366
 -- Name: TABLE hmbloodgrps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22246,8 +22325,8 @@ GRANT ALL ON TABLE qset.hmbloodgrps TO PUBLIC;
 
 
 --
--- TOC entry 7652 (class 0 OID 0)
--- Dependencies: 847
+-- TOC entry 7128 (class 0 OID 0)
+-- Dependencies: 368
 -- Name: TABLE hmcomplaints; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22255,8 +22334,8 @@ GRANT ALL ON TABLE qset.hmcomplaints TO PUBLIC;
 
 
 --
--- TOC entry 7653 (class 0 OID 0)
--- Dependencies: 848
+-- TOC entry 7129 (class 0 OID 0)
+-- Dependencies: 369
 -- Name: TABLE hmdepts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22264,8 +22343,8 @@ GRANT ALL ON TABLE qset.hmdepts TO PUBLIC;
 
 
 --
--- TOC entry 7654 (class 0 OID 0)
--- Dependencies: 849
+-- TOC entry 7130 (class 0 OID 0)
+-- Dependencies: 370
 -- Name: TABLE hmdiagnosis; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22273,8 +22352,8 @@ GRANT ALL ON TABLE qset.hmdiagnosis TO PUBLIC;
 
 
 --
--- TOC entry 7655 (class 0 OID 0)
--- Dependencies: 850
+-- TOC entry 7131 (class 0 OID 0)
+-- Dependencies: 371
 -- Name: TABLE hmmedication; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22282,8 +22361,8 @@ GRANT ALL ON TABLE qset.hmmedication TO PUBLIC;
 
 
 --
--- TOC entry 7656 (class 0 OID 0)
--- Dependencies: 851
+-- TOC entry 7132 (class 0 OID 0)
+-- Dependencies: 374
 -- Name: TABLE hmptcomplaints; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22291,8 +22370,8 @@ GRANT ALL ON TABLE qset.hmptcomplaints TO PUBLIC;
 
 
 --
--- TOC entry 7657 (class 0 OID 0)
--- Dependencies: 852
+-- TOC entry 7133 (class 0 OID 0)
+-- Dependencies: 375
 -- Name: TABLE hmptdiagnosis; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22300,8 +22379,8 @@ GRANT ALL ON TABLE qset.hmptdiagnosis TO PUBLIC;
 
 
 --
--- TOC entry 7658 (class 0 OID 0)
--- Dependencies: 853
+-- TOC entry 7134 (class 0 OID 0)
+-- Dependencies: 376
 -- Name: TABLE hmptlab; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22309,8 +22388,8 @@ GRANT ALL ON TABLE qset.hmptlab TO PUBLIC;
 
 
 --
--- TOC entry 7660 (class 0 OID 0)
--- Dependencies: 854
+-- TOC entry 7136 (class 0 OID 0)
+-- Dependencies: 379
 -- Name: TABLE hmptphotos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22318,8 +22397,8 @@ GRANT ALL ON TABLE qset.hmptphotos TO PUBLIC;
 
 
 --
--- TOC entry 7661 (class 0 OID 0)
--- Dependencies: 855
+-- TOC entry 7137 (class 0 OID 0)
+-- Dependencies: 380
 -- Name: TABLE hmptprofile; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22327,8 +22406,8 @@ GRANT ALL ON TABLE qset.hmptprofile TO PUBLIC;
 
 
 --
--- TOC entry 7662 (class 0 OID 0)
--- Dependencies: 858
+-- TOC entry 7138 (class 0 OID 0)
+-- Dependencies: 383
 -- Name: TABLE hmrcptsmiscdtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22336,8 +22415,8 @@ GRANT ALL ON TABLE qset.hmrcptsmiscdtls TO PUBLIC;
 
 
 --
--- TOC entry 7663 (class 0 OID 0)
--- Dependencies: 859
+-- TOC entry 7139 (class 0 OID 0)
+-- Dependencies: 384
 -- Name: TABLE hmrcptsmischdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22345,8 +22424,8 @@ GRANT ALL ON TABLE qset.hmrcptsmischdr TO PUBLIC;
 
 
 --
--- TOC entry 7664 (class 0 OID 0)
--- Dependencies: 860
+-- TOC entry 7140 (class 0 OID 0)
+-- Dependencies: 385
 -- Name: TABLE hmregistration; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22354,8 +22433,8 @@ GRANT ALL ON TABLE qset.hmregistration TO PUBLIC;
 
 
 --
--- TOC entry 7666 (class 0 OID 0)
--- Dependencies: 1122
+-- TOC entry 7142 (class 0 OID 0)
+-- Dependencies: 388
 -- Name: TABLE hmstaffphotos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22363,8 +22442,8 @@ GRANT ALL ON TABLE qset.hmstaffphotos TO PUBLIC;
 
 
 --
--- TOC entry 7668 (class 0 OID 0)
--- Dependencies: 862
+-- TOC entry 7144 (class 0 OID 0)
+-- Dependencies: 392
 -- Name: TABLE hmstafftypes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22372,8 +22451,8 @@ GRANT ALL ON TABLE qset.hmstafftypes TO PUBLIC;
 
 
 --
--- TOC entry 7669 (class 0 OID 0)
--- Dependencies: 863
+-- TOC entry 7145 (class 0 OID 0)
+-- Dependencies: 393
 -- Name: TABLE hmtriage; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22381,8 +22460,8 @@ GRANT ALL ON TABLE qset.hmtriage TO PUBLIC;
 
 
 --
--- TOC entry 7670 (class 0 OID 0)
--- Dependencies: 864
+-- TOC entry 7146 (class 0 OID 0)
+-- Dependencies: 394
 -- Name: TABLE hrcategory; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22390,8 +22469,8 @@ GRANT ALL ON TABLE qset.hrcategory TO PUBLIC;
 
 
 --
--- TOC entry 7671 (class 0 OID 0)
--- Dependencies: 865
+-- TOC entry 7147 (class 0 OID 0)
+-- Dependencies: 395
 -- Name: TABLE hrengterms; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22399,8 +22478,8 @@ GRANT ALL ON TABLE qset.hrengterms TO PUBLIC;
 
 
 --
--- TOC entry 7672 (class 0 OID 0)
--- Dependencies: 866
+-- TOC entry 7148 (class 0 OID 0)
+-- Dependencies: 396
 -- Name: TABLE hrgrades; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22408,8 +22487,8 @@ GRANT ALL ON TABLE qset.hrgrades TO PUBLIC;
 
 
 --
--- TOC entry 7673 (class 0 OID 0)
--- Dependencies: 873
+-- TOC entry 7149 (class 0 OID 0)
+-- Dependencies: 403
 -- Name: TABLE hrpositions; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22417,8 +22496,8 @@ GRANT ALL ON TABLE qset.hrpositions TO PUBLIC;
 
 
 --
--- TOC entry 7674 (class 0 OID 0)
--- Dependencies: 874
+-- TOC entry 7150 (class 0 OID 0)
+-- Dependencies: 404
 -- Name: TABLE hrstaffphotos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22426,8 +22505,8 @@ GRANT ALL ON TABLE qset.hrstaffphotos TO PUBLIC;
 
 
 --
--- TOC entry 7675 (class 0 OID 0)
--- Dependencies: 875
+-- TOC entry 7151 (class 0 OID 0)
+-- Dependencies: 405
 -- Name: TABLE hrstaffprofile; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22435,8 +22514,8 @@ GRANT ALL ON TABLE qset.hrstaffprofile TO PUBLIC;
 
 
 --
--- TOC entry 7676 (class 0 OID 0)
--- Dependencies: 876
+-- TOC entry 7152 (class 0 OID 0)
+-- Dependencies: 406
 -- Name: TABLE hrstatus; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22444,8 +22523,8 @@ GRANT ALL ON TABLE qset.hrstatus TO PUBLIC;
 
 
 --
--- TOC entry 7677 (class 0 OID 0)
--- Dependencies: 895
+-- TOC entry 7153 (class 0 OID 0)
+-- Dependencies: 425
 -- Name: TABLE pracademicyears; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22453,8 +22532,8 @@ GRANT ALL ON TABLE qset.pracademicyears TO PUBLIC;
 
 
 --
--- TOC entry 7678 (class 0 OID 0)
--- Dependencies: 896
+-- TOC entry 7154 (class 0 OID 0)
+-- Dependencies: 426
 -- Name: TABLE prcalendar; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22462,8 +22541,8 @@ GRANT ALL ON TABLE qset.prcalendar TO PUBLIC;
 
 
 --
--- TOC entry 7679 (class 0 OID 0)
--- Dependencies: 897
+-- TOC entry 7155 (class 0 OID 0)
+-- Dependencies: 427
 -- Name: TABLE prclasses; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22471,8 +22550,8 @@ GRANT ALL ON TABLE qset.prclasses TO PUBLIC;
 
 
 --
--- TOC entry 7680 (class 0 OID 0)
--- Dependencies: 898
+-- TOC entry 7156 (class 0 OID 0)
+-- Dependencies: 428
 -- Name: TABLE prconfig2; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22480,8 +22559,8 @@ GRANT ALL ON TABLE qset.prconfig2 TO PUBLIC;
 
 
 --
--- TOC entry 7681 (class 0 OID 0)
--- Dependencies: 899
+-- TOC entry 7157 (class 0 OID 0)
+-- Dependencies: 429
 -- Name: TABLE prexams; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22489,8 +22568,8 @@ GRANT ALL ON TABLE qset.prexams TO PUBLIC;
 
 
 --
--- TOC entry 7682 (class 0 OID 0)
--- Dependencies: 900
+-- TOC entry 7158 (class 0 OID 0)
+-- Dependencies: 430
 -- Name: TABLE prfsdtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22498,8 +22577,8 @@ GRANT ALL ON TABLE qset.prfsdtls TO PUBLIC;
 
 
 --
--- TOC entry 7683 (class 0 OID 0)
--- Dependencies: 901
+-- TOC entry 7159 (class 0 OID 0)
+-- Dependencies: 431
 -- Name: TABLE prfshdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22507,8 +22586,8 @@ GRANT ALL ON TABLE qset.prfshdr TO PUBLIC;
 
 
 --
--- TOC entry 7684 (class 0 OID 0)
--- Dependencies: 902
+-- TOC entry 7160 (class 0 OID 0)
+-- Dependencies: 432
 -- Name: TABLE prinvsdtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22516,8 +22595,8 @@ GRANT ALL ON TABLE qset.prinvsdtls TO PUBLIC;
 
 
 --
--- TOC entry 7685 (class 0 OID 0)
--- Dependencies: 903
+-- TOC entry 7161 (class 0 OID 0)
+-- Dependencies: 433
 -- Name: TABLE prinvshdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22525,8 +22604,8 @@ GRANT ALL ON TABLE qset.prinvshdr TO PUBLIC;
 
 
 --
--- TOC entry 7686 (class 0 OID 0)
--- Dependencies: 904
+-- TOC entry 7162 (class 0 OID 0)
+-- Dependencies: 434
 -- Name: TABLE pritems; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22534,8 +22613,8 @@ GRANT ALL ON TABLE qset.pritems TO PUBLIC;
 
 
 --
--- TOC entry 7687 (class 0 OID 0)
--- Dependencies: 905
+-- TOC entry 7163 (class 0 OID 0)
+-- Dependencies: 435
 -- Name: TABLE prmarksheet; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22543,8 +22622,8 @@ GRANT ALL ON TABLE qset.prmarksheet TO PUBLIC;
 
 
 --
--- TOC entry 7688 (class 0 OID 0)
--- Dependencies: 906
+-- TOC entry 7164 (class 0 OID 0)
+-- Dependencies: 436
 -- Name: TABLE probl; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22552,8 +22631,8 @@ GRANT ALL ON TABLE qset.probl TO PUBLIC;
 
 
 --
--- TOC entry 7689 (class 0 OID 0)
--- Dependencies: 907
+-- TOC entry 7165 (class 0 OID 0)
+-- Dependencies: 437
 -- Name: TABLE probs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22561,8 +22640,8 @@ GRANT ALL ON TABLE qset.probs TO PUBLIC;
 
 
 --
--- TOC entry 7690 (class 0 OID 0)
--- Dependencies: 908
+-- TOC entry 7166 (class 0 OID 0)
+-- Dependencies: 438
 -- Name: TABLE prqddtls; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22570,8 +22649,8 @@ GRANT ALL ON TABLE qset.prqddtls TO PUBLIC;
 
 
 --
--- TOC entry 7691 (class 0 OID 0)
--- Dependencies: 909
+-- TOC entry 7167 (class 0 OID 0)
+-- Dependencies: 439
 -- Name: TABLE prqdhdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22579,8 +22658,8 @@ GRANT ALL ON TABLE qset.prqdhdr TO PUBLIC;
 
 
 --
--- TOC entry 7692 (class 0 OID 0)
--- Dependencies: 910
+-- TOC entry 7168 (class 0 OID 0)
+-- Dependencies: 440
 -- Name: TABLE prrcpts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22588,8 +22667,8 @@ GRANT ALL ON TABLE qset.prrcpts TO PUBLIC;
 
 
 --
--- TOC entry 7693 (class 0 OID 0)
--- Dependencies: 911
+-- TOC entry 7169 (class 0 OID 0)
+-- Dependencies: 441
 -- Name: TABLE prregistration; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22597,8 +22676,8 @@ GRANT ALL ON TABLE qset.prregistration TO PUBLIC;
 
 
 --
--- TOC entry 7694 (class 0 OID 0)
--- Dependencies: 912
+-- TOC entry 7170 (class 0 OID 0)
+-- Dependencies: 442
 -- Name: TABLE prstreams; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22606,8 +22685,8 @@ GRANT ALL ON TABLE qset.prstreams TO PUBLIC;
 
 
 --
--- TOC entry 7695 (class 0 OID 0)
--- Dependencies: 913
+-- TOC entry 7171 (class 0 OID 0)
+-- Dependencies: 443
 -- Name: TABLE prstudentmarks; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22615,8 +22694,8 @@ GRANT ALL ON TABLE qset.prstudentmarks TO PUBLIC;
 
 
 --
--- TOC entry 7696 (class 0 OID 0)
--- Dependencies: 914
+-- TOC entry 7172 (class 0 OID 0)
+-- Dependencies: 444
 -- Name: TABLE prstudents; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22624,8 +22703,8 @@ GRANT ALL ON TABLE qset.prstudents TO PUBLIC;
 
 
 --
--- TOC entry 7697 (class 0 OID 0)
--- Dependencies: 915
+-- TOC entry 7173 (class 0 OID 0)
+-- Dependencies: 445
 -- Name: TABLE prstudnos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22633,8 +22712,8 @@ GRANT ALL ON TABLE qset.prstudnos TO PUBLIC;
 
 
 --
--- TOC entry 7698 (class 0 OID 0)
--- Dependencies: 916
+-- TOC entry 7174 (class 0 OID 0)
+-- Dependencies: 446
 -- Name: TABLE prstudphotos; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22642,8 +22721,8 @@ GRANT ALL ON TABLE qset.prstudphotos TO PUBLIC;
 
 
 --
--- TOC entry 7699 (class 0 OID 0)
--- Dependencies: 917
+-- TOC entry 7175 (class 0 OID 0)
+-- Dependencies: 447
 -- Name: TABLE prstudprds; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22651,8 +22730,8 @@ GRANT ALL ON TABLE qset.prstudprds TO PUBLIC;
 
 
 --
--- TOC entry 7700 (class 0 OID 0)
--- Dependencies: 918
+-- TOC entry 7176 (class 0 OID 0)
+-- Dependencies: 448
 -- Name: TABLE prstudstatus; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22660,8 +22739,8 @@ GRANT ALL ON TABLE qset.prstudstatus TO PUBLIC;
 
 
 --
--- TOC entry 7701 (class 0 OID 0)
--- Dependencies: 919
+-- TOC entry 7177 (class 0 OID 0)
+-- Dependencies: 449
 -- Name: TABLE prstudsubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22669,8 +22748,8 @@ GRANT ALL ON TABLE qset.prstudsubjects TO PUBLIC;
 
 
 --
--- TOC entry 7702 (class 0 OID 0)
--- Dependencies: 920
+-- TOC entry 7178 (class 0 OID 0)
+-- Dependencies: 450
 -- Name: TABLE prstudtypes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22678,8 +22757,8 @@ GRANT ALL ON TABLE qset.prstudtypes TO PUBLIC;
 
 
 --
--- TOC entry 7703 (class 0 OID 0)
--- Dependencies: 921
+-- TOC entry 7179 (class 0 OID 0)
+-- Dependencies: 451
 -- Name: TABLE prstudyears; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22687,8 +22766,8 @@ GRANT ALL ON TABLE qset.prstudyears TO PUBLIC;
 
 
 --
--- TOC entry 7704 (class 0 OID 0)
--- Dependencies: 922
+-- TOC entry 7180 (class 0 OID 0)
+-- Dependencies: 452
 -- Name: TABLE prsubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22696,8 +22775,8 @@ GRANT ALL ON TABLE qset.prsubjects TO PUBLIC;
 
 
 --
--- TOC entry 7705 (class 0 OID 0)
--- Dependencies: 923
+-- TOC entry 7181 (class 0 OID 0)
+-- Dependencies: 453
 -- Name: TABLE prterms; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22705,8 +22784,8 @@ GRANT ALL ON TABLE qset.prterms TO PUBLIC;
 
 
 --
--- TOC entry 7706 (class 0 OID 0)
--- Dependencies: 929
+-- TOC entry 7182 (class 0 OID 0)
+-- Dependencies: 459
 -- Name: TABLE pydepomaps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22714,8 +22793,8 @@ GRANT ALL ON TABLE qset.pydepomaps TO PUBLIC;
 
 
 --
--- TOC entry 7707 (class 0 OID 0)
--- Dependencies: 930
+-- TOC entry 7183 (class 0 OID 0)
+-- Dependencies: 460
 -- Name: TABLE pyfml; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22723,8 +22802,8 @@ GRANT ALL ON TABLE qset.pyfml TO PUBLIC;
 
 
 --
--- TOC entry 7708 (class 0 OID 0)
--- Dependencies: 931
+-- TOC entry 7184 (class 0 OID 0)
+-- Dependencies: 461
 -- Name: TABLE pyfmt; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22732,8 +22811,8 @@ GRANT ALL ON TABLE qset.pyfmt TO PUBLIC;
 
 
 --
--- TOC entry 7709 (class 0 OID 0)
--- Dependencies: 932
+-- TOC entry 7185 (class 0 OID 0)
+-- Dependencies: 462
 -- Name: TABLE pyitemexm; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22741,8 +22820,8 @@ GRANT ALL ON TABLE qset.pyitemexm TO PUBLIC;
 
 
 --
--- TOC entry 7710 (class 0 OID 0)
--- Dependencies: 933
+-- TOC entry 7186 (class 0 OID 0)
+-- Dependencies: 463
 -- Name: TABLE pyitems; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22750,8 +22829,8 @@ GRANT ALL ON TABLE qset.pyitems TO PUBLIC;
 
 
 --
--- TOC entry 7711 (class 0 OID 0)
--- Dependencies: 934
+-- TOC entry 7187 (class 0 OID 0)
+-- Dependencies: 464
 -- Name: TABLE pyitp; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22759,8 +22838,8 @@ GRANT ALL ON TABLE qset.pyitp TO PUBLIC;
 
 
 --
--- TOC entry 7712 (class 0 OID 0)
--- Dependencies: 935
+-- TOC entry 7188 (class 0 OID 0)
+-- Dependencies: 465
 -- Name: TABLE pyleaverates; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22768,8 +22847,8 @@ GRANT ALL ON TABLE qset.pyleaverates TO PUBLIC;
 
 
 --
--- TOC entry 7713 (class 0 OID 0)
--- Dependencies: 936
+-- TOC entry 7189 (class 0 OID 0)
+-- Dependencies: 466
 -- Name: TABLE pylnmaps; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22777,8 +22856,8 @@ GRANT ALL ON TABLE qset.pylnmaps TO PUBLIC;
 
 
 --
--- TOC entry 7714 (class 0 OID 0)
--- Dependencies: 937
+-- TOC entry 7190 (class 0 OID 0)
+-- Dependencies: 467
 -- Name: TABLE pynhifrates; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22786,8 +22865,8 @@ GRANT ALL ON TABLE qset.pynhifrates TO PUBLIC;
 
 
 --
--- TOC entry 7715 (class 0 OID 0)
--- Dependencies: 938
+-- TOC entry 7191 (class 0 OID 0)
+-- Dependencies: 468
 -- Name: TABLE pypaypoints; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22795,8 +22874,8 @@ GRANT ALL ON TABLE qset.pypaypoints TO PUBLIC;
 
 
 --
--- TOC entry 7716 (class 0 OID 0)
--- Dependencies: 941
+-- TOC entry 7192 (class 0 OID 0)
+-- Dependencies: 471
 -- Name: TABLE pypslhdr; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22804,8 +22883,8 @@ GRANT ALL ON TABLE qset.pypslhdr TO PUBLIC;
 
 
 --
--- TOC entry 7717 (class 0 OID 0)
--- Dependencies: 942
+-- TOC entry 7193 (class 0 OID 0)
+-- Dependencies: 472
 -- Name: TABLE pyslip; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22813,8 +22892,8 @@ GRANT ALL ON TABLE qset.pyslip TO PUBLIC;
 
 
 --
--- TOC entry 7718 (class 0 OID 0)
--- Dependencies: 943
+-- TOC entry 7194 (class 0 OID 0)
+-- Dependencies: 473
 -- Name: TABLE pystaffbanks; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22822,8 +22901,8 @@ GRANT ALL ON TABLE qset.pystaffbanks TO PUBLIC;
 
 
 --
--- TOC entry 7719 (class 0 OID 0)
--- Dependencies: 944
+-- TOC entry 7195 (class 0 OID 0)
+-- Dependencies: 474
 -- Name: TABLE pystaffexempt; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22831,8 +22910,8 @@ GRANT ALL ON TABLE qset.pystaffexempt TO PUBLIC;
 
 
 --
--- TOC entry 7720 (class 0 OID 0)
--- Dependencies: 945
+-- TOC entry 7196 (class 0 OID 0)
+-- Dependencies: 475
 -- Name: TABLE pystaffitems; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22840,8 +22919,8 @@ GRANT ALL ON TABLE qset.pystaffitems TO PUBLIC;
 
 
 --
--- TOC entry 7721 (class 0 OID 0)
--- Dependencies: 946
+-- TOC entry 7197 (class 0 OID 0)
+-- Dependencies: 476
 -- Name: TABLE pytaxrates; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22849,8 +22928,8 @@ GRANT ALL ON TABLE qset.pytaxrates TO PUBLIC;
 
 
 --
--- TOC entry 7732 (class 0 OID 0)
--- Dependencies: 990
+-- TOC entry 7209 (class 0 OID 0)
+-- Dependencies: 542
 -- Name: TABLE viewhgcalendar; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22858,8 +22937,8 @@ GRANT ALL ON TABLE qset.viewhgcalendar TO PUBLIC;
 
 
 --
--- TOC entry 7733 (class 0 OID 0)
--- Dependencies: 991
+-- TOC entry 7210 (class 0 OID 0)
+-- Dependencies: 543
 -- Name: TABLE viewhgcoresubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22867,8 +22946,8 @@ GRANT ALL ON TABLE qset.viewhgcoresubjects TO PUBLIC;
 
 
 --
--- TOC entry 7734 (class 0 OID 0)
--- Dependencies: 992
+-- TOC entry 7211 (class 0 OID 0)
+-- Dependencies: 544
 -- Name: TABLE viewhgqddetails; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22876,8 +22955,8 @@ GRANT ALL ON TABLE qset.viewhgqddetails TO PUBLIC;
 
 
 --
--- TOC entry 7735 (class 0 OID 0)
--- Dependencies: 993
+-- TOC entry 7212 (class 0 OID 0)
+-- Dependencies: 545
 -- Name: TABLE viewhgcreditnotes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22885,8 +22964,8 @@ GRANT ALL ON TABLE qset.viewhgcreditnotes TO PUBLIC;
 
 
 --
--- TOC entry 7736 (class 0 OID 0)
--- Dependencies: 994
+-- TOC entry 7213 (class 0 OID 0)
+-- Dependencies: 546
 -- Name: TABLE viewhgdebitnotes; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22894,8 +22973,8 @@ GRANT ALL ON TABLE qset.viewhgdebitnotes TO PUBLIC;
 
 
 --
--- TOC entry 7737 (class 0 OID 0)
--- Dependencies: 995
+-- TOC entry 7214 (class 0 OID 0)
+-- Dependencies: 547
 -- Name: TABLE viewhgformsbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22903,8 +22982,8 @@ GRANT ALL ON TABLE qset.viewhgformsbjs TO PUBLIC;
 
 
 --
--- TOC entry 7738 (class 0 OID 0)
--- Dependencies: 996
+-- TOC entry 7215 (class 0 OID 0)
+-- Dependencies: 548
 -- Name: TABLE viewhgfsdetails; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22912,8 +22991,8 @@ GRANT ALL ON TABLE qset.viewhgfsdetails TO PUBLIC;
 
 
 --
--- TOC entry 7739 (class 0 OID 0)
--- Dependencies: 997
+-- TOC entry 7216 (class 0 OID 0)
+-- Dependencies: 549
 -- Name: TABLE viewhgfsheader; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22921,8 +23000,8 @@ GRANT ALL ON TABLE qset.viewhgfsheader TO PUBLIC;
 
 
 --
--- TOC entry 7740 (class 0 OID 0)
--- Dependencies: 998
+-- TOC entry 7217 (class 0 OID 0)
+-- Dependencies: 550
 -- Name: TABLE viewhggrpsbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22930,8 +23009,8 @@ GRANT ALL ON TABLE qset.viewhggrpsbjs TO PUBLIC;
 
 
 --
--- TOC entry 7741 (class 0 OID 0)
--- Dependencies: 999
+-- TOC entry 7218 (class 0 OID 0)
+-- Dependencies: 551
 -- Name: TABLE viewhginvsdetails; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22939,8 +23018,8 @@ GRANT ALL ON TABLE qset.viewhginvsdetails TO PUBLIC;
 
 
 --
--- TOC entry 7742 (class 0 OID 0)
--- Dependencies: 1000
+-- TOC entry 7219 (class 0 OID 0)
+-- Dependencies: 552
 -- Name: TABLE viewhgmarksheet; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22948,8 +23027,8 @@ GRANT ALL ON TABLE qset.viewhgmarksheet TO PUBLIC;
 
 
 --
--- TOC entry 7743 (class 0 OID 0)
--- Dependencies: 1001
+-- TOC entry 7220 (class 0 OID 0)
+-- Dependencies: 553
 -- Name: TABLE viewhgobs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22957,8 +23036,8 @@ GRANT ALL ON TABLE qset.viewhgobs TO PUBLIC;
 
 
 --
--- TOC entry 7744 (class 0 OID 0)
--- Dependencies: 1002
+-- TOC entry 7221 (class 0 OID 0)
+-- Dependencies: 554
 -- Name: TABLE viewhgreceipts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22966,8 +23045,8 @@ GRANT ALL ON TABLE qset.viewhgreceipts TO PUBLIC;
 
 
 --
--- TOC entry 7745 (class 0 OID 0)
--- Dependencies: 1003
+-- TOC entry 7222 (class 0 OID 0)
+-- Dependencies: 555
 -- Name: TABLE viewhgprocrcpts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22975,8 +23054,8 @@ GRANT ALL ON TABLE qset.viewhgprocrcpts TO PUBLIC;
 
 
 --
--- TOC entry 7746 (class 0 OID 0)
--- Dependencies: 1004
+-- TOC entry 7223 (class 0 OID 0)
+-- Dependencies: 556
 -- Name: TABLE viewhgqdheader; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22984,8 +23063,8 @@ GRANT ALL ON TABLE qset.viewhgqdheader TO PUBLIC;
 
 
 --
--- TOC entry 7747 (class 0 OID 0)
--- Dependencies: 1005
+-- TOC entry 7224 (class 0 OID 0)
+-- Dependencies: 557
 -- Name: TABLE viewhgregistration; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -22993,8 +23072,8 @@ GRANT ALL ON TABLE qset.viewhgregistration TO PUBLIC;
 
 
 --
--- TOC entry 7748 (class 0 OID 0)
--- Dependencies: 1006
+-- TOC entry 7225 (class 0 OID 0)
+-- Dependencies: 558
 -- Name: TABLE viewhgselsbjs; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23002,8 +23081,8 @@ GRANT ALL ON TABLE qset.viewhgselsbjs TO PUBLIC;
 
 
 --
--- TOC entry 7749 (class 0 OID 0)
--- Dependencies: 1007
+-- TOC entry 7226 (class 0 OID 0)
+-- Dependencies: 559
 -- Name: TABLE viewhgselsbjscores; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23011,8 +23090,8 @@ GRANT ALL ON TABLE qset.viewhgselsbjscores TO PUBLIC;
 
 
 --
--- TOC entry 7750 (class 0 OID 0)
--- Dependencies: 1008
+-- TOC entry 7227 (class 0 OID 0)
+-- Dependencies: 560
 -- Name: TABLE viewhgselsbjstts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23020,8 +23099,8 @@ GRANT ALL ON TABLE qset.viewhgselsbjstts TO PUBLIC;
 
 
 --
--- TOC entry 7751 (class 0 OID 0)
--- Dependencies: 1009
+-- TOC entry 7228 (class 0 OID 0)
+-- Dependencies: 561
 -- Name: TABLE viewhgstudentmarks; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23029,8 +23108,8 @@ GRANT ALL ON TABLE qset.viewhgstudentmarks TO PUBLIC;
 
 
 --
--- TOC entry 7752 (class 0 OID 0)
--- Dependencies: 1010
+-- TOC entry 7229 (class 0 OID 0)
+-- Dependencies: 562
 -- Name: TABLE viewhgstudentprofile; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23038,8 +23117,8 @@ GRANT ALL ON TABLE qset.viewhgstudentprofile TO PUBLIC;
 
 
 --
--- TOC entry 7753 (class 0 OID 0)
--- Dependencies: 1011
+-- TOC entry 7230 (class 0 OID 0)
+-- Dependencies: 563
 -- Name: TABLE viewhgstudsubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23047,8 +23126,8 @@ GRANT ALL ON TABLE qset.viewhgstudsubjects TO PUBLIC;
 
 
 --
--- TOC entry 7754 (class 0 OID 0)
--- Dependencies: 1012
+-- TOC entry 7231 (class 0 OID 0)
+-- Dependencies: 564
 -- Name: TABLE viewhgsubjects; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23056,8 +23135,8 @@ GRANT ALL ON TABLE qset.viewhgsubjects TO PUBLIC;
 
 
 --
--- TOC entry 7755 (class 0 OID 0)
--- Dependencies: 1013
+-- TOC entry 7232 (class 0 OID 0)
+-- Dependencies: 565
 -- Name: TABLE viewhgunverfdrcpts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23065,8 +23144,8 @@ GRANT ALL ON TABLE qset.viewhgunverfdrcpts TO PUBLIC;
 
 
 --
--- TOC entry 7756 (class 0 OID 0)
--- Dependencies: 1014
+-- TOC entry 7233 (class 0 OID 0)
+-- Dependencies: 566
 -- Name: TABLE viewhgverfdrcpts; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23074,8 +23153,8 @@ GRANT ALL ON TABLE qset.viewhgverfdrcpts TO PUBLIC;
 
 
 --
--- TOC entry 7757 (class 0 OID 0)
--- Dependencies: 1036
+-- TOC entry 7234 (class 0 OID 0)
+-- Dependencies: 596
 -- Name: TABLE viewprqddetails; Type: ACL; Schema: qset; Owner: postgres
 --
 
@@ -23083,15 +23162,15 @@ GRANT ALL ON TABLE qset.viewprqddetails TO PUBLIC;
 
 
 --
--- TOC entry 7758 (class 0 OID 0)
--- Dependencies: 1044
+-- TOC entry 7235 (class 0 OID 0)
+-- Dependencies: 604
 -- Name: TABLE viewprreceipts; Type: ACL; Schema: qset; Owner: postgres
 --
 
 GRANT ALL ON TABLE qset.viewprreceipts TO PUBLIC;
 
 
--- Completed on 2023-04-28 07:31:14 EAT
+-- Completed on 2023-05-01 16:32:55 EAT
 
 --
 -- PostgreSQL database dump complete
