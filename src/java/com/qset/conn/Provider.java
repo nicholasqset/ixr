@@ -14,6 +14,7 @@ public interface Provider {
     String DBTYPE           = "postgres";
     String DRIVER           = "org.postgresql.Driver";
     String CONNECTION_URL   = "jdbc:postgresql://localhost:5432/ixr";
+//    String CONNECTION_URL   = "jdbc:postgresql://ixr.qset.co.ke:5432/ixr";
     String USERNAME         = "postgres";
     String PASSWORD         = "p)%tgre%%";
     
