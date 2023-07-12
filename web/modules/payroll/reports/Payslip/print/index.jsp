@@ -133,6 +133,11 @@
             html += "</tr>";
 
             html += "<tr>";
+            html += "<td class = \"bold\">National ID</td>";
+            html += "<td>"+ staffProfile.nationalId+ "</td>";
+            html += "</tr>";
+
+            html += "<tr>";
             html += "<td class = \"bold\">Pin No</td>";
             html += "<td>"+ staffProfile.pinNo+ "</td>";
             html += "</tr>";
