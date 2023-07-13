@@ -269,16 +269,21 @@
             _todaySales = _todaySales != null? _todaySales: "0";
             
 //            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
-            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "cash", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
+            String _todaySalesCash = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'CASH'");
             _todaySalesCash = _todaySalesCash != null? _todaySalesCash: "0";
             
+            
 //            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
-            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "mpesa", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
+            String _todaySalesMpesa = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'MPESA'");
             _todaySalesMpesa = _todaySalesMpesa != null? _todaySalesMpesa: "0";
             
 //            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
-            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "bank", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' ");
+            String _todaySalesBank = system.getOneAgt(this.comCode+ ".VIEWPSPYDTLS", "SUM", "amount", "amount", "entrydate::DATE = '"+system.getLogDateV2()+"' and pmcode = 'BANK'");
             _todaySalesBank = _todaySalesBank != null? _todaySalesBank: "0";
+            
+            Double tpc = (Double.parseDouble(_todaySalesCash) + Double.parseDouble(_todaySalesMpesa) + Double.parseDouble(_todaySalesBank) );
+            
+            _todaySales = tpc.toString();
 
             html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
 
