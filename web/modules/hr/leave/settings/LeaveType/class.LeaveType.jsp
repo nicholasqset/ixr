@@ -257,7 +257,7 @@ final class LeaveType{
                 
         html += "<tr>";
 	html += "<td>"+ gui.formIcon(request.getContextPath(),"gender.png", "", "")+ gui.formLabel("gender", " Gender")+"</td>";
-	html += "<td>"+ gui.formSelect("gender", "CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
+	html += "<td>"+ gui.formSelect("gender", this.comCode+".CSGENDER", "GENDERCODE", "GENDERNAME", null, null, this.id != null? this.genderCode: "", null, false)+"</td>";
 	html += "</tr>";
         
         html += "<tr>";

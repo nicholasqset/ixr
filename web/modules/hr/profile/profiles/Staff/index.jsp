@@ -30,7 +30,7 @@
 //        }
         
     }catch(Exception e){
-        System.out.print(e.getMessage());
+        out.print(e.getMessage());
     }
         
     Gui gui = new Gui();

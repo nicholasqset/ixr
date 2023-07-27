@@ -11,468 +11,467 @@
 <%@page import="com.qset.hr.Hr"%>
 <%
 
-final class LeaveApr{
-    HttpSession session = request.getSession();
+    final class LeaveApr {
+
+        HttpSession session = request.getSession();
         String comCode = session.getAttribute("comCode").toString();
-    String table        = this.comCode+".HRLVAPPS";
-    String view         = this.comCode+".VIEWHRLVAPPS";
-        
-    Integer id          = request.getParameter("id") != null? Integer.parseInt(request.getParameter("id")): null;
-    String docNo        = request.getParameter("docNo");
-    
-    public String getGrid(){
-        String html = "";
-        
-        Gui gui = new Gui();
-        Sys sys = new Sys();
-        
-        String dbType = ConnectionProvider.getDBType();
-        
-        Integer recordCount = sys.getRecordCount(this.table, "");
-        
-        if(recordCount > 0){
-            String gridSql;
-            String filterSql        = "";
-            Integer startRecord     = 0;
-            Integer maxRecord       = 10;
+        String table = this.comCode + ".HRLVAPPS";
+        String view = this.comCode + ".VIEWHRLVAPPS";
 
-            Integer maxRecordHidden = request.getParameter("maxRecord") != null? Integer.parseInt(request.getParameter("maxRecord")): null;
-            Integer pageSize        = maxRecordHidden != null? maxRecordHidden: maxRecord;
-            maxRecord               = maxRecordHidden != null? maxRecordHidden: maxRecord;
+        Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
+        String docNo = request.getParameter("docNo");
 
-            HttpSession session     = request.getSession();
-            session.setAttribute("maxRecord", maxRecord);
+        public String getGrid() {
+            String html = "";
 
-            String act              = request.getParameter("act");
+            Gui gui = new Gui();
+            Sys sys = new Sys();
 
-            if(act != null){
-                if(act.equals("find")){
-                    String find = request.getParameter("find");
-                    if(find != null){
-                        session.setAttribute("startRecord", startRecord);
+            String dbType = ConnectionProvider.getDBType();
 
-                        ArrayList<String> list = new ArrayList();
+            Integer recordCount = sys.getRecordCount(this.table, "");
 
-                        list.add("DOCNO");
-                        list.add("PFNO");
-                        list.add("FULLNAME");
-                        for(int i = 0; i < list.size(); i++){
-                            if(i == 0){
-                                if(dbType.equals("postgres")){
-                                    filterSql += " WHERE ( UPPER(CAST ("+ list.get(i) +" AS TEXT)) LIKE '%"+ find.toUpperCase()+ "%' ";
-                                }else{
-                                    filterSql += " WHERE ( UPPER("+list.get(i)+") LIKE '%"+ find.toUpperCase()+ "%' ";
+            if (recordCount > 0) {
+                String gridSql;
+                String filterSql = "";
+                Integer startRecord = 0;
+                Integer maxRecord = 10;
+
+                Integer maxRecordHidden = request.getParameter("maxRecord") != null ? Integer.parseInt(request.getParameter("maxRecord")) : null;
+                Integer pageSize = maxRecordHidden != null ? maxRecordHidden : maxRecord;
+                maxRecord = maxRecordHidden != null ? maxRecordHidden : maxRecord;
+
+                HttpSession session = request.getSession();
+                session.setAttribute("maxRecord", maxRecord);
+
+                String act = request.getParameter("act");
+
+                if (act != null) {
+                    if (act.equals("find")) {
+                        String find = request.getParameter("find");
+                        if (find != null) {
+                            session.setAttribute("startRecord", startRecord);
+
+                            ArrayList<String> list = new ArrayList();
+
+                            list.add("DOCNO");
+                            list.add("PFNO");
+                            list.add("FULLNAME");
+                            for (int i = 0; i < list.size(); i++) {
+                                if (i == 0) {
+                                    if (dbType.equals("postgres")) {
+                                        filterSql += " WHERE ( UPPER(CAST (" + list.get(i) + " AS TEXT)) LIKE '%" + find.toUpperCase() + "%' ";
+                                    } else {
+                                        filterSql += " WHERE ( UPPER(" + list.get(i) + ") LIKE '%" + find.toUpperCase() + "%' ";
+                                    }
+                                } else {
+                                    filterSql += " OR ( UPPER(" + list.get(i) + ") LIKE '%" + find.toUpperCase() + "%' ";
                                 }
-                            }else{
-                                filterSql += " OR ( UPPER("+list.get(i)+") LIKE '%"+ find.toUpperCase()+ "%' ";
+                                filterSql += ")";
                             }
-                            filterSql += ")";
                         }
                     }
                 }
-            }
 
-            Integer useGrid         = request.getParameter("maxRecord") != null? Integer.parseInt(request.getParameter("maxRecord")): null;
-            String gridAction       = request.getParameter("gridAction");
+                Integer useGrid = request.getParameter("maxRecord") != null ? Integer.parseInt(request.getParameter("maxRecord")) : null;
+                String gridAction = request.getParameter("gridAction");
 
-            if(useGrid != null){
-                if(gridAction.equals("gridNext")){
-                    if (session.getAttribute("startRecord") != null) {
-                        if(Integer.parseInt(session.getAttribute("startRecord").toString()) >= startRecord){
-                            session.setAttribute("startRecord", Integer.parseInt(session.getAttribute("startRecord").toString()) + pageSize);
-                        }else{
+                if (useGrid != null) {
+                    if (gridAction.equals("gridNext")) {
+                        if (session.getAttribute("startRecord") != null) {
+                            if (Integer.parseInt(session.getAttribute("startRecord").toString()) >= startRecord) {
+                                session.setAttribute("startRecord", Integer.parseInt(session.getAttribute("startRecord").toString()) + pageSize);
+                            } else {
+                                session.setAttribute("startRecord", startRecord);
+                            }
+
+                            if (Integer.parseInt(session.getAttribute("startRecord").toString()) == recordCount) {
+                                session.setAttribute("startRecord", startRecord);
+                            }
+
+                            if (Integer.parseInt(session.getAttribute("startRecord").toString()) > recordCount) {
+                                session.setAttribute("startRecord", Integer.parseInt(session.getAttribute("startRecord").toString()) - pageSize);
+                            }
+                        } else {
                             session.setAttribute("startRecord", startRecord);
                         }
-
-                        if(Integer.parseInt(session.getAttribute("startRecord").toString()) == recordCount){
+                    } else if (gridAction.equals("gridPrevious")) {
+                        if (session.getAttribute("startRecord") != null) {
+                            if (Integer.parseInt(session.getAttribute("startRecord").toString()) > startRecord) {
+                                session.setAttribute("startRecord", Integer.parseInt(session.getAttribute("startRecord").toString()) - pageSize);
+                            } else {
+                                session.setAttribute("startRecord", startRecord);
+                            }
+                        } else {
                             session.setAttribute("startRecord", startRecord);
                         }
-
-                        if(Integer.parseInt(session.getAttribute("startRecord").toString()) > recordCount){
-                            session.setAttribute("startRecord", Integer.parseInt(session.getAttribute("startRecord").toString()) - pageSize);
-                        }
-                    }else{
+                    } else if (gridAction.equals("gridFirst")) {
                         session.setAttribute("startRecord", startRecord);
+                    } else if (gridAction.equals("gridLast")) {
+                        session.setAttribute("startRecord", recordCount - pageSize);
+                    } else {
+                        session.setAttribute("startRecord", 0);
                     }
-                }else if(gridAction.equals("gridPrevious")){
-                    if (session.getAttribute("startRecord") != null) {
-                        if(Integer.parseInt(session.getAttribute("startRecord").toString()) > startRecord){
-                            session.setAttribute("startRecord", Integer.parseInt(session.getAttribute("startRecord").toString()) - pageSize);
-                        }else{
-                            session.setAttribute("startRecord", startRecord);
-                        }
-                    }else{
-                        session.setAttribute("startRecord", startRecord);
-                    }
-                }else if(gridAction.equals("gridFirst")){
-                    session.setAttribute("startRecord", startRecord);
-                }else if(gridAction.equals("gridLast")){
-                    session.setAttribute("startRecord", recordCount - pageSize);
-                }else{
+                } else {
                     session.setAttribute("startRecord", 0);
                 }
-            }else{
-                session.setAttribute("startRecord", 0);
-            }
 
-            String orderBy = "DOCNO DESC ";
-            String limitSql = "";
+                String orderBy = "DOCNO DESC ";
+                String limitSql = "";
 
-            switch(dbType){
-                case "mysql":
-                    limitSql = "LIMIT "+ session.getAttribute("startRecord")+ " , "+ session.getAttribute("maxRecord");
-                    break;
-                case "postgres":
-                    limitSql = "OFFSET "+ session.getAttribute("startRecord")+ " LIMIT "+ session.getAttribute("maxRecord");
-                    break;
-            }
+                switch (dbType) {
+                    case "mysql":
+                        limitSql = "LIMIT " + session.getAttribute("startRecord") + " , " + session.getAttribute("maxRecord");
+                        break;
+                    case "postgres":
+                        limitSql = "OFFSET " + session.getAttribute("startRecord") + " LIMIT " + session.getAttribute("maxRecord");
+                        break;
+                }
 
-            gridSql = "SELECT * FROM "+ this.view+ " "+ filterSql+ " ORDER BY "+ orderBy+ limitSql;
+                gridSql = "SELECT * FROM " + this.view + " " + filterSql + " ORDER BY " + orderBy + limitSql;
 
-            try{
-                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat targetFormat   = new SimpleDateFormat("dd-MM-yyyy");
-                
-                Connection conn = ConnectionProvider.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(gridSql);
+                try {
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-                Integer startRecordHidden = Integer.parseInt(session.getAttribute("startRecord").toString()) + Integer.parseInt(session.getAttribute("maxRecord").toString());
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(gridSql);
 
-                html += gui.formInput("hidden", "maxRecord", 10, session.getAttribute("maxRecord").toString(), "", "");
-                html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
-                html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
-                html += gui.formInput("hidden", "startRecord", 10, startRecordHidden.toString(), "", "");
+                    Integer startRecordHidden = Integer.parseInt(session.getAttribute("startRecord").toString()) + Integer.parseInt(session.getAttribute("maxRecord").toString());
 
-                html += "<table class = \"grid\" width=\"100%\" cellpadding = \"2\" cellspacing = \"0\" border = \"0\">";
+                    html += gui.formInput("hidden", "maxRecord", 10, session.getAttribute("maxRecord").toString(), "", "");
+                    html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
+                    html += gui.formInput("hidden", "totalRecord", 10, recordCount.toString(), "", "");
+                    html += gui.formInput("hidden", "startRecord", 10, startRecordHidden.toString(), "", "");
 
-                html += "<tr>";
-                html += "<th>#</th>";
-                html += "<th>Document No</th>";
-                html += "<th>PF No.</th>";
-                html += "<th>Name</th>";
-                html += "<th>Leave Type</th>";
-                html += "<th>Applied Days</th>";
-                html += "<th>Start Date</th>";
-                html += "<th>Return Date</th>";
-                html += "<th>Approved</th>";
-                html += "<th>Processed</th>";
+                    html += "<table class = \"grid\" width=\"100%\" cellpadding = \"2\" cellspacing = \"0\" border = \"0\">";
+
+                    html += "<tr>";
+                    html += "<th>#</th>";
+                    html += "<th>Document No</th>";
+                    html += "<th>PF No.</th>";
+                    html += "<th>Name</th>";
+                    html += "<th>Leave Type</th>";
+                    html += "<th>Applied Days</th>";
+                    html += "<th>Start Date</th>";
+                    html += "<th>Return Date</th>";
+                    html += "<th>Approved</th>";
+                    html += "<th>Processed</th>";
 //                html += "<th>Document Total</th>";
-                html += "<th>Options</th>";
-                html += "</tr>";
+                    html += "<th>Options</th>";
+                    html += "</tr>";
 
-                Integer count = Integer.parseInt(session.getAttribute("startRecord").toString()) + 1;
+                    Integer count = Integer.parseInt(session.getAttribute("startRecord").toString()) + 1;
 
-                while(rs.next()){
+                    while (rs.next()) {
 
-                    Integer id          = rs.getInt("ID");
-                    String docNo        = rs.getString("DOCNO");
-                    String pfNo         = rs.getString("PFNO");
-                    String fullName     = rs.getString("FULLNAME");
-                    String lvTypeName   = rs.getString("LVTYPENAME");
-                    Integer aplDays     = rs.getInt("APLDAYS");
-                    String startDate    = rs.getString("STARTDATE");
-                    String returnDate   = rs.getString("RETURNDATE");
-                    Integer approved    = rs.getInt("APPROVED");
-                    Integer processed   = rs.getInt("PROCESSED");
-                    
-                    java.util.Date startDate_ = originalFormat.parse(startDate);
-                    startDate = targetFormat.format(startDate_);
-                    
-                    java.util.Date returnDate_ = originalFormat.parse(returnDate);
-                    returnDate = targetFormat.format(returnDate_);
+                        Integer id = rs.getInt("ID");
+                        String docNo = rs.getString("DOCNO");
+                        String pfNo = rs.getString("PFNO");
+                        String fullName = rs.getString("FULLNAME");
+                        String lvTypeName = rs.getString("LVTYPENAME");
+                        Integer aplDays = rs.getInt("APLDAYS");
+                        String startDate = rs.getString("STARTDATE");
+                        String returnDate = rs.getString("RETURNDATE");
+                        Integer approved = rs.getInt("APPROVED");
+                        Integer processed = rs.getInt("PROCESSED");
 
-                    String rtpUi = "";
-                    if(approved == 1){
-                        rtpUi = gui.formCheckBox("rtp_"+ id, "checked", "", "", "disabled", "");
-                    }else{
-                        rtpUi = gui.formCheckBox("rtp_"+ id, "", "", "onchange = \"leaveApr.approve("+ id+ ", '"+ docNo+ "', '"+ fullName+ "');\"", "", "");
-                    }
-                    
-                    String postedUi = "";
-                    if(processed == 1){
-                        postedUi = gui.formCheckBox("posted_"+ id, "checked", "", "", "disabled", "");
-                    }else{
-                        if(approved == 1){
-                            postedUi = gui.formCheckBox("posted_"+ id, "", "", "onchange = \"leaveApr.post("+ id+ ", '"+ docNo+ "', '"+ fullName+ "');\"", "", "");
-                        }else{
-                            postedUi = gui.formIcon(request.getContextPath(), "hourglass.png", "", "");
+                        java.util.Date startDate_ = originalFormat.parse(startDate);
+                        startDate = targetFormat.format(startDate_);
+
+                        java.util.Date returnDate_ = originalFormat.parse(returnDate);
+                        returnDate = targetFormat.format(returnDate_);
+
+                        String rtpUi = "";
+                        if (approved == 1) {
+                            rtpUi = gui.formCheckBox("rtp_" + id, "checked", "", "", "disabled", "");
+                        } else {
+                            rtpUi = gui.formCheckBox("rtp_" + id, "", "", "onchange = \"leaveApr.approve(" + id + ", '" + docNo + "', '" + fullName + "');\"", "", "");
                         }
-                    }
-                    
+
+                        String postedUi = "";
+                        if (processed == 1) {
+                            postedUi = gui.formCheckBox("posted_" + id, "checked", "", "", "disabled", "");
+                        } else {
+                            if (approved == 1) {
+                                postedUi = gui.formCheckBox("posted_" + id, "", "", "onchange = \"leaveApr.post(" + id + ", '" + docNo + "', '" + fullName + "');\"", "", "");
+                            } else {
+                                postedUi = gui.formIcon(request.getContextPath(), "hourglass.png", "", "");
+                            }
+                        }
+
 //                    Double batchTotal = 0.0;
 ////                    
 //                    String batchTotal_ = system.getOneAgt("AMAQDTLS", "SUM", "OPC", "SM", "DOCNO = '"+ docNo+ "'");
 //                    if(batchTotal_ != null){
 //                        batchTotal = Double.parseDouble(batchTotal_);
 //                    }
-                    
-                    String edit = gui.formHref("onclick = \"module.editModule("+id+")\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
+                        String edit = gui.formHref("onclick = \"module.editModule(" + id + ")\"", request.getContextPath(), "pencil.png", "edit", "edit", "", "");
 
-                    String bgcolor = (count%2 > 0)? "#FFFFFF": "#F7F7F7";
-                    
-                    html += "<tr bgcolor = \""+ bgcolor+ "\">";
-                    html += "<td>"+ count+ "</td>";
-                    html += "<td>"+ docNo+ "</td>";
-                    html += "<td>"+ pfNo+ "</td>";
-                    html += "<td>"+ fullName+ "</td>";
-                    html += "<td>"+ lvTypeName+ "</td>";
-                    html += "<td>"+ aplDays+ "</td>";
-                    html += "<td>"+ startDate+ "</td>";
-                    html += "<td>"+ returnDate+ "</td>";
-                    html += "<td>"+ rtpUi+ "</td>";
-                    html += "<td>"+ postedUi+ "</td>";
-                    html += "<td>"+ edit+ "</td>";
-                    html += "</tr>";
+                        String bgcolor = (count % 2 > 0) ? "#FFFFFF" : "#F7F7F7";
 
-                    count++;
+                        html += "<tr bgcolor = \"" + bgcolor + "\">";
+                        html += "<td>" + count + "</td>";
+                        html += "<td>" + docNo + "</td>";
+                        html += "<td>" + pfNo + "</td>";
+                        html += "<td>" + fullName + "</td>";
+                        html += "<td>" + lvTypeName + "</td>";
+                        html += "<td>" + aplDays + "</td>";
+                        html += "<td>" + startDate + "</td>";
+                        html += "<td>" + returnDate + "</td>";
+                        html += "<td>" + rtpUi + "</td>";
+                        html += "<td>" + postedUi + "</td>";
+                        html += "<td>" + edit + "</td>";
+                        html += "</tr>";
+
+                        count++;
+                    }
+                    html += "</table>";
+                } catch (SQLException e) {
+                    html += e.getMessage();
+                } catch (Exception e) {
+                    html += e.getMessage();
                 }
-                html += "</table>";
-            }catch(SQLException e){
-                html += e.getMessage();
-            }catch(Exception e){
-                html += e.getMessage();
+            } else {
+                html += "No records found.";
             }
-        }else{
-            html += "No records found.";
+
+            return html;
         }
-        
-        return html;
-    }
-    
-    public String getModule(){
-        String html = "";
-        
-        Gui gui = new Gui();
-        
-        Integer approved = null;
-        
-        if(this.id != null){
-            
-            try{
-                Connection conn = ConnectionProvider.getConnection();
-                Statement stmt = conn.createStatement();
-                String query = "SELECT * FROM "+this.table+" WHERE ID = "+this.id;
-                ResultSet rs = stmt.executeQuery(query);
-                while(rs.next()){
+
+        public String getModule() {
+            String html = "";
+
+            Gui gui = new Gui();
+
+            Integer approved = null;
+
+            if (this.id != null) {
+
+                try {
+                    Connection conn = ConnectionProvider.getConnection();
+                    Statement stmt = conn.createStatement();
+                    String query = "SELECT * FROM " + this.table + " WHERE ID = " + this.id;
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
 //                    this.fullName      = rs.getString("FULLNAME");		
-                    approved           = rs.getInt("APPROVED");		
+                        approved = rs.getInt("APPROVED");
+                    }
+                } catch (SQLException e) {
+                    html += e.getMessage();
+                } catch (Exception e) {
+                    html += e.getMessage();
                 }
-            }catch (SQLException e){
-                html += e.getMessage();
-            }catch(Exception e){
-                html += e.getMessage();
             }
-        }
-        
-        html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
-        
-        if(this.id != null){
-            html += gui.formInput("hidden", "id", 30, ""+this.id, "", "");
-        }
-        
-        html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
-        
+
+            html += gui.formStart("frmModule", "void%200", "post", "onSubmit=\"javascript:return false;\"");
+
+            if (this.id != null) {
+                html += gui.formInput("hidden", "id", 30, "" + this.id, "", "");
+            }
+
+            html += "<table width = \"100%\" class = \"module\" cellpadding=\"2\" cellspacing=\"0\" >";
+
 //        html += "<tr>";
 //	html += "<td width = \"15%\">"+ gui.formIcon(request.getContextPath(), "page-edit.png", "", "")+ gui.formLabel("desc", " Document Description")+"</td>";
 //	html += "<td>"+ gui.formInput("text", "desc", 35, this.id != null? this.fullName: "", "", "")+"</td>";
 //	html += "</tr>";
-        
-        html += "<tr>";
-	html += "<td>&nbsp;</td>";
-	html += "<td>";
-        String btnSave = "";
-        if(this.id == null){
-            btnSave = gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"leaveApr.save('desc');\"", "");
-        }else{
-            if(approved == 0 || approved == null){
+            html += "<tr>";
+            html += "<td>&nbsp;</td>";
+            html += "<td>";
+            String btnSave = "";
+            if (this.id == null) {
                 btnSave = gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"leaveApr.save('desc');\"", "");
-            }
-        }
-        
-        html += btnSave;
-	
-	html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getGrid();\"", "");
-	html += "</td>";
-	html += "</tr>";
-         
-        html += "</table>";
-        html += gui.formEnd();
-                
-        return html;
-    }
-    
-    public JSONObject save() throws Exception{
-        JSONObject obj = new JSONObject();
-        Sys sys = new Sys();
-        
-        try{
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = conn.createStatement();
-            
-            String query;
-            Integer saved = 0;
-            
-            query = "UPDATE "+ this.table+ " SET "
-//                        + "FULLNAME    = '"+ this.fullName+ "', "
-                        + "AUDITDATE   = '"+ sys.getLogDate()+ "'"
-                        + "WHERE ID     = "+ this.id;
-            
-            saved = stmt.executeUpdate(query);
-            
-            if(saved == 1){
-                obj.put("success", new Integer(1));
-                obj.put("message", "Entry successfully made.");
-            }else{
-                obj.put("success", new Integer(0));
-                obj.put("message", "An unexpected error occured while saving record.");
-            }
-            
-        }catch (SQLException e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
-        }catch (Exception e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
-        }
-        
-        return obj;
-    }
-    
-    public JSONObject purge() throws Exception{
-         JSONObject obj = new JSONObject();
-         
-         try{
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = conn.createStatement();
-            
-            if(this.id != null){
-                String query = "DELETE FROM "+this.table+" WHERE ID = "+this.id;
-            
-                Integer purged = stmt.executeUpdate(query);
-                if(purged == 1){
-                    obj.put("success", new Integer(1));
-                    obj.put("message", "Entry successfully deleted.");
-                }else{
-                    obj.put("success", new Integer(0));
-                    obj.put("message", "An error occured while deleting record.");
+            } else {
+                if (approved == 0 || approved == null) {
+                    btnSave = gui.formButton(request.getContextPath(), "button", "btnSave", "Save", "save.png", "onclick = \"leaveApr.save('desc');\"", "");
                 }
-            }else{
-                obj.put("success", new Integer(0));
-                obj.put("message", "An unexpected error occured while deleting record.");
-            }
-            
-        }catch (SQLException e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
-        }catch (Exception e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
-        }
-         
-         return obj;
-        
-    }
-    
-    public JSONObject approve() throws Exception{
-        JSONObject obj = new JSONObject();
-        Sys sys = new Sys();
-         
-        try{
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = conn.createStatement();
-            
-            Integer rts = 1;
-            String msg = "Ok";
-            
-            if(this.id == null){
-                rts = 0;
-                msg = "An unexpected error occured";
             }
 
-            if(rts == 1){
-                String query = "UPDATE "+ this.table+ " SET APPROVED = 1 WHERE ID = "+ this.id;
-                Integer approved = stmt.executeUpdate(query);
-                if(approved == 1){
-                    obj.put("success", new Integer(1));
-                    obj.put("message", "Document successfully approved.");
-                }else{
-                    obj.put("success", new Integer(0));
-                    obj.put("message", "An error occured.");
-                }
-            }else{
-                obj.put("success", new Integer(0));
-                obj.put("message", msg);
-            }
-        }catch (SQLException e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
-        }catch (Exception e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
+            html += btnSave;
+
+            html += gui.formButton(request.getContextPath(), "button", "btnCancel", "Cancel", "reload.png", "onclick = \"module.getGrid();\"", "");
+            html += "</td>";
+            html += "</tr>";
+
+            html += "</table>";
+            html += gui.formEnd();
+
+            return html;
         }
-         
-        return obj;
-    }
-    
-    public JSONObject post() throws Exception{
-         JSONObject obj = new JSONObject();
-         HttpSession session = request.getSession();
-         
-         try{
-            Connection conn = ConnectionProvider.getConnection();
-            Statement stmt = conn.createStatement();
-            
-            Hr hr = new Hr();
-            
-            Integer rts = 1;
-            String msg = "";
-            
-            if(this.docNo == null){
-                rts = 0;
-                msg = "Invalid leaveApr";
+
+        public JSONObject save() throws Exception {
+            JSONObject obj = new JSONObject();
+            Sys sys = new Sys();
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                String query;
+                Integer saved = 0;
+
+                query = "UPDATE " + this.table + " SET "
+                        //                        + "FULLNAME    = '"+ this.fullName+ "', "
+                        + "AUDITDATE   = '" + sys.getLogDate() + "'"
+                        + "WHERE ID     = " + this.id;
+
+                saved = stmt.executeUpdate(query);
+
+                if (saved == 1) {
+                    obj.put("success", new Integer(1));
+                    obj.put("message", "Entry successfully made.");
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "An unexpected error occured while saving record.");
+                }
+
+            } catch (SQLException e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
             }
-            
-            if(this.id == null){
-                rts = 0;
-                msg = "An unexpected error occured";
+
+            return obj;
+        }
+
+        public JSONObject purge() throws Exception {
+            JSONObject obj = new JSONObject();
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                if (this.id != null) {
+                    String query = "DELETE FROM " + this.table + " WHERE ID = " + this.id;
+
+                    Integer purged = stmt.executeUpdate(query);
+                    if (purged == 1) {
+                        obj.put("success", new Integer(1));
+                        obj.put("message", "Entry successfully deleted.");
+                    } else {
+                        obj.put("success", new Integer(0));
+                        obj.put("message", "An error occured while deleting record.");
+                    }
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", "An unexpected error occured while deleting record.");
+                }
+
+            } catch (SQLException e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
             }
-            
-            String batchPosted = hr.processLeave(this.docNo, session, request);
-            
-            if(! batchPosted.equals("1")){
-                rts = 0;
-                msg = "Document could not be processed.";
+
+            return obj;
+
+        }
+
+        public JSONObject approve() throws Exception {
+            JSONObject obj = new JSONObject();
+            Sys sys = new Sys();
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                Integer rts = 1;
+                String msg = "Ok";
+
+                if (this.id == null) {
+                    rts = 0;
+                    msg = "An unexpected error occured";
+                }
+
+                if (rts == 1) {
+                    String query = "UPDATE " + this.table + " SET APPROVED = 1 WHERE ID = " + this.id;
+                    Integer approved = stmt.executeUpdate(query);
+                    if (approved == 1) {
+                        obj.put("success", new Integer(1));
+                        obj.put("message", "Document successfully approved.");
+                    } else {
+                        obj.put("success", new Integer(0));
+                        obj.put("message", "An error occured.");
+                    }
+                } else {
+                    obj.put("success", new Integer(0));
+                    obj.put("message", msg);
+                }
+            } catch (SQLException e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
             }
-            
-            if(rts == 1){
-                String query = "UPDATE "+ this.table+ " SET PROCESSED = 1 WHERE ID = "+ this.id;
+
+            return obj;
+        }
+
+        public JSONObject post() throws Exception {
+            JSONObject obj = new JSONObject();
+            HttpSession session = request.getSession();
+
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                Statement stmt = conn.createStatement();
+
+                Hr hr = new Hr();
+
+                Integer rts = 1;
+                String msg = "";
+
+                if (this.docNo == null) {
+                    rts = 0;
+                    msg = "Invalid leaveApr";
+                }
+
+                if (this.id == null) {
+                    rts = 0;
+                    msg = "An unexpected error occured";
+                }
+
+                String batchPosted = hr.processLeave(this.docNo, session, request);
+
+                if (!batchPosted.equals("1")) {
+                    rts = 0;
+                    msg = "Document could not be processed.";
+                }
+
+                if (rts == 1) {
+                    String query = "UPDATE " + this.table + " SET PROCESSED = 1 WHERE ID = " + this.id;
 //                String query = "UPDATE "+this.table+" SET PROCESSED = NULL WHERE ID = "+ this.id;
 
-                Integer approved = stmt.executeUpdate(query);
+                    Integer approved = stmt.executeUpdate(query);
 
-                if(approved == 1){
-                    obj.put("success", new Integer(1));
-                    obj.put("message", "Document successfully processed.");
-                }else{
+                    if (approved == 1) {
+                        obj.put("success", new Integer(1));
+                        obj.put("message", "Document successfully processed.");
+                    } else {
+                        obj.put("success", new Integer(0));
+                        obj.put("message", "An error occured while posting leaveApr.");
+                    }
+                } else {
                     obj.put("success", new Integer(0));
-                    obj.put("message", "An error occured while posting leaveApr.");
+                    obj.put("message", msg);
                 }
-            }else{
+            } catch (SQLException e) {
                 obj.put("success", new Integer(0));
-                obj.put("message", msg);
+                obj.put("message", e.getMessage());
+            } catch (Exception e) {
+                obj.put("success", new Integer(0));
+                obj.put("message", e.getMessage());
             }
-        }catch (SQLException e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
-        }catch (Exception e){
-            obj.put("success", new Integer(0));
-            obj.put("message", e.getMessage());
+
+            return obj;
+
         }
-         
-         return obj;
-        
     }
-}
 
 %>
