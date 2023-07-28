@@ -512,7 +512,7 @@ public class Sys {
                 query = "SELECT " + agt + "(" + col + ")" + colAlias + " FROM " + dataSrc + " LIMIT 1";
             }
 
-            this.logV2(query);
+//            this.logV2(query);
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {

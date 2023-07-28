@@ -24,7 +24,7 @@
   {
     var prototypejs = document.createElement('script');
     prototypejs.setAttribute('type','text/javascript');
-    prototypejs.setAttribute('src','<%=request.getContextPath()+"/js/scriptaculous/lib/prototype.js" %>');
+    prototypejs.setAttribute('src','<%=request.getContextPath()+"/assets/js/scriptaculous/lib/prototype.js" %>');
     var head = document.getElementsByTagName('head');
     head[0].appendChild(prototypejs);
   }
