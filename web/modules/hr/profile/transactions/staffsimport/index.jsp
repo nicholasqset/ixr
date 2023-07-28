@@ -26,10 +26,10 @@
         
         User user = new User(session.getAttribute("userId").toString(), session.getAttribute("comCode").toString());
         
-        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
-            session.setAttribute("userId", null);
-            response.sendRedirect(rootPath);
-        }
+//        if(! system.userHasRight(user.roleCode, Integer.parseInt(encryptionUtil.decode(URLDecoder.decode(request.getParameter("n"), "UTF-8"))))){
+//            session.setAttribute("userId", null);
+//            response.sendRedirect(rootPath);
+//        }
         
     }catch(NullPointerException e){
         

@@ -27,7 +27,7 @@
     String errorMsg     = "";
     Integer sucCount = 0;
     
-    Sys sys = new Sys();
+    Sys system = new Sys();
     
     File file ;
     int maxFileSize = 1024 * 1024 * 10;
