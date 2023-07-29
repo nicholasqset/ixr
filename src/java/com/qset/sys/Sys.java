@@ -900,5 +900,9 @@ public class Sys {
         
         return queryExecuted;
     }
+    
+    public Long curTimeMillis(){
+        return System.currentTimeMillis();
+    }
 
 }

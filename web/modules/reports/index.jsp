@@ -176,6 +176,9 @@
                         frmModule.action = "./view/?"+data;
                         frmModule.submit();
                         
+//                        var new_window = window.open("./view/?"+data, 'report', 'height=400,width=600,toolbar=no,menubar=no,directories=no,location=no,scrollbars=yes,status=no,resizable=no,fullscreen=no,top=0,left=0');
+//                        new_window.focus();
+                        
                     }
                 },
                 toggleColAlias: function(checkbox, colName){

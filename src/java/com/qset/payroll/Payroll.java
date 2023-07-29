@@ -156,7 +156,19 @@ public class Payroll {
         Sys system = new Sys();
 
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-        ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("js");
+        ScriptEngine scriptEngine;
+
+//        system.logV2(System.getProperty("java.version"));
+//        system.logV2(Runtime.version());
+
+//        String version = System.getProperty("java.version");
+//        if (version.startsWith("1.")) {
+            scriptEngine = scriptEngineManager.getEngineByName("js");
+//            scriptEngine = scriptEngineManager.getEngineByName("javascript");
+//            scriptEngine = scriptEngineManager.getEngineByName("narshon");
+//        }else{
+//            scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+//        }
 
         //list of math chars to skip when finding itemcode & fmlcode in formula string
         HashMap<Integer, String> MathCharsList = new HashMap();
@@ -247,14 +259,12 @@ public class Payroll {
             html += e.getMessage();
         }
 
-        html += "<hr> staff exempt items <br>";
-
+//        html += "<hr> staff exempt items <br>";
         for (Map.Entry m : StaffExemptItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
 
-        html += "<hr>";
-
+//        html += "<hr>";
         //////////////////////////////////////////////////////////////////////////////////
         //get staff items into an array
         //////////////////////////////////////////////////////////////////////////////////
@@ -274,7 +284,7 @@ public class Payroll {
                 //check if exempt            
                 if (StaffExemptItems.containsKey(ItemCode)) {
                     //exempted 
-                    html += "<font color=\"red\">Exempting Item " + ItemCode + "...</font> <br>";
+//                    html += "<font color=\"red\">Exempting Item " + ItemCode + "...</font> <br>";
 
                     //remove if present is map
                     StaffItems.remove(ItemCode);
@@ -288,10 +298,10 @@ public class Payroll {
                         Double HAmount = HeaderSums.get(HdrCode);
                         Double NewHAmt = HAmount + Amount;
                         HeaderSums.put(HdrCode, NewHAmt);//increament header amount
-                        html += "Header " + HdrCode + " update item " + ItemCode + " to now  " + Amount + "<br> ";
+//                        html += "Header " + HdrCode + " update item " + ItemCode + " to now  " + Amount + "<br> ";
                     } else {
                         HeaderSums.put(HdrCode, Amount);//set header sum 
-                        html += "Header " + HdrCode + " added item " + ItemCode + " is now  " + Amount + "<br> ";
+//                        html += "Header " + HdrCode + " added item " + ItemCode + " is now  " + Amount + "<br> ";
                     }
                 }//if not expemt
             }//get staff items
@@ -299,10 +309,10 @@ public class Payroll {
             html += e.getMessage();
         }
         //////////////////////////////////////////////////////////////////////////////////
-        html += "<hr> staff items <br>";
+//        html += "<hr> staff items <br>";
 
         for (Map.Entry m : StaffItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
 
         //get staff loans items into an array
@@ -348,12 +358,12 @@ public class Payroll {
 //                    Double NewHAmt = HAmount + Amount;
                             Double NewHAmt = HAmount + 0;
                             HeaderSums.put(HdrCode, NewHAmt);//increament header amount
-                            html += "HAmount= " + HAmount + "<br>";
-                            html += "NewHAmt= " + NewHAmt + "<br>";
-                            html += "Header " + HdrCode + "  update loan item " + ItemCode + " with  " + Amount + " to   " + NewHAmt + "<br> ";
+//                            html += "HAmount= " + HAmount + "<br>";
+//                            html += "NewHAmt= " + NewHAmt + "<br>";
+//                            html += "Header " + HdrCode + "  update loan item " + ItemCode + " with  " + Amount + " to   " + NewHAmt + "<br> ";
                         } else {
                             HeaderSums.put(HdrCode, Amount);//set header sum 
-                            html += "Header " + HdrCode + " added loan item " + ItemCode + " to  " + Amount + "<br> ";
+//                            html += "Header " + HdrCode + " added loan item " + ItemCode + " to  " + Amount + "<br> ";
                         }
 
                     }//if item is loan repayment
@@ -363,16 +373,16 @@ public class Payroll {
             html += e.getMessage();
         }
         //////////////////////////////////////////////////////////////////////////////////
-        html += "<hr>loan mapped items <br>";
+//        html += "<hr>loan mapped items <br>";
         for (Map.Entry m : LoanItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
 
         html += "<hr>loan items <br>";
         for (Map.Entry m : StaffLoanItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
-        html += "<hr>";
+//        html += "<hr>";
 
 //        get loan rep & loan bal
         for (Map.Entry m : StaffLoanItems.entrySet()) {
@@ -383,9 +393,8 @@ public class Payroll {
 
 //            niklas add check null
 //            LoanBal = LoanBal != null? LoanBal: 0.0;
-            html += " loan amount = " + LoanAmount + " <br>";
-            html += " loan bal = " + LoanBal + " <br>";
-
+//            html += " loan amount = " + LoanAmount + " <br>";
+//            html += " loan bal = " + LoanBal + " <br>";
             if (LoanAmount >= LoanBal) {
                 LoanAmount = LoanBal;
                 LoanBal = 0.0;
@@ -396,11 +405,10 @@ public class Payroll {
                 StaffItems.put(LoanItemBal, LoanBal);
             }
 
-            html += " loan item rep " + LoaItemRep + "  has amount " + LoanAmount + " <br>";
-            html += " loan item bal " + LoanItemBal + "  has amount " + LoanBal + " <br>";
-
+//            html += " loan item rep " + LoaItemRep + "  has amount " + LoanAmount + " <br>";
+//            html += " loan item bal " + LoanItemBal + "  has amount " + LoanBal + " <br>";
         }
-        html += "<hr>";
+//        html += "<hr>";
 
         //get staff deposit items into an array
         //////////////////////////////////////////////////////////////////////////////////
@@ -444,10 +452,10 @@ public class Payroll {
                             Double HAmount = HeaderSums.get(HdrCode);
                             Double NewHAmt = HAmount + Amount;
                             HeaderSums.put(HdrCode, NewHAmt);//increament header amount
-                            html += "Header " + HdrCode + "  update deposit item " + ItemCode + " with  " + Amount + " to   " + NewHAmt + "<br> ";
+//                            html += "Header " + HdrCode + "  update deposit item " + ItemCode + " with  " + Amount + " to   " + NewHAmt + "<br> ";
                         } else {
                             HeaderSums.put(HdrCode, Amount);//set header sum 
-                            html += "Header " + HdrCode + " added deposit item " + ItemCode + " to  " + Amount + "<br> ";
+//                            html += "Header " + HdrCode + " added deposit item " + ItemCode + " to  " + Amount + "<br> ";
                         }
 
                     }//if item is loan repayment
@@ -457,16 +465,16 @@ public class Payroll {
             html += e.getMessage();
         }
         //////////////////////////////////////////////////////////////////////////////////
-        html += "<hr>deposit mapped items <br>";
+//        html += "<hr>deposit mapped items <br>";
         for (Map.Entry m : DepositItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
 
-        html += "<hr>staff deposit items <br>";
+//        html += "<hr>staff deposit items <br>";
         for (Map.Entry m : StaffDepositItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
-        html += "<hr>";
+//        html += "<hr>";
 
         //get loan rep & loan bal
         for (Map.Entry m : StaffDepositItems.entrySet()) {
@@ -481,11 +489,10 @@ public class Payroll {
 
             StaffItems.put(DepoItemCumm, CummAmount);
 
-            html += " depo item depo " + DepoItemDepo + "  has amount " + DepoAmount + " <br>";
-            html += " depo item cumm " + DepoItemCumm + "  has amount " + CummAmount + " <br>";
-
+//            html += " depo item depo " + DepoItemDepo + "  has amount " + DepoAmount + " <br>";
+//            html += " depo item cumm " + DepoItemCumm + "  has amount " + CummAmount + " <br>";
         }
-        html += "<hr>";
+//        html += "<hr>";
 
         //fomula calc
         //////////////////////////////////////////////////////////////////////////////////
@@ -507,14 +514,12 @@ public class Payroll {
 
                 String FormularStr = rs.getString("FORMULAR");
 
-                html += "<font color=\"#333\" =====> " + fmlCode + " : " + fmtType + " : " + fmlName + " : " + FormularStr + "</font><br>";
-
+//                html += "<font color=\"#333\" =====> " + fmlCode + " : " + fmtType + " : " + fmlName + " : " + FormularStr + "</font><br>";
                 formularsArray.put(fmlCode, fmlName);
 
             }
 
-            html += "<hr>";
-
+//            html += "<hr>";
             //scroll back to first row
             rs.beforeFirst();
 
@@ -529,12 +534,11 @@ public class Payroll {
                 Double Result;
                 String MathStr = "";
 
-                html += "<font color=orange =====> " + fmlCode + " " + fmtType + " : : " + fmlName + " : " + FormularStr + "</font><br>";
-
+//                html += "<font color=orange =====> " + fmlCode + " " + fmtType + " : : " + fmlName + " : " + FormularStr + "</font><br>";
                 //check if formular is exempt
                 if (StaffExemptItems.containsKey(fmlCode)) {
                     //exempted 
-                    html += "<font color=\"red\">Exempting Formula " + fmlCode + " : " + fmlName + ".</font> <br>";
+//                    html += "<font color=\"red\">Exempting Formula " + fmlCode + " : " + fmlName + ".</font> <br>";
 
                     //remove if present is map
                     StaffItems.remove(fmlCode);
@@ -548,8 +552,7 @@ public class Payroll {
                             Double myTax = this.getIncomeTax(CalcBase);
                             MathStr += "  " + myTax + "  ";
 
-                            html += "<font color=orange > =====> calculate_TaxRate " + CalcBase + " = " + myTax + " </font><br>";
-
+//                            html += "<font color=orange > =====> calculate_TaxRate " + CalcBase + " = " + myTax + " </font><br>";
                             break;
                         case "calculate_NHIFRate":
 //                   MathStr +=  calculate_NHIFRate;
@@ -557,7 +560,7 @@ public class Payroll {
                             Double CalcBaseNHIF = StaffItems.get(FormularStr);
                             Double myNHIFRate = this.getNHIFRate(CalcBaseNHIF);
                             MathStr += "  " + myNHIFRate + "  ";
-                            html += "<font color=violet > =====> calculate_NHIFRate " + CalcBaseNHIF + " = " + myNHIFRate + " </font><br>";
+//                            html += "<font color=violet > =====> calculate_NHIFRate " + CalcBaseNHIF + " = " + myNHIFRate + " </font><br>";
                             break;
                         case "calculate_InsuranceRelief":
 //                   MathStr +=  calculate_InsuranceRelief;
@@ -581,27 +584,27 @@ public class Payroll {
 
                                     String ItemDesc = Items.containsKey(formularChar) ? Items.get(formularChar) : formularsArray.get(formularChar);
 
-                                    html += "<font color=red> =====> fml part found in staff trans " + formularChar + " : " + ItemDesc + "   </font><font color=blue> with value <b> " + StaffItems.get(formularChar) + " </b></font><br>";
+//                                    html += "<font color=red> =====> fml part found in staff trans " + formularChar + " : " + ItemDesc + "   </font><font color=blue> with value <b> " + StaffItems.get(formularChar) + " </b></font><br>";
                                     MathStr += StaffItems.get(formularChar);
                                 } else //check if part in an itemcode in math chars lis
                                 if (MathCharsList.containsValue(formularChar)) {
-                                    html += "<font color=blue> =====> math char  </font><font color=blue> as symbol <b> " + formularChar + " </b></font><br>";
+//                                    html += "<font color=blue> =====> math char  </font><font color=blue> as symbol <b> " + formularChar + " </b></font><br>";
                                     MathStr += formularChar;
                                 } else //check if part in headers
                                 if (HeaderSums.containsKey(formularChar)) {
-                                    html += "<font color=\"#ea1ee0\"> =====> fml part found in headers " + formularChar + "  </font><font color=blue> with value <b> " + HeaderSums.get(formularChar) + " </b></font><br>";
+//                                    html += "<font color=\"#ea1ee0\"> =====> fml part found in headers " + formularChar + "  </font><font color=blue> with value <b> " + HeaderSums.get(formularChar) + " </b></font><br>";
                                     MathStr += HeaderSums.get(formularChar);
                                 } else //else
                                 if (Items.containsKey(formularChar)) {
-                                    html += "<font color=\"#f9a7de\" > =====> fml part found in items array " + formularChar + "  </font><font color=blue> with name <b> " + Items.get(formularChar) + " </b> value set=0</font><br>";
+//                                    html += "<font color=\"#f9a7de\" > =====> fml part found in items array " + formularChar + "  </font><font color=blue> with name <b> " + Items.get(formularChar) + " </b> value set=0</font><br>";
 
                                     MathStr += "0";
                                 } else if (formularsArray.containsKey(formularChar)) {
-                                    html += "<font color=green> =====> fml part found in formularsArray " + formularChar + "  </font><font color=blue> with value <b> " + formularChar + " </b></font><br>";
+//                                    html += "<font color=green> =====> fml part found in formularsArray " + formularChar + "  </font><font color=blue> with value <b> " + formularChar + " </b></font><br>";
                                     //              MathStr +=  formularsArray.get( formularChar );
                                     MathStr += formularChar;
                                 } else {
-                                    html += "<font color=brown> =====> fml part not found " + formularChar + "  </font><font color=blue> with value <b>  " + formularChar + " </b></font><br>";
+//                                    html += "<font color=brown> =====> fml part not found " + formularChar + "  </font><font color=blue> with value <b>  " + formularChar + " </b></font><br>";
                                     //switch calc method
                                     //             
                                     //f*cking formularChar not a staff item , formula, payroll item or math-char
@@ -623,12 +626,11 @@ public class Payroll {
                     Double ResultFinal = Math.round(Result * 100.0) / 100.0;
 
                     //Result = Double.parseDouble(scriptEngine.eval(MathStr).toString());         
-                    html += "<br><font color=\"#f00\">" + fmlCode + "=";
-                    html += MathStr;
-                    html += "=";
-                    html += ResultFinal;
-                    html += "</font><hr>";
-
+//                    html += "<br><font color=\"#f00\">" + fmlCode + "=";
+//                    html += MathStr;
+//                    html += "=";
+//                    html += ResultFinal;
+//                    html += "</font><hr>";
                     StaffItems.put(fmlCode, ResultFinal);
 
                 }//if formular not exempted
@@ -638,35 +640,30 @@ public class Payroll {
         }
         //////////////////////////////////////////////////////////////////////////////////
 
-        html += "<hr>";
-
+//        html += "<hr>";
         for (int i = 0; i < MathCharsList.size(); i++) {
             String ItemCodeLoop = MathCharsList.get(i);
-            html += MathCharsList.get(i) + "<br>";
+//            html += MathCharsList.get(i) + "<br>";
         }
 
-        html += "<hr>";
-
+//        html += "<hr>";
         for (Map.Entry m : StaffItems.entrySet()) {
-            html += m.getKey() + " " + m.getValue() + "<br>";
+//            html += m.getKey() + " " + m.getValue() + "<br>";
         }
 
-        html += "<hr>";
-
+//        html += "<hr>";
         for (Map.Entry f : formularsArray.entrySet()) {
-            html += f.getKey() + " " + f.getValue() + "<br>";
+//            html += f.getKey() + " " + f.getValue() + "<br>";
         }
 
-        html += "<hr>";
-
+//        html += "<hr>";
         for (Map.Entry h : itemHeaders.entrySet()) {
-            html += h.getKey() + " " + h.getValue() + "<br>";
+//            html += h.getKey() + " " + h.getValue() + "<br>";
         }
 
-        html += "<hr>";
-
+//        html += "<hr>";
         for (Map.Entry h : HeaderSums.entrySet()) {
-            html += h.getKey() + " " + h.getValue() + "<br>";
+//            html += h.getKey() + " " + h.getValue() + "<br>";
         }
 
         //finaly insert
@@ -691,8 +688,7 @@ public class Payroll {
                     Statement stmtUpdate = connUpdate.createStatement();
                     String queryUpdate;
 
-                    html += "<font color=\"blue\">Staff " + staffNo + ": inserting payroll item " + m.getKey() + " with " + Amount + " </font><br>";
-
+//                    html += "<font color=\"blue\">Staff " + staffNo + ": inserting payroll item " + m.getKey() + " with " + Amount + " </font><br>";
                     queryUpdate = "INSERT INTO " + this.schema + ".PYSLIP "
                             + "(ID, PFNO, ITEMCODE, PYEAR, PMONTH, AMOUNT )"
                             + "VALUES"
