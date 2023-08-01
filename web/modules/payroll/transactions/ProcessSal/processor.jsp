@@ -46,61 +46,61 @@
     Integer pYear       = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
     Integer pMonth      = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
      
-    public String init(){
-        String html = "";
-        
-        Payroll payroll = new Payroll(schema);
-        
-        try{
-            Integer recordCount = this.getStaffCount();
-            
-            if(recordCount > 0){
-                
-                Connection conn = ConnectionProvider.getConnection();
-                Statement stmt = conn.createStatement();
-                
-//                String query = "SELECT DISTINCT PFNO FROM PYSTAFFITEMS WHERE PFNO = '1212' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " ";
-                String query = "SELECT DISTINCT PFNO FROM "+ schema+ ".PYSTAFFITEMS WHERE PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " ";
-                
-                ResultSet rs = stmt.executeQuery(query);
-                
-                Integer i = 1;
-                while(rs.next()){
-                    if((i - 1) < recordCount){
-                        html += "<script type = \"text/javascript\">";
-                        html += "comet.showProgress("+ i+ ", "+ recordCount+ ");";
-                        html += "</script>" ;
-                    }
-                    
-                    String pfNo         = rs.getString("PFNO");
-                    
-                    html += payroll.process(pfNo, this.pYear, this.pMonth);
-                    
-                    if(i == recordCount){
-                        html += "<script type = \"text/javascript\">";
-                        html += "comet.taskComplete();";
-                        html += "</script>" ;
-                    }
-
-//                    out.flush(); // used to send the echoed data to the client
-                    Thread.sleep(7); // a little break to unload the server CPU
-                    
-                    i++;
-                }
-                
-            }else{
-                html += "<script type = \"text/javascript\">";
-                html += "alert('No Record found');";
-                html += "comet.taskComplete();";
-                html += "</script>" ;
-            }
-
-        }catch(Exception e){
-            html += e.getMessage();
-        }
-        
-        return html;
-    }
+//    public String init(){
+//        String html = "";
+//        
+//        Payroll payroll = new Payroll(schema);
+//        
+//        try{
+//            Integer recordCount = this.getStaffCount();
+//            
+//            if(recordCount > 0){
+//                
+//                Connection conn = ConnectionProvider.getConnection();
+//                Statement stmt = conn.createStatement();
+//                
+////                String query = "SELECT DISTINCT PFNO FROM PYSTAFFITEMS WHERE PFNO = '1212' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " ";
+////                String query = "SELECT DISTINCT PFNO FROM "+ schema+ ".PYSTAFFITEMS WHERE PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " ";
+//                
+//                ResultSet rs = stmt.executeQuery(query);
+//                
+//                Integer i = 1;
+//                while(rs.next()){
+//                    if((i - 1) < recordCount){
+//                        html += "<script type = \"text/javascript\">";
+//                        html += "comet.showProgress("+ i+ ", "+ recordCount+ ");";
+//                        html += "</script>" ;
+//                    }
+//                    
+//                    String pfNo         = rs.getString("PFNO");
+//                    
+//                    html += payroll.process(pfNo, this.pYear, this.pMonth);
+//                    
+//                    if(i == recordCount){
+//                        html += "<script type = \"text/javascript\">";
+//                        html += "comet.taskComplete();";
+//                        html += "</script>" ;
+//                    }
+//
+////                    out.flush(); // used to send the echoed data to the client
+//                    Thread.sleep(7); // a little break to unload the server CPU
+//                    
+//                    i++;
+//                }
+//                
+//            }else{
+//                html += "<script type = \"text/javascript\">";
+//                html += "alert('No Record found');";
+//                html += "comet.taskComplete();";
+//                html += "</script>" ;
+//            }
+//
+//        }catch(Exception e){
+//            html += e.getMessage();
+//        }
+//        
+//        return html;
+//    }
     
     public Integer getStaffCount(){
         Integer staffCount = 0;
@@ -155,6 +155,8 @@ try{
         Statement stmt = conn.createStatement();
 
 //        String query = "SELECT DISTINCT PFNO FROM PYSTAFFITEMS WHERE PFNO = '8122' AND PYEAR = 2018 AND PMONTH = 9";
+//        String query = "SELECT DISTINCT PFNO FROM "+ schema+ ".PYSTAFFITEMS WHERE PFNO = 'SC000016' AND PYEAR = "+ process.pYear+ " AND PMONTH = "+ process.pMonth+ " ORDER BY PFNO";
+//        String query = "SELECT DISTINCT PFNO FROM "+ schema+ ".PYSTAFFITEMS WHERE PFNO IN ( 'SC000016', 'SM00001' ) AND PYEAR = "+ process.pYear+ " AND PMONTH = "+ process.pMonth+ " ORDER BY PFNO";
         String query = "SELECT DISTINCT PFNO FROM "+ schema+ ".PYSTAFFITEMS WHERE PYEAR = "+ process.pYear+ " AND PMONTH = "+ process.pMonth+ " ORDER BY PFNO";
 
         ResultSet rs = stmt.executeQuery(query);

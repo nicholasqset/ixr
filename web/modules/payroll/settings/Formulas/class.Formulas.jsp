@@ -157,6 +157,7 @@ final class Formulas{
                 html += "<th>Name</th>";
                 html += "<th>Header</th>";
                 html += "<th>Type</th>";
+                html += "<th>Formular</th>";
                 html += "<th>Order</th>";
                 html += "<th>Options</th>";
                 html += "</tr>";
@@ -170,6 +171,7 @@ final class Formulas{
                     String fmlName  = rs.getString("FMLNAME");
                     String itemHeader  = rs.getString("HDRCODE");
                     String fmtCode   = rs.getString("FMTCODE");
+                    String formular   = rs.getString("formular");
                     String GLAccount   = rs.getString("ACCOUNTCODE");
                     String itemPos   = rs.getString("ITEMPOS");
 
@@ -183,6 +185,7 @@ final class Formulas{
                     html += "<td>"+fmlName+"</td>";
                     html += "<td>"+itemHeader+"</td>";
                     html += "<td>"+fmtCode+"</td>";
+                    html += "<td>"+formular+"</td>";
                     html += "<td>"+itemPos+"</td>";
                     html += "<td>"+edit+"</td>";
                     html += "</tr>";

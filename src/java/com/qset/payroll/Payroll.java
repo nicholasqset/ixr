@@ -626,11 +626,11 @@ public class Payroll {
                     Double ResultFinal = Math.round(Result * 100.0) / 100.0;
 
                     //Result = Double.parseDouble(scriptEngine.eval(MathStr).toString());         
-//                    html += "<br><font color=\"#f00\">" + fmlCode + "=";
-//                    html += MathStr;
-//                    html += "=";
-//                    html += ResultFinal;
-//                    html += "</font><hr>";
+                    html += "<br><font color=\"#f00\">" + fmlCode + "=";
+                    html += MathStr;
+                    html += "=";
+                    html += ResultFinal;
+                    html += "</font><hr>";
                     StaffItems.put(fmlCode, ResultFinal);
 
                 }//if formular not exempted
@@ -681,7 +681,9 @@ public class Payroll {
 
             Double Amount = Double.parseDouble(m.getValue().toString());
 
-            if (Amount > 0) {
+//            if (Amount > 0) {
+//            if (1==1) {
+            if ((Amount > 0) || ((m.getKey().equals("065")) && Amount < 0)) {
                 try {
 
                     Connection connUpdate = ConnectionProvider.getConnection();
