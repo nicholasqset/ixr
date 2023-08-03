@@ -37,6 +37,11 @@ WHERE
 	<field name="psshow" class="java.lang.Integer"/>
 	<field name="recur" class="java.lang.Integer"/>
 	<field name="itempos" class="java.lang.Integer"/>
+	<field name="nationalid" class="java.lang.String"/>
+	<field name="pinno" class="java.lang.String"/>
+	<field name="nhifno" class="java.lang.String"/>
+	<field name="nssfno" class="java.lang.String"/>
+	<field name="accountno" class="java.lang.String"/>
 	<sortField name="pyear" order="Descending"/>
 	<sortField name="pmonth" order="Descending"/>
 	<sortField name="pfno"/>
@@ -101,7 +106,7 @@ WHERE
 					<reportElement x="0" y="75" width="525" height="1" uuid="176505e1-dbc7-48dc-a99c-e7a2cdfae202"/>
 				</line>
 				<staticText>
-					<reportElement x="233" y="60" width="100" height="15" uuid="db899871-1e4f-4302-b64c-ff18ce8ed1c0"/>
+					<reportElement x="201" y="60" width="100" height="15" uuid="db899871-1e4f-4302-b64c-ff18ce8ed1c0"/>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
@@ -110,6 +115,61 @@ WHERE
 				<textField>
 					<reportElement x="101" y="60" width="100" height="15" uuid="2e33e405-0e9d-4065-a7df-707fa06769ee"/>
 					<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="313" y="0" width="100" height="15" uuid="3efa22dc-94c8-4cd8-8a54-b880caf9b388"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ID No:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="15" width="100" height="15" uuid="44997339-66f8-4164-ac7c-58c07ccf4c7f"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PIN No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="30" width="100" height="15" uuid="281e6f44-9aa8-4230-9a68-ce7f88e75e22"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NHIF No:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="45" width="100" height="15" uuid="05d91d52-b50f-4326-9e41-c222099b65a5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NSSF No:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="60" width="100" height="15" uuid="ac404291-9eae-4a68-9feb-0fc9431dfbdb"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Acc No:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="413" y="60" width="100" height="16" uuid="195fc76f-00f5-4a8d-8a9a-79238210d290"/>
+					<textFieldExpression><![CDATA[$F{accountno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="413" y="45" width="100" height="15" uuid="7b623bd4-558e-407c-b8b2-9d8ad550353a"/>
+					<textFieldExpression><![CDATA[$F{nssfno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="413" y="30" width="100" height="15" uuid="5c8c2607-69f5-453a-b97e-3b8721cbaf55"/>
+					<textFieldExpression><![CDATA[$F{nhifno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="413" y="15" width="100" height="15" uuid="76888ccd-78ab-4fd6-9cbd-efc4a55d353a"/>
+					<textFieldExpression><![CDATA[$F{pinno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="413" y="0" width="100" height="15" uuid="5c66f868-ec50-416b-921e-374c566bad9c"/>
+					<textFieldExpression><![CDATA[$F{nationalid}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -159,7 +219,7 @@ WHERE
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField pattern="#,##0.00">
-				<reportElement x="233" y="0" width="100" height="14" uuid="3c012c37-0bb1-4930-8d98-10365dbe22a2"/>
+				<reportElement x="201" y="0" width="100" height="14" uuid="3c012c37-0bb1-4930-8d98-10365dbe22a2"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>

@@ -14,14 +14,14 @@
 <%@page import="com.qset.gui.Gui"%>
 <%@page import="com.qset.sys.Sys"%>
 <%
-    final class PrintRptEarningSmr{
+    final class PrintRptOverview{
         HttpSession session = request.getSession();
         String comCode       = session.getAttribute("comCode").toString();
         
         Integer pYear   = (request.getParameter("pYear") != null && ! request.getParameter("pYear").trim().equals(""))? Integer.parseInt(request.getParameter("pYear")): null;
         Integer pMonth  = (request.getParameter("pMonth") != null && ! request.getParameter("pMonth").trim().equals(""))? Integer.parseInt(request.getParameter("pMonth")): null;
         
-        String rptName  = "Earning Summary";
+        String rptName  = "Payroll Overview";
         
         public String getReportHeader(){
             String html = "";
@@ -128,12 +128,12 @@
             
             html += "<br>";
             
-            html += this.getEarningSummary();
+            html += this.getOverviewDtls();
             
             return html;
         }
         
-        public String getEarningSummary(){
+        public String getOverviewDtls(){
             String html = "";
 
             Sys sys = new Sys();
@@ -145,28 +145,48 @@
                 html += "<table width = \"100%\" class = \"header\" cellpadding = \"2\" cellspacing = \"0\" >";
 
                 html += "<tr>";
-                html += "<th width = \"12.5%\" nowrap>Staff No</th>";
-                html += "<th width = \"12.5%\" nowrap>Name</th>";
-                html += "<th width = \"12.5%\" style = \"text-align: right;\" nowrap>Basic Pay</th>";
-                html += "<th width = \"12.5%\" style = \"text-align: right;\" nowrap>House Allowance</th>";
-                html += "<th width = \"12.5%\" style = \"text-align: right;\" nowrap>Commuter Allowance</th>";
-                html += "<th width = \"12.5%\" style = \"text-align: right;\" nowrap>Car Allowance</th>";
-                html += "<th width = \"12.5%\" style = \"text-align: right;\" nowrap>Other</th>";
-                html += "<th style = \"text-align: right;\" nowrap>Gross Pay</th>";
+                html += "<th width = \"\" nowrap>Staff No</th>";
+                html += "<th width = \"\" nowrap>Name</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Basic Pay</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>House Allowance</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Attendance Allowance</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Over Time @1.5</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Over Time @2.0</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Abseentism</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Other Income</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Gross Pay</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>NHIF</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>NSSF</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Insurance Relief</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>PAYE</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Total Deductions</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Net Pay</th>";
+                html += "<th width = \"\" style = \"text-align: right;\" nowrap>Acc #</th>";
                 html += "</tr>";
                 
                 Double bpTotal = 0.0;
                 Double hsTotal = 0.0;
                 Double cmTotal = 0.0;
                 Double crTotal = 0.0;
+                Double ot2Total = 0.0;
+                Double abTotal = 0.0;
                 Double otTotal = 0.0;
                 Double gpTotal = 0.0;
+                
+                Double nhTotal = 0.0;
+                Double nsTotal = 0.0;
+                Double irTotal = 0.0;
+                Double peTotal = 0.0;
+                Double tdTotal = 0.0;
+                Double npTotal = 0.0;
                 
                 try{                    
                     Connection conn = ConnectionProvider.getConnection();
                     Statement stmt = conn.createStatement();
 
-                    String query = "SELECT DISTINCT PFNO, FULLNAME FROM "+comCode+".VIEWPYSLIP WHERE PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " AND HDRTYPE = 'EN' ORDER BY PFNO";
+                    String query = "SELECT DISTINCT PFNO, FULLNAME FROM "+comCode+".VIEWPYSLIP WHERE "
+                    + "PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " AND HDRTYPE = 'EN' "
+                    + "ORDER BY PFNO";
 
                     ResultSet rs = stmt.executeQuery(query);
 
@@ -181,17 +201,44 @@
                         String hs_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.hs+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
                         Double hs   = hs_ != null? Double.parseDouble(hs_): 0.0;
 
-                        String cm_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.cm+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+//                        String cm_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.cm+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        String cm_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '183' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
                         Double cm   = cm_ != null? Double.parseDouble(cm_): 0.0;
 
-                        String cr_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.cr+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+//                        String cr_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.cr+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        String cr_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '040' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
                         Double cr   = cr_ != null? Double.parseDouble(cr_): 0.0;
                         
-                        String ot_  = sys.getOneAgt(comCode+".VIEWPYSLIP", "SUM", "AMOUNT", "SM", " HDRTYPE = 'EN' AND PFNO = '"+ pfNo+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " AND ITEMCODE NOT IN ('"+ pyConfig.bp+ "', '"+ pyConfig.hs+ "', '"+ pyConfig.cm+ "', '"+ pyConfig.cr+ "', '"+ pyConfig.gp+ "')");
+                        String ot2_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '041' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double ot2   = ot2_ != null? Double.parseDouble(ot2_): 0.0;
+                        
+                        String ab_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '065' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double ab   = ab_ != null? Double.parseDouble(ab_): 0.0;
+                        
+                        String ot_  = sys.getOneAgt(comCode+".VIEWPYSLIP", "SUM", "AMOUNT", "SM", " HDRTYPE = 'EN' AND PFNO = '"+ pfNo+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " AND ITEMCODE NOT IN ('"+ pyConfig.bp+ "', '"+ pyConfig.hs+ "', '183', '040', '041', '065', '"+ pyConfig.gp+ "')");
                         Double ot   = ot_ != null? Double.parseDouble(ot_): 0.0;
 
                         String gp_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.gp+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
                         Double gp   = gp_ != null? Double.parseDouble(gp_): 0.0;
+                        
+                        
+                        String nh_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '410' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double nh   = nh_ != null? Double.parseDouble(nh_): 0.0;
+                        
+                        String ns_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '409' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double ns   = ns_ != null? Double.parseDouble(ns_): 0.0;
+                        
+                        String ir_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '444' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double ir   = ir_ != null? Double.parseDouble(ir_): 0.0;
+                        
+                        String pe_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '420' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double pe   = pe_ != null? Double.parseDouble(pe_): 0.0;
+                        
+                        String td_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '495' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double td   = td_ != null? Double.parseDouble(td_): 0.0;
+                        
+                        String np_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '999' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        Double np   = np_ != null? Double.parseDouble(np_): 0.0;
 
                         html += "<tr>";
                         html += "<td nowrap>"+ pfNo+ "</td>";
@@ -200,16 +247,34 @@
                         html += "<td style = \"text-align: right;\">"+ sys.numberFormat(hs.toString())+ "</td>";
                         html += "<td style = \"text-align: right;\">"+ sys.numberFormat(cm.toString())+ "</td>";
                         html += "<td style = \"text-align: right;\">"+ sys.numberFormat(cr.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ot2.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ab.toString())+ "</td>";
                         html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ot.toString())+ "</td>";
                         html += "<td style = \"text-align: right;\">"+ sys.numberFormat(gp.toString())+ "</td>";
+                        
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(nh.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ns.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ir.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(pe.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(td.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">"+ sys.numberFormat(np.toString())+ "</td>";
+                        html += "<td style = \"text-align: right;\">&nbsp;</td>";
                         html += "</tr>";
 
                         bpTotal = bpTotal + bp;
                         hsTotal = hsTotal + hs;
                         cmTotal = cmTotal + cm;
                         crTotal = crTotal + cr;
+                        ot2Total = ot2Total + ot2;
+                        abTotal = abTotal + ab;
                         otTotal = otTotal + ot;
-                        gpTotal = gpTotal + gp;
+                        
+                        nhTotal = nhTotal + nh;
+                        nsTotal = nsTotal + ns;
+                        irTotal = irTotal + ir;
+                        peTotal = peTotal + pe;
+                        tdTotal = tdTotal + td;
+                        npTotal = npTotal + np;
                     }
                     
                 }catch(Exception e){
@@ -225,6 +290,15 @@
                 html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
                 html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
                 html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
+                html += "<td style = \"text-align: right;\" nowrap>- - - - - - -</td>";
                 html += "</tr>";
                 
                 html += "<tr>";
@@ -234,8 +308,18 @@
                 html += "<td style = \"text-align: right;\">"+ sys.numberFormat(hsTotal.toString())+ "</td>";
                 html += "<td style = \"text-align: right;\">"+ sys.numberFormat(cmTotal.toString())+ "</td>";
                 html += "<td style = \"text-align: right;\">"+ sys.numberFormat(crTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(ot2Total.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(abTotal.toString())+ "</td>";
                 html += "<td style = \"text-align: right;\">"+ sys.numberFormat(otTotal.toString())+ "</td>";
                 html += "<td style = \"text-align: right;\">"+ sys.numberFormat(gpTotal.toString())+ "</td>";
+                
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(nhTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(nsTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(irTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(peTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(tdTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">"+ sys.numberFormat(npTotal.toString())+ "</td>";
+                html += "<td style = \"text-align: right;\">&nbsp;</td>";
                 html += "</tr>";
                 
                 html += "</table>";
@@ -258,7 +342,7 @@
         }
     }
     
-    PrintRptEarningSmr printRptEarningSmr = new PrintRptEarningSmr();
+    PrintRptOverview printRptOverview = new PrintRptOverview();
     
     Gui gui = new Gui();
     
@@ -268,13 +352,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Earning Summary</title>
+        <title>Payroll Overview</title>
         <% 
             out.print(gui.loadCss(request.getContextPath(), "reports"));
         %>
     </head>
     <body>
-        <%= printRptEarningSmr.printRpt()%>
+        <%= printRptOverview.printRpt()%>
         
         <% out.print(gui.loadJs(request.getContextPath(), "scriptaculous/lib/prototype")); %>
         
