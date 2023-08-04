@@ -11,12 +11,13 @@
 	<parameter name="p_comcode" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT 
-	*	
+	*, qset.get_month_name(pmonth)
 FROM 
 	qset.viewpyslip 
 WHERE 
 	pyear = CAST($P{P_YEAR} AS BIGINT) AND 
-	pmonth = CAST($P{P_MONTH} AS BIGINT)]]>
+	pmonth = CAST($P{P_MONTH} AS BIGINT) AND
+	hdrtype NOT IN ('IN')]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="pfno" class="java.lang.String"/>
@@ -42,6 +43,7 @@ WHERE
 	<field name="nhifno" class="java.lang.String"/>
 	<field name="nssfno" class="java.lang.String"/>
 	<field name="accountno" class="java.lang.String"/>
+	<field name="get_month_name" class="java.lang.String"/>
 	<sortField name="pyear" order="Descending"/>
 	<sortField name="pmonth" order="Descending"/>
 	<sortField name="pfno"/>
@@ -50,126 +52,191 @@ WHERE
 	<group name="pp_pfno" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{pfno}]]></groupExpression>
 		<groupHeader>
-			<band height="76">
+			<band height="208">
 				<staticText>
-					<reportElement x="0" y="0" width="100" height="15" uuid="e5a93aa3-7799-4b05-82a7-925ab330ee7c"/>
+					<reportElement x="-1" y="114" width="100" height="16" uuid="e5a93aa3-7799-4b05-82a7-925ab330ee7c"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Personnel No:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="15" width="100" height="15" uuid="eeda59ff-8e8f-4c15-8d85-238671317c7c"/>
+					<reportElement x="-1" y="129" width="100" height="16" uuid="eeda59ff-8e8f-4c15-8d85-238671317c7c"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Name:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="45" width="100" height="15" uuid="6f1fc731-5767-46ee-a171-aade5daf2752"/>
+					<reportElement x="-1" y="159" width="100" height="16" uuid="6f1fc731-5767-46ee-a171-aade5daf2752"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Year:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="60" width="100" height="15" uuid="852073eb-d33e-4ead-b4a6-8960013370d8"/>
+					<reportElement x="-1" y="174" width="100" height="16" uuid="852073eb-d33e-4ead-b4a6-8960013370d8"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Month:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="101" y="0" width="177" height="15" uuid="dc9b50ae-02a4-49d2-88c2-919afe68408a"/>
+					<reportElement x="100" y="114" width="177" height="16" uuid="dc9b50ae-02a4-49d2-88c2-919afe68408a"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="101" y="15" width="177" height="15" uuid="3ccaf30e-2dca-4396-be26-c5a7d9cf598a"/>
+					<reportElement x="100" y="129" width="177" height="16" uuid="3ccaf30e-2dca-4396-be26-c5a7d9cf598a"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
 				</textField>
 				<textField pattern="###0">
-					<reportElement x="101" y="45" width="177" height="15" uuid="5001e5c7-d02c-4387-a84d-1a4ac2ec86aa"/>
+					<reportElement x="100" y="159" width="177" height="16" uuid="5001e5c7-d02c-4387-a84d-1a4ac2ec86aa"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{pyear}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="30" width="100" height="15" uuid="90185f81-f510-4847-8196-50c16bc6111a"/>
+					<reportElement x="-1" y="144" width="100" height="16" uuid="90185f81-f510-4847-8196-50c16bc6111a"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Scale:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="101" y="30" width="177" height="15" uuid="7fcf64c2-9a37-42ee-b1ee-32b22fd4a809"/>
+					<reportElement x="100" y="144" width="177" height="16" uuid="7fcf64c2-9a37-42ee-b1ee-32b22fd4a809"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{gradename}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="0" y="75" width="525" height="1" uuid="176505e1-dbc7-48dc-a99c-e7a2cdfae202"/>
+					<reportElement x="-1" y="206" width="525" height="1" uuid="176505e1-dbc7-48dc-a99c-e7a2cdfae202"/>
 				</line>
 				<staticText>
-					<reportElement x="201" y="60" width="100" height="15" uuid="db899871-1e4f-4302-b64c-ff18ce8ed1c0"/>
+					<reportElement x="339" y="190" width="100" height="16" uuid="db899871-1e4f-4302-b64c-ff18ce8ed1c0"/>
 					<textElement textAlignment="Right">
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Amount]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="101" y="60" width="100" height="15" uuid="2e33e405-0e9d-4065-a7df-707fa06769ee"/>
-					<textFieldExpression><![CDATA[$F{pmonth}]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement x="313" y="0" width="100" height="15" uuid="3efa22dc-94c8-4cd8-8a54-b880caf9b388"/>
+					<reportElement x="312" y="114" width="100" height="16" uuid="3efa22dc-94c8-4cd8-8a54-b880caf9b388"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ID No:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="313" y="15" width="100" height="15" uuid="44997339-66f8-4164-ac7c-58c07ccf4c7f"/>
+					<reportElement x="312" y="129" width="100" height="16" uuid="44997339-66f8-4164-ac7c-58c07ccf4c7f"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PIN No.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="313" y="30" width="100" height="15" uuid="281e6f44-9aa8-4230-9a68-ce7f88e75e22"/>
+					<reportElement x="312" y="144" width="100" height="16" uuid="281e6f44-9aa8-4230-9a68-ce7f88e75e22"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NHIF No:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="313" y="45" width="100" height="15" uuid="05d91d52-b50f-4326-9e41-c222099b65a5"/>
+					<reportElement x="312" y="159" width="100" height="16" uuid="05d91d52-b50f-4326-9e41-c222099b65a5"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NSSF No:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="313" y="60" width="100" height="15" uuid="ac404291-9eae-4a68-9feb-0fc9431dfbdb"/>
+					<reportElement x="312" y="174" width="100" height="16" uuid="ac404291-9eae-4a68-9feb-0fc9431dfbdb"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Acc No:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="413" y="60" width="100" height="16" uuid="195fc76f-00f5-4a8d-8a9a-79238210d290"/>
+					<reportElement x="412" y="174" width="100" height="16" uuid="195fc76f-00f5-4a8d-8a9a-79238210d290"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{accountno}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="413" y="45" width="100" height="15" uuid="7b623bd4-558e-407c-b8b2-9d8ad550353a"/>
+					<reportElement x="412" y="159" width="100" height="16" uuid="7b623bd4-558e-407c-b8b2-9d8ad550353a"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nssfno}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="413" y="30" width="100" height="15" uuid="5c8c2607-69f5-453a-b97e-3b8721cbaf55"/>
+					<reportElement x="412" y="144" width="100" height="16" uuid="5c8c2607-69f5-453a-b97e-3b8721cbaf55"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nhifno}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="413" y="15" width="100" height="15" uuid="76888ccd-78ab-4fd6-9cbd-efc4a55d353a"/>
+					<reportElement x="412" y="129" width="100" height="16" uuid="76888ccd-78ab-4fd6-9cbd-efc4a55d353a"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{pinno}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="413" y="0" width="100" height="15" uuid="5c66f868-ec50-416b-921e-374c566bad9c"/>
+					<reportElement x="412" y="114" width="100" height="16" uuid="5c66f868-ec50-416b-921e-374c566bad9c"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nationalid}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="93" width="110" height="18" uuid="87724703-2a2a-4c1c-874a-51b56ea9de72"/>
+					<textElement>
+						<font size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Payslip]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="141" y="11" width="254" height="19" uuid="7e4c728e-5acd-4fc0-a540-ff38d73312c3"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Shangcheng Kenya Apparel EPZ LIMITED]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="141" y="30" width="254" height="19" uuid="8a579e7c-f9d6-4238-a848-f1a432917109"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="36" y="49" width="476" height="16" uuid="dacaf08c-6659-429f-95c5-9cbf8e44a6b3"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ADD: Opposite Sunda Industrial Park, Mombasa Road, Machakos, Kenya]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="36" y="65" width="476" height="16" uuid="706e0545-3cd7-4d8f-ac1d-a33c91d666f2"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PO BOX 18635 - 00500 NAIROBI]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="84" width="525" height="1" uuid="45dd4afe-8356-4ee3-b2e2-33804d2eb16a"/>
+				</line>
+				<textField>
+					<reportElement x="99" y="175" width="178" height="15" uuid="32ce2aad-a7c0-42b8-b12a-cdee43087d47"/>
+					<textFieldExpression><![CDATA[$F{get_month_name}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -192,23 +259,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="121" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="100" width="100" height="20" uuid="87724703-2a2a-4c1c-874a-51b56ea9de72"/>
-				<textElement>
-					<font size="14" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Payslip(s)]]></text>
-			</staticText>
-			<subreport>
-				<reportElement x="1" y="0" width="524" height="100" uuid="d5b5c486-1f91-4c16-98a9-9776a363f2e1"/>
-				<subreportParameter name="p_comcode">
-					<subreportParameterExpression><![CDATA[$P{p_comcode}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_profile.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band height="1" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
@@ -217,30 +268,30 @@ WHERE
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="14" splitType="Stretch">
+		<band height="16" splitType="Stretch">
 			<textField pattern="#,##0.00">
-				<reportElement x="201" y="0" width="100" height="14" uuid="3c012c37-0bb1-4930-8d98-10365dbe22a2"/>
+				<reportElement x="339" y="0" width="100" height="16" uuid="3c012c37-0bb1-4930-8d98-10365dbe22a2"/>
 				<textElement textAlignment="Right">
-					<font size="10"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="17" y="0" width="184" height="14" uuid="160ab89c-f57f-46b6-954a-ff06b6bec2a6"/>
+				<reportElement x="17" y="0" width="260" height="16" uuid="160ab89c-f57f-46b6-954a-ff06b6bec2a6"/>
 				<textElement>
-					<font size="10"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{itemname}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="1" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="27" splitType="Stretch"/>
+		<band height="19" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="1" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
