@@ -13,7 +13,7 @@
 		<![CDATA[SELECT 
 	*, qset.get_month_name(pmonth)
 FROM 
-	qset.viewpyslip 
+	shang_sheng.viewpyslip 
 WHERE 
 	pyear = CAST($P{P_YEAR} AS BIGINT) AND 
 	pmonth = CAST($P{P_MONTH} AS BIGINT) AND
@@ -89,7 +89,7 @@ WHERE
 					<textFieldExpression><![CDATA[$F{pfno}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="100" y="129" width="177" height="16" uuid="3ccaf30e-2dca-4396-be26-c5a7d9cf598a"/>
+					<reportElement x="100" y="129" width="188" height="16" uuid="3ccaf30e-2dca-4396-be26-c5a7d9cf598a"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
