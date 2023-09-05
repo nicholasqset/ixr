@@ -318,7 +318,7 @@
                         String ot_  = sys.getOneAgt(comCode+".VIEWPYSLIP", "SUM", "AMOUNT", "SM", " HDRTYPE = 'EN' AND PFNO = '"+ pfNo+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth+ " AND ITEMCODE NOT IN ('"+ pyConfig.bp+ "', '"+ pyConfig.hs+ "', '183', '040', '041', '065', '"+ pyConfig.gp+ "')");
                         Double ot   = ot_ != null? Double.parseDouble(ot_): 0.0;
 
-                        String gp_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '"+ pyConfig.gp+ "' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
+                        String gp_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '200' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
                         Double gp   = gp_ != null? Double.parseDouble(gp_): 0.0;
                         
                         String nh_  = sys.getOne(comCode+".PYSLIP", "AMOUNT", "PFNO = '"+ pfNo+ "' AND ITEMCODE = '410' AND PYEAR = "+ this.pYear+ " AND PMONTH = "+ this.pMonth);
@@ -375,6 +375,7 @@
                         ot2Total = ot2Total + ot2;
                         abTotal = abTotal + ab;
                         otTotal = otTotal + ot;
+                        gpTotal = gpTotal + gp;
                         
                         nhTotal = nhTotal + nh;
                         nsTotal = nsTotal + ns;

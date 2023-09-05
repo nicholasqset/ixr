@@ -30,11 +30,14 @@
 <%@page import="com.qset.conn.ConnectionProvider"%>
 <%@page import="java.sql.*"%>
 <%@page import="com.qset.sys.Sys"%>
+<%@page trimDirectiveWhitespaces="true" %>
+
 
 <%
     String comCode = session.getAttribute("comCode").toString();
+    Sys sys = new Sys();
     try {
-        Sys sys = new Sys();
+
         Connection conn = ConnectionProvider.getConnection();
         Statement stmt = null;
         ResultSet rs;
@@ -65,7 +68,7 @@
 
         query = ""
                 + "SELECT "
-                + "*, qset.get_month_name("+pMonth+") "
+                + "*, qset.get_month_name(" + pMonth + ") "
                 + "FROM "
                 + comCode + ".viewpyslip "
                 + "WHERE "
@@ -148,26 +151,30 @@
 //            long start = System.currentTimeMillis(); 
             long start = sys.curTimeMillis();
             File file = new File(tempPath + rptName + "_" + comCode + "_" + start + ".pdf");
-            OutputStream output = new FileOutputStream(file);
+//            OutputStream output = new FileOutputStream(file);
 //            JasperExportManager.exportReportToPdfStream(jrPrint, output);
 
-            FileInputStream fin = new FileInputStream(file);
-
-            ServletOutputStream outStream = response.getOutputStream();
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rptName + ".pdf\"");
-            JasperExportManager.exportReportToPdfStream(jrPrint, output);
-
-            byte[] buffer = new byte[1024];
-            int n = 0;
-            while ((n = fin.read(buffer)) != -1) {
-                outStream.write(buffer, 0, n);
-                out.print(buffer);
-            }
-
-            outStream.flush();
-            outStream.close();
-            fin.close();
+//            FileInputStream fin = new FileInputStream(file);
+//
+//            ServletOutputStream outStream = response.getOutputStream();
+//            response.setContentType("application/pdf");
+//            response.setHeader("Content-Disposition", "attachment;filename=\"" + rptName + ".pdf\"");
+//            JasperExportManager.exportReportToPdfStream(jrPrint, output);
+//            JasperRunManager.runReportToPdfStream(fin, outStream, params);
+//            byte[] buffer = new byte[1024];
+//            int n = 0;
+//            while ((n = fin.read(buffer)) != -1) {
+//                outStream.write(buffer, 0, n);
+//                out.print(buffer);
+//            }
+//
+//            outStream.flush();
+//            outStream.close();
+//            fin.close();
+            response.setContentType("application/x-download");
+            response.addHeader("Content-disposition", "attachment;filename=\"" + rptName + ".pdf\"");
+            OutputStream out2 = response.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jrPrint, out2);
 
             if (file.exists()) {
                 file.delete();
@@ -175,7 +182,8 @@
 
         }
     } catch (Exception e) {
-        out.println(e.getMessage());
+        //        out.println(e.getMessage());
+        sys.logV2(e.getMessage());
     }
 
 %>
